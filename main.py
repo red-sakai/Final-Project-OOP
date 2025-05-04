@@ -28,3 +28,28 @@ class Vehicle(ABC):
     def schedule_maintenance(self):
         pass
 
+class Employee(ABC):
+    def __init__(self, name: str, employee_id: int, status: EmployeeStatus):
+        self.__name = name
+        self.__employee_id = employee_id
+        self.__status = status
+
+    @property
+    def name(self) -> str:
+        return self.__name
+
+    @property
+    def employee_id(self) -> int:
+        return self.__employee_id
+
+    @property
+    def status(self) -> EmployeeStatus:
+        return self.__status
+
+    @status.setter
+    def status(self, status: EmployeeStatus):
+        self.__status = status
+
+    @abstractmethod
+    def calculate_salary(self) -> float:
+        pass
