@@ -1,0 +1,74 @@
+:root {
+    --bg-color: #ffffff;
+    --second-bg-color: #fcfcfc;
+    --primary-color: #002549;
+    --secondary-color: #003d63;
+    --tertiary-color: #00567f;
+    --quaternary-color: #00719b;
+    --quinary-color: #008db9;
+}
+
+body {
+    background-color: var(--bg-color);
+    font-family: Inter, sans-serif;
+    color: var(--primary-color);
+    line-height: 1.6;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+
+nav {
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    background-color: var(--second-bg-color);
+    display: flex;
+    
+}
+
+.nav-container {
+    display: flex;
+    justify-content: space-between;
+    max-width: 2000px;
+    height: 80px;
+}
+
+.nav-links-container {
+    border: 3px solid var(--primary-color);
+    border-radius: 90px;
+    display: flex;
+    width: 400px;
+    height: 40px;
+    align-items: center;
+    justify-content: space-evenly;
+
+}
+
+.nav-links a:link {
+    padding: 0.5rem 1rem;
+    text-align: center;
+    text-decoration: none;
+}
+
+.logo-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.logo-container img {
+    align-items: left;
+    width: 100px;
+    height: 80px;
+    margin: 10px;
+}
+
+.login-button img {
+    width: 30px;
+    height: 30px;
+}
