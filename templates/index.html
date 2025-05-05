@@ -4,8 +4,8 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <title>LogistIQ | HexaHaul</title>
-        <link rel="stylesheet" href="style.css">
-        <link rel="icon" href="images/screentake-removebg-preview.png">
+        <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+        <link rel="icon" href="{{ url_for('static', filename='images/screentake-removebg-preview.png') }}">
     </head>
     <body>
         <!--Navigation Bar-->
@@ -13,7 +13,7 @@
             <div class="nav-container">
                 <!--Logo Container-->
                 <div class="logo-container">
-                    <img src="images/HexaHaul_icon-removebg-preview.png" alt="Logo" />
+                    <img src="{{ url_for('static', filename='images/HexaHaul_icon-removebg-preview.png') }}" alt="Logo" />
                 </div>
 
                 <!--Navigation Links-->
