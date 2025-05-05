@@ -36,8 +36,8 @@
         <!--Title Page-->
         <div class="Our_Services">
             <section id="Service">
-            <h1>LogistIQ</h1>
-            <p>Delivering Excellence, No matter the situation</p>
+            <h1 class="fade-slide-down" id="services-title">LogistIQ Services</h1>
+            <p class="fade-slide-down" id="services-subtitle">Delivering Excellence, No matter the situation</p>
             </section>
         <div class="arrow arrow-left">
             <img src="images/left-chevron.png" alt="left arrow">
@@ -85,5 +85,11 @@
             </div>
         </div>
             </div>
+        <script>
+            window.addEventListener("load", function () {
+                document.getElementById("services-title").classList.add("visible");
+                document.getElementById("services-subtitle").classList.add("visible");
+            });
+        </script>
     </body>
 </html>
