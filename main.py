@@ -11,10 +11,21 @@ WISHLIST:
 2. Location Tracker
 """
 
-
+from flask import Flask, render_template, url_for
 from abc import ABC, abstractmethod
 from enum import Enum
-import matplotlib.pyplot as plt
+#import matplotlib.pyplot as plt
+
+app = Flask(__name__, 
+            static_url_path='',
+            static_folder='static')
+
+@app.route("/")
+def home():
+    return render_template("index.html")
+
+if __name__ == "__main__":
+    app.run(debug=True)
 
 # employee statuses list inside class
 class EmployeeStatus(Enum):
