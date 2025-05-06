@@ -22,9 +22,34 @@ app = Flask(__name__,
 
 @app.route("/")
 def home():
-    return render_template("index.html")
+    print("Home route accessed")
+    return render_template("services.html")
+
+@app.route("/services")
+def services():
+    print("Services route accessed")
+    return render_template("services.html")
+
+@app.route("/tracking")
+def tracking():
+    print("Tracking route accessed")
+    return render_template("tracking.html")
+
+# Add direct routes for HTML files
+@app.route("/services.html")
+def services_html():
+    print("Services.html route accessed")
+    return render_template("services.html")
+
+@app.route("/tracking.html")
+def tracking_html():
+    print("Tracking.html route accessed")
+    return render_template("tracking.html")
 
 if __name__ == "__main__":
+    app.debug = True
+    print("Flask app routes:")
+    print(app.url_map)
     app.run(debug=True)
 
 # employee statuses list inside class
