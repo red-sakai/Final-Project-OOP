@@ -35,7 +35,7 @@ def tracking():
     print("Tracking route accessed")
     return render_template("tracking.html")
 
-# Add direct routes for HTML files
+# add direct routes for HTML files
 @app.route("/services.html")
 def services_html():
     print("Services.html route accessed")
