@@ -16,6 +16,13 @@ Then it will prompt you to update the installed version.
 ```bash
 python.exe -m pip install --upgrade pip
 ```
+
+You also need to install our dependencies to ensure that there will be no error on your end.
+
+```bash
+pip install -r requirements.txt
+```
+
 ## 🛠️ Tech Stack
 [![My Skills](https://skillicons.dev/icons?i=html,css,js,py,tailwind,flask)](https://skillicons.dev)
 
