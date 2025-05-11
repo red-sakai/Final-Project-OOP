@@ -1,0 +1,23 @@
+{
+  "name": "final-project-oop",
+  "version": "1.0.0",
+  "description": "Smart Logistics. Seamless Delivery. Scalable Impact.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/red-sakai/Final-Project-OOP.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/red-sakai/Final-Project-OOP/issues"
+  },
+  "homepage": "https://github.com/red-sakai/Final-Project-OOP#readme",
+  "devDependencies": {
+    "tailwindcss": "^4.1.6"
+  }
+}
