@@ -36,6 +36,8 @@ python.exe -m pip install --upgrade pip
 
 LOGISTIQ is a next-generation logistics solution that integrates technology, data, and operational intelligence to deliver end-to-end visibility and control over your logistics operations. From real-time fleet tracking to intelligent route optimization and predictive analytics, LOGISTIQ empowers businesses to reduce costs, improve efficiency, and delight customers.
 
+## 🧪 License
+This project is licensed under the **MIT License**. See the [LICENSE](LICENSE) file for full details.
 
 ## 📩 Contact
 For questions or support, contact the research team at [jheredmiguelrepublica14@gmail.com](mailto:jheredmiguelrepublica14@gmail.com).
