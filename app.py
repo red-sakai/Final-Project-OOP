@@ -53,9 +53,5 @@ if __name__ == "__main__":
     app.debug = True
     print("Flask app routes:")
     print(app.url_map)
-<<<<<<< HEAD
     app.run(debug=True)
     
-=======
-    app.run(debug=True)
->>>>>>> origin
