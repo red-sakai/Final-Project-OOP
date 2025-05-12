@@ -54,3 +54,4 @@ if __name__ == "__main__":
     print("Flask app routes:")
     print(app.url_map)
     app.run(debug=True)
+    
