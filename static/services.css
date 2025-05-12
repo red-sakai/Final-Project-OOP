@@ -338,14 +338,19 @@ nav {
 
 /* Animation for heading */
 .fade-slide-down {
-    opacity: 0;
-    transform: translateY(-30px);
-    transition: all 0.8s ease-out;
+    animation: fadeSlideDown 1.2s ease-out forwards;
+    opacity: 0; /* Start with opacity 0 */
 }
 
-.fade-slide-down.visible {
-    opacity: 1;
-    transform: translateY(0);
+@keyframes fadeSlideDown {
+    0% {
+        opacity: 0;
+        transform: translateY(-30px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
 
 .chatbox-container {
