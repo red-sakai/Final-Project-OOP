@@ -4,8 +4,9 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <title>LogistIQ | HexaHaul</title>
-    <link rel="stylesheet" href="services.css" />
-    <link rel="icon" href="images/screentake-removebg-preview.png" />
+    <link rel="stylesheet" href="{{ url_for('static', filename='services.css') }}">
+    <script src="{{ url_for('static', filename='services.js') }}"></script>
+    <link rel="icon" href="{{ url_for('static', filename='images/screentake-removebg-preview.png') }}" />
 </head>
 <body>
 
@@ -27,7 +28,7 @@
 <nav class="navbar">
     <div class="nav-container">
         <div class="logo-container">
-            <img src="images/HexaHaul_icon-removebg-preview.png" alt="Logo" />
+            <img src="{{ url_for('static', filename='images/HexaHaul_icon-removebg-preview.png') }}" alt="Logo" />
         </div>
         <div class="nav-links-container">
             <div class="nav-links">
@@ -38,7 +39,7 @@
             </div>
         </div>
         <div class="login-button-container">
-            <a href="#login"><img src="images/login.png" alt="login" /></a>
+            <a href="#login"><img src="{{ url_for('static', filename='images/login.png') }}" alt="login" /></a>
         </div>
     </div> 
 </nav>
@@ -51,13 +52,13 @@
     </section>
 
     <div class="arrow arrow-left">
-        <img src="images/left-chevron.png" alt="left arrow">
+        <img src="{{ url_for('static', filename='images/left-chevron.png') }}" alt="left arrow">
     </div>
 
     <!-- Cards -->
     <div class="card-container">
         <div class="card">
-            <img src="images/electric-car.png">
+            <img src="{{ url_for('static', filename='images/electric-car.png') }}">
             <div class="card-content">
                 <h3>Car</h3>
                 <p>A compact yet versatile vehicle, ideal for executive travel, client meetings, and more.</p>
@@ -67,7 +68,7 @@
     </div>
     <div class="card-container2">
         <div class="card2">
-            <img src="images/delivery-truck.png">
+            <img src="{{ url_for('static', filename='images/delivery-truck.png') }}">
             <div class="card-content2">
                 <h3>Truck</h3>
                 <p>The backbone of logistics, transporting large volumes efficiently.</p>
@@ -77,7 +78,7 @@
     </div>
     <div class="card-container3">
         <div class="card3">
-            <img src="images/fast-delivery.png">
+            <img src="{{ url_for('static', filename='images/fast-delivery.png') }}">
             <div class="card-content3">
                 <h3>Motorcycle</h3>
                 <p>Perfect for last-mile delivery in tight city traffic.</p>
@@ -86,7 +87,7 @@
         </div>    
     </div>
     <div class="arrow arrow-right">
-        <img src="images/chevron.png" alt="right arrow">
+        <img src="{{ url_for('static', filename='images/chevron.png') }}" alt="right arrow">
     </div>
     <div class="ending-container">
         <div class="ending">
@@ -94,7 +95,5 @@
         </div>
     </div>
 </div>
-
-<script src="services.js"></script>
 </body>
 </html>
