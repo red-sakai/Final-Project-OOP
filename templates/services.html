@@ -6,50 +6,48 @@
         <title>LogistIQ | HexaHaul</title>
         <link rel="stylesheet" href="services.css">
         <link rel="icon" href="images/screentake-removebg-preview.png">
+        <style>
+            .chatbox-body {
+                display: flex;
+                flex-direction: column;
+            }
+            
+            .chat-message {
+                margin: 5px 0;
+                padding: 8px 12px;
+                border-radius: 15px;
+                max-width: 80%;
+            }
+            
+            .chat-message.user {
+                background-color: #dcf8c6;
+                margin-left: auto; /* Aligns user messages to the right */
+            }
+            
+            .chat-message.bot {
+                background-color: #ececec;
+                margin-right: auto; /* Aligns bot messages to the left */
+            }
+        </style>
     </head>
-    <!-- Chatbox -->
-<div class="chatbox-container">
-    <div class="chatbox-header">HexaBot</div>
-    <div class="chatbox-body" id="chatbox-body">
-        <div class="chat-message bot">Hi there! How can we help you today?</div>
-    </div>
-    <div class="chatbox-input">
-        <input type="text" id="chat-input" placeholder="Type a message..." />
-        <button id="send-btn">Send</button>
-    </div>
-</div>
-
-<script>
-    const sendBtn = document.getElementById("send-btn");
-    const chatInput = document.getElementById("chat-input");
-    const chatBody = document.getElementById("chatbox-body");
-
-    sendBtn.addEventListener("click", () => {
-        const message = chatInput.value.trim();
-        if (message !== "") {
-            const userMsg = document.createElement("div");
-            userMsg.className = "chat-message user";
-            userMsg.textContent = message;
-            chatBody.appendChild(userMsg);
-
-            // Scroll to bottom
-            chatBody.scrollTop = chatBody.scrollHeight;
-
-            chatInput.value = "";
-
-            // Simulated bot response
-            const botReply = document.createElement("div");
-            botReply.className = "chat-message bot";
-            botReply.textContent = "Thanks for your message! We'll get back to you soon.";
-            setTimeout(() => {
-                chatBody.appendChild(botReply);
-                chatBody.scrollTop = chatBody.scrollHeight;
-            }, 1000);
-        }
-    });
-</script>
 
     <body>
+    <!-- Chatbox -->
+      <div class="chatbox-container">
+        <div class="chatbox-header" id="chatbox-toggle">
+            HexaBot
+        </div>
+        <div class="chatbox-body-container" id="chatbox-body-container">
+            <div class="chatbox-body" id="chatbox-body">
+                <div class="chat-message bot">Hi there! How can we help you today?</div>
+            </div>
+            <div class="chatbox-input">
+                <input type="text" id="chat-input" placeholder="Type a message..." />
+                <button id="send-btn">Send</button>
+            </div>
+        </div>
+    </div>
+
         <!--Navigation Bar-->
         <nav class="navbar">
             <div class="nav-container">
@@ -62,9 +60,9 @@
                 <div class="nav-links-container">
                     <div class="nav-links">
                         <a href="#about">About</a>
-                        <a href="services.html" class="active">Services</a>
-                        <a href="tracking.html">Tracking</a>
-                        <a href="#faq">FAQ</a>
+                        <a href="{{ url_for('services_html') }}" class="active">Services</a>
+                        <a href="{{ url_for('tracking_html') }}">Tracking</a>
+                        <a href="{{ url_for('faq_html') }}">FAQ</a>
                     </div>
                 </div>
 
@@ -125,10 +123,89 @@
         </div>
             </div>
         <script>
-            window.addEventListener("load", function () {
-                document.getElementById("services-title").classList.add("visible");
-                document.getElementById("services-subtitle").classList.add("visible");
+        document.addEventListener("DOMContentLoaded", () => {
+            const sendBtn = document.getElementById("send-btn");
+            const chatInput = document.getElementById("chat-input");
+            const chatBody = document.getElementById("chatbox-body");
+            const chatToggle = document.getElementById("chatbox-toggle");
+            const chatContent = document.getElementById("chatbox-content");
+
+            // Initialize chat state - start expanded
+            let isChatCollapsed = false;
+
+            // For debugging - check if elements are found
+            console.log("Chat elements loaded:", {
+                sendBtn: !!sendBtn,
+                chatInput: !!chatInput,
+                chatBody: !!chatBody,
+                chatToggle: !!chatToggle,
+                chatContent: !!chatContent
             });
+
+            // Send message function
+            function sendMessage() {
+                const message = chatInput.value.trim();
+                if (message !== "") {
+                    // Create and add user message
+                    const userMsg = document.createElement("div");
+                    userMsg.className = "chat-message user";
+                    userMsg.textContent = message;
+                    chatBody.appendChild(userMsg);
+                    
+                    // Clear input field
+                    chatInput.value = "";
+                    
+                    // Scroll to bottom of chat
+                    chatBody.scrollTop = chatBody.scrollHeight;
+                    
+                    // Simulate bot response after delay
+                    setTimeout(() => {
+                        const botReply = document.createElement("div");
+                        botReply.className = "chat-message bot";
+                        botReply.textContent = "Thanks for your message! We'll get back to you soon.";
+                        chatBody.appendChild(botReply);
+                        chatBody.scrollTop = chatBody.scrollHeight;
+                    }, 1000);
+                }
+            }
+
+            // Toggle chat function with debug logging
+            function toggleChat() {
+                console.log("Toggle clicked. Current state:", isChatCollapsed);
+                isChatCollapsed = !isChatCollapsed;
+                
+                if (isChatCollapsed) {
+                    console.log("Collapsing chat");
+                    chatContent.classList.add("collapsed");
+                } else {
+                    console.log("Expanding chat");
+                    chatContent.classList.remove("collapsed");
+                }
+                
+                console.log("New state:", isChatCollapsed);
+                console.log("Has collapsed class:", chatContent.classList.contains("collapsed"));
+            }
+
+            // Event listeners
+            sendBtn.addEventListener("click", sendMessage);
+            
+            // Also allow sending with Enter key
+            chatInput.addEventListener("keypress", (e) => {
+                if (e.key === "Enter") {
+                    sendMessage();
+                }
+            });
+            
+            // Toggle chat on header click
+            chatToggle.addEventListener("click", function(e) {
+                console.log("Header clicked");
+                toggleChat();
+            });
+            
+            // Set initial state explicitly
+            chatContent.classList.remove("collapsed");
+            console.log("Initial setup complete");
+        });
         </script>
     </body>
 </html>
