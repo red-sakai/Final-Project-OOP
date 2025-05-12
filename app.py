@@ -1,16 +1,3 @@
-"""
-TO DO LIST:
-1. Implement logic of:
-   - database class
-   - utilities class
-2. Connect back-end to front-end for more accurate visualization
-3. Learn matplotlib
-
-WISHLIST:
-1. HexaBot
-2. Location Tracker
-"""
-
 from flask import Flask, render_template, url_for
 from abc import ABC, abstractmethod
 from enum import Enum
@@ -35,6 +22,11 @@ def tracking():
     print("Tracking route accessed")
     return render_template("tracking.html")
 
+@app.route("/FAQ")
+def faq():
+    print("FAQ route accessed")
+    return render_template("FAQ.html")
+
 # add direct routes for HTML files
 @app.route("/services.html")
 def services_html():
@@ -46,8 +38,13 @@ def tracking_html():
     print("Tracking.html route accessed")
     return render_template("tracking.html")
 
+@app.route("/FAQ.html")
+def faq_html():
+    print("FAQ.html route accessed")
+    return render_template("FAQ.html")
+
 if __name__ == "__main__":
     app.debug = True
     print("Flask app routes:")
     print(app.url_map)
-    app.run(host='0.0.0.0', port=5000, debug=True)
+    app.run(debug=True)

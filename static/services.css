@@ -348,7 +348,6 @@ nav {
     transform: translateY(0);
 }
 
-/* Chatbox styles */
 .chatbox-container {
     position: fixed;
     bottom: 20px;
@@ -366,18 +365,33 @@ nav {
 }
 
 .chatbox-header {
-    background-color: #00567f;
+    background-color: #004aad;
     color: white;
     padding: 10px;
     font-weight: bold;
     text-align: center;
+    cursor: pointer;
+    user-select: none; /* Prevents text selection on double-click */
+}
+
+/* This is the key class for collapse functionality */
+.chatbox-content {
+    display: flex;
+    flex-direction: column;
+    transition: max-height 0.3s ease;
+}
+
+.chatbox-content.collapsed {
+    display: none;
 }
 
 .chatbox-body {
-    max-height: 200px;
+    height: 200px;
     overflow-y: auto;
     padding: 10px;
     background-color: #f9f9f9;
+    display: flex;
+    flex-direction: column;
 }
 
 .chatbox-input {
@@ -390,6 +404,7 @@ nav {
     border: none;
     padding: 10px;
     font-size: 14px;
+    outline: none; /* Removes focus outline */
 }
 
 .chatbox-input button {
@@ -398,6 +413,7 @@ nav {
     border: none;
     padding: 10px 15px;
     cursor: pointer;
+    transition: background-color 0.2s;
 }
 
 .chatbox-input button:hover {
@@ -409,15 +425,15 @@ nav {
     padding: 8px 12px;
     border-radius: 15px;
     max-width: 80%;
+    word-wrap: break-word;
 }
 
 .chat-message.user {
     background-color: #dcf8c6;
-    align-self: flex-end;
+    margin-left: auto; /* Aligns user messages to the right */
 }
 
 .chat-message.bot {
     background-color: #ececec;
-    align-self: flex-start;
+    margin-right: auto; /* Aligns bot messages to the left */
 }
-
