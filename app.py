@@ -28,7 +28,6 @@ def tracking():
     print("Tracking route accessed")
     return render_template("tracking.html")  # update as needed
 
-<<<<<<< Updated upstream
 @app.route("/FAQ")
 def faq():
     print("FAQ route accessed")
@@ -50,24 +49,8 @@ def faq_html():
     print("FAQ.html route accessed")
     return render_template("FAQ.html")
 
-=======
-# FAQ route
-@app.route("/faq")
-@app.route("/FAQ.html")
-def faq():
-    print("FAQ route accessed")
-    return render_template("FAQ.html")
-
-# Start the Flask development server
->>>>>>> Stashed changes
 if __name__ == "__main__":
     app.debug = True
     print("Flask app routes:")
     print(app.url_map)
-<<<<<<< Updated upstream
     app.run(debug=True)
-=======
-    print("Flask is running on http://127.0.0.1:5000")
-    app.run(host='0.0.0.0', port=5000)
-
->>>>>>> Stashed changes
