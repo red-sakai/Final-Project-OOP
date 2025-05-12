@@ -7,6 +7,48 @@
         <link rel="stylesheet" href="services.css">
         <link rel="icon" href="images/screentake-removebg-preview.png">
     </head>
+    <!-- Chatbox -->
+<div class="chatbox-container">
+    <div class="chatbox-header">HexaBot</div>
+    <div class="chatbox-body" id="chatbox-body">
+        <div class="chat-message bot">Hi there! How can we help you today?</div>
+    </div>
+    <div class="chatbox-input">
+        <input type="text" id="chat-input" placeholder="Type a message..." />
+        <button id="send-btn">Send</button>
+    </div>
+</div>
+
+<script>
+    const sendBtn = document.getElementById("send-btn");
+    const chatInput = document.getElementById("chat-input");
+    const chatBody = document.getElementById("chatbox-body");
+
+    sendBtn.addEventListener("click", () => {
+        const message = chatInput.value.trim();
+        if (message !== "") {
+            const userMsg = document.createElement("div");
+            userMsg.className = "chat-message user";
+            userMsg.textContent = message;
+            chatBody.appendChild(userMsg);
+
+            // Scroll to bottom
+            chatBody.scrollTop = chatBody.scrollHeight;
+
+            chatInput.value = "";
+
+            // Simulated bot response
+            const botReply = document.createElement("div");
+            botReply.className = "chat-message bot";
+            botReply.textContent = "Thanks for your message! We'll get back to you soon.";
+            setTimeout(() => {
+                chatBody.appendChild(botReply);
+                chatBody.scrollTop = chatBody.scrollHeight;
+            }, 1000);
+        }
+    });
+</script>
+
     <body>
         <!--Navigation Bar-->
         <nav class="navbar">
