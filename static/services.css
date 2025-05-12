@@ -1,0 +1,444 @@
+:root {
+    --bg-color: #ffffff;
+    --second-bg-color: #fcfcfc;
+    --primary-color: #03335e;
+    --secondary-color: #095190;
+    --tertiary-color: #1579c0;
+    --quaternary-color: #598cb8;
+    --quinary-color: #b2dbf8;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+/*nav*/ 
+}
+
+body {
+    background-color: var(--bg-color);
+    color: var(--primary-color);
+    font-family: Inter, sans-serif;
+}
+
+nav {
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    background-color: var(--second-bg-color);
+    justify-content: center;
+    font-display: flex;
+}
+
+.nav-container {
+    display: flex;
+    justify-content: space-between;
+    max-width: 2000px;
+    height: 80px;
+    padding: 20px 20px;
+    padding-right: 80px;
+}
+
+
+
+.nav-links-container {
+    border: 3px solid var(--primary-color);
+    border-radius: 90px;
+    display: flex;
+    width: 400px;
+    height: 40px;
+    align-items: center;
+    gap: 20px;
+    justify-content: space-evenly;
+}
+
+.nav-links a:link,
+.nav-links a:visited {
+    color: var(--primary-color);
+    padding: 0.3rem 1rem;
+    text-decoration: none;
+    text-align: center;
+}
+
+.nav-links a:hover {
+    color: var(--bg-color);
+    background-color: var(--primary-color);
+    border-radius: 90px;
+}
+
+.nav-links a:active {
+    color: var(--primary-color);
+    background-color: var(--primary-color);
+    border-radius: 90px;
+}
+
+.nav-links a.active {
+    color: var(--bg-color);
+    background-color: var(--primary-color);
+    border-radius: 90px;
+    margin: 10px;
+
+}
+
+.logo-container {
+    display: flex;
+    align-items: center; 
+}
+
+.logo-container img {
+    width: 100px;
+    height: 100px; 
+    object-fit: contain;
+    padding: 0;
+}
+
+
+
+.login-button-container {
+    display: flex;
+    align-items: center;
+    padding: 0;
+}
+
+.login-button-container img {
+    width: 30px;
+    height: 30px;
+}
+
+/*Logistiq services*/
+
+.Our_Services {
+    margin: -20px auto;
+    max-width: 600px;
+    
+}
+
+.Our_Services {
+    text-align: center;
+}
+
+.Our_Services h1 {
+    font-size: 40px;
+    font-weight: bold;
+    padding-top: 50px;
+}
+
+.Our_Services p {
+    color: #555;
+    font-size: 10px;
+    opacity: 80%;
+    padding-top: 6px;
+}
+
+/*cards*/
+
+
+/*card1*/
+
+.card-container{
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+    height: 480px;
+    opacity: 100%;
+}
+
+.card{
+    width: 325px;
+    background-color: #ffffff;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0px 10px 24px rgba(0,0,0,0.2);
+    margin: 20px;
+}
+
+.card img{
+    width: 150px;
+    height: 190px;
+    padding-top: 40px;
+}
+.card-content h3{
+    font-size: 48px;
+    margin-bottom: 8px;
+    margin-top: 10px;
+}
+.card-content p{
+    color:666;
+    font-size: 15px;
+    line-height: 1.3;
+    margin-top: 5px;
+    text-align: center;
+    margin-left: 20px;
+    margin-right: 20px;
+    color: gray;
+    opacity: 75%;
+}
+
+.card-content .btn{
+    display: inline-flex;
+    padding: 8px 16px;
+    background-color: #00567f ;
+    border-radius: 4px;
+    border: none;
+    color: #ffffff;
+    margin-top: 24px;
+    text-decoration: none;
+   
+}
+/*card2*/
+
+
+.card-container2{
+    display: flex;
+    justify-content: left;
+    height: 410px;
+    width: 400px;
+    margin-top: -450px;
+    margin-left: -280px;
+    opacity: 65%;
+
+}
+
+
+.card2{
+    width: 325px;
+    background-color: #ffffff;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0px 10px 24px rgba(0,0,0,0.2);
+    margin: 20px;
+}
+
+.card2 img{
+    width: 150px;
+    height: 180px;
+    padding-top: 40px;
+}
+.card-content2 h3{
+    font-size: 40px;
+    margin-bottom: 8px;
+    margin-top: 10px;
+}
+.card-content2 p{
+    color:666;
+    font-size: 10px;
+    line-height: 1.3;
+    margin-top: 10px;
+    text-align: center;
+    margin-left: 20px;
+    margin-right: 20px;
+    color: gray;
+    opacity: 75%;
+}
+
+.card-content2 .btn{
+    display: inline-flex;
+    padding: 8px 16px;
+    background-color: #00567f ;
+    border-radius: 4px;
+    border: none;
+    color: #ffffff;
+    margin-top: 24px;
+    text-decoration: none;
+   
+}
+
+/*card3*/
+
+.card-container3{
+    display: flex;
+    justify-content: left;
+    height: 410px;
+    width: 380px;
+    margin-top: -410px;
+    margin-left: 510px;
+    opacity: 65%;
+
+}
+
+
+.card3{
+    width: 325px;
+    background-color: #ffffff;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0px 10px 24px rgba(0,0,0,0.2);
+    margin: 20px;
+}
+
+.card3 img{
+    width: 120px;
+    height: 150px;
+    padding-top: 40px;
+}
+.card-content3 h3{
+    font-size: 40px;
+    margin-bottom: 8px;
+    margin-top: 10px;
+}
+.card-content3 p{
+    color:666;
+    font-size: 10px;
+    line-height: 1.3;
+    margin-top: 10px;
+    text-align: center;
+    margin-left: 20px;
+    margin-right: 20px;
+    color: gray;
+    opacity: 75%;
+}
+
+.card-content3 .btn{
+    display: inline-flex;
+    padding: 8px 16px;
+    background-color: #00567f ;
+    border-radius: 4px;
+    border: none;
+    color: #ffffff;
+    margin-top: 24px;
+    text-decoration: none;
+   
+}
+
+/*arrow*/
+
+.arrow {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 40px;
+    height: 40px;
+    cursor: pointer;
+    z-index: 100;
+}
+
+.arrow-left {
+    left: 70px;
+    margin-top: 50px;
+}
+
+.arrow-right {
+    right: 70px;
+    margin-top: 50px;
+}
+
+.arrow img {
+    width: 100%;
+    height: auto;
+}
+
+/*ending*/
+
+.ending-container{
+    margin-top: 30px;
+}
+.ending p{
+    opacity: 100%;
+}
+
+/* Animation for heading */
+.fade-slide-down {
+    animation: fadeSlideDown 1.2s ease-out forwards;
+    opacity: 0; /* Start with opacity 0 */
+}
+
+@keyframes fadeSlideDown {
+    0% {
+        opacity: 0;
+        transform: translateY(-30px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.chatbox-container {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    width: 300px;
+    background: #ffffff;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    font-family: Arial, sans-serif;
+    z-index: 1000;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+.chatbox-header {
+    background-color: #004aad;
+    color: white;
+    padding: 10px;
+    font-weight: bold;
+    text-align: center;
+    cursor: pointer;
+    user-select: none; /* Prevents text selection on double-click */
+}
+
+/* This is the key class for collapse functionality */
+.chatbox-content {
+    display: flex;
+    flex-direction: column;
+    transition: max-height 0.3s ease;
+}
+
+.chatbox-content.collapsed {
+    display: none;
+}
+
+.chatbox-body {
+    height: 200px;
+    overflow-y: auto;
+    padding: 10px;
+    background-color: #f9f9f9;
+    display: flex;
+    flex-direction: column;
+}
+
+.chatbox-input {
+    display: flex;
+    border-top: 1px solid #ccc;
+}
+
+.chatbox-input input {
+    flex: 1;
+    border: none;
+    padding: 10px;
+    font-size: 14px;
+    outline: none; /* Removes focus outline */
+}
+
+.chatbox-input button {
+    background-color: #004aad;
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.chatbox-input button:hover {
+    background-color: #003580;
+}
+
+.chat-message {
+    margin: 5px 0;
+    padding: 8px 12px;
+    border-radius: 15px;
+    max-width: 80%;
+    word-wrap: break-word;
+}
+
+.chat-message.user {
+    background-color: #dcf8c6;
+    margin-left: auto; /* Aligns user messages to the right */
+}
+
+.chat-message.bot {
+    background-color: #ececec;
+    margin-right: auto; /* Aligns bot messages to the left */
+}

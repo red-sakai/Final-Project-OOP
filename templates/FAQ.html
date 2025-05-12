@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HexaHaul | FAQ</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='FAQ.css') }}">
+    <link rel="icon" href="{{ url_for('static', filename='images/screentake-removebg-preview.png') }}">
+    <script src="{{ url_for('static', filename='js/faq.js') }}"></script>
+</head>
+<body>
+    <!--Navigation Bar-->
+    <nav class="navbar">
+        <div class="nav-container">
+            <!--Logo Container-->
+            <div class="logo-container">
+                <img src="{{ url_for('static', filename='images/HexaHaul_icon-removebg-preview.png') }}" alt="Logo" />
+            </div>
+
+            <!--Navigation Links-->
+            <div class="nav-links-container">
+                <div class="nav-links">
+                    <a href="#about">About</a>
+                    <a href="{{ url_for('services_html') }}">Services</a>
+                    <a href="{{ url_for('tracking_html') }}">Tracking</a>
+                    <a href="{{ url_for('faq_html') }}" class="active">FAQ</a>
+                </div>
+            </div>
+
+            <!--Login Button-->
+            <div class="login-button-container">
+                <a href="#login"><img src="{{ url_for('static', filename='images/login.png') }}" alt="login" /></a>
+            </div>
+        </div> 
+    </nav>
+    
+    <!--Cards/Boxes-->
+    <div class="card-container">
+        <div class="card">
+            <div class="card-content">
+                <h3>Frequently Asked<br>Questions </h3>
+                <p>Find quick answers to common questions about how HexaHaul<br>
+                    works—whether it's tracking parcels, managing vehicles, or <br>
+                    accessing your admin account. This section helps users navigate the<br>
+                    platform smoothly without needing extra support.</p>
+            </div>
+        </div>
+    </div>
+    
+    <!--1st question and answer-->
+    <div class="card-container2">
+        <div class="card2">
+            <div class="card-content2">
+                <h3>How do I track my parcel on HexaHaul?</h3>
+                <div class="arrow arrow-down">
+                    <img src="{{ url_for('static', filename='images/angle-down-solid.svg') }}">
+                </div>                        
+            </div>
+        </div>
+    </div>
+    <!--answer sa questions (chat ka sa gc kapag andito ka na sa aprt na to)-->
+    <div class="card_answer">
+        <h3>To track your parcel on HexaHaul, simply enter your tracking number in the search bar on the Tracking page. You can find this number in your confirmation email. Our system will display real-time updates on your parcel's location and estimated delivery time.</h3>
+    </div>
+
+    <!--2nd question and answer-->
+    <div class="card-container3">
+        <div class="card3">
+            <div class="card-content3">
+                <h3>What types of vehicles does HexaHaul support for tracking?</h3>
+                <div class="arrow arrow-down2">
+                    <img src="{{ url_for('static', filename='images/angle-down-solid.svg') }}">
+                </div>                        
+            </div>
+        </div>
+    </div>
+    <!--answer sa questions (chat ka sa gc kapag andito ka na sa aprt na to)-->
+    <div class="card_answer">
+        <h3>HexaHaul supports tracking for a wide range of delivery vehicles including vans, trucks, motorcycles, and bicycles. Our system can monitor any vehicle equipped with our GPS tracking device, providing real-time location data and route information.</h3>
+    </div>
+
+    <!--3rd question and answer-->
+    <div class="card-container4">
+        <div class="card4">
+            <div class="card-content4">
+                <h3>What services does HexaHaul offer aside from parcel tracking?</h3>
+                <div class="arrow arrow-down3">
+                    <img src="{{ url_for('static', filename='images/angle-down-solid.svg') }}">
+                </div>                        
+            </div>
+        </div>
+    </div>
+    <!--answer sa questions (chat ka sa gc kapag andito ka na sa aprt na to)-->
+    <div class="card_answer">
+        <h3>Beyond parcel tracking, HexaHaul offers fleet management solutions, delivery optimization algorithms, custom delivery scheduling, secure payment processing, and business analytics dashboards. We also provide API integration for e-commerce platforms to streamline your logistics operations.</h3>
+    </div>
+
+    <!--4th question and answer-->
+    <div class="card-container5">
+        <div class="card5">
+            <div class="card-content5">
+                <h3>Why is my parcel taking longer than expected to arrive?</h3>
+                <div class="arrow arrow-down4">
+                    <img src="{{ url_for('static', filename='images/angle-down-solid.svg') }}">
+                </div>                        
+            </div>
+        </div>
+    </div>
+    <!--answer sa questions (chat ka sa gc kapag andito ka na sa aprt na to)-->
+    <div class="card_answer">
+        <h3>Delays can occur due to several factors including adverse weather conditions, high volume of deliveries, unexpected traffic, customs clearance for international shipments, or delivery address issues. Check your tracking page for specific delay notifications. If no information is provided, please contact our customer support.</h3>
+    </div>
+
+    <!--5th question and answer-->
+    <div class="card-container6">
+        <div class="card6">
+            <div class="card-content6">
+                <h3>Is my data safe on HexaHaul?</h3>
+                <div class="arrow arrow-down5">
+                    <img src="{{ url_for('static', filename='images/angle-down-solid.svg') }}">
+                </div>                        
+            </div>
+        </div>
+    </div>
+    <!--answer sa questions (chat ka sa gc kapag andito ka na sa aprt na to)-->
+    <div class="card_answer">
+        <h3>Yes, your data is secure with HexaHaul. We employ industry-standard encryption protocols and regular security audits to protect all user information. Our platform complies with global data protection regulations, and we never share your personal information with third parties without your explicit consent.</h3>
+    </div>
+    
+    <div class="slogan">
+        <p>Haul Smarter, with HexaHaul</p>
+    </div>
+</body>
+</html>

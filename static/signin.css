@@ -1,0 +1,149 @@
+:root {
+    --bg-color: #ffffff;
+    --second-bg-color: #fcfcfc;
+    --primary-color: #03335e;
+    --secondary-color: #095190;
+    --tertiary-color: #1579c0;
+    --quaternary-color: #598cb8;
+    --quinary-color: #b2dbf8;
+    --form-box-color: #bebebe;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    background-color: var(--bg-color);
+    color: var(--primary-color);
+    font-family: "Inter", sans-serif;
+    font-weight: normal;
+    margin: 0;
+    justify-content: center;
+    align-items: center;
+
+}
+
+.logistiq-text {
+    text-align: center;
+    font-family: "Futura", sans-serif;
+    font-size: 50px;
+    font-weight: bold;
+    color: var(--primary-color);
+    margin-top: 20px;
+}
+
+.logistiq-slogan {
+    text-align: center;
+    font-family: "Inter", sans-serif;
+    font-size: 15px;
+    font-weight: normal;
+    color: var(--primary-color);
+    margin-top: -50px;
+}
+
+.user-signin-container {
+    display: flex;
+    height: 100vh;
+}
+
+.user-signin-panel {
+    width: 40%;
+    padding: 40px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    height: 100vh;
+}
+
+.user-signin-header {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.user-signin-header img {
+    width: 200px;
+    margin-bottom: 10px;
+}
+
+
+.user-signin-form {
+    width: 100%;
+    max-width: 300px;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+}
+
+.user-username-input,
+.user-password-input {
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid var(--form-box-color);
+    border-radius: 6px;
+}
+
+.signin-button {
+    width: 100px;
+    margin: 0 auto;
+    padding: 10px;
+    display: block;
+    background-color: var(--primary-color);
+    color: var(--bg-color);
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    margin-top: 10px;
+}
+
+.signin-button:hover {
+    background-color: var(--secondary-color);
+}
+
+.user-signup {
+    margin-top: 20px;
+    font-size: 15px;
+    text-align: center;
+}
+
+.user-signup {
+    font-family: "Inter", sans-serif;
+    font-size: 15px;
+    font-weight: normal;
+    color: #bebebe;
+}
+
+.user-signup a:link {
+    color: var(--primary-color);
+    text-decoration: none;
+}
+
+.user-signin-media {
+    flex-grow: 1;
+    background-size: cover;
+    background-position: center;
+}
+
+
+.card-container{
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+    height: 480px;
+    opacity: 100%;
+    color: gray;
+}
+
+.card{
+    width: 800px;
+    background-color: lightgray;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0px 10px 24px rgba(0,0,0,0.2);
+    margin: 20px;
+    height: 980px;
+    margin-top: -200px;
+    margin-right: -20px;
+}

@@ -1,0 +1,195 @@
+
+:root {
+    --bg-color: #ffffff;
+    --second-bg-color: #fcfcfc;
+    --primary-color: #03335e;
+    --secondary-color: #095190;
+    --tertiary-color: #1579c0;
+    --quaternary-color: #598cb8;
+    --quinary-color: #b2dbf8;
+}
+
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+/*nav*/ 
+}
+
+@font-face {
+    font-family: "Inter";
+    src: url("fonts/Inter-28pt-SemiBoldtalic.ttf");
+    src: url("fonts/Inter-28pt-SemiBoldtalic.ttf") format("truetype"); 
+    font-weight: normal;
+    font-style: normal;
+}
+
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background-color: #e6f4f9; /* light teal background */
+    background-image: url('/images/wo'); /* use your faint map image here */
+    background-position: center;
+    opacity: 0.9;
+    ;
+    
+}
+
+nav {
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    background-color: var(--second-bg-color);
+    justify-content: center;
+    font-display: flex;
+}
+
+.nav-container {
+    display: flex;
+    justify-content: space-between;
+    max-width: 2000px;
+    height: 80px;
+    padding: 20px 20px;
+    padding-right: 80px;
+}
+
+
+
+.nav-links-container {
+    border: 3px solid var(--primary-color);
+    border-radius: 90px;
+    display: flex;
+    width: 400px;
+    height: 40px;
+    align-items: center;
+    gap: 20px;
+    justify-content: space-evenly;
+}
+
+.nav-links a:link,
+.nav-links a:visited {
+    color: var(--primary-color);
+    padding: 0.3rem 1rem;
+    text-decoration: none;
+    text-align: center;
+}
+
+.nav-links a:hover {
+    color: var(--bg-color);
+    background-color: var(--primary-color);
+    border-radius: 90px;
+}
+
+.nav-links a:active {
+    color: var(--primary-color);
+    background-color: var(--primary-color);
+    border-radius: 90px;
+}
+
+.nav-links a.active {
+    color: var(--bg-color);
+    background-color: var(--primary-color);
+    border-radius: 90px;
+    margin: 10px;
+
+}
+
+.logo-container {
+    display: flex;
+    align-items: center; 
+}
+
+.logo-container img {
+    width: 100px;
+    height: 100px; 
+    object-fit: contain;
+    padding: 0;
+}
+
+
+
+.login-button-container {
+    display: flex;
+    align-items: center;
+    padding: 0;
+}
+
+.login-button-container img {
+    width: 30px;
+    height: 30px;
+}
+
+
+
+/*square*/
+
+.track {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 50px 100px;
+    background-color: #dff5f3;
+    background-image: url('world-map.png'); /* make sure this path is correct */
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    opacity: 1;
+    border-radius: 12px;
+    height: 600px;
+    font-family: 'Inter', sans-serif;
+    background-attachment: fixed;
+}
+
+.track-content {
+    max-width: 50%;
+}
+
+.track h2 {
+    margin-bottom: 20px;
+    color: black;
+    font-size: 60px;
+    text-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+    margin-top: 0;
+    text-align: left;
+}
+
+.track-text, .track-text2 {
+    color: #444;
+    font-size: 16px;
+    margin-bottom: 10px;
+    text-align: left;
+}
+
+.track-input {
+    padding: 10px;
+    width: 220px;
+    border-radius: 6px;
+    border: 1px solid gray;
+    margin-top: 20px;
+}
+
+.track-button {
+    padding: 10px 25px;
+    margin-left: 10px;
+    background-color: #03335e;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+.track-image img {
+    height: 630px;
+    object-fit: contain;
+    margin-bottom: 0px;
+}
+
+   
+.ending-container{
+    margin-top: -10px;
+    text-align: center;
+}
+.ending p{
+    opacity: 100%;
+}
