@@ -4,8 +4,8 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <title>LogistIQ | HexaHaul</title>
-        <link rel="stylesheet" href="user-login.css" />
-        <link rel="icon" href="/assets/HexaHaul icon transparent.png" />
+        <link rel="stylesheet" href="{{ url_for('static', filename='user-login.css') }}">
+        <link rel="icon" href="{{ url_for('static', filename='images/HexaHaul icon transparent.png') }}">
     </head>
     <body>
         <!--User Login-->
@@ -14,17 +14,17 @@
                 <div class="user-login-header">
                     <p class="logistiq-text">LogistIQ</p>
                     <p class="logistiq-slogan">Delivering excellence. No matter the situation.</p>
-                    <center><img src="/assets/HexaHaul logo.png" alt="Logo" /></center>
+                    <center><img src="{{ url_for('static', filename='images/HexaHaul logo.png') }}" alt="Logo" /></center>
                 </div>
-                <form action="index.html" method="post" class="user-login-form">
+                <form action="{{ url_for('index_html') }}" method="post" class="user-login-form">
                     <input type="text" placeholder="Username" class="user-username-input" required />
                     <input type="password" placeholder="Password" class="user-password-input" required />
                     <button type="submit" class="signin-button">Sign In</button>
                 </form>
-                <p class="user-signup">Don't have an account? <a href="user-signup.html">Sign Up</a></p>
+                <p class="user-signup">Don't have an account? <a href="{{ url_for('user_signup_html') }}">Sign Up</a></p>
             </div> 
             <div class="user-login-media">
             </div>
         </div>
     </body> 
-</html> 
+</html>
