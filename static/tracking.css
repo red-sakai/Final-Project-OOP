@@ -193,3 +193,36 @@ nav {
 .ending p{
     opacity: 100%;
 }
+
+/*Animation for header*/
+.fade-slide-right {
+    animation: fadeSlideRight 1.0s ease-out forwards;
+    opacity: 0;
+}
+
+@keyframes fadeSlideRight {
+    0% {
+        opacity: 0;
+        transform: translateX(-50px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+.fade-slide-up {
+    animation: fadeSlideUp 1.0s ease-out forwards;
+    opacity: 0;
+}
+
+@keyframes fadeSlideUp {
+    0% {
+        opacity: 0;
+        transform: translateY(50px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}

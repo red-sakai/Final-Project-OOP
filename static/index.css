@@ -429,3 +429,36 @@ footer {
     width: 20px;
     height: 20px;
 }
+
+/*Animation for header*/
+.fade-slide-right {
+    animation: fadeSlideRight 2.0s ease-out forwards;
+    opacity: 0;
+}
+
+@keyframes fadeSlideRight {
+    0% {
+        opacity: 0;
+        transform: translateX(-70px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+.fade-slide-left {
+    animation: fadeSlideLeft 2.0s ease-out forwards;
+    opacity: 0;
+}
+
+@keyframes fadeSlideLeft {
+    0% {
+        opacity: 0;
+        transform: translateX(70px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}

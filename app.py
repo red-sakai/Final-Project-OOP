@@ -12,7 +12,7 @@ app = Flask(__name__,
 @app.route("/")
 def home():
     print("Home route accessed")
-    return render_template("user-login.html")
+    return render_template("index.html")
 
 # Index route (handles both '/index' and '/index.html')
 @app.route("/index")
