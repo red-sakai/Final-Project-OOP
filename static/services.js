@@ -9,6 +9,7 @@ document.addEventListener("DOMContentLoaded", () => {
     // Get title elements and fix visibility
     const servicesTitle = document.getElementById("services-title");
     const servicesSubtitle = document.getElementById("services-subtitle");
+    const servicesSlogan = document.getElementById("services-slogan");
     
     // Ensure title animation works properly
     if (servicesTitle) {
@@ -28,6 +29,16 @@ document.addEventListener("DOMContentLoaded", () => {
         servicesSubtitle.classList.remove("fade-slide-down");
         setTimeout(() => {
             servicesSubtitle.classList.add("fade-slide-down");
+        }, 10);
+    }
+
+    if (servicesSlogan) {
+        servicesSlogan.style.opacity = "1";
+        servicesSlogan.style.visibility = "visible";
+        // Re-trigger animation
+        servicesSlogan.classList.remove("fade-slide-up");
+        setTimeout(() => {
+            servicesSlogan.classList.add("fade-slide-up");
         }, 10);
     }
     
