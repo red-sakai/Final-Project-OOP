@@ -1,10 +1,10 @@
 document.addEventListener("DOMContentLoaded", () => {
-    //Call outs
+    // Call outs
     const indexSlogan = document.getElementById("index-slogan");
     const indexText = document.getElementById("index-text");
     const zoomEl = document.getElementById("zoom-image");
 
-    //Animation for all elements
+    // Animation for all elements
     if (indexSlogan) {       
         indexSlogan.style.opacity = "1";
         indexSlogan.style.visibility = "visible";
@@ -23,5 +23,15 @@ document.addEventListener("DOMContentLoaded", () => {
         setTimeout(() => {
             indexText.classList.add("fade-slide-left");
         }, 10);
+    }
+
+    // --- Navigation Bar Toggle Animation ---
+    const navToggle = document.getElementById('nav-toggle');
+    const navLinksContainer = document.getElementById('nav-links-container');
+
+    if (navToggle && navLinksContainer) {
+        navToggle.addEventListener('click', function () {
+            navLinksContainer.classList.toggle('expanded');
+        });
     }
 });

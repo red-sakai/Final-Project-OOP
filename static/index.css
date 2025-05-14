@@ -96,6 +96,59 @@ nav {
     padding: 20px 20px;
 }
 
+/* Hamburger button styles */
+.nav-toggle {
+    display: none;
+    flex-direction: column;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    z-index: 1100;
+}
+.nav-toggle span {
+    display: block;
+    height: 4px;
+    width: 28px;
+    margin: 4px auto;
+    background: var(--primary-color, #03335e);
+    border-radius: 2px;
+    transition: all 0.3s;
+}
+
+/* Responsive nav links animation */
+#nav-links-container {
+    transition: max-height 0.4s cubic-bezier(.4,2,.6,1), opacity 0.3s;
+    overflow: hidden;
+    max-height: 500px; /* default for desktop */
+    opacity: 1;
+}
+
+#nav-links-container.collapsed {
+    max-height: 0;
+    opacity: 0;
+    pointer-events: none;
+}
+
+/* Show hamburger and collapse nav on small screens */
+@media (max-width: 900px) {
+    .nav-toggle {
+        display: flex;
+    }
+    #nav-links-container {
+        max-height: 0;
+        opacity: 0;
+        pointer-events: none;
+    }
+    #nav-links-container.expanded {
+        max-height: 300px; /* adjust as needed */
+        opacity: 1;
+        pointer-events: auto;
+    }
+}
+
 .nav-links-container {
     border: 3px solid var(--primary-color);
     border-radius: 90px;
