@@ -17,8 +17,14 @@
                     <img src="{{ url_for('static', filename='images/HexaHaul icon transparent.png') }}" alt="Logo" />
                 </div>
 
+                <button class="nav-toggle" id="nav-toggle" aria-label="Toggle navigation">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+                
                 <!--Navigation Links-->
-                <div class="nav-links-container">
+                <div class="nav-links-container" id="nav-links-container">
                     <div class="nav-links">
                         <a href="{{ url_for('index_html') }}" class="active">About</a>
                         <a href="{{ url_for('services_html') }}">Services</a>

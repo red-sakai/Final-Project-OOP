@@ -39,7 +39,58 @@ nav {
     padding-right: 80px;
 }
 
+/* Hamburger button styles */
+.nav-toggle {
+    display: none;
+    flex-direction: column;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    z-index: 1100;
+}
+.nav-toggle span {
+    display: block;
+    height: 4px;
+    width: 28px;
+    margin: 4px auto;
+    background: var(--primary-color, #03335e);
+    border-radius: 2px;
+    transition: all 0.3s;
+}
 
+/* Responsive nav links animation */
+#nav-links-container {
+    transition: max-height 0.4s cubic-bezier(.4,2,.6,1), opacity 0.3s;
+    overflow: hidden;
+    max-height: 500px; /* default for desktop */
+    opacity: 1;
+}
+
+#nav-links-container.collapsed {
+    max-height: 0;
+    opacity: 0;
+    pointer-events: none;
+}
+
+/* Show hamburger and collapse nav on small screens */
+@media (max-width: 900px) {
+    .nav-toggle {
+        display: flex;
+    }
+    #nav-links-container {
+        max-height: 0;
+        opacity: 0;
+        pointer-events: none;
+    }
+    #nav-links-container.expanded {
+        max-height: 300px; /* adjust as needed */
+        opacity: 1;
+        pointer-events: auto;
+    }
+}
 
 .nav-links-container {
     border: 3px solid var(--primary-color);
@@ -112,6 +163,10 @@ nav {
     opacity: 100%;
 }
 
+.card-content2, .card-content3, .card-content4, .card-content5 {
+    position: relative; /* Add this to position arrows correctly */
+}
+
 .card{
     width: 2500px;
     background-color: #d9d9d9;
@@ -176,12 +231,42 @@ nav {
 /* arrow 1 */
 .arrow {
     position: absolute;
+    right: 20px; /* Adjust as needed */
     top: 50%;
     transform: translateY(-50%);
-    width: 40px;
-    height: 40px;
     cursor: pointer;
-    z-index: 100;
+    width: 20px;
+    height: 20px;
+    z-index: 10; /* Ensure arrows are above other elements */
+}
+
+
+.arrow.rotated {
+    transform: translateY(-50%) rotate(180deg);
+}
+
+/* Ensure arrow images are visible */
+.arrow img {
+    width: 100%;
+    height: auto;
+    display: block; /* Ensure the image is displayed */
+}
+
+.hidden {
+    display: none;
+}
+
+.card_answer {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.4s cubic-bezier(.4,2,.6,1), padding 0.4s;
+    padding: 0 20px;
+    opacity: 1;
+}
+.card_answer.active {
+    display: block;
+    max-height: 500px; /* adjust as needed */
+    padding: 10px 20px;
 }
 
 .arrow-left {
@@ -240,12 +325,29 @@ nav {
 /* arrow 2 */
 .arrow2 {
     position: absolute;
+    right: 20px;
     top: 50%;
     transform: translateY(-50%);
-    width: 40px;
-    height: 40px;
     cursor: pointer;
-    z-index: 100;
+    width: 20px;
+    height: 20px;
+}
+
+.hidden {
+    display: none;
+}
+
+.card_answer {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.4s cubic-bezier(.4,2,.6,1), padding 0.4s;
+    padding: 0 20px;
+    opacity: 1;
+}
+.card_answer.active {
+    display: block;
+    max-height: 500px; /* adjust as needed */
+    padding: 10px 20px;
 }
 
 .arrow-left {
@@ -304,12 +406,29 @@ nav {
 /* arrow 3 */
 .arrow3 {
     position: absolute;
+    right: 20px;
     top: 50%;
     transform: translateY(-50%);
-    width: 40px;
-    height: 40px;
     cursor: pointer;
-    z-index: 100;
+    width: 20px;
+    height: 20px;
+}
+
+.hidden {
+    display: none;
+}
+
+.card_answer {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.4s cubic-bezier(.4,2,.6,1), padding 0.4s;
+    padding: 0 20px;
+    opacity: 1;
+}
+.card_answer.active {
+    display: block;
+    max-height: 500px; /* adjust as needed */
+    padding: 10px 20px;
 }
 
 .arrow-left {
@@ -368,12 +487,29 @@ nav {
 /* arrow 4 */
 .arrow4 {
     position: absolute;
+    right: 20px;
     top: 50%;
     transform: translateY(-50%);
-    width: 40px;
-    height: 40px;
     cursor: pointer;
-    z-index: 100;
+    width: 20px;
+    height: 20px;
+}
+
+.hidden {
+    display: none;
+}
+
+.card_answer {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.4s cubic-bezier(.4,2,.6,1), padding 0.4s;
+    padding: 0 20px;
+    opacity: 1;
+}
+.card_answer.active {
+    display: block;
+    max-height: 500px; /* adjust as needed */
+    padding: 10px 20px;
 }
 
 .arrow-left {
@@ -432,12 +568,29 @@ nav {
 /* arrow 5 */
 .arrow5 {
     position: absolute;
+    right: 20px;
     top: 50%;
     transform: translateY(-50%);
-    width: 40px;
-    height: 40px;
     cursor: pointer;
-    z-index: 100;
+    width: 20px;
+    height: 20px;
+}
+
+.hidden {
+    display: none;
+}
+
+.card_answer {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.4s cubic-bezier(.4,2,.6,1), padding 0.4s;
+    padding: 0 20px;
+    opacity: 1;
+}
+.card_answer.active {
+    display: block;
+    max-height: 500px; /* adjust as needed */
+    padding: 10px 20px;
 }
 
 .arrow-left {

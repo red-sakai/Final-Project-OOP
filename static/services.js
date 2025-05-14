@@ -5,12 +5,12 @@ document.addEventListener("DOMContentLoaded", () => {
     const chatBody = document.getElementById("chatbox-body");
     const chatToggle = document.getElementById("chatbox-toggle");
     const chatContent = document.getElementById("chatbox-body-container");
-    
+
     // Get title elements and fix visibility
     const servicesTitle = document.getElementById("services-title");
     const servicesSubtitle = document.getElementById("services-subtitle");
     const servicesSlogan = document.getElementById("services-slogan");
-    
+
     // Ensure title animation works properly
     if (servicesTitle) {
         servicesTitle.style.opacity = "1";
@@ -21,7 +21,7 @@ document.addEventListener("DOMContentLoaded", () => {
             servicesTitle.classList.add("fade-slide-down");
         }, 10);
     }
-    
+
     if (servicesSubtitle) {
         servicesSubtitle.style.opacity = "1";
         servicesSubtitle.style.visibility = "visible";
@@ -41,7 +41,7 @@ document.addEventListener("DOMContentLoaded", () => {
             servicesSlogan.classList.add("fade-slide-up");
         }, 10);
     }
-    
+
     // Chat state
     let isChatCollapsed = false;
 
@@ -54,13 +54,13 @@ document.addEventListener("DOMContentLoaded", () => {
             userMsg.className = "chat-message user";
             userMsg.textContent = message;
             chatBody.appendChild(userMsg);
-            
+
             // Clear input field
             chatInput.value = "";
-            
+
             // Scroll to bottom
             chatBody.scrollTop = chatBody.scrollHeight;
-            
+
             // Bot response
             setTimeout(() => {
                 const botReply = document.createElement("div");
@@ -72,7 +72,7 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     }
 
-    // Toggle chat visibility
+    // Toggle chat visibility with smooth animation
     function toggleChat() {
         isChatCollapsed = !isChatCollapsed;
         if (isChatCollapsed) {
@@ -82,11 +82,21 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     }
 
+    // --- Navigation Bar Toggle Animation ---
+    const navToggle = document.getElementById('nav-toggle');
+    const navLinksContainer = document.getElementById('nav-links-container');
+
+    if (navToggle && navLinksContainer) {
+        navToggle.addEventListener('click', function () {
+            navLinksContainer.classList.toggle('expanded');
+        });
+    }
+
     // Event listeners
     if (sendBtn) {
         sendBtn.addEventListener("click", sendMessage);
     }
-    
+
     if (chatInput) {
         chatInput.addEventListener("keypress", (e) => {
             if (e.key === "Enter") {
@@ -95,7 +105,7 @@ document.addEventListener("DOMContentLoaded", () => {
             }
         });
     }
-    
+
     if (chatToggle) {
         chatToggle.addEventListener("click", toggleChat);
     }

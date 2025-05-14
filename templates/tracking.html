@@ -15,10 +15,14 @@
             <div class="logo-container">
                 <img src="images/HexaHaul_icon-removebg-preview.png" alt="Logo" />
             </div>
-
+            <button class="nav-toggle" id="nav-toggle" aria-label="Toggle navigation">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
             <!--Navigation Links-->
-            <div class="nav-links-container">
-              <div class="nav-links">
+              <div class="nav-links-container" id="nav-links-container">
+                  <div class="nav-links">
                   <a href="{{ url_for('index_html') }}">About</a>
                   <a href="{{ url_for('services_html') }}">Services</a>
                   <a href="{{ url_for('tracking_html') }}" class="active">Tracking</a>
