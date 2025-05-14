@@ -399,11 +399,13 @@ nav {
 .chatbox-content {
     display: flex;
     flex-direction: column;
-    transition: max-height 0.3s ease;
+    max-height: 0; /* Start collapsed */
+    overflow: hidden; /* Hide overflowing content */
+    transition: max-height 0.3s ease; /* Smooth transition */
 }
 
-.chatbox-content.collapsed {
-    display: none;
+.chatbox-content.expanded {
+    max-height: 300px; /* Adjust this value based on the content height */
 }
 
 .chatbox-body {

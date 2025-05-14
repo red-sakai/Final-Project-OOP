@@ -76,9 +76,9 @@ document.addEventListener("DOMContentLoaded", () => {
     function toggleChat() {
         isChatCollapsed = !isChatCollapsed;
         if (isChatCollapsed) {
-            chatContent.classList.add("collapsed");
+            chatContent.classList.remove("expanded");
         } else {
-            chatContent.classList.remove("collapsed");
+            chatContent.classList.add("expanded");
         }
     }
 
