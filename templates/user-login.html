@@ -29,6 +29,7 @@
                     <input type="text" name="username" placeholder="Username" class="user-username-input" required />
                     <input type="password" name="password" placeholder="Password" class="user-password-input" required />
                     <button type="submit" class="signin-button">Sign In</button>
+                    <a href="{{ url_for('forgot_password') }}" class="forgot-password-link">Forgot Password?</a>
                 </form>
                 <p class="user-signup">Don't have an account? <a href="{{ url_for('user_signup_html') }}">Sign Up</a></p>
             </div> 
