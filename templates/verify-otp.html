@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Verify OTP</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='forgot-password.css') }}">
+</head>
+<body>
+    <h2>Enter OTP</h2>
+    <form method="post">
+        <input type="hidden" name="email" value="{{ email }}">
+        <label>OTP:</label>
+        <input type="text" name="otp" maxlength="6" required>
+        <label>New Password:</label>
+        <input type="password" name="new_password" required>
+        <button type="submit">Change Password</button>
+    </form>
+</body>
+</html>
