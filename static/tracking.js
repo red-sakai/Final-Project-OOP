@@ -1,10 +1,10 @@
 document.addEventListener("DOMContentLoaded", () => {
-    //Call outs
+    // Call outs
     const trackingHeader = document.getElementById("tracking-header");
     const trackingSubheader = document.getElementById("tracking-subheader");
     const trackingSlogan = document.getElementById("tracking-slogan");
-    
-    //Animation for all elements
+
+    // Animation for all elements
     if (trackingHeader) {       
         trackingHeader.style.opacity = "1";
         trackingHeader.style.visibility = "visible";
@@ -33,5 +33,15 @@ document.addEventListener("DOMContentLoaded", () => {
         setTimeout(() => {
             trackingSlogan.classList.add("fade-slide-right");
         }, 10);
+    }
+
+    // --- Navigation Bar Toggle Animation ---
+    const navToggle = document.getElementById('nav-toggle');
+    const navLinksContainer = document.getElementById('nav-links-container');
+
+    if (navToggle && navLinksContainer) {
+        navToggle.addEventListener('click', function () {
+            navLinksContainer.classList.toggle('expanded');
+        });
     }
 });
