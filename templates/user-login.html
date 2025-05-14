@@ -16,9 +16,18 @@
                     <p class="logistiq-slogan">Delivering excellence. No matter the situation.</p>
                     <center><img src="{{ url_for('static', filename='images/HexaHaul logo.png') }}" alt="Logo" /></center>
                 </div>
-                <form action="{{ url_for('index_html') }}" method="post" class="user-login-form">
-                    <input type="text" placeholder="Username" class="user-username-input" required />
-                    <input type="password" placeholder="Password" class="user-password-input" required />
+                {% with messages = get_flashed_messages() %}
+                  {% if messages %}
+                    <div class="flash-messages">
+                      {% for message in messages %}
+                        <p style="color: red;">{{ message }}</p>
+                      {% endfor %}
+                    </div>
+                  {% endif %}
+                {% endwith %}
+                <form action="{{ url_for('user_login_html') }}" method="post" class="user-login-form">
+                    <input type="text" name="username" placeholder="Username" class="user-username-input" required />
+                    <input type="password" name="password" placeholder="Password" class="user-password-input" required />
                     <button type="submit" class="signin-button">Sign In</button>
                 </form>
                 <p class="user-signup">Don't have an account? <a href="{{ url_for('user_signup_html') }}">Sign Up</a></p>
