@@ -1,5 +1,5 @@
 from flask import Flask, render_template, url_for, request, redirect, flash
-from models.admin import Admin  # Import your Admin class
+from models.admin import Admin
 from abc import ABC, abstractmethod
 from enum import Enum
 # import matplotlib.pyplot as plt
