@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Book Now | Car</title>
+    <link rel="stylesheet" href="motorcycle-book.css">
+</head>
+<body>
+    <!--Square-->
+    <div class="book-container">
+        <div class="book">
+            <div class="book-header">
+                <div>
+                    <h3>You are almost ready <br>to book!</h3>
+                    <p>Let's get your details</p>
+                </div>
+                <img src="image/delivery-truck.png" alt="img" />
+            </div>
+            <form class="TypeBox">
+                <div>
+                    <label class="Drop" for="dropoff">Drop off point</label>
+                    <select id="dropoff" class="truck-input">
+                        <option>Select drop off point</option>
+                        <option>Location A</option>
+                        <option>Location B</option>
+                        <option>Location C</option>
+                    </select>
+                </div>
+                <div>
+                    <label class="schedule" for="schedule">Schedule</label>
+                    <input type="date" id="schedule" class="truck-input" placeholder="Select Schedule" />
+                </div>
+                <div>
+                    <label class="weight" for="weight">Specify Weight</label>
+                    <select id="weight" class="truck-input">
+                        <option>Weight must only be 150kg-300kg</option>
+                        <option>150kg</option>
+                        <option>200kg</option>
+                        <option>250kg</option>
+                        <option>300kg</option>
+                    </select>
+                </div>
+                 <div>
+                    <label class="quantity" for="quantity">Quantity</label>
+                    <input type="quantity" id="quantity" class="truck-input" placeholder="Enter Quantity"/>
+                </div>
+                <div>
+                    <label class="email" for="email">Email Address</label>
+                    <input type="email" id="email" class="truck-input" placeholder="Enter Email Address" />
+                </div>
+                <div>
+                    <label class="special" for="special">Special Instructions</label>
+                    <input type="text" id="special" class="truck-input" placeholder="Enter Any Additional Details (Optional)" />
+                </div>
+                <button type="submit" class="btn">Confirm Booking</button>
+            </form>
+        </div>
+    </div>
+</body>
+</html>
