@@ -1,9 +1,13 @@
-from flask import Flask, render_template, url_for, request, redirect, flash
+from flask import Flask, render_template, url_for, request, redirect, flash, jsonify
 from models.admin import Admin
 from abc import ABC, abstractmethod
 from enum import Enum
 from flask_mail import Mail, Message
 import random
+from transformers import pipeline
+
+# Initialize DistilBERT QA pipeline
+qa_pipeline = pipeline("question-answering", model="distilbert-base-uncased-distilled-squad")
 
 # Initialize Flask app and set static folder
 app = Flask(__name__, 
@@ -204,6 +208,68 @@ def carbook2_html():
 @app.route("/carbook3")
 def carbook3_html():
     return render_template("carbook3.html")
+
+# predefined quick replies and their answers
+QUICK_REPLY_ANSWERS = {
+    "about hexahaul": "HexaHaul is a logistics company founded and operated by a passionate team of six people: Jhered, Carl, Patricia, Kris, Sandrine, and CJ. We provide efficient and reliable transportation solutions for businesses and individuals.",
+    "who are you?": "I'm HexaBot, your helpful AI assistant for HexaHaul. Ask me anything about our company or services!",
+    "what services do you offer?": "HexaHaul offers truck, motorcycle, and car logistics for deliveries of all sizes. We ensure timely deliveries, real-time tracking, and excellent customer service.",
+    "how can i track my shipment?": "You can track your shipment using the tracking page on our website by entering your tracking number. If you have lost your tracking number, please contact our support team.",
+    "how do i contact support?": "For support, contact us at hexahaulprojects@gmail.com or call 123-456-7890. Our office hours are 9am to 6pm, Monday to Saturday."
+}
+
+FAQ_CONTEXT = """
+HexaHaul is a logistics company founded and operated by a passionate team of six people: Jhered, Carl, Patricia, Kris, Sandrine, and CJ. We provide efficient and reliable transportation solutions for businesses and individuals.
+Our services include truck, motorcycle, and car logistics for deliveries of all sizes. You can track your shipment using the tracking page on our website by entering your tracking number.
+For support, contact us at hexahaulprojects@gmail.com or call 123-456-7890. Our office hours are 9am to 6pm, Monday to Saturday.
+We ensure timely deliveries, real-time tracking, and excellent customer service. We operate in major cities and offer both same-day and scheduled delivery options.
+If you have lost your tracking number, please contact our support team. For partnership or business inquiries, email us at hexahaulprojects@gmail.com.
+HexaHaul is committed to safe, secure, and on-time delivery of your goods.
+"""
+
+CONVERSATION_PATTERNS = {
+    "greetings": [
+        "hello", "hi", "hey", "good morning", "good afternoon", "good evening", "yo", "sup"
+    ],
+    "thanks": [
+        "thank you", "thanks", "thx", "ty"
+    ],
+    "goodbye": [
+        "bye", "goodbye", "see you", "see ya", "farewell"
+    ]
+}
+
+CONVERSATION_RESPONSES = {
+    "greetings": "Hello, I am HexaBot, your logistics assistant. What can I do for you today?",
+    "thanks": "You're welcome! If you have more questions about HexaHaul, just ask.",
+    "goodbye": "Goodbye! If you need anything else about HexaHaul, feel free to chat again."
+}
+
+@app.route("/faq-bot", methods=["POST"])
+def faq_bot():
+    user_question = request.form.get("question", "").strip()
+    if not user_question:
+        return jsonify({"answer": "Please provide a question."}), 400
+
+    normalized = user_question.lower().strip(" ?!.")
+
+    # 1. Check for conversational patterns (greetings, thanks, goodbye)
+    for pattern, keywords in CONVERSATION_PATTERNS.items():
+        if any(normalized.startswith(word) or normalized == word for word in keywords):
+            return jsonify({"answer": CONVERSATION_RESPONSES[pattern]})
+
+    # 2. Check for quick reply match (case-insensitive)
+    for quick, answer in QUICK_REPLY_ANSWERS.items():
+        if normalized == quick or normalized.rstrip("?!.") == quick.rstrip("?!."):
+            return jsonify({"answer": answer})
+
+    # 3. Use DistilBERT QA pipeline as fallback
+    result = qa_pipeline(question=user_question, context=FAQ_CONTEXT)
+    answer = result["answer"].strip()
+
+    if not answer or len(answer) < 5:
+        answer = "I'm sorry, I don't have an answer for that. Please ask about HexaHaul's services, tracking, or support."
+    return jsonify({"answer": answer})
 
 if __name__ == "__main__":
     app.debug = True
