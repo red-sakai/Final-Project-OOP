@@ -6,7 +6,6 @@
     font-style: normal;
 }
 
-
 .card-container{
     display: flex;
     justify-content: center;
@@ -26,7 +25,6 @@
     opacity: 20%;
     position: absolute;
 }
-
 
 /*Nav*/
 
@@ -270,7 +268,6 @@ input:focus, select:focus {
     outline: none;
 }
 
-
 /* Custom dropdown arrow for select elements */
 .TypeBox select.truck-input {
     appearance: none;
@@ -342,7 +339,6 @@ input:focus, select:focus {
     position: relative
 }
 
-
 .popup img {
     width: 70px;
     height: 70px;
@@ -352,3 +348,10 @@ input:focus, select:focus {
     margin-top: -25px;
 }
 
+.blur-bg {
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: rgba(255,255,255,0.7);
+    backdrop-filter: blur(8px);
+    z-index: 0;
+}
