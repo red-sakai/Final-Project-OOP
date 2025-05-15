@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Book Now | Car</title>
-    <link rel="stylesheet" href="motorcycle-book.css">
+    <title>Book Now | Motorcycle</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='motorcycle-book.css') }}">
 </head>
 <body>
     <!--Square-->
@@ -15,12 +15,12 @@
                     <h3>You are almost ready <br>to book!</h3>
                     <p>Let's get your details</p>
                 </div>
-                <img src="image/delivery-truck.png" alt="img" />
+                <img src="{{ url_for('static', filename='images/delivery-truck.png') }}" alt="img" />
             </div>
-            <form class="TypeBox">
+            <form class="TypeBox" id="bookingForm">
                 <div>
                     <label class="Drop" for="dropoff">Drop off point</label>
-                    <select id="dropoff" class="truck-input">
+                    <select id="dropoff" class="truck-input" required>
                         <option>Select drop off point</option>
                         <option>Location A</option>
                         <option>Location B</option>
@@ -29,11 +29,11 @@
                 </div>
                 <div>
                     <label class="schedule" for="schedule">Schedule</label>
-                    <input type="date" id="schedule" class="truck-input" placeholder="Select Schedule" />
+                    <input type="date" id="schedule" class="truck-input" placeholder="Select Schedule" required />
                 </div>
                 <div>
                     <label class="weight" for="weight">Specify Weight</label>
-                    <select id="weight" class="truck-input">
+                    <select id="weight" class="truck-input" required>
                         <option>Weight must only be 150kg-300kg</option>
                         <option>150kg</option>
                         <option>200kg</option>
@@ -43,11 +43,11 @@
                 </div>
                  <div>
                     <label class="quantity" for="quantity">Quantity</label>
-                    <input type="quantity" id="quantity" class="truck-input" placeholder="Enter Quantity"/>
+                    <input type="number" id="quantity" class="truck-input" placeholder="Enter Quantity" required />
                 </div>
                 <div>
                     <label class="email" for="email">Email Address</label>
-                    <input type="email" id="email" class="truck-input" placeholder="Enter Email Address" />
+                    <input type="email" id="email" class="truck-input" placeholder="Enter Email Address" required />
                 </div>
                 <div>
                     <label class="special" for="special">Special Instructions</label>
@@ -57,5 +57,19 @@
             </form>
         </div>
     </div>
+
+    <!-- Popup -->
+    <div class="popup" id="popup" style="display:none;">
+        <img src="{{ url_for('static', filename='images/tick.png') }}" alt="img">
+        <div class="pcontent">
+            <h2 class="you">Thank You!</h2>
+            <p class="TD">Your tracking ID is 0123ab</p>
+        </div>
+        <button type="button" class="OK" id="okBtn" onclick="closePpopup()" disabled>OK(<span id="okTimer">3</span>)</button>
+    </div>
+    <script>
+        const motorcycleHomeUrl = "{{ url_for('motorcycle_html') }}";
+    </script>
+    <script src="{{ url_for('static', filename='motorcycle-book.js') }}"></script>
 </body>
 </html>

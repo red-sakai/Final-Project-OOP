@@ -154,6 +154,7 @@ def verify_otp():
             flash("Invalid OTP. Please try again.")
     return render_template("verify-otp.html", email=email)
 
+# Truck routes
 @app.route("/truck")
 def truck_html():
     return render_template("truck.html")
@@ -169,6 +170,23 @@ def truck_book2_html():
 @app.route("/truck-book3")
 def truck_book3_html():
     return render_template("truck-book3.html")
+
+# Motorcycle routes
+@app.route("/motorcycle")
+def motorcycle_html():
+    return render_template("motorcycle.html")
+
+@app.route("/motorcycle-book")
+def motorcycle_book_html():
+    return render_template("motorcycle-book.html")
+
+@app.route("/motorcycle-book2")
+def motorcycle_book2_html():
+    return render_template("motorcycle-book2.html")
+
+@app.route("/motorcycle-book3")
+def motorcycle_book3_html():
+    return render_template("motorcycle-book3.html")
 
 if __name__ == "__main__":
     app.debug = True
