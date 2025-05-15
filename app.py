@@ -15,8 +15,8 @@ app.secret_key = "your_secret_key"
 app.config['MAIL_SERVER'] = 'smtp.gmail.com'
 app.config['MAIL_PORT'] = 587
 app.config['MAIL_USE_TLS'] = True
-app.config['MAIL_USERNAME'] = 'jheredmiguelrepublica14@gmail.com'
-app.config['MAIL_PASSWORD'] = 'mehf kygg amjr kedv'
+app.config['MAIL_USERNAME'] = 'hexahaulprojects@gmail.com'
+app.config['MAIL_PASSWORD'] = 'ikai nagb zyna hjoc'
 
 mail = Mail(app)
 
@@ -31,10 +31,34 @@ class PasswordResetManager:
         return otp
 
     def send_otp(self, email, otp):
-        msg = Message("HexaHaul Password Reset OTP",
+        logo_url = "https://i.imgur.com/upLAusA.png"
+        msg = Message("Forgot Password Code: " + otp,
                       sender="hexahaulprojects@gmail.com",
                       recipients=[email])
-        msg.body = f"Your OTP for password reset is: {otp}"
+        msg.html = f"""
+        <div style="background:#f7f7f7;padding:40px 0;">
+          <div style="max-width:480px;margin:0 auto;background:#fff;border-radius:8px;overflow:hidden;box-shadow:0 2px 8px rgba(0,0,0,0.05);">
+            <div style="background:#e6e9ef;padding:24px 0;text-align:center;">
+              <img src="{logo_url}" alt="HexaHaul Logo" style="width:64px;height:64px;margin-bottom:8px;">
+              <h2 style="margin:0;font-family:sans-serif;color:#03335e;">Forgot Password Code</h2>
+            </div>
+            <div style="padding:32px 24px;text-align:center;">
+              <p style="font-family:sans-serif;color:#333;font-size:16px;margin-bottom:24px;">
+                Here's your forgot password code:
+              </p>
+              <div style="font-size:36px;letter-spacing:12px;font-family:monospace;color:#03335e;font-weight:bold;margin-bottom:16px;">
+                {otp}
+              </div>
+              <p style="font-family:sans-serif;color:#888;font-size:14px;">
+                This code will expire soon.
+              </p>
+            </div>
+            <div style="padding:16px 24px 24px 24px;font-family:sans-serif;font-size:13px;color:#888;text-align:center;">
+              If this request did not come from you, change your account password immediately to prevent unauthorized access.
+            </div>
+          </div>
+        </div>
+        """
         mail.send(msg)
 
     def verify_otp(self, email, otp):
