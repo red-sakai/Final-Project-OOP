@@ -52,28 +52,41 @@
 
 .buttoncontainer{
     display: inline-flex;
-    padding: 8px 16px;
-    background-color: #B2D8F8;
+    margin-top: 10px;
+    margin-left: 150px;
+    width: 100px;
+    justify-content: center;
+    align-items: center;
+    background: none;
+    border: none;
+    padding: 0;
+}
+
+.book-btn {
+    display: inline-block;
+    padding: 8px 32px;      
+    background-color: #B2DBF8;
     border-radius: 15px;
     border: none;
     color: #fff;
-    margin-top: 10px;
     text-decoration: none;
-    margin-left: 100px ;
-    width: 100px;
-
+    min-width: 120px;      
+    width: auto;            
+    text-align: center;
+    font-family: 'Inter', sans-serif;
+    font-weight: 600;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background 0.2s, color 0.2s;
+    line-height: 1.2;      
+    white-space: nowrap;
+    box-shadow: 4px 4px 8px #b2dbf8aa;
 }
 
-.btn{
-    color: black;
-    text-decoration: none;
-    margin-left: 15px;
-    
-
+.book-btn:hover {
+    background-color: #8ecae6;
+    color: #222;
 }
-
-
-
 
 /* nav bar - Motorcycle 2 */
 
@@ -128,24 +141,40 @@
 
 .buttoncontainer{
     display: inline-flex;
-    padding: 8px 16px;
-    background-color: #B2D8F8;
+    margin-top: 10px;
+    margin-left: 150px;
+    width: 100px;
+    justify-content: center;
+    align-items: center;
+    background: none;
+    border: none;
+    padding: 0;
+}
+
+.book-btn {
+    display: inline-block;
+    padding: 8px 32px;      
+    background-color: #B2DBF8;
     border-radius: 15px;
     border: none;
     color: #fff;
-    margin-top: 18px;
     text-decoration: none;
-    margin-left: 100px ;
-    width: 100px;
-
+    min-width: 120px;      
+    width: auto;            
+    text-align: center;
+    font-family: 'Inter', sans-serif;
+    font-weight: 600;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background 0.2s, color 0.2s;
+    line-height: 1.2;      
+    white-space: nowrap;
+    box-shadow: 4px 4px 8px #b2dbf8aa;
 }
 
-.btn{
-    color: black;
-    text-decoration: none;
-    margin-left: 15px;
-
-
+.book-btn:hover {
+    background-color: #8ecae6;
+    color: #222;
 }
 
 
@@ -202,24 +231,40 @@
 
 .buttoncontainer{
     display: inline-flex;
-    padding: 8px 16px;
-    background-color: #B2D8F8;
+    margin-top: 10px;
+    margin-left: 150px;
+    width: 100px;
+    justify-content: center;
+    align-items: center;
+    background: none;
+    border: none;
+    padding: 0;
+}
+
+.book-btn {
+    display: inline-block;
+    padding: 8px 32px;      
+    background-color: #B2DBF8;
     border-radius: 15px;
     border: none;
     color: #fff;
-    margin-top: 18px;
     text-decoration: none;
-    margin-left: 100px ;
-    width: 100px;
-
+    min-width: 120px;      
+    width: auto;            
+    text-align: center;
+    font-family: 'Inter', sans-serif;
+    font-weight: 600;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background 0.2s, color 0.2s;
+    line-height: 1.2;      
+    white-space: nowrap;
+    box-shadow: 4px 4px 8px #b2dbf8aa;
 }
 
-.btn{
-    color: black;
-    text-decoration: none;
-    margin-left: 15px;
-
-
+.book-btn:hover {
+    background-color: #8ecae6;
+    color: #222;
 }
  /* Fonts */
 

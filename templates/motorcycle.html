@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Book Now | Motorcycle </title>
+    <title>Book Now | Motorcycle</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='motorcycle.css') }}">
 </head>
 <body>
@@ -16,38 +16,38 @@
             </div>
         </div>
     </div>
-
+    <!--Honda Click-->
     <div class="Honda-Click">
         <img src="{{ url_for('static', filename='images/Honda-Click.png') }}" class="img">
         <div class="Honda-Click-Content">
             <h2>Honda Click 125i</h2>
-            <p> A fuel-efficient and stylish scooter with a sporty <br> design, perfect for daily commutes and light delivery <br> tasks in urban areas.</p>
+            <p>A fuel-efficient and stylish scooter with a sporty <br>design, perfect for daily commutes and light delivery <br>tasks in urban areas.</p>
+        </div>
+        <div class="buttoncontainer">
+            <a href="{{ url_for('motorcycle_book_html') }}" class="book-btn">Book Now</a>
         </div>
     </div>
-    <div class="buttoncontainer">
-        <a href="{{ url_for('motorcycle_book_html') }}" class="btn"> Book Now</a>
-    </div> 
-
+    <!--Yamaha Mio Sporty-->
     <div class="Yamaha-Mio">
         <img src="{{ url_for('static', filename='images/Yamaha-MIO.jpeg') }}" class="img">
         <div class="Yamaha-Mio-Content">
             <h2>Yamaha Mio Sporty</h2>
-            <p> A lightweight and easy-to-ride scooter ideal for short <br> trips, errands, and light deliveries in congested city <br> streets.</p>
+            <p>A lightweight and easy-to-ride scooter ideal for short <br>trips, errands, and light deliveries in congested city <br>streets.</p>
+        </div>
+        <div class="buttoncontainer">
+            <a href="{{ url_for('motorcycle_book2_html') }}" class="book-btn">Book Now</a>
         </div>
     </div>
-    <div class="buttoncontainer">
-        <a href="{{ url_for('motorcycle_book2_html') }}" class="btn"> Book Now</a>
-    </div> 
-
+    <!--Yamaha NMAX-->
     <div class="Yamaha-NMAX">
         <img src="{{ url_for('static', filename='images/Yamaha-NMAX.jpeg') }}" class="img">
         <div class="Yamaha-NMAX-Content">
             <h2>Yamaha NMAX</h2>
-        <p> A premium maxi-scooter with a powerful engine and <br> comfortable ride, great for longer commutes or express <br> deliveries with added cargo.</p>
+            <p>A premium maxi-scooter with a powerful engine and <br>comfortable ride, great for longer commutes or express <br>deliveries with added cargo.</p>
+        </div>
+        <div class="buttoncontainer">
+            <a href="{{ url_for('motorcycle_book3_html') }}" class="book-btn">Book Now</a>
         </div>
     </div>
-    <div class="buttoncontainer">
-        <a href="{{ url_for('motorcycle_book3_html') }}" class="btn"> Book Now</a>
-    </div> 
 </body>
 </html>
