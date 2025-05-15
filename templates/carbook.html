@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Book Now | Car</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='carbook.css') }}">
+</head>
+<body>
+    <!--Square-->
+    <div class="book-container">
+        <div class="book">
+            <div class="book-header">
+                <div>
+                    <h3>You are almost ready <br>to book!</h3>
+                    <p>Let's get your details</p>
+                </div>
+                <img src="{{ url_for('static', filename='images/electric-car.png') }}" alt="img" />
+            </div>
+            <form class="TypeBox" id="bookingForm">
+                <div>
+                    <label class="Drop" for="dropoff">Drop off point</label>
+                    <select id="dropoff" class="truck-input" required>
+                        <option value="" disabled selected>Select drop off point</option>
+                        <option>Location A</option>
+                        <option>Location B</option>
+                        <option>Location C</option>
+                    </select>
+                </div>
+                <div>
+                    <label class="schedule" for="schedule">Schedule</label>
+                    <input type="date" id="schedule" class="truck-input" placeholder="Select Schedule" required />
+                </div>
+                <div>
+                    <label class="weight" for="weight">Specify Weight</label>
+                    <select id="weight" class="truck-input" required>
+                        <option value="" disabled selected>Select weight range</option>
+                        <option>150k-250Kg</option>
+                    </select>
+                </div>
+                 <div>
+                    <label class="quantity" for="quantity">Quantity</label>
+                    <input type="number" id="quantity" class="truck-input" placeholder="Enter Quantity" required min="1" step="1" />
+                 </div>
+                <div>
+                    <label class="special" for="special">Special Instructions</label>
+                    <input type="text" id="special" class="truck-input" placeholder="Enter Any Additional Details (Optional)"/>
+                </div>
+                <button type="submit" class="btn">Confirm Booking</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Popup -->
+    <div class="popup" id="popup" style="display:none;">
+        <img src="{{ url_for('static', filename='images/tick.png') }}" alt="img">
+        <div class="pcontent">
+            <h2 class="you">Thank You!</h2>
+            <p class="TD">Your tracking ID is 0123ab</p>
+        </div>
+        <button type="button" class="OK" id="okBtn" onclick="closePpopup()" disabled>OK(<span id="okTimer">3</span>)</button>
+    </div>
+
+    <script>
+        const carHomeUrl = "{{ url_for('index_html') }}";
+    </script>
+    <script src="{{ url_for('static', filename='carbook.js') }}"></script>
+</body>
+</html>

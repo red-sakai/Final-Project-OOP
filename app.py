@@ -1,9 +1,14 @@
-from flask import Flask, render_template, url_for, request, redirect, flash
+from flask import Flask, render_template, url_for, request, redirect, flash, jsonify
 from models.admin import Admin
 from abc import ABC, abstractmethod
 from enum import Enum
 from flask_mail import Mail, Message
 import random
+from transformers import pipeline
+import os
+
+# Initialize DistilBERT QA pipeline
+qa_pipeline = pipeline("question-answering", model="distilbert-base-uncased-distilled-squad")
 
 # Initialize Flask app and set static folder
 app = Flask(__name__, 
@@ -15,8 +20,8 @@ app.secret_key = "your_secret_key"
 app.config['MAIL_SERVER'] = 'smtp.gmail.com'
 app.config['MAIL_PORT'] = 587
 app.config['MAIL_USE_TLS'] = True
-app.config['MAIL_USERNAME'] = 'jheredmiguelrepublica14@gmail.com'
-app.config['MAIL_PASSWORD'] = 'mehf kygg amjr kedv'
+app.config['MAIL_USERNAME'] = 'hexahaulprojects@gmail.com'
+app.config['MAIL_PASSWORD'] = 'ikai nagb zyna hjoc'
 
 mail = Mail(app)
 
@@ -31,10 +36,34 @@ class PasswordResetManager:
         return otp
 
     def send_otp(self, email, otp):
-        msg = Message("HexaHaul Password Reset OTP",
+        logo_url = "https://i.imgur.com/upLAusA.png"
+        msg = Message("Forgot Password Code: " + otp,
                       sender="hexahaulprojects@gmail.com",
                       recipients=[email])
-        msg.body = f"Your OTP for password reset is: {otp}"
+        msg.html = f"""
+        <div style="background:#f7f7f7;padding:40px 0;">
+          <div style="max-width:480px;margin:0 auto;background:#fff;border-radius:8px;overflow:hidden;box-shadow:0 2px 8px rgba(0,0,0,0.05);">
+            <div style="background:#e6e9ef;padding:24px 0;text-align:center;">
+              <img src="{logo_url}" alt="HexaHaul Logo" style="width:64px;height:64px;margin-bottom:8px;">
+              <h2 style="margin:0;font-family:sans-serif;color:#03335e;">Forgot Password Code</h2>
+            </div>
+            <div style="padding:32px 24px;text-align:center;">
+              <p style="font-family:sans-serif;color:#333;font-size:16px;margin-bottom:24px;">
+                Here's your forgot password code:
+              </p>
+              <div style="font-size:36px;letter-spacing:12px;font-family:monospace;color:#03335e;font-weight:bold;margin-bottom:16px;">
+                {otp}
+              </div>
+              <p style="font-family:sans-serif;color:#888;font-size:14px;">
+                This code will expire soon.
+              </p>
+            </div>
+            <div style="padding:16px 24px 24px 24px;font-family:sans-serif;font-size:13px;color:#888;text-align:center;">
+              If this request did not come from you, change your account password immediately to prevent unauthorized access.
+            </div>
+          </div>
+        </div>
+        """
         mail.send(msg)
 
     def verify_otp(self, email, otp):
@@ -130,8 +159,127 @@ def verify_otp():
             flash("Invalid OTP. Please try again.")
     return render_template("verify-otp.html", email=email)
 
+# Truck routes
+@app.route("/truck")
+def truck_html():
+    return render_template("truck.html")
+
+@app.route("/truck-book")
+def truck_book_html():
+    return render_template("truck-book.html")
+
+@app.route("/truck-book2")
+def truck_book2_html():
+    return render_template("truck-book2.html")
+
+@app.route("/truck-book3")
+def truck_book3_html():
+    return render_template("truck-book3.html")
+#-----------------------------------------------
+# Motorcycle routes
+@app.route("/motorcycle")
+def motorcycle_html():
+    return render_template("motorcycle.html")
+
+@app.route("/motorcycle-book")
+def motorcycle_book_html():
+    return render_template("motorcycle-book.html")
+
+@app.route("/motorcycle-book2")
+def motorcycle_book2_html():
+    return render_template("motorcycle-book2.html")
+
+@app.route("/motorcycle-book3")
+def motorcycle_book3_html():
+    return render_template("motorcycle-book3.html")
+#------------------------------------------------
+# Car routes
+@app.route("/car")
+def car_html():
+    return render_template("car.html")
+
+@app.route("/carbook")
+def carbook_html():
+    return render_template("carbook.html")
+
+@app.route("/carbook2")
+def carbook2_html():
+    return render_template("carbook2.html")
+
+@app.route("/carbook3")
+def carbook3_html():
+    return render_template("carbook3.html")
+
+@app.route("/parcel-tracker")
+def parcel_tracker():
+    tracking_id = request.args.get("tracking_id", "")
+    return render_template("parcel-tracker.html", tracking_id=tracking_id)
+
+# predefined quick replies and their answers
+QUICK_REPLY_ANSWERS = {
+    "about hexahaul": "HexaHaul is a logistics company founded and operated by a passionate team of six people: Jhered, Carl, Patricia, Kris, Sandrine, and CJ. We provide efficient and reliable transportation solutions for businesses and individuals.",
+    "who are you?": "I'm HexaBot, your helpful AI assistant for HexaHaul. Ask me anything about our company or services!",
+    "what services do you offer?": "HexaHaul offers truck, motorcycle, and car logistics for deliveries of all sizes. We ensure timely deliveries, real-time tracking, and excellent customer service.",
+    "how can i track my shipment?": "You can track your shipment using the tracking page on our website by entering your tracking number. If you have lost your tracking number, please contact our support team.",
+    "how do i contact support?": "For support, contact us at hexahaulprojects@gmail.com or call 123-456-7890. Our office hours are 9am to 6pm, Monday to Saturday."
+}
+
+FAQ_CONTEXT = """
+HexaHaul is a logistics company founded and operated by a passionate team of six people: Jhered, Carl, Patricia, Kris, Sandrine, and CJ. We provide efficient and reliable transportation solutions for businesses and individuals.
+Our services include truck, motorcycle, and car logistics for deliveries of all sizes. You can track your shipment using the tracking page on our website by entering your tracking number.
+For support, contact us at hexahaulprojects@gmail.com or call 123-456-7890. Our office hours are 9am to 6pm, Monday to Saturday.
+We ensure timely deliveries, real-time tracking, and excellent customer service. We operate in major cities and offer both same-day and scheduled delivery options.
+If you have lost your tracking number, please contact our support team. For partnership or business inquiries, email us at hexahaulprojects@gmail.com.
+HexaHaul is committed to safe, secure, and on-time delivery of your goods.
+"""
+
+CONVERSATION_PATTERNS = {
+    "greetings": [
+        "hello", "hi", "hey", "good morning", "good afternoon", "good evening", "yo", "sup"
+    ],
+    "thanks": [
+        "thank you", "thanks", "thx", "ty"
+    ],
+    "goodbye": [
+        "bye", "goodbye", "see you", "see ya", "farewell"
+    ]
+}
+
+CONVERSATION_RESPONSES = {
+    "greetings": "Hello, I am HexaBot, your logistics assistant. What can I do for you today?",
+    "thanks": "You're welcome! If you have more questions about HexaHaul, just ask.",
+    "goodbye": "Goodbye! If you need anything else about HexaHaul, feel free to chat again."
+}
+
+@app.route("/faq-bot", methods=["POST"])
+def faq_bot():
+    user_question = request.form.get("question", "").strip()
+    if not user_question:
+        return jsonify({"answer": "Please provide a question."}), 400
+
+    normalized = user_question.lower().strip(" ?!.")
+
+    # 1. Check for conversational patterns (greetings, thanks, goodbye)
+    for pattern, keywords in CONVERSATION_PATTERNS.items():
+        if any(normalized.startswith(word) or normalized == word for word in keywords):
+            return jsonify({"answer": CONVERSATION_RESPONSES[pattern]})
+
+    # 2. Check for quick reply match (case-insensitive)
+    for quick, answer in QUICK_REPLY_ANSWERS.items():
+        if normalized == quick or normalized.rstrip("?!.") == quick.rstrip("?!."):
+            return jsonify({"answer": answer})
+
+    # 3. Use DistilBERT QA pipeline as fallback
+    result = qa_pipeline(question=user_question, context=FAQ_CONTEXT)
+    answer = result["answer"].strip()
+
+    if not answer or len(answer) < 5:
+        answer = "I'm sorry, I don't have an answer for that. Please ask about HexaHaul's services, tracking, or support."
+    return jsonify({"answer": answer})
+
 if __name__ == "__main__":
     app.debug = True
     print("Flask app routes:")
     print(app.url_map)
-    app.run(host='0.0.0.0', port=5000, debug=True)
+    port = int(os.environ.get("PORT", 5000))
+    app.run(host='0.0.0.0', port=port, debug=True)
