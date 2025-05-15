@@ -4,51 +4,50 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Get Started | Truck</title>
-    <link rel="stylesheet" href="truck.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='truck.css') }}">
+</head>
+<body>
     <!--Navbar-->
     <div>
        <div class="card-container">
             <div class="card">
-            <img src="image/screentake-removebg-preview.png" alt="Logo">
+            <img src="{{ url_for('static', filename='images/screentake-removebg-preview.png') }}" alt="Logo">
             <span class="text">LogistIQ © 2025</span>
             </div>
         </div>
     </div>
-</head>
-<body>
-     <!--4 Wheeler-->
+    <!--4 Wheeler-->
     <div class="Wheeler4">
-        <img src="image/4 wheeler.png" class="img">
+        <img src="{{ url_for('static', filename='images/4 wheeler.png') }}" class="img">
         <div class="Wheeler4Content">
             <h2>4-Wheeler</h2>
             <p> A compact delivery truck ideal for light cargo and<br>urban deliveries. Suitable for navigating tight <br> streets and quick drop-offs.</p>
         </div>
-    <div class="buttoncontainer">
-            <a href="truck-book.html" class="book-btn">Book Now</a>
+        <div class="buttoncontainer">
+            <a href="{{ url_for('truck_book_html') }}" class="book-btn">Book Now</a>
         </div>
     </div>
-     <!--Wheeler 6-->
+    <!--Wheeler 6-->
     <div class="Wheeler6">
-        <img src="image/6 Wheeler.png" class="img">
+        <img src="{{ url_for('static', filename='images/6 Wheeler.png') }}" class="img">
         <div class="Wheeler6Content">
             <h2>6-Wheeler</h2>
             <p> A medium-sized truck used for moderate cargo loads.<br> Commonly used for regional deliveries, balancing <br> capacity and maneuverability..</p>
         </div>
-    <div class="buttoncontainer">
-            <a href="truck-book2.html" class="book-btn">Book Now</a>
+        <div class="buttoncontainer">
+            <a href="{{ url_for('truck_book2_html') }}" class="book-btn">Book Now</a>
         </div>
     </div>
     <!--Wheeler 10-->
-     <div class="Wheeler10">
-        <img src="image/10 Wheeler.png" class="img">
+    <div class="Wheeler10">
+        <img src="{{ url_for('static', filename='images/10 Wheeler.png') }}" class="img">
         <div class="Wheeler10Content">
             <h2>10-Wheeler</h2>
             <p> A heavy-duty truck designed for large and bulky <br> shipments. Ideal for long-distance hauls and <br>industrial-scale deliveries</p>
         </div>
         <div class="buttoncontainer">
-            <a href="truck-book3.html" class="book-btn">Book Now</a>
+            <a href="{{ url_for('truck_book3_html') }}" class="book-btn">Book Now</a>
         </div>
-    </div>
     </div>
 </body>
 </html>

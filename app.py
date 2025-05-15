@@ -154,6 +154,22 @@ def verify_otp():
             flash("Invalid OTP. Please try again.")
     return render_template("verify-otp.html", email=email)
 
+@app.route("/truck")
+def truck_html():
+    return render_template("truck.html")
+
+@app.route("/truck-book")
+def truck_book_html():
+    return render_template("truck-book.html")
+
+@app.route("/truck-book2")
+def truck_book2_html():
+    return render_template("truck-book2.html")
+
+@app.route("/truck-book3")
+def truck_book3_html():
+    return render_template("truck-book3.html")
+
 if __name__ == "__main__":
     app.debug = True
     print("Flask app routes:")
