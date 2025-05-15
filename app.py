@@ -5,6 +5,7 @@ from enum import Enum
 from flask_mail import Mail, Message
 import random
 from transformers import pipeline
+import os
 
 # Initialize DistilBERT QA pipeline
 qa_pipeline = pipeline("question-answering", model="distilbert-base-uncased-distilled-squad")
@@ -275,4 +276,5 @@ if __name__ == "__main__":
     app.debug = True
     print("Flask app routes:")
     print(app.url_map)
-    app.run(host='0.0.0.0', port=5000, debug=True)
+    port = int(os.environ.get("PORT", 5000))
+    app.run(host='0.0.0.0', port=port, debug=True)
