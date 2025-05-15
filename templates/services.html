@@ -11,13 +11,21 @@
 <body>
 
 <!-- Chatbox -->
-<div class="chatbox-container">
+<div class="chatbox-container" id="chatbox-container">
     <div class="chatbox-header" id="chatbox-toggle">HexaBot</div>
-    <div class="chatbox-body-container chatbox-content" id="chatbox-body-container">
+    <div class="chatbox-body-container" id="chatbox-body-container">
         <div class="chatbox-body" id="chatbox-body">
             <div class="chat-message bot">Hi there! How can we help you today?</div>
         </div>
-        <div class="chatbox-input">
+        <div class="quick-reply-toggle" id="quick-reply-toggle">Quick Replies &#9660;</div>
+        <div class="chatbox-quick-replies" id="chatbox-quick-replies">
+            <button class="quick-reply-btn">About HexaHaul</button>
+            <button class="quick-reply-btn">Who are you?</button>
+            <button class="quick-reply-btn">What services do you offer?</button>
+            <button class="quick-reply-btn">How can I track my shipment?</button>
+            <button class="quick-reply-btn">How do I contact support?</button>
+        </div>
+        <div class="chatbox-input-container">
             <input type="text" id="chat-input" placeholder="Type a message..." />
             <button id="send-btn">Send</button>
         </div>
