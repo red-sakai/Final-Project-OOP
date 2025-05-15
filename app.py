@@ -192,7 +192,7 @@ def motorcycle_book2_html():
 @app.route("/motorcycle-book3")
 def motorcycle_book3_html():
     return render_template("motorcycle-book3.html")
-#-----------------------------------------------
+#------------------------------------------------
 # Car routes
 @app.route("/car")
 def car_html():
@@ -209,6 +209,11 @@ def carbook2_html():
 @app.route("/carbook3")
 def carbook3_html():
     return render_template("carbook3.html")
+
+@app.route("/parcel-tracker")
+def parcel_tracker():
+    tracking_id = request.args.get("tracking_id", "")
+    return render_template("parcel-tracker.html", tracking_id=tracking_id)
 
 # predefined quick replies and their answers
 QUICK_REPLY_ANSWERS = {
