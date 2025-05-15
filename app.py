@@ -170,7 +170,7 @@ def truck_book2_html():
 @app.route("/truck-book3")
 def truck_book3_html():
     return render_template("truck-book3.html")
-
+#-----------------------------------------------
 # Motorcycle routes
 @app.route("/motorcycle")
 def motorcycle_html():
@@ -187,6 +187,23 @@ def motorcycle_book2_html():
 @app.route("/motorcycle-book3")
 def motorcycle_book3_html():
     return render_template("motorcycle-book3.html")
+#-----------------------------------------------
+# Car routes
+@app.route("/car")
+def car_html():
+    return render_template("car.html")
+
+@app.route("/carbook")
+def carbook_html():
+    return render_template("carbook.html")
+
+@app.route("/carbook2")
+def carbook2_html():
+    return render_template("carbook2.html")
+
+@app.route("/carbook3")
+def carbook3_html():
+    return render_template("carbook3.html")
 
 if __name__ == "__main__":
     app.debug = True
