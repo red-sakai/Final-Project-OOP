@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Book Now | Truck</title>
-    <link rel="stylesheet" href="motorcycle-book.css">
+    <title>Book Now | Motorcycle</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='motorcycle-book.css') }}">
 </head>
 <body>
     <!--Square-->
@@ -15,7 +15,7 @@
                     <h3>You are almost ready <br>to book!</h3>
                     <p>Let's get your details</p>
                 </div>
-                <img src="image/motorcycle.png" alt="img" />
+                <img src="{{ url_for('static', filename='images/motorcycle.png') }}" alt="img" />
             </div>
             <form class="TypeBox" id="bookingForm">
                 <div>
@@ -35,13 +35,13 @@
                     <label class="weight" for="weight">Specify Weight</label>
                     <select id="weight" class="truck-input" required>
                         <option>Weight must only be 0.1kg - 20kg</option>
-                        <option> 0.1kg - 20kg </option>
+                        <option>0.1kg - 20kg</option>
                     </select>
                 </div>
-                 <div>
+                <div>
                     <label class="quantity" for="quantity">Quantity</label>
-                    <input type="quantity" id="quantity" class="truck-input" placeholder="Enter Quantity" required />
-                 </div>
+                    <input type="number" id="quantity" class="truck-input" placeholder="Enter Quantity" required />
+                </div>
                 <div>
                     <label class="special" for="special">Special Instructions</label>
                     <input type="text" id="special" class="truck-input" placeholder="Enter Any Additional Details (Optional)"/>
@@ -51,9 +51,9 @@
         </div>
     </div>
 
-    <!-- Move popup here, outside .book-container -->
-    <div class="popup" id="popup">
-        <img src="image/tick.png" alt="img">
+    <!-- Popup -->
+    <div class="popup" id="popup" style="display:none;">
+        <img src="{{ url_for('static', filename='images/tick.png') }}" alt="img">
         <div class="pcontent">
             <h2 class="you">Thank You!</h2>
             <p class="TD">Your tracking ID is 0123ab</p>
@@ -62,70 +62,8 @@
     </div>
 
     <script>
-        document.getElementById('bookingForm').addEventListener('submit', function(event) {
-            event.preventDefault();
-            if (this.checkValidity()) {
-                openPopup();
-            } else {
-                // Optionally, show validation errors
-                this.reportValidity();
-            }
-        });
-
-        function openPopup() {
-            document.getElementById("popup").style.display = "block";
-            document.querySelector('.book-container').classList.add('blurred');
-            startOkTimer();
-        }
-
-        function closePpopup() {
-            document.getElementById("popup").style.display = "none";
-            document.querySelector('.book-container').classList.remove('blurred');
-            window.location.href = "motorcycle.html";
-        }
-
-        function startOkTimer() {
-            var okBtn = document.getElementById('okBtn');
-            var okTimer = document.getElementById('okTimer');
-            var seconds = 3;
-    
-            okBtn.disabled = true;
-            okTimer.textContent = seconds;
-            okBtn.textContent = `OK (${seconds})`;
-
-            var interval = setInterval(function() {
-                seconds--;
-                okTimer.textContent = seconds;
-                okBtn.textContent = `OK (${seconds})`;
-
-                if (seconds <= 0) {
-                clearInterval(interval);
-                okBtn.disabled = false;
-                okBtn.textContent = "OK";
-            }
-        }, 1000);
-    }
-
-
-        // Disable button initially
-        const bookingForm = document.getElementById('bookingForm');
-        const confirmBtn = document.querySelector('.btn');
-
-        function checkFormValidity() {
-            if (bookingForm.checkValidity()) {
-                confirmBtn.disabled = false;
-                confirmBtn.classList.remove('btn-disabled');
-            } else {
-                confirmBtn.disabled = true;
-                confirmBtn.classList.add('btn-disabled');
-            }
-        }
-
-        // Listen for input changes on the form
-        bookingForm.addEventListener('input', checkFormValidity);
-
-        // Initial check on page load
-        checkFormValidity();
+        const motorcycleHomeUrl = "{{ url_for('motorcycle_html') }}";
     </script>
+    <script src="{{ url_for('static', filename='motorcycle-book.js') }}"></script>
 </body>
 </html>
