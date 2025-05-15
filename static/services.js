@@ -5,6 +5,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const chatBody = document.getElementById("chatbox-body");
     const chatToggle = document.getElementById("chatbox-toggle");
     const chatContent = document.getElementById("chatbox-body-container");
+    const chatboxContainer = document.getElementById("chatbox-container");
 
     // Get title elements and fix visibility
     const servicesTitle = document.getElementById("services-title");
@@ -45,30 +46,53 @@ document.addEventListener("DOMContentLoaded", () => {
     // Chat state
     let isChatCollapsed = false;
 
-    // Function to send messages
-    function sendMessage() {
-        const message = chatInput.value.trim();
+    function createMessageBubble(text, sender = "bot", isTyping = false) {
+        const msg = document.createElement("div");
+        msg.className = `chat-message ${sender}${isTyping ? " typing" : " pop"}`;
+        msg.textContent = text;
+        return msg;
+    }
+
+    // Function to send messages (make it accessible to quick replies)
+    function sendMessage(messageText) {
+        const message = (messageText !== undefined) ? messageText : chatInput.value.trim();
         if (message !== "") {
-            // Create and append user message
-            const userMsg = document.createElement("div");
-            userMsg.className = "chat-message user";
-            userMsg.textContent = message;
+            // User message with pop animation
+            const userMsg = createMessageBubble(message, "user");
             chatBody.appendChild(userMsg);
+            chatBody.scrollTop = chatBody.scrollHeight;
+            if (messageText === undefined) chatInput.value = "";
 
-            // Clear input field
-            chatInput.value = "";
-
-            // Scroll to bottom
+            // Add typing indicator for bot
+            const typingBubble = createMessageBubble("...", "bot", true);
+            chatBody.appendChild(typingBubble);
             chatBody.scrollTop = chatBody.scrollHeight;
 
-            // Bot response
-            setTimeout(() => {
-                const botReply = document.createElement("div");
-                botReply.className = "chat-message bot";
-                botReply.textContent = "Thanks for your message! We'll get back to you soon.";
-                chatBody.appendChild(botReply);
-                chatBody.scrollTop = chatBody.scrollHeight;
-            }, 1000);
+            // Simulate delay before bot responds
+            fetch('/faq-bot', {
+                method: 'POST',
+                body: new URLSearchParams({ question: message }),
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded'
+                }
+            })
+            .then(res => res.json())
+            .then(data => {
+                setTimeout(() => {
+                    typingBubble.remove();
+                    const botReply = createMessageBubble(data.answer, "bot");
+                    chatBody.appendChild(botReply);
+                    chatBody.scrollTop = chatBody.scrollHeight;
+                }, 700); // 700ms delay for realism
+            })
+            .catch(() => {
+                setTimeout(() => {
+                    typingBubble.remove();
+                    const botReply = createMessageBubble("Sorry, I couldn't process your question.", "bot");
+                    chatBody.appendChild(botReply);
+                    chatBody.scrollTop = chatBody.scrollHeight;
+                }, 700);
+            });
         }
     }
 
@@ -82,6 +106,13 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     }
 
+    // Chatbox toggle
+    if (chatboxContainer && chatToggle) {
+        chatToggle.addEventListener("click", () => {
+            chatboxContainer.classList.toggle("collapsed");
+        });
+    }
+
     // --- Navigation Bar Toggle Animation ---
     const navToggle = document.getElementById('nav-toggle');
     const navLinksContainer = document.getElementById('nav-links-container');
@@ -92,9 +123,38 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
 
+    // Quick reply slider toggle
+    const quickReplyToggle = document.getElementById("quick-reply-toggle");
+    const quickRepliesBox = document.getElementById("chatbox-quick-replies");
+    let quickRepliesExpanded = false;
+
+    if (quickReplyToggle && quickRepliesBox) {
+        quickReplyToggle.addEventListener("click", () => {
+            quickRepliesExpanded = !quickRepliesExpanded;
+            if (quickRepliesExpanded) {
+                quickRepliesBox.classList.add("expanded");
+                quickReplyToggle.innerHTML = 'Quick Replies &#9650;'; // Up arrow
+            } else {
+                quickRepliesBox.classList.remove("expanded");
+                quickReplyToggle.innerHTML = 'Quick Replies &#9660;'; // Down arrow
+            }
+        });
+        // Start collapsed
+        quickRepliesBox.classList.remove("expanded");
+        quickReplyToggle.innerHTML = 'Quick Replies &#9660;';
+    }
+
+    // Attach event listeners to quick reply buttons
+    const quickReplies = document.querySelectorAll('.quick-reply-btn');
+    quickReplies.forEach(btn => {
+        btn.addEventListener('click', () => {
+            sendMessage(btn.textContent);
+        });
+    });
+
     // Event listeners
     if (sendBtn) {
-        sendBtn.addEventListener("click", sendMessage);
+        sendBtn.addEventListener("click", () => sendMessage());
     }
 
     if (chatInput) {
