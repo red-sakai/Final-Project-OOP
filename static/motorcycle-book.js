@@ -24,16 +24,13 @@ document.addEventListener("DOMContentLoaded", function () {
         var okBtn = document.getElementById('okBtn');
         var okTimer = document.getElementById('okTimer');
         var seconds = 3;
-
         okBtn.disabled = true;
         okTimer.textContent = seconds;
         okBtn.textContent = `OK (${seconds})`;
-
         var interval = setInterval(function() {
             seconds--;
             okTimer.textContent = seconds;
             okBtn.textContent = `OK (${seconds})`;
-
             if (seconds <= 0) {
                 clearInterval(interval);
                 okBtn.disabled = false;
