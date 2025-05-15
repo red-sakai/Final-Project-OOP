@@ -19,9 +19,9 @@
             </div>
             <form class="TypeBox" id="bookingForm">
                 <div>
-                    <label class="Drop" for="dropoff">Drop off point</label>
+                     <label class="Drop" for="dropoff">Drop off point</label>
                     <select id="dropoff" class="truck-input" required>
-                        <option>Select drop off point</option>
+                        <option value="" disabled selected>Select drop off point</option>
                         <option>Location A</option>
                         <option>Location B</option>
                         <option>Location C</option>
@@ -34,13 +34,13 @@
                 <div>
                     <label class="weight" for="weight">Specify Weight</label>
                     <select id="weight" class="truck-input" required>
-                        <option>Weight must only be 7000kg - 15000kg</option>
+                        <option value="" disabled selected>Select weight range</option>
                         <option>7000kg - 15000kg </option>
                     </select>
                 </div>
                  <div>
                     <label class="quantity" for="quantity">Quantity</label>
-                    <input type="quantity" id="quantity" class="truck-input" placeholder="Enter Quantity" required />
+                    <input type="number" id="quantity" class="truck-input" placeholder="Enter Quantity" required min="1" step="1" />
                  </div>
                 <div>
                     <label class="special" for="special">Special Instructions</label>
@@ -62,7 +62,7 @@
     </div>
 
     <script>
-        const truckHomeUrl = "{{ url_for('truck_html') }}";
+        const truckHomeUrl = "{{ url_for('index_html') }}";
     </script>
     <script src="{{ url_for('static', filename='truck-book.js') }}"></script>
 </body>

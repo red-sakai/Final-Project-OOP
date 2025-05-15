@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Book Now | Motorcycle</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='motorcycle-book.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='motorcycle-book3.css') }}">
 </head>
 <body>
     <!--Square-->
@@ -21,7 +21,7 @@
                 <div>
                     <label class="Drop" for="dropoff">Drop off point</label>
                     <select id="dropoff" class="truck-input" required>
-                        <option>Select drop off point</option>
+                        <option value="" disabled selected>Select drop off point</option>
                         <option>Location A</option>
                         <option>Location B</option>
                         <option>Location C</option>
@@ -34,14 +34,14 @@
                 <div>
                     <label class="weight" for="weight">Specify Weight</label>
                     <select id="weight" class="truck-input" required>
-                        <option>Weight must only be 25kg-80kg</option>
+                        <option value="" disabled selected>Select weight range</option>
                         <option>25kg-80kg</option>
                     </select>
                 </div>
-                 <div>
+                <div>
                     <label class="quantity" for="quantity">Quantity</label>
-                    <input type="number" id="quantity" class="truck-input" placeholder="Enter Quantity" required />
-                 </div>
+                    <input type="number" id="quantity" class="truck-input" placeholder="Enter Quantity" required min="1" step="1" />
+                </div>
                 <div>
                     <label class="special" for="special">Special Instructions</label>
                     <input type="text" id="special" class="truck-input" placeholder="Enter Any Additional Details (Optional)"/>
@@ -62,7 +62,7 @@
     </div>
 
     <script>
-        const motorcycleHomeUrl = "{{ url_for('motorcycle_html') }}";
+        const motorcycleHomeUrl = "{{ url_for('index_html') }}";
     </script>
     <script src="{{ url_for('static', filename='motorcycle-book.js') }}"></script>
 </body>
