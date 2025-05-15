@@ -1,3 +1,11 @@
+@font-face {
+    font-family: "Inter";
+    src: url("fonts/Inter-28pt-SemiBoldtalic.ttf");
+    src: url("fonts/Inter-28pt-SemiBoldtalic.ttf") format("truetype"); 
+    font-weight: normal;
+    font-style: normal;
+}
+
 .card-container{
     display: flex;
     justify-content: center;
@@ -17,7 +25,6 @@
     opacity: 20%;
     position: absolute;
 }
-
 
 /*Nav*/
 
@@ -63,6 +70,7 @@
     margin-right: 20px;
     color: gray;
     opacity: 75%;
+    font-family: 'Inter', serif;
 }
 
 .book-content .btn{
@@ -185,6 +193,8 @@ input:focus {
     font-weight: 700;
     margin: 0 0 8px 0;
     line-height: 1.2;
+    font-family: 'Inter', serif;
+
 }
 
 .book-header p {
@@ -192,6 +202,8 @@ input:focus {
     font-size: 1.1em;
     margin: 0;
     letter-spacing: 1px;
+    font-family: 'Inter', serif;
+
 }
 
 .book-header img {
@@ -243,15 +255,19 @@ input:focus {
     background: #00567f;
 }
 
+.btn:disabled,
+.btn.btn-disabled {
+    background: #cccccc !important;
+    color: #888 !important;
+    cursor: not-allowed !important;
+    border: none;
+}
+
 /* Remove default input outline for a cleaner look */
 input:focus, select:focus {
     outline: none;
 }
 
-/* Hide old image style */
-.book img:not(.book-header img) {
-    display: none;
-}
 
 /* Custom dropdown arrow for select elements */
 .TypeBox select.truck-input {
@@ -266,10 +282,69 @@ input:focus, select:focus {
     font-family: 'Inter', monospace;
     font-size: 1em;
     transition: border-color 0.2s;
-    opacity: 75%;
+    
 }
 
 .TypeBox select.truck-input:focus {
     border-color: #00567f;
     outline: none;
+}
+
+.popup {
+    width: 320px;
+    background: #fff;
+    border-radius: 10px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    box-shadow: 0 -8px 24px rgba(0,0,0,0.18), 0 8px 24px rgba(0,0,0,0.12);
+    padding: 32px 24px 24px 24px;
+    display: none;
+    margin-top: 200px;
+}
+
+.open-popup{
+    display:block;
+    top: 50%;
+    transform: translate(-50%, -50%) scale(1); 
+
+}
+
+.blurred {
+    filter: blur(6px);
+    pointer-events: none;
+    user-select: none;
+}
+
+.OK{
+    display: block;
+    margin: 32px auto 0 auto;
+    width: 70%;
+    font-size: 1.2em;
+    padding: 14px 0;
+    background-color: #003355;   
+    border-radius: 32px;          
+    border: none;                   
+    color: #fff;                   
+    text-align: center;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background 0.2s;
+    font-family: 'Inter', serif;   
+}
+
+.pcontent{
+    margin-top: 40px;
+    position: relative
+}
+
+.popup img {
+    width: 70px;
+    height: 70px;
+    margin-bottom: 16px;
+    position: absolute;
+    margin-left: -30px;
+    margin-top: -25px;
 }
