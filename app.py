@@ -215,6 +215,23 @@ def parcel_tracker():
     tracking_id = request.args.get("tracking_id", "")
     return render_template("parcel-tracker.html", tracking_id=tracking_id)
 
+@app.route("/submit-ticket", methods=["GET", "POST"])
+def submit_ticket():
+    if request.method == "POST":
+        user_email = request.form.get("email")
+        issue = request.form.get("issue")
+        # Send the issue to the support email
+        msg = Message(
+            subject="New Support Ticket",
+            sender="hexahaulprojects@gmail.com",
+            recipients=["hexahaulprojects@gmail.com"]
+        )
+        msg.body = f"Support ticket submitted by: {user_email}\n\nIssue Description:\n{issue}"
+        mail.send(msg)
+        # Pass a query parameter to trigger the modal on index.html
+        return redirect(url_for("index_html", ticket_submitted="1"))
+    return render_template("submit-ticket.html")
+
 # predefined quick replies and their answers
 QUICK_REPLY_ANSWERS = {
     "about hexahaul": "HexaHaul is a logistics company founded and operated by a passionate team of six people: Jhered, Carl, Patricia, Kris, Sandrine, and CJ. We provide efficient and reliable transportation solutions for businesses and individuals.",
