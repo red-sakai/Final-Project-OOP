@@ -41,11 +41,10 @@
 
 .Honda-Click img{
     position: absolute;
-    margin-left: 860px;
-    margin-top: -50px;
+    margin-left: 800px;
+    margin-top: -30px;
     margin-right: 300px;
-    height: 300px;
-    transform: scaleX(-1);
+    height: 250px;
 } 
 
 /* button */
@@ -130,11 +129,11 @@
 
 .Yamaha-Mio img{
     position: absolute;
-    margin-left: 779px;
-    margin-top: -50px;
+    margin-left: 789px;
+    margin-top: -30px;
     margin-right: 300px;
-    height: 350px;
-    transform: scaleX(-1);
+    height: 250px;
+    
 } 
 
 /* button */
@@ -220,11 +219,11 @@
 
 .Yamaha-NMAX img{
     position: absolute;
-    margin-left: 850px;
-    margin-top: 0px;
+    margin-left: 800px;
+    margin-top: -5px;
     margin-right: 300px;
-    height: 300px;
-    transform: scaleX(-1);
+    height: 250px;
+   
 } 
 
 /* button */
