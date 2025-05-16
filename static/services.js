@@ -231,7 +231,18 @@ document.addEventListener("DOMContentLoaded", () => {
     // Logout button
     if (logoutBtn) {
         logoutBtn.addEventListener("click", () => {
-            window.location.href = "/user-login.html";
+            // Show the loading screen
+            const logoutLoading = document.getElementById("logout-loading");
+            if (logoutLoading) {
+                logoutLoading.style.display = "flex";
+                // Wait for animation, then redirect
+                setTimeout(() => {
+                    window.location.href = "/user-login.html";
+                }, 2500); // Match the truck animation duration
+            } else {
+                // fallback
+                window.location.href = "/user-login.html";
+            }
         });
     }
     // Theme toggle

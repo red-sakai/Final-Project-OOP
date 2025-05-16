@@ -110,6 +110,18 @@
 </div>
 <div id="sidebar-overlay" class="sidebar-overlay"></div>
 
+<div id="logout-loading" class="logout-loading-overlay" style="display:none;">
+    <div class="logout-loading-content">
+        <div class="truck-animation">
+            <img src="{{ url_for('static', filename='images/moving-truck.gif') }}" alt="Moving Truck" class="truck-img">
+            <div class="road"></div>
+        </div>
+        <div class="logout-message">
+            <h2>You've reached your last stop. Logged out!</h2>
+        </div>
+    </div>
+</div>
+
 <!-- Title -->
 <div class="Our_Services">
     <section id="Service">
