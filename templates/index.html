@@ -127,6 +127,15 @@
 <br />
 <br />
 <br />
+        <!-- Ticket Submitted Modal -->
+        <div id="ticket-modal" class="modal-overlay" style="display:none;">
+            <div class="modal-box">
+                <h3>Ticket Submitted</h3>
+                <p>Your ticket has been submitted! Our team will contact you soon.</p>
+                <button id="close-modal-btn">OK</button>
+            </div>
+        </div>
+
         <!--Footer-->
         <footer class="footer-container">
             <div class="contact-us">
@@ -177,5 +186,24 @@
                 </div>
             </div>
         </footer>
+        <script>
+        // Show modal if redirected after ticket submission
+        window.addEventListener("DOMContentLoaded", function() {
+            const urlParams = new URLSearchParams(window.location.search);
+            if (urlParams.get("ticket_submitted") === "1") {
+                document.getElementById("ticket-modal").style.display = "flex";
+            }
+            document.getElementById("close-modal-btn").onclick = function() {
+                document.getElementById("ticket-modal").style.display = "none";
+                // Remove the query param from URL without reload
+                if (window.history.replaceState) {
+                    const url = new URL(window.location);
+                    url.searchParams.delete("ticket_submitted");
+                    window.history.replaceState({}, document.title, url.pathname + url.search);
+                }
+            };
+        });
+        </script>
+        <script src="{{ url_for('static', filename='ticket-modal.js') }}"></script>
     </body>
 </html>

@@ -23,7 +23,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 100vw;
+    width: 300px;
     height: 70px;
     background: linear-gradient(90deg, rgba(178,219,248,0.3) 0%, rgba(110,198,245,0.7) 100%);
     box-shadow: 0 4px 16px #4a4a4a22;
