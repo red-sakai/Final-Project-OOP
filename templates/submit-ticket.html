@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Submit Support Ticket | HexaHaul</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <link rel="stylesheet" href="{{ url_for('static', filename='submit-ticket.css') }}">
+    <link rel="icon" href="{{ url_for('static', filename='images/screentake-removebg-preview.png') }}" />
+</head>
+<body>
+    <div class="ticket-container fade-in">
+        <div class="ticket-card slide-down">
+            <img src="{{ url_for('static', filename='images/HexaHaul_icon-removebg-preview.png') }}" alt="HexaHaul Logo" class="ticket-logo">
+            <h2>Submit a Support Ticket</h2>
+            <form method="POST" autocomplete="off">
+                <label for="email">Your Email</label>
+                <input type="email" id="email" name="email" required placeholder="you@email.com">
+                <label for="issue">Describe the Issue or Bug</label>
+                <textarea id="issue" name="issue" rows="6" required placeholder="Describe your issue or bug in detail..."></textarea>
+                <button type="submit" class="submit-btn">Submit Ticket</button>
+            </form>
+            {% with messages = get_flashed_messages() %}
+              {% if messages %}
+                <div class="flash-message">
+                  {{ messages[0] }}
+                </div>
+              {% endif %}
+            {% endwith %}
+        </div>
+    </div>
+</body>
+</html>
