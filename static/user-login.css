@@ -119,6 +119,25 @@ body {
     margin-bottom: 15px;
     border: 1px solid var(--form-box-color);
     border-radius: 6px;
+    width: 100%;
+}
+
+.user-password-container {
+    position: relative;
+    width: 100%;
+}
+
+.toggle-password {
+    position: absolute;
+    right: 10px;
+    top: 41%;
+    transform: translateY(-50%);
+    cursor: pointer;
+}
+
+.toggle-password img {
+    width: 20px;
+    height: 20px;
 }
 
 .signin-button {

@@ -4,7 +4,7 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <title>LogistIQ | HexaHaul</title>
-        <link rel="stylesheet" href="user-login.css" />
+        <link rel="stylesheet" href="/static/user-login.css" />
         <link rel="icon" href="/assets/HexaHaul icon transparent.png" />
     </head>
     <body>
@@ -16,9 +16,15 @@
                     <p class="logistiq-slogan">Delivering excellence. No matter the situation.</p>
                     <center><img src="/assets/HexaHaul logo.png" alt="Logo" /></center>
                 </div>
+
                 <form action="index.html" method="post" class="user-login-form">
-                    <input type="text" placeholder="Username" class="user-username-input" required />
-                    <input type="password" placeholder="Password" class="user-password-input" required />
+                    <input type="text" placeholder="Username" class="user-username-input" required />  
+                    <div class="user-password-container">
+                        <input type="password" placeholder="Password" class="user-password-input" id="user-password" required />
+                        <span class="toggle-password" onclick="togglePassword()">
+                            <img src="/assets/visible.png" alt="Show Password" id="show-password-icon">
+                        </span>
+                    </div>
                     <button type="submit" class="signin-button">Sign In</button>
                 </form>
                 <p class="user-signup">Don't have an account? <a href="user-signup.html">Sign Up</a></p>
@@ -26,5 +32,23 @@
             <div class="user-login-media">
             </div>
         </div>
+        <script>
+            let isVisible = false;
+
+            function togglePassword() {
+                const input = document.getElementById("user-password");
+                const icon = document.getElementById("show-password-icon");
+
+                if (!input || !icon) {
+                    console.warn("Password input or icon not found");
+                    return;
+                }
+
+                isVisible = !isVisible;
+                input.type = isVisible ? "text" : "password";
+                icon.src = isVisible ? "/assets/hide.png" : "/assets/visible.png";
+                icon.alt = isVisible ? "Hide Password" : "Show Password";
+            }
+        </script>
     </body> 
 </html> 

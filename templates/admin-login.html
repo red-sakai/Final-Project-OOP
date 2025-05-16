@@ -4,30 +4,53 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <title>LogistIQ | HexaHaul</title>
-        <link rel="stylesheet" href="admin-login.css" />
+        <link rel="stylesheet" href="/static/admin-login.css" />
         <link rel="icon" href="/assets/HexaHaul icon transparent.png" />
     </head>
     <body>
     
     <!--Admin Login-->
-    <div class="admin-login-background">
-        <div class="admin-login-container">
-            <div class="admin-login-panel">
-                <div class="admin-login-header">
-                    <p class="logistiq-text">LogistIQ</p>
-                    <p class="logistiq-slogan">Delivering excellence. No matter the situation.</p>
-                </div>
+        <div class="admin-login-background">
+            <div class="admin-login-container">
+                <div class="admin-login-panel">
+                    <div class="admin-login-header">
+                        <p class="logistiq-text">LogistIQ</p>
+                        <p class="logistiq-slogan">Delivering excellence. No matter the situation.</p>
+                    </div>
 
-                <form action="admin.html" method="post" class="admin-login-form">
-                    <input type="text" placeholder="Username" class="admin-username-input" required />
-                    <input type="password" placeholder="Password" class="admin-password-input" required />
-                    <button type="submit" class="signin-button">Sign In</button>
-                </form>
-                <div class="admin-forgot-password">
-                    <a href=admin-forgot-password.html>Forgot Password?</a>
-                </div> 
+                    <form action="admin.html" method="post" class="admin-login-form">
+                        <input type="text" placeholder="Username" class="admin-username-input" required />
+                        <div class="admin-password-container">
+                            <input type="password" placeholder="Password" class="admin-password-input" id="admin-password" required />
+                            <span class="toggle-password" onclick="togglePassword()">
+                                <img src="/assets/visible.png" alt="Show Password" id="show-password-icon">
+                            </span>
+                        </div>
+                        <button type="submit" class="signin-button">Sign In</button>
+                    </form>
+                    <div class="admin-forgot-password">
+                        <a href=admin-forgot-password.html>Forgot Password?</a>
+                    </div> 
+                </div>
             </div>
-        </div>
-    </div> 
+        </div> 
+        <script>
+            let isVisible = false;
+
+            function togglePassword() {
+                const input = document.getElementById("admin-password");
+                const icon = document.getElementById("show-password-icon");
+
+                if (!input || !icon) {
+                    console.warn("Password input or icon not found");
+                    return;
+                }
+
+                isVisible = !isVisible;
+                input.type = isVisible ? "text" : "password";
+                icon.src = isVisible ? "/assets/hide.png" : "/assets/visible.png";
+                icon.alt = isVisible ? "Hide Password" : "Show Password";
+            }
+        </script>
     </body>
 </html>

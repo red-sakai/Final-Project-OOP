@@ -110,7 +110,7 @@ body {
 
 .admin-login-form {
     width: 100%;
-    max-width: 300px;
+    max-width: 185px;
     display: flex;
     flex-direction: column;
     align-items: stretch;
@@ -126,9 +126,28 @@ body {
     border-radius: 6px;
 }
 
+.admin-password-container {
+    position: relative;
+    width: 100%;
+}
+
+.toggle-password {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    cursor: pointer;
+}
+
+.toggle-password img {
+    width: 20px;
+    height: 20px;
+}
+
 .signin-button {
     width: 80px;
     margin: 0 auto;
+    margin-top: 20px;
     padding: 10px;
     display: block;
     background-color: var(--primary-color);
@@ -136,6 +155,8 @@ body {
     border: none;
     border-radius: 6px;
     cursor: pointer;
+    font-family: "Inter", sans-serif;
+    font-size: 15px;
 }
 
 .admin-forgot-password {
