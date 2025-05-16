@@ -1,0 +1,39 @@
+body {
+    background: linear-gradient(135deg, #03335e 0%, #1579c0 100%);
+    color: #fff;
+    font-family: "Inter", sans-serif;
+    margin: 0;
+    min-height: 100vh;
+}
+
+.admin-dashboard-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+.admin-dashboard-panel {
+    background: rgba(255,255,255,0.1);
+    border-radius: 16px;
+    padding: 40px 60px;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.2);
+    text-align: center;
+}
+
+.admin-dashboard-panel h1 {
+    font-size: 2.5rem;
+    margin-bottom: 20px;
+    color: #fff;
+}
+
+.admin-dashboard-panel p {
+    font-size: 1.2rem;
+    margin-bottom: 30px;
+    color: #e0e0e0;
+}
+
+.admin-logo {
+    width: 120px;
+    margin-top: 20px;
+}
