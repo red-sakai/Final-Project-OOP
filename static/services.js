@@ -174,4 +174,78 @@ document.addEventListener("DOMContentLoaded", () => {
     if (chatContent) {
         chatContent.classList.remove("collapsed");
     }
+
+    // --- Sidebar Toggle Logic ---
+    // Sidebar elements
+    const sidebar = document.getElementById("user-sidebar");
+    const sidebarToggle = document.getElementById("sidebar-toggle");
+    const sidebarClose = document.getElementById("sidebar-close");
+    const logoutBtn = document.getElementById("logout-btn");
+    const themeToggle = document.getElementById("theme-toggle");
+    const themeLabel = document.getElementById("theme-label");
+    const sidebarOverlay = document.getElementById("sidebar-overlay");
+
+    // Open sidebar
+    if (sidebarToggle && sidebar) {
+        sidebarToggle.addEventListener("click", () => {
+            sidebar.classList.add("open");
+            sidebarOverlay.classList.add("active");
+            document.body.style.overflow = "hidden"; // Prevent background scroll
+        });
+    }
+    // Close sidebar
+    function closeSidebar() {
+        sidebar.classList.remove("open");
+        sidebarOverlay.classList.remove("active");
+        document.body.style.overflow = ""; // Restore scroll
+    }
+    if (sidebarClose && sidebar) {
+        sidebarClose.addEventListener("click", closeSidebar);
+    }
+    if (sidebarOverlay) {
+        sidebarOverlay.addEventListener("click", closeSidebar);
+    }
+
+    // Dropdown logic for sidebar (accordion style: only one open at a time)
+    document.querySelectorAll('.sidebar-section.dropdown').forEach(section => {
+        const toggle = section.querySelector('.dropdown-toggle');
+        toggle.addEventListener('click', (e) => {
+            e.stopPropagation();
+            // Close all dropdowns except the one clicked
+            document.querySelectorAll('.sidebar-section.dropdown').forEach(s => {
+                if (s !== section) s.classList.remove('open');
+            });
+            // Toggle the clicked one
+            section.classList.toggle('open');
+        });
+    });
+
+    // Close sidebar and dropdowns on ESC key
+    document.addEventListener('keydown', (e) => {
+        if (e.key === "Escape" && sidebar.classList.contains("open")) {
+            closeSidebar();
+            document.querySelectorAll('.sidebar-section.dropdown').forEach(s => s.classList.remove('open'));
+        }
+    });
+
+    // Logout button
+    if (logoutBtn) {
+        logoutBtn.addEventListener("click", () => {
+            window.location.href = "/user-login.html";
+        });
+    }
+    // Theme toggle
+    if (themeToggle && themeLabel) {
+        themeToggle.addEventListener("change", () => {
+            if (themeToggle.checked) {
+                document.body.style.background = "#222";
+                document.body.style.color = "#fff";
+                themeLabel.textContent = "Dark";
+            } else {
+                document.body.style.background = "";
+                document.body.style.color = "";
+                themeLabel.textContent = "Light";
+            }
+        });
+    }
 });

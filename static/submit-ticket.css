@@ -1,0 +1,127 @@
+:root {
+    --bg-color: #f7faff;
+    --primary-color: #03335e;
+    --secondary-color: #1579c0;
+    --accent-color: #b2dbf8;
+    --card-bg: #fff;
+}
+
+body {
+    background: var(--bg-color);
+    font-family: Inter, Arial, sans-serif;
+    color: var(--primary-color);
+    margin: 0;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.ticket-container {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.ticket-card {
+    background: var(--card-bg);
+    border-radius: 16px;
+    box-shadow: 0 6px 32px rgba(3,51,94,0.10);
+    padding: 40px 32px 32px 32px;
+    max-width: 400px;
+    width: 100%;
+    text-align: center;
+    animation: slideDown 1s cubic-bezier(.4,2,.6,1);
+}
+
+.ticket-logo {
+    width: 70px;
+    margin-bottom: 18px;
+    animation: fadeIn 1.2s;
+}
+
+h2 {
+    color: var(--primary-color);
+    margin-bottom: 18px;
+    font-size: 1.6rem;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+label {
+    text-align: left;
+    font-weight: 600;
+    color: var(--primary-color);
+    margin-bottom: 4px;
+    font-size: 1rem;
+}
+
+input[type="email"], textarea {
+    padding: 12px;
+    border: 1.5px solid var(--accent-color);
+    border-radius: 8px;
+    font-size: 1rem;
+    background: #f7faff;
+    color: var(--primary-color);
+    transition: border 0.2s, box-shadow 0.2s;
+    outline: none;
+    resize: none;
+}
+
+input[type="email"]:focus, textarea:focus {
+    border: 1.5px solid var(--secondary-color);
+    box-shadow: 0 2px 8px rgba(21,121,192,0.08);
+}
+
+.submit-btn {
+    background: linear-gradient(90deg, var(--primary-color) 60%, var(--secondary-color) 100%);
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    padding: 12px 0;
+    font-size: 1.08rem;
+    font-weight: 600;
+    cursor: pointer;
+    margin-top: 8px;
+    box-shadow: 0 2px 8px rgba(3,51,94,0.06);
+    transition: background 0.2s, box-shadow 0.2s, transform 0.1s;
+}
+
+.submit-btn:hover {
+    background: linear-gradient(90deg, var(--secondary-color) 60%, var(--primary-color) 100%);
+    box-shadow: 0 4px 16px rgba(3,51,94,0.12);
+    transform: translateY(-2px) scale(1.03);
+}
+
+.flash-message {
+    margin-top: 18px;
+    background: var(--accent-color);
+    color: var(--primary-color);
+    border-radius: 8px;
+    padding: 10px 0;
+    font-weight: 600;
+    animation: fadeIn 0.7s;
+}
+
+/* Animations */
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+@keyframes slideDown {
+    from { opacity: 0; transform: translateY(-40px);}
+    to { opacity: 1; transform: translateY(0);}
+}
+.fade-in {
+    animation: fadeIn 1.2s;
+}
+.slide-down {
+    animation: slideDown 1s cubic-bezier(.4,2,.6,1);
+}
