@@ -36,5 +36,9 @@
             <div class="user-login-media">
             </div>
         </div>
+        <script>
+            const adminDashboardUrl = "{{ url_for('admin_dashboard') }}";
+        </script>
+        <script src="{{ url_for('static', filename='admin-dashboard.js') }}"></script>
     </body> 
 </html>

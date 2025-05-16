@@ -294,6 +294,10 @@ def faq_bot():
         answer = "I'm sorry, I don't have an answer for that. Please ask about HexaHaul's services, tracking, or support."
     return jsonify({"answer": answer})
 
+@app.route("/admin-dashboard")
+def admin_dashboard():
+    return render_template("admin-dashboard.html")
+
 if __name__ == "__main__":
     app.debug = True
     print("Flask app routes:")
