@@ -15,7 +15,7 @@
                 <div class="verification-code-panel">
                     <div class="verification-code-header">
                         <p class="verification-code">Verification Code</p>
-                        <p class="verification-code-text">A verification code has been sent to <strong></strong></p>
+                        <p class="verification-code-text">A verification code has been sent to <strong id="email-display"></strong></p>
                     </div>
 
                     <div class="otp-box">
@@ -43,5 +43,48 @@
                 </div>
             </div>
         </div>
+        <script>
+        // Extract email from URL and display it
+        const params = new URLSearchParams(window.location.search);
+        const email = params.get("email");
+        if (email) {
+            document.getElementById("emailDisplay").textContent = email;
+        }
+
+        // Countdown Timer and Resend Code Logic
+        let timeLeft = 180;
+        const countdownEl = document.getElementById("countdown");
+        const resendBlue = document.getElementById("blue");
+
+        function updateTimer() {
+            const minutes = String(Math.floor(timeLeft / 60)).padStart(2, '0');
+            const seconds = String(timeLeft % 60).padStart(2, '0');
+            countdownEl.textContent = `${minutes}:${seconds}`;
+            if (timeLeft > 0) {
+                timeLeft--;
+                setTimeout(updateTimer, 1000);
+            } else {
+                makeResendClickable();
+            }
+        }
+
+        function makeResendClickable() {
+            resendBlue.innerHTML = `<a href="#" id="resend-link" style="color:#095190; text-decoration:underline; cursor:pointer;">Resend the code</a>`
+            document.getElementById("resend-link").addEventListener("click", function(e) {
+                e.preventDefault();
+                sendVerificationCode();
+            });
+
+        }
+
+        function sendVerificationCode() {
+                resendBlue.innerHTML = `Resend the code in <span class="timer" id="countdown">03:00</span>`;
+                timeLeft = 180;
+                countdownEl = document.getElementById("countdown");
+                updateTimer();
+        };
+
+        updateTimer();
+        </script>
     </body>
 </html>
