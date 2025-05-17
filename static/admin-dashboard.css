@@ -1,39 +1,168 @@
-body {
-    background: linear-gradient(135deg, #03335e 0%, #1579c0 100%);
-    color: #fff;
-    font-family: "Inter", sans-serif;
-    margin: 0;
-    min-height: 100vh;
+:root {
+    --bg-color: #ffffff;
+    --navbar-color: #03335e;
+    --primary-color: #03335e;
+    --secondary-color: #095190;
+    --tertiary-color: #1579c0;
+    --quaternary-color: #598cb8;
+    --quinary-color: #b2dbf8;
 }
 
-.admin-dashboard-container {
+body {
+    background: var(--bg-color);
+    min-height: 100vh;
+    margin: 0;
+    font-family: "Inter", sans-serif;
+    color: var(--primary-color);
+}
+
+.navbar {
+    width: 100%;
+    background: var(--navbar-color);
+    color: #fff;
+    padding: 24px 0 24px 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 2px 12px #03335e22;
+}
+
+.dashboard-header {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 24px;
+    margin-top: 0;
+}
+
+.dashboard-header img {
+    width: 60px;
+    height: auto;
+}
+
+.dashboard-title {
+    font-size: 2.2rem;
+    font-weight: 800;
+    letter-spacing: 1px;
+    color: #fff;
+    text-shadow: 0 2px 8px #1579c044, 0 1px 0 #fff;
+}
+
+.dashboard-options {
     display: flex;
     justify-content: center;
-    align-items: center;
-    height: 100vh;
+    align-items: flex-start;
+    gap: 32px;
+    margin: 48px auto 0 auto;
+    flex-wrap: wrap;
+    max-width: 1100px;
 }
 
-.admin-dashboard-panel {
-    background: rgba(255,255,255,0.1);
+.dashboard-card {
+    background: #fff;
     border-radius: 16px;
-    padding: 40px 60px;
-    box-shadow: 0 8px 32px rgba(0,0,0,0.2);
+    box-shadow: 0 4px 24px #03335e18;
+    padding: 32px 28px 28px 28px;
+    min-width: 220px;
+    max-width: 280px;
+    text-align: center;
+    transition: transform 0.18s cubic-bezier(.4,2,.6,1), box-shadow 0.18s;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+    border: 1px solid #f0f4fa;
+}
+.dashboard-card:hover {
+    transform: translateY(-6px) scale(1.03);
+    box-shadow: 0 12px 32px #1579c022;
+    border-color: var(--quinary-color);
+}
+.dashboard-card .icon-bg {
+    background: linear-gradient(135deg, var(--primary-color) 60%, var(--tertiary-color) 100%);
+    border-radius: 50%;
+    width: 56px;
+    height: 56px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 14px auto;
+    box-shadow: 0 2px 12px #1579c022;
+}
+.dashboard-card .icon-bg img {
+    width: 30px;
+    height: 30px;
+}
+.dashboard-card h2 {
+    font-size: 1.15rem;
+    font-weight: 700;
+    color: var(--primary-color);
+    margin: 10px 0 8px 0;
+    letter-spacing: 0.5px;
+}
+.dashboard-card p {
+    color: var(--secondary-color);
+    font-size: 0.98rem;
+    opacity: 0.92;
+    margin-bottom: 0;
+}
+
+/* Utilities/Graphs Section */
+.dashboard-utilities {
+    margin: 48px auto 0 auto;
+    max-width: 900px;
+    background: #fff;
+    border-radius: 16px;
+    box-shadow: 0 4px 24px #03335e18;
+    padding: 28px 18px 24px 18px;
+}
+.utilities-title {
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: var(--primary-color);
+    margin-bottom: 18px;
     text-align: center;
 }
-
-.admin-dashboard-panel h1 {
-    font-size: 2.5rem;
-    margin-bottom: 20px;
-    color: #fff;
+.utilities-graphs {
+    display: flex;
+    gap: 24px;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+.graph-card {
+    background: #f8fbfd;
+    border-radius: 12px;
+    box-shadow: 0 2px 12px #b2dbf822;
+    padding: 18px 10px;
+    min-width: 220px;
+    max-width: 320px;
+    flex: 1 1 220px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.graph-title {
+    color: var(--primary-color);
+    font-weight: 700;
+    font-size: 1rem;
+    margin-bottom: 8px;
+}
+.graph-img {
+    width: 180px;
+    height: 120px;
+    border-radius: 8px;
+    background: #eaf6fb;
+    box-shadow: 0 2px 12px #b2dbf822;
+    object-fit: contain;
+    margin-bottom: 4px;
 }
 
-.admin-dashboard-panel p {
-    font-size: 1.2rem;
-    margin-bottom: 30px;
-    color: #e0e0e0;
+@media (max-width: 900px) {
+    .dashboard-options { gap: 18px; }
+    .dashboard-header { flex-direction: column; gap: 10px; }
+    .dashboard-title { font-size: 1.3rem;}
+    .dashboard-utilities { padding: 12px 2px;}
 }
-
-.admin-logo {
-    width: 120px;
-    margin-top: 20px;
+@media (max-width: 600px) {
+    .dashboard-options { flex-direction: column; align-items: center;}
+    .dashboard-header { padding: 12px 2px 0 2px;}
 }

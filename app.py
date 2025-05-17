@@ -1,5 +1,6 @@
-from flask import Flask, render_template, url_for, request, redirect, flash, jsonify
+from flask import Flask, render_template, url_for, request, redirect, flash, jsonify, Blueprint, send_from_directory
 from models.admin import Admin
+from models.analytics_backend import plot_employee_statuses, plot_vehicles_deployed
 from abc import ABC, abstractmethod
 from enum import Enum
 from flask_mail import Mail, Message
@@ -266,6 +267,18 @@ def recent_logins():
 def recent_bookings():
     return render_template("recent-bookings.html")
 
+@app.route('/admin/vehicles')
+def admin_vehicles():
+    return render_template('admin_vehicles.html')
+
+@app.route('/admin/employees')
+def admin_employees():
+    return render_template('admin_employees.html')
+
+@app.route('/admin/hexaboxes')
+def admin_hexaboxes():
+    return render_template('admin_hexaboxes.html')
+
 # predefined quick replies and their answers
 QUICK_REPLY_ANSWERS = {
     "about hexahaul": "HexaHaul is a logistics company founded and operated by a passionate team of six people: Jhered, Carl, Patricia, Kris, Sandrine, and CJ. We provide efficient and reliable transportation solutions for businesses and individuals.",
@@ -367,9 +380,26 @@ def faq_bot():
 def admin_dashboard():
     return render_template("admin-dashboard.html")
 
+analytics_bp = Blueprint('analytics', __name__)
+
+@analytics_bp.route('/analytics/employee_statuses.png')
+def employee_statuses_graph():
+    save_path = os.path.join('static', 'graphs', 'employee_statuses.png')
+    os.makedirs(os.path.dirname(save_path), exist_ok=True)
+    plot_employee_statuses(save_path)
+    return send_from_directory('static/graphs', 'employee_statuses.png')
+
+@analytics_bp.route('/analytics/vehicles_deployed.png')
+def vehicles_deployed_graph():
+    save_path = os.path.join('static', 'graphs', 'vehicles_deployed.png')
+    os.makedirs(os.path.dirname(save_path), exist_ok=True)
+    plot_vehicles_deployed(save_path)
+    return send_from_directory('static/graphs', 'vehicles_deployed.png')
+
 if __name__ == "__main__":
     app.debug = True
     print("Flask app routes:")
     print(app.url_map)
     port = int(os.environ.get("PORT", 5000))
+    app.register_blueprint(analytics_bp)
     app.run(host='0.0.0.0', port=port, debug=True)
