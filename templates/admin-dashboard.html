@@ -37,7 +37,7 @@
             <h2>HexaBoxes</h2>
             <p>Track, assign, or update parcel deliveries.</p>
         </div>
-        <div class="dashboard-card" onclick="document.getElementById('utilities-section').scrollIntoView({behavior:'smooth'})">
+        <div class="dashboard-card" onclick="location.href='{{ url_for('admin_utilities') }}'">
             <div class="icon-bg">
                 <img src="{{ url_for('static', filename='images/analysis.png') }}" alt="Utilities">
             </div>
