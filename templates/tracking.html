@@ -4,16 +4,38 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>LogistIQ | Tracking</title>
-    <link rel="stylesheet" href="tracking.css">
-    <link rel="icon" href="images/screentake-removebg-preview.png">
+    <link rel="stylesheet" href="{{ url_for('static', filename='tracking.css') }}">
+    <link rel="icon" href="{{ url_for('static', filename='images/screentake-removebg-preview.png') }}">
 </head>
 <body>
-    <!--Navigation Bar-->
+    <!-- Chatbox -->
+    <div class="chatbox-container" id="chatbox-container">
+        <div class="chatbox-header" id="chatbox-toggle">HexaBot</div>
+        <div class="chatbox-body-container" id="chatbox-body-container">
+            <div class="chatbox-body" id="chatbox-body">
+                <div class="chat-message bot">Hi there! How can we help you today?</div>
+            </div>
+            <div class="quick-reply-toggle" id="quick-reply-toggle">Quick Replies &#9660;</div>
+            <div class="chatbox-quick-replies" id="chatbox-quick-replies">
+                <button class="quick-reply-btn">About HexaHaul</button>
+                <button class="quick-reply-btn">Who are you?</button>
+                <button class="quick-reply-btn">What services do you offer?</button>
+                <button class="quick-reply-btn">How can I track my shipment?</button>
+                <button class="quick-reply-btn">How do I contact support?</button>
+            </div>
+            <div class="chatbox-input-container">
+                <input type="text" id="chat-input" placeholder="Type a message..." />
+                <button id="send-btn">Send</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Navigation Bar -->
     <nav class="navbar">
         <div class="nav-container">
             <!--Logo Container-->
             <div class="logo-container">
-                <img src="images/HexaHaul_icon-removebg-preview.png" alt="Logo" />
+                <img src="{{ url_for('static', filename='images/HexaHaul_icon-removebg-preview.png') }}" alt="Logo" />
             </div>
             <button class="nav-toggle" id="nav-toggle" aria-label="Toggle navigation">
                 <span></span>
@@ -21,49 +43,105 @@
                 <span></span>
             </button>
             <!--Navigation Links-->
-              <div class="nav-links-container" id="nav-links-container">
-                  <div class="nav-links">
-                  <a href="{{ url_for('index_html') }}">About</a>
-                  <a href="{{ url_for('services_html') }}">Services</a>
-                  <a href="{{ url_for('tracking_html') }}" class="active">Tracking</a>
-                  <a href="{{ url_for('faq_html') }}">FAQ</a>
+            <div class="nav-links-container" id="nav-links-container">
+                <div class="nav-links">
+                    <a href="{{ url_for('index_html') }}">About</a>
+                    <a href="{{ url_for('services_html') }}">Services</a>
+                    <a href="{{ url_for('tracking_html') }}" class="active">Tracking</a>
+                    <a href="{{ url_for('faq_html') }}">FAQ</a>
                 </div>
             </div>
-
-            <!--Login Button-->
+            <!--Login Button (Sidebar Toggle)-->
             <div class="login-button-container">
-                <a href="#login"><img src="images/login.png" alt="login" /></a>
+                <button id="sidebar-toggle" aria-label="Open user sidebar" style="background:none;border:none;cursor:pointer;">
+                    <img src="{{ url_for('static', filename='images/login.png') }}" alt="login" />
+                </button>
             </div>
-        </div> 
-    </nav> 
+        </div>
+    </nav>
 
-    <!--Square gradient-->
+    <!-- User Sidebar -->
+    <div id="user-sidebar" class="user-sidebar">
+        <div class="sidebar-content">
+            <button class="sidebar-close" id="sidebar-close" aria-label="Close sidebar">&times;</button>
+            <div class="sidebar-profile">
+                <img src="{{ url_for('static', filename='images/profile-icon.png') }}" alt="Profile Icon" class="profile-icon">
+                <div class="profile-name">User Name</div>
+            </div>
+            <div class="sidebar-section dropdown">
+                <button class="dropdown-toggle" type="button">Profile <span class="arrow">&#9662;</span></button>
+                <ul class="dropdown-menu">
+                    <li><a href="{{ url_for('personal_info') }}">View/Edit Personal Info</a></li>
+                    <li><a href="{{ url_for('change_password') }}">Change Password</a></li>
+                    <li><a href="{{ url_for('update_email') }}">Update Email</a></li>
+                </ul>
+            </div>
+            <div class="sidebar-section dropdown">
+                <button class="dropdown-toggle" type="button">Settings <span class="arrow">&#9662;</span></button>
+                <ul class="dropdown-menu">
+                    <li><a href="{{ url_for('privacy_settings') }}">Privacy Settings</a></li>
+                    <li><a href="{{ url_for('language_region') }}">Language and Region</a></li>
+                    <li class="theme-switch-row">
+                        <span>Theme:</span>
+                        <label class="theme-switch">
+                            <input type="checkbox" id="theme-toggle">
+                            <span class="slider"></span>
+                            <span class="theme-label" id="theme-label">Light</span>
+                        </label>
+                    </li>
+                </ul>
+            </div>
+            <div class="sidebar-section dropdown">
+                <button class="dropdown-toggle" type="button">Activity Log/History <span class="arrow">&#9662;</span></button>
+                <ul class="dropdown-menu">
+                    <li><a href="{{ url_for('recent_logins') }}">Recent Logins</a></li>
+                    <li><a href="{{ url_for('recent_bookings') }}">Recent Bookings</a></li>
+                </ul>
+            </div>
+            <div class="sidebar-section dropdown">
+                <button class="dropdown-toggle" type="button">Support/Help Center <span class="arrow">&#9662;</span></button>
+                <ul class="dropdown-menu">
+                    <li><a href="{{ url_for('submit_ticket') }}">Submit a Ticket</a></li>
+                </ul>
+            </div>
+            <button class="logout-btn" id="logout-btn">Logout</button>
+        </div>
+    </div>
+    <div id="sidebar-overlay" class="sidebar-overlay"></div>
+
+    <!-- Logout Modal -->
+    <div id="logout-loading" class="logout-loading-overlay" style="display:none;">
+        <div class="logout-loading-content">
+            <div class="truck-animation">
+                <img src="{{ url_for('static', filename='images/moving-truck.gif') }}" alt="Moving Truck" class="truck-img">
+                <div class="road"></div>
+            </div>
+            <div class="logout-message">
+                <h2>You've reached your last stop. Logged out!</h2>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Tracking Section (unchanged) -->
     <section class="track">
         <div class="track-content">
-          <h2 class="fade-slide-right" id="tracking-header">We Provide Best Courier Services</h2>
-          <p class="track-text fade-slide-right" id="tracking-subheader">Stay updated with live tracking from dispatch to delivery.</p>
-          <p class="track-text2 fade-slide-right tracking-subheader">Track your parcel now!</p>
-          <form action="{{ url_for('parceltracking') }}" method="get">
-              <input type="text" class="track-input" name="tracking_id" placeholder="Tracking ID" required />
-              <button type="submit" class="track-button">Track Order</button>
-          </form>
+            <h2 class="fade-slide-right" id="tracking-header">We Provide Best Courier Services</h2>
+            <p class="track-text fade-slide-right" id="tracking-subheader">Stay updated with live tracking from dispatch to delivery.</p>
+            <p class="track-text2 fade-slide-right tracking-subheader">Track your parcel now!</p>
+            <form action="{{ url_for('parceltracking') }}" method="get">
+                <input type="text" class="track-input" name="tracking_id" placeholder="Tracking ID" required />
+                <button type="submit" class="track-button">Track Order</button>
+            </form>
         </div>
         <div class="track-image">
-          <img src="images/image-removebg-preview.png" alt="Courier Holding Box">
+            <img src="{{ url_for('static', filename='images/image-removebg-preview.png') }}" alt="Courier Holding Box">
         </div>
-      </section>
-      
-      
-      <div class="ending-container">
+    </section>
+    <div class="ending-container">
         <div class="ending">
-          <p class="fade-slide-up" id="tracking-slogan">Haul smarter, with HexaHaul</p>
-        </div>
-      </div>
-      
+            <p class="fade-slide-up" id="tracking-slogan">Haul smarter, with HexaHaul</p>
         </div>
     </div>
-
-          
-    </div>
+    <script src="{{ url_for('static', filename='tracking.js') }}"></script>
 </body>
 </html>
