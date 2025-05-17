@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <title>Recent Bookings</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='profile.css') }}">
+</head>
+<body>
+    <div class="profile-anim-container fade-in-slide">
+        <h2>Recent Bookings</h2>
+        <ul class="profile-info-box">
+            <li>Booking #12345 - Truck - 2024-05-16</li>
+            <li>Booking #12312 - Car - 2024-05-14</li>
+            <li>Booking #12298 - Motorcycle - 2024-05-12</li>
+        </ul>
+        <a href="{{ url_for('services_html') }}" class="back-link">← Back to Services</a>
+    </div>
+</body>
+</html>
