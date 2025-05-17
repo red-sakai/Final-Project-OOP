@@ -305,10 +305,10 @@ CONVERSATION_RESPONSES = {
 # Add a list of profane words (expand as needed)
 PROFANITY_LIST = [
 
-    "fuck", "shit", "bitch", "asshole", "bastard", "dick", "pussy", "motherfucker", "fucker", "cunt", "slut",
+    "fuck", "shit", "bitch", "asshole", "bastard", "dick", "pussy", "motherfucker", "fucker", "cunt", "slut", "penis", 
 
     "putangina", "tangina", "tanginamo", "taena", "taenamo", "gago", "ulol", "leche", "bwisit", "punyeta", "potangina", "pota",
-    "pakshet", "puta"
+    "pakshet", "puta", "pukinginamo", "kinginamo",
 ]
 
 def contains_profanity(text):
