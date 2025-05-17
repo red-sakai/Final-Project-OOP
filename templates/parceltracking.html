@@ -4,20 +4,21 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>HexaHaul | ParcelTracking</title>
-    <link rel="stylesheet" href="parceltracking.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='parceltracking.css') }}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
 </head>
 <body>
     <div class="header">
         <span class="text">Shipment Tracking</span>
-        <button class="home-btn">Home</button>
+        <button class="home-btn" onclick="window.location.href='{{ url_for('index_html') }}'">Home</button>
     </div>
     <div class="main-content">
         <div class="sidebar">
             <div class="card2">
                 <div class="carder">
                     <i class="fa-solid fa-box icon"></i>
-                    <span class="text2">Tracking ID<br>1234abc</span>
+                    <span class="text2">Tracking ID<br>{{ tracking_id or '1234abc' }}</span>
                 </div>
                 <div class="location-card">
                     <div class="loc-row">
@@ -42,7 +43,7 @@
         </div>
         <div class="content-area">
             <div class="map-container">
-                <div class="map-box"></div>
+                <div id="map"></div>
             </div>
             <div class="courier-card">
                 <div class="courier-avatar"></div>
@@ -54,5 +55,7 @@
             </div>
         </div>
     </div>
+    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+    <script src="{{ url_for('static', filename='parceltracking.js') }}"></script>
 </body>
 </html>
