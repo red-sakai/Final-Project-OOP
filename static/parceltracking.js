@@ -79,4 +79,23 @@ document.addEventListener("DOMContentLoaded", function () {
             requestAnimationFrame(animateParcel);
         }, idx * 800); // stagger start
     });
+
+    // Modal logic for employee details
+    var callBtn = document.querySelector('.call-btn');
+    var modal = document.getElementById('employee-modal');
+    var closeModal = document.getElementById('close-modal');
+
+    if (callBtn && modal && closeModal) {
+        callBtn.addEventListener('click', function() {
+            modal.style.display = 'block';
+        });
+        closeModal.addEventListener('click', function() {
+            modal.style.display = 'none';
+        });
+        window.addEventListener('click', function(event) {
+            if (event.target === modal) {
+                modal.style.display = 'none';
+            }
+        });
+    }
 });

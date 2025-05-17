@@ -181,7 +181,6 @@ body {
     background: #388e3c;
 }
 
-
 .map-container{
     width: 1000px;
     height: 400px;
@@ -189,4 +188,47 @@ body {
     margin-top: 20px;
     box-shadow: 0 4px 12px #0002;
     background: #DFDFDF;
+}
+
+/* Modal Styles */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    left: 0; top: 0;
+    width: 100%; height: 100%;
+    overflow: auto;
+    background: rgba(0,0,0,0.4);
+}
+.modal-content {
+    background: #fff;
+    margin: 8% auto;
+    padding: 32px 40px;
+    border-radius: 18px;
+    width: 350px;
+    box-shadow: 0 4px 24px #0003;
+    position: relative;
+    animation: modalFadeIn 0.3s;
+}
+@keyframes modalFadeIn {
+    from { transform: translateY(-40px); opacity: 0;}
+    to { transform: translateY(0); opacity: 1;}
+}
+.close-btn {
+    position: absolute;
+    top: 14px; right: 18px;
+    font-size: 28px;
+    color: #888;
+    cursor: pointer;
+    transition: color 0.2s;
+}
+.close-btn:hover { color: #d32f2f; }
+.employee-details {
+    list-style: none;
+    padding: 0;
+    margin: 18px 0 0 0;
+}
+.employee-details li {
+    margin-bottom: 10px;
+    font-size: 1.08em;
 }
