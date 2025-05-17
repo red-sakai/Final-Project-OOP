@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <title>Personal Info</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='profile.css') }}">
+</head>
+<body>
+    <div class="profile-anim-container fade-in-slide">
+        <h2>Personal Information</h2>
+        <div class="profile-info-box">
+            <p><strong>Name:</strong> John Doe</p>
+            <p><strong>Email:</strong> johndoe@email.com</p>
+            <button class="edit-btn">Edit Info</button>
+        </div>
+        <a href="{{ url_for('services_html') }}" class="back-link">← Back to Services</a>
+    </div>
+</body>
+</html>
