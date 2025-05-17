@@ -48,6 +48,26 @@ body {
     text-shadow: 0 2px 8px #1579c044, 0 1px 0 #fff;
 }
 
+.back-btn {
+    position: absolute;
+    left: 32px;
+    top: 32px;
+    background: var(--navbar-color, #03335e);
+    color: #fff;
+    border: none;
+    border-radius: 6px;
+    padding: 10px 22px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    box-shadow: 0 2px 8px #03335e22;
+    transition: background 0.18s;
+    z-index: 10;
+}
+.back-btn:hover {
+    background: #095190;
+}
+
 .dashboard-options {
     display: flex;
     justify-content: center;
@@ -165,4 +185,10 @@ body {
 @media (max-width: 600px) {
     .dashboard-options { flex-direction: column; align-items: center;}
     .dashboard-header { padding: 12px 2px 0 2px;}
+    .back-btn {
+        left: 10px;
+        top: 10px;
+        padding: 8px 14px;
+        font-size: 0.95rem;
+    }
 }
