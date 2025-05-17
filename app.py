@@ -215,6 +215,11 @@ def parcel_tracker():
     tracking_id = request.args.get("tracking_id", "")
     return render_template("parcel-tracker.html", tracking_id=tracking_id)
 
+@app.route("/parceltracking")
+def parceltracking():
+    tracking_id = request.args.get("tracking_id", "")
+    return render_template("parceltracking.html", tracking_id=tracking_id)
+
 @app.route("/submit-ticket", methods=["GET", "POST"])
 def submit_ticket():
     if request.method == "POST":

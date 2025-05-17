@@ -43,7 +43,7 @@
           <h2 class="fade-slide-right" id="tracking-header">We Provide Best Courier Services</h2>
           <p class="track-text fade-slide-right" id="tracking-subheader">Stay updated with live tracking from dispatch to delivery.</p>
           <p class="track-text2 fade-slide-right tracking-subheader">Track your parcel now!</p>
-          <form action="{{ url_for('parcel_tracker') }}" method="get">
+          <form action="{{ url_for('parceltracking') }}" method="get">
               <input type="text" class="track-input" name="tracking_id" placeholder="Tracking ID" required />
               <button type="submit" class="track-button">Track Order</button>
           </form>
