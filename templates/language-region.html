@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8" />
     <title>Language and Region</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='profile.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='language.css') }}" />
 </head>
 <body>
     <div class="profile-anim-container fade-in-slide">
@@ -20,26 +20,14 @@
             <label>
                 Region:
                 <select>
-                    <option>Philippines</option>
-                    <option>USA</option>
+                    <option>Asia</option>
                     <option>Europe</option>
+                    <option>America</option>
+                    <option>Oceania</option>
                 </select>
             </label>
             <button type="submit" class="edit-btn">Save Changes</button>
         </form>
         <a href="{{ url_for('services_html') }}" class="back-link">← Back to Services</a>
     </div>
-    <ul class="dropdown-menu">
-        <li><a href="{{ url_for('privacy_settings') }}">Privacy Settings</a></li>
-        <li><a href="{{ url_for('language_region') }}">Language and Region</a></li>
-        <li class="theme-switch-row">
-            <span>Theme:</span>
-            <label class="theme-switch">
-                <input type="checkbox" id="theme-toggle">
-                <span class="slider"></span>
-                <span class="theme-label" id="theme-label">Light</span>
-            </label>
-        </li>
-    </ul>
-</body>
 </html>
