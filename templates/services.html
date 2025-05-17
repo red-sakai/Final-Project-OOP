@@ -80,8 +80,8 @@
         <div class="sidebar-section dropdown">
             <button class="dropdown-toggle" type="button">Settings <span class="arrow">&#9662;</span></button>
             <ul class="dropdown-menu">
-                <li><a href="#">Privacy Settings</a></li>
-                <li><a href="#">Language and Region</a></li>
+                <li><a href="{{ url_for('privacy_settings') }}">Privacy Settings</a></li>
+                <li><a href="{{ url_for('language_region') }}">Language and Region</a></li>
                 <li class="theme-switch-row">
                     <span>Theme:</span>
                     <label class="theme-switch">
@@ -95,8 +95,8 @@
         <div class="sidebar-section dropdown">
             <button class="dropdown-toggle" type="button">Activity Log/History <span class="arrow">&#9662;</span></button>
             <ul class="dropdown-menu">
-                <li><a href="#">Recent Logins</a></li>
-                <li><a href="#">Recent Bookings</a></li>
+                <li><a href="{{ url_for('recent_logins') }}">Recent Logins</a></li>
+                <li><a href="{{ url_for('recent_bookings') }}">Recent Bookings</a></li>
             </ul>
         </div>
         <div class="sidebar-section dropdown">
