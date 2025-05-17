@@ -11,3 +11,17 @@ document.addEventListener('keydown', function(e) {
         eqCount = 0;
     }
 });
+
+document.addEventListener('DOMContentLoaded', function() {
+    // Animate cards on hover (optional, for extra smoothness)
+    document.querySelectorAll('.dashboard-card').forEach(card => {
+        card.addEventListener('mouseenter', () => card.classList.add('hovered'));
+        card.addEventListener('mouseleave', () => card.classList.remove('hovered'));
+    });
+
+    // Optionally, reload graphs every X seconds for live updates
+    setInterval(() => {
+        document.getElementById('employees-graph').src = '/analytics/employee_statuses.png?' + new Date().getTime();
+        document.getElementById('vehicles-graph').src = '/analytics/vehicles_deployed.png?' + new Date().getTime();
+    }, 60000); // every 60 seconds
+});
