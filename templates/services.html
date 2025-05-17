@@ -72,9 +72,9 @@
         <div class="sidebar-section dropdown">
             <button class="dropdown-toggle" type="button">Profile <span class="arrow">&#9662;</span></button>
             <ul class="dropdown-menu">
-                <li><a href="#">View/Edit Personal Info</a></li>
-                <li><a href="#">Change Password</a></li>
-                <li><a href="#">Update Email</a></li>
+                <li><a href="{{ url_for('personal_info') }}">View/Edit Personal Info</a></li>
+                <li><a href="{{ url_for('change_password') }}">Change Password</a></li>
+                <li><a href="{{ url_for('update_email') }}">Update Email</a></li>
             </ul>
         </div>
         <div class="sidebar-section dropdown">

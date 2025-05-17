@@ -232,6 +232,18 @@ def submit_ticket():
         return redirect(url_for("index_html", ticket_submitted="1"))
     return render_template("submit-ticket.html")
 
+@app.route("/personal-info")
+def personal_info():
+    return render_template("personal-info.html")
+
+@app.route("/change-password")
+def change_password():
+    return render_template("change-password.html")
+
+@app.route("/update-email")
+def update_email():
+    return render_template("update-email.html")
+
 # predefined quick replies and their answers
 QUICK_REPLY_ANSWERS = {
     "about hexahaul": "HexaHaul is a logistics company founded and operated by a passionate team of six people: Jhered, Carl, Patricia, Kris, Sandrine, and CJ. We provide efficient and reliable transportation solutions for businesses and individuals.",
