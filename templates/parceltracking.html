@@ -55,6 +55,21 @@
             </div>
         </div>
     </div>
+    <!-- Employee Details Modal -->
+    <div id="employee-modal" class="modal">
+        <div class="modal-content">
+            <span class="close-btn" id="close-modal">&times;</span>
+            <h2>Courier Rider Details</h2>
+            <ul class="employee-details">
+                <li><strong>Employee ID:</strong> 00123</li>
+                <li><strong>First Name:</strong> John</li>
+                <li><strong>Last Name:</strong> Doe</li>
+                <li><strong>Sex:</strong> Male</li>
+                <li><strong>Age:</strong> 28</li>
+                <li><strong>Birthdate:</strong> 1997-04-15</li>
+            </ul>
+        </div>
+    </div>
     <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
     <script src="{{ url_for('static', filename='parceltracking.js') }}"></script>
 </body>
