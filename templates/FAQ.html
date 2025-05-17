@@ -9,6 +9,28 @@
     <script src="{{ url_for('static', filename='faq.js') }}"></script>
 </head>
 <body>
+    <!-- Chatbox -->
+    <div class="chatbox-container" id="chatbox-container">
+        <div class="chatbox-header" id="chatbox-toggle">HexaBot</div>
+        <div class="chatbox-body-container" id="chatbox-body-container">
+            <div class="chatbox-body" id="chatbox-body">
+                <div class="chat-message bot">Hi there! How can we help you today?</div>
+            </div>
+            <div class="quick-reply-toggle" id="quick-reply-toggle">Quick Replies &#9660;</div>
+            <div class="chatbox-quick-replies" id="chatbox-quick-replies">
+                <button class="quick-reply-btn">About HexaHaul</button>
+                <button class="quick-reply-btn">Who are you?</button>
+                <button class="quick-reply-btn">What services do you offer?</button>
+                <button class="quick-reply-btn">How can I track my shipment?</button>
+                <button class="quick-reply-btn">How do I contact support?</button>
+            </div>
+            <div class="chatbox-input-container">
+                <input type="text" id="chat-input" placeholder="Type a message..." />
+                <button id="send-btn">Send</button>
+            </div>
+        </div>
+    </div>
+
     <!--Navigation Bar-->
     <nav class="navbar">
         <div class="nav-container">
@@ -33,10 +55,74 @@
 
             <!--Login Button-->
             <div class="login-button-container">
-                <a href="#login"><img src="{{ url_for('static', filename='images/login.png') }}" alt="login" /></a>
+                <button id="sidebar-toggle" aria-label="Open user sidebar" style="background:none;border:none;cursor:pointer;">
+                    <img src="{{ url_for('static', filename='images/login.png') }}" alt="login" />
+                </button>
             </div>
         </div> 
     </nav>
+
+    <!-- User Sidebar -->
+    <div id="user-sidebar" class="user-sidebar">
+        <div class="sidebar-content">
+            <button class="sidebar-close" id="sidebar-close" aria-label="Close sidebar">&times;</button>
+            <div class="sidebar-profile">
+                <img src="{{ url_for('static', filename='images/profile-icon.png') }}" alt="Profile Icon" class="profile-icon">
+                <div class="profile-name">User Name</div>
+            </div>
+            <div class="sidebar-section dropdown">
+                <button class="dropdown-toggle" type="button">Profile <span class="arrow">&#9662;</span></button>
+                <ul class="dropdown-menu">
+                    <li><a href="{{ url_for('personal_info') }}">View/Edit Personal Info</a></li>
+                    <li><a href="{{ url_for('change_password') }}">Change Password</a></li>
+                    <li><a href="{{ url_for('update_email') }}">Update Email</a></li>
+                </ul>
+            </div>
+            <div class="sidebar-section dropdown">
+                <button class="dropdown-toggle" type="button">Settings <span class="arrow">&#9662;</span></button>
+                <ul class="dropdown-menu">
+                    <li><a href="{{ url_for('privacy_settings') }}">Privacy Settings</a></li>
+                    <li><a href="{{ url_for('language_region') }}">Language and Region</a></li>
+                    <li class="theme-switch-row">
+                        <span>Theme:</span>
+                        <label class="theme-switch">
+                            <input type="checkbox" id="theme-toggle">
+                            <span class="slider"></span>
+                            <span class="theme-label" id="theme-label">Light</span>
+                        </label>
+                    </li>
+                </ul>
+            </div>
+            <div class="sidebar-section dropdown">
+                <button class="dropdown-toggle" type="button">Activity Log/History <span class="arrow">&#9662;</span></button>
+                <ul class="dropdown-menu">
+                    <li><a href="{{ url_for('recent_logins') }}">Recent Logins</a></li>
+                    <li><a href="{{ url_for('recent_bookings') }}">Recent Bookings</a></li>
+                </ul>
+            </div>
+            <div class="sidebar-section dropdown">
+                <button class="dropdown-toggle" type="button">Support/Help Center <span class="arrow">&#9662;</span></button>
+                <ul class="dropdown-menu">
+                    <li><a href="{{ url_for('submit_ticket') }}">Submit a Ticket</a></li>
+                </ul>
+            </div>
+            <button class="logout-btn" id="logout-btn">Logout</button>
+        </div>
+    </div>
+    <div id="sidebar-overlay" class="sidebar-overlay"></div>
+
+    <!-- Logout Modal -->
+    <div id="logout-loading" class="logout-loading-overlay" style="display:none;">
+        <div class="logout-loading-content">
+            <div class="truck-animation">
+                <img src="{{ url_for('static', filename='images/moving-truck.gif') }}" alt="Moving Truck" class="truck-img">
+                <div class="road"></div>
+            </div>
+            <div class="logout-message">
+                <h2>You've reached your last stop. Logged out!</h2>
+            </div>
+        </div>
+    </div>
     
     <!--Cards/Boxes-->
     <div class="card-container">
