@@ -685,7 +685,7 @@ nav {
 
 .logout-btn {
     margin-top: 18px;
-    background: linear-gradient(90deg, #03335e 60%, #1579c0 100%);
+    background-color:#00567f;
     color: #fff;
     border: none;
     border-radius: 8px;
