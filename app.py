@@ -279,6 +279,10 @@ def admin_employees():
 def admin_hexaboxes():
     return render_template('admin_hexaboxes.html')
 
+@app.route('/admin/utilities')
+def admin_utilities():
+    return render_template('admin_utilities.html')
+
 # predefined quick replies and their answers
 QUICK_REPLY_ANSWERS = {
     "about hexahaul": "HexaHaul is a logistics company founded and operated by a passionate team of six people: Jhered, Carl, Patricia, Kris, Sandrine, and CJ. We provide efficient and reliable transportation solutions for businesses and individuals.",
