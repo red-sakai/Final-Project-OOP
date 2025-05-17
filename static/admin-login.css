@@ -157,6 +157,7 @@ body {
     cursor: pointer;
     font-family: "Inter", sans-serif;
     font-size: 15px;
+    transition: background 0.2s, color 0.2s;
 }
 
 .signin-button:hover {

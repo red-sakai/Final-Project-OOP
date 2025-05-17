@@ -4,9 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>HexaHaul | FAQ</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='FAQ.css') }}">
-    <link rel="icon" href="{{ url_for('static', filename='images/screentake-removebg-preview.png') }}">
-    <script src="{{ url_for('static', filename='js/faq.js') }}"></script>
+    <link rel="stylesheet" href="/static/FAQ.css">
+    <link rel="icon" href="/assets/HexaHaul icon transparent.png">
+    <script src="/static/faq.js"></script>
 </head>
 <body>
     <!--Navigation Bar-->
@@ -14,16 +14,16 @@
         <div class="nav-container">
             <!--Logo Container-->
             <div class="logo-container">
-                <img src="{{ url_for('static', filename='images/HexaHaul_icon-removebg-preview.png') }}" alt="Logo" />
+                <img src="/assets/HexaHaul icon transparent.png" alt="Logo" />
             </div>
 
             <!--Navigation Links-->
             <div class="nav-links-container">
                 <div class="nav-links">
-                    <a href="#about">About</a>
-                    <a href="{{ url_for('services_html') }}">Services</a>
-                    <a href="{{ url_for('tracking_html') }}">Tracking</a>
-                    <a href="{{ url_for('faq_html') }}" class="active">FAQ</a>
+                    <a href="/templates/index.html">About</a>
+                    <a href="/templates/services.html">Services</a>
+                    <a href="/templates/tracking.html">Tracking</a>
+                    <a href="/templates/FAQ.html" class="active">FAQ</a>
                 </div>
             </div>
 
