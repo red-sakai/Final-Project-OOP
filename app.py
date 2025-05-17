@@ -338,24 +338,24 @@ def faq_bot():
             "answer": "Engr. Jerico Sarcillo, our outstanding professor! He inspires us to excel and brings out the best in every student. We are grateful for his dedication and guidance."
         })
 
-    # 1. Check for conversational patterns (greetings, thanks, goodbye)
+    # 1. check for conversational patterns (greetings, thanks, goodbye)
     for pattern, keywords in CONVERSATION_PATTERNS.items():
         if any(normalized.startswith(word) or normalized == word for word in keywords):
             return jsonify({"answer": CONVERSATION_RESPONSES[pattern]})
 
-    # 2. Check for quick reply match (case-insensitive)
+    # 2. check for quick reply match (case-insensitive)
     for quick, answer in QUICK_REPLY_ANSWERS.items():
         if normalized == quick or normalized.rstrip("?!.") == quick.rstrip("?!."):
             return jsonify({"answer": answer})
 
-    # 3. Only answer if the question is about HexaHaul's services, tracking, or support
+    # 3. only answer if the question is about HexaHaul's services, tracking, or support
     allowed_keywords = [
         "hexahaul", "service", "services", "track", "tracking", "shipment", "support", "contact", "delivery", "truck", "motorcycle", "car", "logistics", "booking", "book", "parcel"
     ]
     if not any(word in normalized for word in allowed_keywords):
         return jsonify({"answer": "I'm sorry, I don't have an answer for that. Please ask about HexaHaul's services, tracking, or support."})
 
-    # 4. Use DistilBERT QA pipeline as fallback (only if in scope)
+    # 4. use DistilBERT QA pipeline as fallback (only if in scope)
     result = qa_pipeline(question=user_question, context=FAQ_CONTEXT)
     answer = result["answer"].strip()
 
