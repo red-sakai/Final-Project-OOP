@@ -244,6 +244,22 @@ def change_password():
 def update_email():
     return render_template("update-email.html")
 
+@app.route("/privacy-settings")
+def privacy_settings():
+    return render_template("privacy-settings.html")
+
+@app.route("/language-region")
+def language_region():
+    return render_template("language-region.html")
+
+@app.route("/recent-logins")
+def recent_logins():
+    return render_template("recent-logins.html")
+
+@app.route("/recent-bookings")
+def recent_bookings():
+    return render_template("recent-bookings.html")
+
 # predefined quick replies and their answers
 QUICK_REPLY_ANSWERS = {
     "about hexahaul": "HexaHaul is a logistics company founded and operated by a passionate team of six people: Jhered, Carl, Patricia, Kris, Sandrine, and CJ. We provide efficient and reliable transportation solutions for businesses and individuals.",
