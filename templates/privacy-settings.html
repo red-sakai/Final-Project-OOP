@@ -9,14 +9,18 @@
     <div class="profile-anim-container fade-in-slide">
         <h2>Privacy Settings</h2>
         <form class="profile-form">
-            <label>
-                <input type="checkbox" checked>
-                Show my profile to others
-            </label>
-            <label>
-                <input type="checkbox">
-                Receive promotional emails
-            </label>
+            <div class="checkbox-group">
+                <label class="checkbox-container">
+                    <input type="checkbox" checked>
+                    <span class="custom-checkbox"></span>
+                    Show my profile to others
+                </label>
+                <label class="checkbox-container">
+                    <input type="checkbox">
+                    <span class="custom-checkbox"></span>
+                    Receive promotional emails
+                </label>
+            </div>
             <button type="submit" class="edit-btn">Save Changes</button>
         </form>
         <a href="{{ url_for('services_html') }}" class="back-link">← Back to Services</a>
