@@ -1,0 +1,138 @@
+body {
+    background: #f4f8fc;
+    font-family: 'Segoe UI', Arial, sans-serif;
+    margin: 0;
+    min-height: 100vh;
+}
+
+
+.profile-anim-container {
+    background: #fff;
+    max-width: 430px;
+    margin: 60px auto 0 auto;
+    padding: 40px 36px 32px 36px;
+    border-radius: 22px;
+    box-shadow: 0 8px 32px rgba(60, 90, 130, 0.12);
+    text-align: center;
+    animation: fadeInSlide 0.7s;
+}
+
+@keyframes fadeInSlide {
+    from { opacity: 0; transform: translateY(30px);}
+    to { opacity: 1; transform: translateY(0);}
+}
+
+h2 {
+    color: #0a3c60;
+    margin-bottom: 28px;
+    font-size: 2rem;
+    font-weight: 700;
+}
+
+.profile-form {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+    align-items: center;
+    margin-bottom: 22px;
+}
+
+.profile-form label {
+    font-size: 1.08rem;
+    color: #1a3550;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.profile-form select {
+    padding: 6px 14px;
+    border-radius: 7px;
+    border: 1px solid #b7c7d9;
+    font-size: 1rem;
+    background: #f7fafc;
+    color: #1a3550;
+    outline: none;
+    transition: border 0.2s;
+    margin-left: 2px;
+}
+
+.profile-form select:focus {
+    border: 1.5px solid #1976d2;
+}
+
+.edit-btn {
+    margin-top: 18px;
+    padding: 12px 0;
+    width: 100%;
+    background: #006494;
+    color: #fff;
+    font-size: 1.1rem;
+    font-weight: 600;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background 0.18s;
+    box-shadow: 0 2px 8px rgba(0, 100, 148, 0.08);
+}
+
+.edit-btn:hover {
+    background: #1976d2;
+}
+
+.back-link {
+    display: inline-block;
+    margin-top: 18px;
+    color: #1976d2;
+    text-decoration: none;
+    font-size: 1rem;
+    transition: color 0.18s;
+}
+
+.back-link:hover {
+    color: #0a3c60;
+    text-decoration: underline;
+}
+
+
+.theme-switch-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.theme-switch {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    cursor: pointer;
+}
+
+
+
+.theme-switch .slider {
+    width: 36px;
+    height: 18px;
+    background: #b7c7d9;
+    border-radius: 12px;
+    position: relative;
+    transition: background 0.2s;
+}
+
+.theme-switch .slider::before {
+    content: "";
+    position: absolute;
+    left: 3px;
+    top: 3px;
+    width: 12px;
+    height: 12px;
+    background: #fff;
+    border-radius: 50%;
+    transition: transform 0.2s;
+}
+
+.theme-label {
+    font-size: 1rem;
+    color: #1a3550;
+    margin-left: 6px;
+}
