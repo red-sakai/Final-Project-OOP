@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <title>Update Email</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='profile.css') }}">
+</head>
+<body>
+    <div class="profile-anim-container fade-in-slide">
+        <h2>Update Email</h2>
+        <form class="profile-form">
+            <input type="email" placeholder="Current Email" required>
+            <input type="email" placeholder="New Email" required>
+            <button type="submit" class="edit-btn">Update Email</button>
+        </form>
+        <a href="{{ url_for('services_html') }}" class="back-link">← Back to Services</a>
+    </div>
+</body>
+</html>
