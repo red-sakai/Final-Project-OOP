@@ -48,11 +48,13 @@
 
                     <div class="resend-code-container">
                         <p class="resend-code-gray" id="gray">
-                            Didn't receive the code? 
+                            Didn't receive the code?
                         </p>
                         <p class="resend-code-blue" id="blue">
-                            Resend the code in <span class="timer" id="countdown">03:00</span>
+                            <a href="#" id="resend-link" style="color:#095190; text-decoration:underline;">Resend the code</a>
+                            <span class="timer" id="countdown" style="margin-left:8px;">03:00</span>
                         </p>
+                        <div id="resend-message" class="error-message"></div>
                     </div>
                 </div>
             </div>
@@ -85,6 +87,65 @@
                 otpHidden.value = otp;
                 this.appendChild(otpHidden);
             });
+
+            // Resend code logic
+            const resendLink = document.getElementById('resend-link');
+            const countdownEl = document.getElementById('countdown');
+            const resendMsg = document.getElementById('resend-message');
+            let timeLeft = 180;
+            let timerActive = false;
+
+            function updateTimer() {
+                const minutes = String(Math.floor(timeLeft / 60)).padStart(2, '0');
+                const seconds = String(timeLeft % 60).padStart(2, '0');
+                countdownEl.textContent = `${minutes}:${seconds}`;
+                if (timeLeft > 0) {
+                    timeLeft--;
+                    setTimeout(updateTimer, 1000);
+                } else {
+                    resendLink.style.pointerEvents = 'auto';
+                    resendLink.style.opacity = 1;
+                    countdownEl.textContent = '';
+                    timerActive = false;
+                }
+            }
+
+            function startTimer() {
+                timeLeft = 180;
+                resendLink.style.pointerEvents = 'none';
+                resendLink.style.opacity = 0.5;
+                timerActive = true;
+                updateTimer();
+            }
+
+            resendLink.addEventListener('click', function(e) {
+                e.preventDefault();
+                if (timerActive) return;
+                resendMsg.textContent = '';
+                fetch('{{ url_for("admin_resend_otp") }}', {
+                    method: 'POST',
+                    headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+                    body: `email=${encodeURIComponent(email)}`
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        resendMsg.style.color = 'green';
+                        resendMsg.textContent = data.message;
+                        startTimer();
+                    } else {
+                        resendMsg.style.color = 'red';
+                        resendMsg.textContent = data.message;
+                    }
+                })
+                .catch(() => {
+                    resendMsg.style.color = 'red';
+                    resendMsg.textContent = 'Failed to resend code.';
+                });
+            });
+
+            // Start timer on page load
+            startTimer();
         </script>
         <script>
             const email = "{{ email|e }}";
