@@ -218,12 +218,16 @@ nav {
 }
 
 .card_answer {
-    margin-top: 0.75rem;
-    display: none;
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.4s cubic-bezier(.4,2,.6,1), padding 0.4s;
+    padding: 0 20px;
+    opacity: 1;
 }
-
 .card_answer.active {
     display: block;
+    max-height: 500px; /* adjust as needed */
+    padding: 10px 20px;
 }
 
 /* arrow 1 */
@@ -252,19 +256,6 @@ nav {
 
 .hidden {
     display: none;
-}
-
-.card_answer {
-    max-height: 0;
-    overflow: hidden;
-    transition: max-height 0.4s cubic-bezier(.4,2,.6,1), padding 0.4s;
-    padding: 0 20px;
-    opacity: 1;
-}
-.card_answer.active {
-    display: block;
-    max-height: 500px; /* adjust as needed */
-    padding: 10px 20px;
 }
 
 .arrow-left {
@@ -335,19 +326,6 @@ nav {
     display: none;
 }
 
-.card_answer {
-    max-height: 0;
-    overflow: hidden;
-    transition: max-height 0.4s cubic-bezier(.4,2,.6,1), padding 0.4s;
-    padding: 0 20px;
-    opacity: 1;
-}
-.card_answer.active {
-    display: block;
-    max-height: 500px; /* adjust as needed */
-    padding: 10px 20px;
-}
-
 .arrow-left {
     left: 70px;
     margin-top: 50px;
@@ -414,19 +392,6 @@ nav {
 
 .hidden {
     display: none;
-}
-
-.card_answer {
-    max-height: 0;
-    overflow: hidden;
-    transition: max-height 0.4s cubic-bezier(.4,2,.6,1), padding 0.4s;
-    padding: 0 20px;
-    opacity: 1;
-}
-.card_answer.active {
-    display: block;
-    max-height: 500px; /* adjust as needed */
-    padding: 10px 20px;
 }
 
 .arrow-left {
@@ -497,19 +462,6 @@ nav {
     display: none;
 }
 
-.card_answer {
-    max-height: 0;
-    overflow: hidden;
-    transition: max-height 0.4s cubic-bezier(.4,2,.6,1), padding 0.4s;
-    padding: 0 20px;
-    opacity: 1;
-}
-.card_answer.active {
-    display: block;
-    max-height: 500px; /* adjust as needed */
-    padding: 10px 20px;
-}
-
 .arrow-left {
     left: 70px;
     margin-top: 50px;
@@ -576,19 +528,6 @@ nav {
 
 .hidden {
     display: none;
-}
-
-.card_answer {
-    max-height: 0;
-    overflow: hidden;
-    transition: max-height 0.4s cubic-bezier(.4,2,.6,1), padding 0.4s;
-    padding: 0 20px;
-    opacity: 1;
-}
-.card_answer.active {
-    display: block;
-    max-height: 500px; /* adjust as needed */
-    padding: 10px 20px;
 }
 
 .arrow-left {

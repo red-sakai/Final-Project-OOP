@@ -9,8 +9,14 @@ document.addEventListener('DOMContentLoaded', function () {
             const answer = cardAnswers[index];
             const arrowDiv = arrowDivs[index];
             if (answer) {
-                answer.classList.toggle('active');
-                answer.classList.toggle('hidden');
+                const isActive = answer.classList.contains('active');
+                // Remove hidden class always, only toggle active for animation
+                answer.classList.remove('hidden');
+                if (isActive) {
+                    answer.classList.remove('active');
+                } else {
+                    answer.classList.add('active');
+                }
                 arrowDiv.classList.toggle('rotated');
             }
         });
