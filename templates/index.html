@@ -4,8 +4,8 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <title>LogistIQ | HexaHaul</title>
-        <link rel="stylesheet" href="/static/index.css" />
-        <link rel="icon" href="/assets/HexaHaul icon transparent.png" />
+        <link rel="stylesheet" href="{{ url_for('static', filename='index.css') }}">
+        <link rel="icon" href="{{ url_for('static', filename='images/HexaHaul icon transparent.png') }}">
     </head>
     <div id="top"></div>
     <body>
@@ -14,42 +14,111 @@
             <div class="nav-container">
                 <!--Logo Container-->
                 <div class="logo-container">
-                    <img src="/assets/HexaHaul icon transparent.png" alt="Logo" />
+                    <img src="{{ url_for('static', filename='images/HexaHaul icon transparent.png') }}" alt="Logo" />
                 </div>
 
+                <button class="nav-toggle" id="nav-toggle" aria-label="Toggle navigation">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+                
                 <!--Navigation Links-->
-                <div class="nav-links-container">
+                <div class="nav-links-container" id="nav-links-container">
                     <div class="nav-links">
-                        <a href="#top" class="active">About</a>
-                        <a href="/templates/services.html">Services</a>
-                        <a href="/templates/tracking.html">Tracking</a>
-                        <a href="/templates/FAQ.html">FAQ</a>
+                        <a href="{{ url_for('index_html') }}" class="active">About</a>
+                        <a href="{{ url_for('services_html') }}">Services</a>
+                        <a href="{{ url_for('tracking_html') }}">Tracking</a>
+                        <a href="{{ url_for('faq_html') }}">FAQ</a>
                     </div>
                 </div>
 
                 <!--Login Button-->
                 <div class="login-button-container">
-                    <a href="user-login.html"><img src="/assets/login.png" alt="login" /></a>
+                    <button id="sidebar-toggle" style="background:none;border:none;cursor:pointer;">
+                        <img src="{{ url_for('static', filename='images/login.png') }}" alt="login" />
+                    </button>
                 </div>
             </div>
         </nav>
 
+        <!-- User Sidebar -->
+        <div id="user-sidebar" class="user-sidebar">
+            <div class="sidebar-content">
+                <button class="sidebar-close" id="sidebar-close" aria-label="Close sidebar">&times;</button>
+                <div class="sidebar-profile">
+                    <img src="{{ url_for('static', filename='images/profile-icon.png') }}" alt="Profile Icon" class="profile-icon">
+                    <div class="profile-name">User Name</div>
+                </div>
+                <div class="sidebar-section dropdown">
+                    <button class="dropdown-toggle" type="button">Profile <span class="arrow">&#9662;</span></button>
+                    <ul class="dropdown-menu">
+                        <li><a href="{{ url_for('personal_info') }}">View/Edit Personal Info</a></li>
+                        <li><a href="{{ url_for('change_password') }}">Change Password</a></li>
+                        <li><a href="{{ url_for('update_email') }}">Update Email</a></li>
+                    </ul>
+                </div>
+                <div class="sidebar-section dropdown">
+                    <button class="dropdown-toggle" type="button">Settings <span class="arrow">&#9662;</span></button>
+                    <ul class="dropdown-menu">
+                        <li><a href="{{ url_for('privacy_settings') }}">Privacy Settings</a></li>
+                        <li><a href="{{ url_for('language_region') }}">Language and Region</a></li>
+                        <li class="theme-switch-row">
+                            <span>Theme:</span>
+                            <label class="theme-switch">
+                                <input type="checkbox" id="theme-toggle">
+                                <span class="slider"></span>
+                                <span class="theme-label" id="theme-label">Light</span>
+                            </label>
+                        </li>
+                    </ul>
+                </div>
+                <div class="sidebar-section dropdown">
+                    <button class="dropdown-toggle" type="button">Activity Log/History <span class="arrow">&#9662;</span></button>
+                    <ul class="dropdown-menu">
+                        <li><a href="{{ url_for('recent_logins') }}">Recent Logins</a></li>
+                        <li><a href="{{ url_for('recent_bookings') }}">Recent Bookings</a></li>
+                    </ul>
+                </div>
+                <div class="sidebar-section dropdown">
+                    <button class="dropdown-toggle" type="button">Support/Help Center <span class="arrow">&#9662;</span></button>
+                    <ul class="dropdown-menu">
+                        <li><a href="{{ url_for('submit_ticket') }}">Submit a Ticket</a></li>
+                    </ul>
+                </div>
+                <button class="logout-btn" id="logout-btn">Logout</button>
+            </div>
+        </div>
+        <div id="sidebar-overlay" class="sidebar-overlay"></div>
+        <div id="logout-loading" class="logout-loading-overlay" style="display:none;">
+            <div class="logout-loading-content">
+                <div class="truck-animation">
+                    <img src="{{ url_for('static', filename='images/moving-truck.gif') }}" alt="Moving Truck" class="truck-img">
+                    <div class="road"></div>
+                </div>
+                <div class="logout-message">
+                    <h2>You've reached your last stop. Logged out!</h2>
+                </div>
+            </div>
+        </div>
+
         <!--Slogan with Media-->
         <div class="slogan-about">
             <div class="slogan-container">
-                <p>Haul Smarter</p>
-                <p>with</p>
-                <p>HexaHaul</p>
+                <p class="fade-slide-right index-slogan">Haul Smarter</p>
+                <p class="fade-slide-right index-slogan">with</p>
+                <p class="fade-slide-right index-slogan">HexaHaul</p>
             </div>
             <div class="media-container-1">
-                <img src="/assets/delivery truck 3d.png" alt="Media" />
+                <img src="{{ url_for('static', filename='images/delivery truck 3d.png') }}" alt="Media" />
             </div>
             <div class="media-container-2">
-                <img src="/assets/conveyor box 3d.png" alt="Media" />
+                <img src="{{ url_for('static', filename='images/conveyor box 3d.png') }}" alt="Media" />
             </div>
-        <!--About Us Section-->
+
+            <!--About Us Section-->
             <div class="about-container">
-                <p>HexaHaul is a leading logistics company dedicated to providing efficient 
+                <p class="fade-slide-left" id="index-text">HexaHaul is a leading logistics company dedicated to providing efficient 
                 and reliable transportation solutions. 
                 Our mission is to streamline your supply chain and ensure timely deliveries.</p>
             </div>
@@ -61,32 +130,31 @@
         <div class="benefits-container">
             <div class="benefits">
                 <div class="circle-wrapper">
-                    <img src="/assets/security.png" alt="Security Icon" />
+                    <img src="{{ url_for('static', filename='images/security.png') }}" alt="Security Icon" />
                 </div>
                 <p class="benefits-text">SECURITY</p>
             </div>
 
             <div class="benefits">
                 <div class="circle-wrapper">
-                    <img src="/assets/timely-delivery.png" alt="Timely Delivery Icon" />
+                    <img src="{{ url_for('static', filename='images/timely-delivery.png') }}" alt="Timely Delivery Icon" />
                 </div>
                 <p class="benefits-text">TIMELY DELIVERY</p>
             </div>
 
             <div class="benefits">
                 <div class="circle-wrapper">
-                    <img src="/assets/cost-efficiency.png" alt="Cost Efficiency Icon" />
+                    <img src="{{ url_for('static', filename='images/cost-efficiency.png') }}" alt="Cost Efficiency Icon" />
                 </div>
                 <p class="benefits-text">COST EFFICIENCY</p>
             </div>
 
             <div class="benefits">
                 <div class="circle-wrapper"> 
-                    <img src="/assets/eco-friendly.png" alt="Eco-Friendly Icon" />
+                    <img src="{{ url_for('static', filename='images/eco-friendly.png') }}" alt="Eco-Friendly Icon" />
                 </div>
                 <p class="benefits-text">ECO-FRIENDLY</p>
             </div>
-
         </div>
 <br />
 <br />
@@ -121,22 +189,53 @@
 <br />
 <br />
 <br />
+        <!-- Ticket Submitted Modal -->
+        <div id="ticket-modal" class="modal-overlay" style="display:none;">
+            <div class="modal-box">
+                <h3>Ticket Submitted</h3>
+                <p>Your ticket has been submitted! Our team will contact you soon.</p>
+                <button id="close-modal-btn">OK</button>
+            </div>
+        </div>
+
+        <!-- Add Chatbox -->
+        <div class="chatbox-container" id="chatbox-container">
+            <div class="chatbox-header" id="chatbox-toggle">HexaBot</div>
+            <div class="chatbox-body-container" id="chatbox-body-container">
+                <div class="chatbox-body" id="chatbox-body">
+                    <div class="chat-message bot">Hi there! How can we help you today?</div>
+                </div>
+                <div class="quick-reply-toggle" id="quick-reply-toggle">Quick Replies &#9660;</div>
+                <div class="chatbox-quick-replies" id="chatbox-quick-replies">
+                    <button class="quick-reply-btn">About HexaHaul</button>
+                    <button class="quick-reply-btn">Who are you?</button>
+                    <button class="quick-reply-btn">What services do you offer?</button>
+                    <button class="quick-reply-btn">How can I track my shipment?</button>
+                    <button class="quick-reply-btn">How do I contact support?</button>
+                </div>
+                <div class="chatbox-input-container">
+                    <input type="text" id="chat-input" placeholder="Type a message..." />
+                    <button id="send-btn">Send</button>
+                </div>
+            </div>
+        </div>
+
         <!--Footer-->
         <footer class="footer-container">
             <div class="contact-us">
                 <p class="footer-text">Contact Us</p>
                 <div class="email">
-                    <img src="/assets/email (1).png" alt="Email Icon" />
+                    <img src="{{ url_for('static', filename='images/email (1).png') }}" alt="Email Icon" />
                     <p class="email-text">customercare@logistiq.com</p>
                 </div>
                 <br />
                 <div class="phone">
-                    <img src="/assets/telephone-handle-silhouette.png" alt="Phone Icon" />
+                    <img src="{{ url_for('static', filename='images/telephone-handle-silhouette.png') }}" alt="Phone Icon" />
                     <p class="phone-text">+63 106 157 1016</p>
                 </div>
                 <br />
                 <div class="branch">
-                    <img src="/assets/home.png" alt="Home Icon" />
+                    <img src="{{ url_for('static', filename='images/home.png') }}" alt="Home Icon" />
                     <p class="branch-text">Local Branches</p>
                 </div>
             </div>
@@ -164,12 +263,32 @@
                 </div>
 
                 <div class="social-media">
-                    <img src="/assets/linkedin.png" alt="LinkedIn Icon" />
-                    <img src="/assets/facebook.png" alt="Facebook Icon" />
-                    <img src="/assets/instagram.png" alt="Instagram Icon" />
-                    <img src="/assets/twitter.png" alt="Twitter Icon" />
+                    <img src="{{ url_for('static', filename='images/linkedin.png') }}" alt="LinkedIn Icon" />
+                    <img src="{{ url_for('static', filename='images/facebook.png') }}" alt="Facebook Icon" />
+                    <img src="{{ url_for('static', filename='images/instagram.png') }}" alt="Instagram Icon" />
+                    <img src="{{ url_for('static', filename='images/twitter.png') }}" alt="Twitter Icon" />
                 </div>
             </div>
         </footer>
+        <script>
+        // Show modal if redirected after ticket submission
+        window.addEventListener("DOMContentLoaded", function() {
+            const urlParams = new URLSearchParams(window.location.search);
+            if (urlParams.get("ticket_submitted") === "1") {
+                document.getElementById("ticket-modal").style.display = "flex";
+            }
+            document.getElementById("close-modal-btn").onclick = function() {
+                document.getElementById("ticket-modal").style.display = "none";
+                // Remove the query param from URL without reload
+                if (window.history.replaceState) {
+                    const url = new URL(window.location);
+                    url.searchParams.delete("ticket_submitted");
+                    window.history.replaceState({}, document.title, url.pathname + url.search);
+                }
+            };
+        });
+        </script>
+        <script src="{{ url_for('static', filename='ticket-modal.js') }}"></script>
+        <script src="{{ url_for('static', filename='index.js') }}"></script>
     </body>
 </html>

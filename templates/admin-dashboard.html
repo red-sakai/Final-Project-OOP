@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Admin Dashboard | HexaHaul</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='admin-dashboard.css') }}">
+    <link rel="icon" href="{{ url_for('static', filename='images/screentake-removebg-preview.png') }}" />
+</head>
+<body>
+    <button class="back-btn" onclick="window.location.href='{{ url_for('user_login_html') }}'">&larr; Back</button>
+    <nav class="navbar">
+        <div class="dashboard-header">
+            <img src="{{ url_for('static', filename='images/HexaHaul_icon-removebg-preview.png') }}" alt="Logo" />
+            <div class="dashboard-title">Admin Dashboard</div>
+        </div>
+    </nav>
+    <div class="dashboard-options">
+        <div class="dashboard-card" onclick="location.href='{{ url_for('admin_vehicles') }}'">
+            <div class="icon-bg">
+                <img src="{{ url_for('static', filename='images/delivery-truck.png') }}" alt="Vehicles">
+            </div>
+            <h2>Vehicles</h2>
+            <p>Manage, add, or monitor all fleet vehicles.</p>
+        </div>
+        <div class="dashboard-card" onclick="location.href='{{ url_for('admin_employees') }}'">
+            <div class="icon-bg">
+                <img src="{{ url_for('static', filename='images/profile-icon.png') }}" alt="Employees">
+            </div>
+            <h2>Employees</h2>
+            <p>View, update, or assign employee roles and statuses.</p>
+        </div>
+        <div class="dashboard-card" onclick="location.href='{{ url_for('admin_hexaboxes') }}'">
+            <div class="icon-bg">
+                <img src="{{ url_for('static', filename='images/fast-delivery.png') }}" alt="HexaBoxes">
+            </div>
+            <h2>HexaBoxes</h2>
+            <p>Track, assign, or update parcel deliveries.</p>
+        </div>
+        <div class="dashboard-card" onclick="location.href='{{ url_for('admin_utilities') }}'">
+            <div class="icon-bg">
+                <img src="{{ url_for('static', filename='images/analysis.png') }}" alt="Utilities">
+            </div>
+            <h2>Utilities</h2>
+            <p>View analytics and operational statistics.</p>
+        </div>
+    </div>
+    <div class="dashboard-utilities" id="utilities-section">
+        <div class="utilities-title">Operational Analytics</div>
+        <div class="utilities-graphs">
+            <div class="graph-card">
+                <div class="graph-title">Vehicles Deployed</div>
+                <img class="graph-img" id="vehicles-graph" src="/analytics/vehicles_deployed.png" alt="Vehicles Deployed">
+            </div>
+            <div class="graph-card">
+                <div class="graph-title">Employee Statuses</div>
+                <img class="graph-img" id="employees-graph" src="/analytics/employee_statuses.png" alt="Employee Statuses">
+            </div>
+        </div>
+    </div>
+    <script src="{{ url_for('static', filename='admin-dashboard.js') }}"></script>
+</body>
+</html>
