@@ -129,43 +129,39 @@
         <p class="fade-slide-down" id="services-subtitle">Delivering Excellence, No matter the situation</p>
     </section>
 
-    <div class="arrow arrow-left">
-        <img src="{{ url_for('static', filename='images/left-chevron.png') }}" alt="left arrow">
-    </div>
-
-    <!-- Cards -->
-    <div class="card-container">
-        <div class="card">
-            <img src="{{ url_for('static', filename='images/electric-car.png') }}">
-            <div class="card-content">
-                <h3>Car</h3>
-                <p>A compact yet versatile vehicle, ideal for executive travel, client meetings, and more.</p>
-                <a href="{{ url_for('car_html') }}" class="btn">Get started</a>
+    <div class="carousel-wrapper">
+        <div class="arrow arrow-left">
+            <img src="{{ url_for('static', filename='images/left-chevron.png') }}" alt="left arrow">
+        </div>
+        <div class="carousel">
+            <div class="carousel-card" data-index="0">
+                <img src="{{ url_for('static', filename='images/electric-car.png') }}">
+                <div class="card-content">
+                    <h3>Car</h3>
+                    <p>A compact yet versatile vehicle, ideal for executive travel, client meetings, and more.</p>
+                    <a href="{{ url_for('car_html') }}" class="btn">Get started</a>
+                </div>
+            </div>
+            <div class="carousel-card" data-index="1">
+                <img src="{{ url_for('static', filename='images/delivery-truck.png') }}">
+                <div class="card-content">
+                    <h3>Truck</h3>
+                    <p>The backbone of logistics, transporting large volumes efficiently.</p>
+                    <a href="{{ url_for('truck_html') }}" class="btn">Get started</a>
+                </div>
+            </div>
+            <div class="carousel-card" data-index="2">
+                <img src="{{ url_for('static', filename='images/fast-delivery.png') }}">
+                <div class="card-content">
+                    <h3>Motorcycle</h3>
+                    <p>Perfect for last-mile delivery in tight city traffic, ensuring your packages arrive quickly.</p>
+                    <a href="{{ url_for('motorcycle_html') }}" class="btn">Get started</a>
+                </div>
             </div>
         </div>
-    </div>
-    <div class="card-container2">
-        <div class="card2">
-            <img src="{{ url_for('static', filename='images/delivery-truck.png') }}">
-            <div class="card-content2">
-                <h3>Truck</h3>
-                <p>The backbone of logistics, transporting large volumes efficiently.</p>
-                <a href="{{ url_for('truck_html') }}" class="btn">Get started</a>
-            </div>
-        </div>    
-    </div>
-    <div class="card-container3">
-        <div class="card3">
-            <img src="{{ url_for('static', filename='images/fast-delivery.png') }}">
-            <div class="card-content3">
-                <h3>Motorcycle</h3>
-                <p>Perfect for last-mile delivery in tight city traffic.</p>
-                <a href="{{ url_for('motorcycle_html') }}" class="btn">Get started</a>
-            </div>
-        </div>    
-    </div>
-    <div class="arrow arrow-right">
-        <img src="{{ url_for('static', filename='images/chevron.png') }}" alt="right arrow">
+        <div class="arrow arrow-right">
+            <img src="{{ url_for('static', filename='images/chevron.png') }}" alt="right arrow">
+        </div>
     </div>
     <div class="ending-container">
         <div class="ending">

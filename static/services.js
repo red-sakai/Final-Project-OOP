@@ -259,4 +259,35 @@ document.addEventListener("DOMContentLoaded", () => {
             }
         });
     }
+
+    // --- 3D Carousel Logic ---
+    const cards = Array.from(document.querySelectorAll('.carousel-card'));
+    const leftArrow = document.querySelector('.arrow-left');
+    const rightArrow = document.querySelector('.arrow-right');
+    let current = 0;
+
+    function updateCarousel() {
+        cards.forEach((card, idx) => {
+            card.classList.remove('active', 'left', 'right');
+            if (idx === current) {
+                card.classList.add('active');
+            } else if ((idx === (current + 1) % 3)) {
+                card.classList.add('right');
+            } else if ((idx === (current + 2) % 3)) {
+                card.classList.add('left');
+            }
+        });
+    }
+
+    leftArrow.addEventListener('click', () => {
+        current = (current + 2) % 3; // Move left
+        updateCarousel();
+    });
+
+    rightArrow.addEventListener('click', () => {
+        current = (current + 1) % 3; // Move right
+        updateCarousel();
+    });
+
+    updateCarousel();
 });
