@@ -1,0 +1,228 @@
+/*navbar*/
+
+
+@font-face {
+    font-family: "Inter";
+    src: url("fonts/Inter-28pt-SemiBoldtalic.ttf");
+    src: url("fonts/Inter-28pt-SemiBoldtalic.ttf") format("truetype"); 
+    font-weight: normal;
+    font-style: normal;
+}
+
+.card-container{
+    display: flex;
+    justify-content: center;
+    height: 400px;
+    opacity: 100%;
+    margin-left: -10px;
+    margin-right: -10px;
+    margin-top: -10px;
+}
+
+.card {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 300px;
+    height: 70px;
+    background: linear-gradient(90deg, rgba(178,219,248,0.3) 0%, rgba(110,198,245,0.7) 100%);
+    box-shadow: 0 4px 16px #4a4a4a22;
+    margin: 0;
+    padding: 0 32px;
+    position: relative;
+    overflow: hidden;
+    gap: 18px;
+}
+
+.card img {
+    height: 60px;
+    width: 60px;
+    object-fit: contain;
+    margin: 0;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px #b2dbf8aa;
+  
+}
+
+.text {
+    font-size: 2rem;
+    font-weight: 800;
+    font-family: 'Inter', sans-serif;
+    color: #1a2a33;
+    text-shadow: 0 2px 8px #b2dbf8;
+    letter-spacing: 4px;
+    line-height: 1;
+    text-transform: uppercase;
+    margin: 0;
+}
+
+/* Text*/
+
+.Wheeler4Content h2{
+    font-size: 60px;
+    margin-top: -300px;
+    margin-left: 100px;
+    font-family: 'Inter', sans-serif;
+}
+
+.Wheeler4Content p{
+    margin-right: 100px;
+    margin-left: 100px;
+    margin-top: -30px;
+    opacity: 75%;
+    font-family: 'Inter', sans-serif;
+}
+
+/* image */
+
+.Wheeler4 img{
+    position: absolute;
+    margin-left: 750px;
+    margin-top: -25px;
+    margin-right: 300px;
+    height: 200px;
+    transform: scaleX(-1);
+} 
+
+/*buton for all*/
+
+.buttoncontainer{
+    display: inline-flex;
+    margin-top: 10px;
+    margin-left: 150px;
+    width: 100px;
+    justify-content: center;
+    align-items: center;
+    background: none;
+    border: none;
+    padding: 0;
+}
+
+
+.book-btn {
+    display: inline-block;
+    padding: 8px 32px;      
+    background-color: #B2DBF8;
+    border-radius: 15px;
+    border: none;
+    color: #fff;
+    text-decoration: none;
+    min-width: 120px;      
+    width: auto;            
+    text-align: center;
+    font-family: 'Inter', sans-serif;
+    font-weight: 600;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background 0.2s, color 0.2s;
+    line-height: 1.2;      
+    white-space: nowrap;
+    box-shadow: 4px 4px 8px #b2dbf8aa;
+}
+
+.book-btn:hover {
+    background-color: #8ecae6;
+    color: #222;
+
+}
+
+
+/* nav bar - Truck 2 */
+
+.card-container{
+    display: flex;
+    justify-content: center;
+    height: 400px;
+    opacity: 100%;
+}
+
+.card{
+    width: 1535px;
+    background-color: #d9d9d9;
+    border-radius: 15px;
+    overflow: hidden;
+    margin-top: -10px;
+    margin-left: -10px;
+    margin-right: -10px;
+    height: 80px;
+}
+
+/* Text*/
+
+.Wheeler6Content h2{
+    font-size: 60px;
+    margin-top: 50px;
+    margin-left: 100px;
+    font-family: 'Inter', sans-serif;
+}
+
+.Wheeler6Content p{
+    margin-right: 100px;
+    margin-left: 100px;
+    margin-top: -25px;
+    opacity: 75%;
+    font-family: 'Inter', sans-serif;
+
+}
+
+/* image */
+
+.Wheeler6 img{
+    position: absolute;
+    margin-left: 750px;
+    margin-top: -25px;
+    margin-right: 300px;
+    height: 200px;
+    transform: scaleX(-1);
+} 
+
+
+/* nav bar - Truck 3 */
+
+.card-container{
+    display: flex;
+    justify-content: center;
+    height: 400px;
+    opacity: 100%;
+}
+
+.card{
+    width: 1535px;
+    background-color: #d9d9d9;
+    border-radius: 0%;
+    overflow: hidden;
+    margin-top: -10px;
+    margin-left: -10px;
+    margin-right: -10px;
+    height: 80px;
+}
+
+/* Text*/
+
+.Wheeler10Content h2{
+    font-size: 60px;
+    margin-top: 50px;
+    margin-left: 100px;
+    font-family: 'Inter', sans-serif;
+}
+
+.Wheeler10Content p{
+    margin-right: 100px;
+    margin-left: 100px;
+    margin-top: -30px;
+    opacity: 75%;
+    font-family: 'Inter', sans-serif;
+
+}
+
+/* image */
+
+.Wheeler10 img{
+    position: absolute;
+    margin-left: 750px;
+    margin-top: -25px;
+    margin-right: 300px;
+    height: 200px;
+    transform: scaleX(-1);
+} 
+

@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <title>Language and Region</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='language.css') }}" />
+</head>
+<body>
+    <div class="profile-anim-container fade-in-slide">
+        <h2>Language & Region</h2>
+        <form class="profile-form">
+            <label>
+                Language:
+                <select>
+                    <option>English</option>
+                    <option>Filipino</option>
+                    <option>Spanish</option>
+                </select>
+            </label>
+            <label>
+                Region:
+                <select>
+                    <option>Asia</option>
+                    <option>Europe</option>
+                    <option>America</option>
+                    <option>Oceania</option>
+                </select>
+            </label>
+            <button type="submit" class="edit-btn">Save Changes</button>
+        </form>
+        <a href="{{ url_for('services_html') }}" class="back-link">← Back to Services</a>
+    </div>
+</html>

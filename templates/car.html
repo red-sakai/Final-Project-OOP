@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Get Started | Car</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='car.css') }}">
+</head>
+<body>
+    <!--Navbar-->
+    <div>
+       <div class="card-container">
+            <div class="card">
+            <img src="{{ url_for('static', filename='images/screentake-removebg-preview-removebg-preview.png') }}" alt="Logo">
+            <span class="text">LogistIQ © 2025</span>
+            </div>
+        </div>
+    </div>
+    <!--Toyota-->
+    <div class="Toyota">
+        <img src="{{ url_for('static', filename='images/vioshd.png') }}" class="img">
+        <div class="ToyotaContent">
+            <h2>Toyota Vios</h2>
+            <p>The Toyota Vios is a reliable, fuel-efficient <br>subcompact sedan known for its sleek design, smooth <br>handling, and practical features—ideal for non-<br>emergency services</p>
+        </div>
+        <div class="buttoncontainer">
+            <a href="{{ url_for('carbook_html') }}" class="book-btn">Book Now</a>
+        </div>
+    </div>
+    <!--Honda-->
+    <div class="Honda">
+        <img src="{{ url_for('static', filename='images/hondaupscaled.png') }}" class="img">
+        <div class="HondaContent">
+            <h2>Honda Civic</h2>
+            <p>The Honda Civic is a stylish and sporty compact sedan<br>that blends performance, comfort, and advanced tech—<br>perfect for smooth-sailing operation.</p>
+        </div>
+        <div class="buttoncontainer">
+            <a href="{{ url_for('carbook2_html') }}" class="book-btn">Book Now</a>
+        </div>
+    </div>
+    <!--MG5-->
+    <div class="MG5">
+        <img src="{{ url_for('static', filename='images/MG5BGremoveUp.png') }}" class="img">
+        <div class="MG5Content">
+            <h2>MG 5</h2>
+            <p>The MG 5 is a spacious and modern sedan offering<br>comfort, technology, and value—great for group rides<br>or executive transport.</p>
+        </div>
+        <div class="buttoncontainer">
+            <a href="{{ url_for('carbook3_html') }}" class="book-btn">Book Now</a>
+        </div>
+    </div>
+</body>
+</html>

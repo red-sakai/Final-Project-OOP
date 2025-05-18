@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <title>Recent Logins</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='profile.css') }}">
+</head>
+<body>
+    <div class="profile-anim-container fade-in-slide">
+        <h2>Recent Logins</h2>
+        <ul class="profile-info-box">
+            <li>2024-05-17 14:22 - Windows 10 - Chrome</li>
+            <li>2024-05-16 19:10 - Android - Chrome Mobile</li>
+            <li>2024-05-15 08:45 - Windows 10 - Edge</li>
+        </ul>
+        <a href="{{ url_for('services_html') }}" class="back-link">← Back to Services</a>
+    </div>
+</body>
+</html>

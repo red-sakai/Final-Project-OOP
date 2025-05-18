@@ -4,11 +4,33 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>HexaHaul | FAQ</title>
-    <link rel="stylesheet" href="/static/FAQ.css">
-    <link rel="icon" href="/assets/HexaHaul icon transparent.png">
-    <script src="/static/faq.js"></script>
+    <link rel="stylesheet" href="{{ url_for('static', filename='FAQ.css') }}">
+    <link rel="icon" href="{{ url_for('static', filename='images/screentake-removebg-preview.png') }}">
+    <script src="{{ url_for('static', filename='faq.js') }}"></script>
 </head>
 <body>
+    <!-- Chatbox -->
+    <div class="chatbox-container" id="chatbox-container">
+        <div class="chatbox-header" id="chatbox-toggle">HexaBot</div>
+        <div class="chatbox-body-container" id="chatbox-body-container">
+            <div class="chatbox-body" id="chatbox-body">
+                <div class="chat-message bot">Hi there! How can we help you today?</div>
+            </div>
+            <div class="quick-reply-toggle" id="quick-reply-toggle">Quick Replies &#9660;</div>
+            <div class="chatbox-quick-replies" id="chatbox-quick-replies">
+                <button class="quick-reply-btn">About HexaHaul</button>
+                <button class="quick-reply-btn">Who are you?</button>
+                <button class="quick-reply-btn">What services do you offer?</button>
+                <button class="quick-reply-btn">How can I track my shipment?</button>
+                <button class="quick-reply-btn">How do I contact support?</button>
+            </div>
+            <div class="chatbox-input-container">
+                <input type="text" id="chat-input" placeholder="Type a message..." />
+                <button id="send-btn">Send</button>
+            </div>
+        </div>
+    </div>
+
     <!--Navigation Bar-->
     <nav class="navbar">
         <div class="nav-container">
@@ -16,23 +38,91 @@
             <div class="logo-container">
                 <img src="/assets/HexaHaul icon transparent.png" alt="Logo" />
             </div>
-
+            <button class="nav-toggle" id="nav-toggle" aria-label="Toggle navigation">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
             <!--Navigation Links-->
-            <div class="nav-links-container">
-                <div class="nav-links">
-                    <a href="/templates/index.html">About</a>
-                    <a href="/templates/services.html">Services</a>
-                    <a href="/templates/tracking.html">Tracking</a>
-                    <a href="/templates/FAQ.html" class="active">FAQ</a>
+                <div class="nav-links-container" id="nav-links-container">
+                    <div class="nav-links">
+                    <a href="{{ url_for('index_html') }}">About</a>
+                    <a href="{{ url_for('services_html') }}">Services</a>
+                    <a href="{{ url_for('tracking_html') }}">Tracking</a>
+                    <a href="{{ url_for('faq_html') }}" class="active">FAQ</a>
                 </div>
             </div>
 
             <!--Login Button-->
             <div class="login-button-container">
-                <a href="#login"><img src="{{ url_for('static', filename='images/login.png') }}" alt="login" /></a>
+                <button id="sidebar-toggle" aria-label="Open user sidebar" style="background:none;border:none;cursor:pointer;">
+                    <img src="{{ url_for('static', filename='images/login.png') }}" alt="login" />
+                </button>
             </div>
         </div> 
     </nav>
+
+    <!-- User Sidebar -->
+    <div id="user-sidebar" class="user-sidebar">
+        <div class="sidebar-content">
+            <button class="sidebar-close" id="sidebar-close" aria-label="Close sidebar">&times;</button>
+            <div class="sidebar-profile">
+                <img src="{{ url_for('static', filename='images/profile-icon.png') }}" alt="Profile Icon" class="profile-icon">
+                <div class="profile-name">User Name</div>
+            </div>
+            <div class="sidebar-section dropdown">
+                <button class="dropdown-toggle" type="button">Profile <span class="arrow">&#9662;</span></button>
+                <ul class="dropdown-menu">
+                    <li><a href="{{ url_for('personal_info') }}">View/Edit Personal Info</a></li>
+                    <li><a href="{{ url_for('change_password') }}">Change Password</a></li>
+                    <li><a href="{{ url_for('update_email') }}">Update Email</a></li>
+                </ul>
+            </div>
+            <div class="sidebar-section dropdown">
+                <button class="dropdown-toggle" type="button">Settings <span class="arrow">&#9662;</span></button>
+                <ul class="dropdown-menu">
+                    <li><a href="{{ url_for('privacy_settings') }}">Privacy Settings</a></li>
+                    <li><a href="{{ url_for('language_region') }}">Language and Region</a></li>
+                    <li class="theme-switch-row">
+                        <span>Theme:</span>
+                        <label class="theme-switch">
+                            <input type="checkbox" id="theme-toggle">
+                            <span class="slider"></span>
+                            <span class="theme-label" id="theme-label">Light</span>
+                        </label>
+                    </li>
+                </ul>
+            </div>
+            <div class="sidebar-section dropdown">
+                <button class="dropdown-toggle" type="button">Activity Log/History <span class="arrow">&#9662;</span></button>
+                <ul class="dropdown-menu">
+                    <li><a href="{{ url_for('recent_logins') }}">Recent Logins</a></li>
+                    <li><a href="{{ url_for('recent_bookings') }}">Recent Bookings</a></li>
+                </ul>
+            </div>
+            <div class="sidebar-section dropdown">
+                <button class="dropdown-toggle" type="button">Support/Help Center <span class="arrow">&#9662;</span></button>
+                <ul class="dropdown-menu">
+                    <li><a href="{{ url_for('submit_ticket') }}">Submit a Ticket</a></li>
+                </ul>
+            </div>
+            <button class="logout-btn" id="logout-btn">Logout</button>
+        </div>
+    </div>
+    <div id="sidebar-overlay" class="sidebar-overlay"></div>
+
+    <!-- Logout Modal -->
+    <div id="logout-loading" class="logout-loading-overlay" style="display:none;">
+        <div class="logout-loading-content">
+            <div class="truck-animation">
+                <img src="{{ url_for('static', filename='images/moving-truck.gif') }}" alt="Moving Truck" class="truck-img">
+                <div class="road"></div>
+            </div>
+            <div class="logout-message">
+                <h2>You've reached your last stop. Logged out!</h2>
+            </div>
+        </div>
+    </div>
     
     <!--Cards/Boxes-->
     <div class="card-container">
@@ -51,80 +141,95 @@
     <div class="card-container2">
         <div class="card2">
             <div class="card-content2">
-                <h3>How do I track my parcel on HexaHaul?</h3>
-                <div class="arrow arrow-down">
-                    <img src="{{ url_for('static', filename='images/angle-down-solid.svg') }}">
-                </div>                        
+                <h2>
+                    How do I track my parcel on HexaHaul?
+                </h2>
+                <div class="arrow">
+                    <img src="{{ url_for('static', filename='images/angle-down-solid.svg') }}" alt="Toggle Answer">
+                </div>
+            </div>
+            <div class="card_answer hidden">
+                <h3>
+                    Customers can track their HexaBox by entering the tracking number—found in the confirmation email—into the search bar on HexaHaul's Tracking page. The system then provides real-time updates showing where the HexaBox is along its route and when it's expected to arrive. Recipients should always check their tracker to know exactly what's happening with their delivery.
+                </h3>
             </div>
         </div>
-    </div>
-    <!--answer sa questions (chat ka sa gc kapag andito ka na sa aprt na to)-->
-    <div class="card_answer">
-        <h3>To track your parcel on HexaHaul, simply enter your tracking number in the search bar on the Tracking page. You can find this number in your confirmation email. Our system will display real-time updates on your parcel's location and estimated delivery time.</h3>
     </div>
 
     <!--2nd question and answer-->
-    <div class="card-container3">
-        <div class="card3">
-            <div class="card-content3">
-                <h3>What types of vehicles does HexaHaul support for tracking?</h3>
-                <div class="arrow arrow-down2">
-                    <img src="{{ url_for('static', filename='images/angle-down-solid.svg') }}">
-                </div>                        
+    <div class="card-container2">
+        <div class="card2">
+            <div class="card-content2">
+                <h2>
+                    Which vehicle types can I track on HexaHaul (e.g., trucks, vans, drones)?
+                </h2>
+                <div class="arrow">
+                    <img src="{{ url_for('static', filename='images/angle-down-solid.svg') }}" alt="Toggle Answer">
+                </div>
+            </div>
+            <div class="card_answer hidden">
+                <h3>
+                    HexaHaul supports real-time tracking for a wide range of delivery vehicles, including cars, trucks (such as box trucks and semi-trucks), and motorcycles. Our system monitors vehicles equipped with our GPS tracking device, providing live location data, route history, and delivery status. If you have questions about tracking a specific vehicle type, our support team is happy to assist.
+                </h3>
             </div>
         </div>
-    </div>
-    <!--answer sa questions (chat ka sa gc kapag andito ka na sa aprt na to)-->
-    <div class="card_answer">
-        <h3>HexaHaul supports tracking for a wide range of delivery vehicles including vans, trucks, motorcycles, and bicycles. Our system can monitor any vehicle equipped with our GPS tracking device, providing real-time location data and route information.</h3>
     </div>
 
     <!--3rd question and answer-->
-    <div class="card-container4">
-        <div class="card4">
-            <div class="card-content4">
-                <h3>What services does HexaHaul offer aside from parcel tracking?</h3>
-                <div class="arrow arrow-down3">
-                    <img src="{{ url_for('static', filename='images/angle-down-solid.svg') }}">
-                </div>                        
+    <div class="card-container2">
+        <div class="card2">
+            <div class="card-content2">
+                <h2>
+                    What additional logistics services does HexaHaul offer besides HexaBox tracking?
+                </h2>
+                <div class="arrow">
+                    <img src="{{ url_for('static', filename='images/angle-down-solid.svg') }}" alt="Toggle Answer">
+                </div>
+            </div>
+            <div class="card_answer hidden">
+                <h3>
+                    HexaHaul offers a full suite of logistics solutions beyond HexaBox tracking. Our services include fleet management with real-time GPS tracking for vehicles like cars, trucks, and motorcycles; AI-powered delivery optimization to improve efficiency; customizable scheduling options; secure integrated payment processing; and comprehensive business analytics dashboards. We also provide API integrations to seamlessly connect with e-commerce platforms, automating your entire logistics workflow. Whether you need to monitor deliveries, optimize routes, or analyze performance data, HexaHaul has the tools to streamline your operations. Contact our team to learn how we can tailor these solutions to your specific business needs. Haul smarter with HexaHaul.
+                </h3>
             </div>
         </div>
-    </div>
-    <!--answer sa questions (chat ka sa gc kapag andito ka na sa aprt na to)-->
-    <div class="card_answer">
-        <h3>Beyond parcel tracking, HexaHaul offers fleet management solutions, delivery optimization algorithms, custom delivery scheduling, secure payment processing, and business analytics dashboards. We also provide API integration for e-commerce platforms to streamline your logistics operations.</h3>
     </div>
 
     <!--4th question and answer-->
-    <div class="card-container5">
-        <div class="card5">
-            <div class="card-content5">
-                <h3>Why is my parcel taking longer than expected to arrive?</h3>
-                <div class="arrow arrow-down4">
-                    <img src="{{ url_for('static', filename='images/angle-down-solid.svg') }}">
-                </div>                        
+    <div class="card-container2">
+        <div class="card2">
+            <div class="card-content2">
+                <h2>
+                    What could cause delays in my parcel delivery, and how can I resolve them?
+                </h2>
+                <div class="arrow">
+                    <img src="{{ url_for('static', filename='images/angle-down-solid.svg') }}" alt="Toggle Answer">
+                </div>
+            </div>
+            <div class="card_answer hidden">
+                <h3>
+                    HexaBox delivery delays can occur due to various factors such as adverse weather conditions, high seasonal volumes, traffic disruptions, or address issues. When delays happen, your tracking page will automatically update with notifications and revised delivery estimates. To address delays, first check your tracking details for specific updates and verify your delivery address is correct. If the delay persists or you need urgent assistance, our 24/7 customer support team is ready to help. During peak seasons like November-January, we recommend allowing an extra 1-2 days for delivery due to increased carrier volumes. Contact our support team for immediate assistance with any delivery concerns.
+                </h3>
             </div>
         </div>
-    </div>
-    <!--answer sa questions (chat ka sa gc kapag andito ka na sa aprt na to)-->
-    <div class="card_answer">
-        <h3>Delays can occur due to several factors including adverse weather conditions, high volume of deliveries, unexpected traffic, customs clearance for international shipments, or delivery address issues. Check your tracking page for specific delay notifications. If no information is provided, please contact our customer support.</h3>
     </div>
 
     <!--5th question and answer-->
-    <div class="card-container6">
-        <div class="card6">
-            <div class="card-content6">
-                <h3>Is my data safe on HexaHaul?</h3>
-                <div class="arrow arrow-down5">
-                    <img src="{{ url_for('static', filename='images/angle-down-solid.svg') }}">
-                </div>                        
+    <div class="card-container2">
+        <div class="card2">
+            <div class="card-content2">
+                <h2>
+                    How does HexaHaul ensure the security and privacy of my data?
+                </h2>
+                <div class="arrow">
+                    <img src="{{ url_for('static', filename='images/angle-down-solid.svg') }}" alt="Toggle Answer">
+                </div>
+            </div>
+            <div class="card_answer hidden">
+                <h3>
+                    At HexaHaul, we prioritize the protection of your data through multiple layers of security. All information is safeguarded with end-to-end encryption, ensuring that your personal and logistical data remains secure during transmission and storage. We conduct regular security audits and vulnerability assessments to maintain the highest protection standards. HexaHaul complies with global data protection regulations, including GDPR and CCPA, and adheres to strict access controls to prevent unauthorized use. Rest assured, HexaHaul never share your personal information with third parties without your explicit consent. For added transparency, you can manage your data preferences directly in your account settings. If you have any concerns, HexaHaul's dedicated security team is available to assist you.
+                </h3>
             </div>
         </div>
-    </div>
-    <!--answer sa questions (chat ka sa gc kapag andito ka na sa aprt na to)-->
-    <div class="card_answer">
-        <h3>Yes, your data is secure with HexaHaul. We employ industry-standard encryption protocols and regular security audits to protect all user information. Our platform complies with global data protection regulations, and we never share your personal information with third parties without your explicit consent.</h3>
     </div>
     
     <div class="slogan">
