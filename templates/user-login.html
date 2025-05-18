@@ -16,12 +16,15 @@
                     <p class="logistiq-slogan">Delivering excellence. No matter the situation.</p>
                     <center><img src="{{ url_for('static', filename='images/HexaHaul logo.png') }}" alt="Logo" /></center>
                 </div>
-                <form action="index.html" method="post" class="user-login-form">
-                    <input type="text" placeholder="Username" class="user-username-input" required />  
+                <form action="{{ url_for('user_login_html') }}" method="post" class="user-login-form">
+                    <input type="text" name="username" placeholder="Username" class="user-username-input" required />  
                     <div class="user-password-container">
-                        <input type="password" placeholder="Password" class="user-password-input" id="user-password" required />
+                        <input type="password" name="password" placeholder="Password" class="user-password-input" id="user-password" required />
                         <span class="toggle-password" onclick="togglePassword()">
-                            <img src="/assets/visible.png" alt="Show Password" id="show-password-icon">
+                            <img src="{{ url_for('static', filename='images/visible.png') }}" 
+                                 data-visible="{{ url_for('static', filename='images/visible.png') }}"
+                                 data-hide="{{ url_for('static', filename='images/hide.png') }}"
+                                 alt="Show Password" id="show-password-icon">
                         </span>
                     </div>
                     <button type="submit" class="signin-button">Sign In</button>
@@ -33,22 +36,9 @@
             </div>
         </div>
         <script>
-            let isVisible = false;
-
-            function togglePassword() {
-                const input = document.getElementById("user-password");
-                const icon = document.getElementById("show-password-icon");
-
-                if (!input || !icon) {
-                    console.warn("Password input or icon not found");
-                    return;
-                }
-
-                isVisible = !isVisible;
-                input.type = isVisible ? "text" : "password";
-                icon.src = isVisible ? "/assets/hide.png" : "/assets/visible.png";
-                icon.alt = isVisible ? "Hide Password" : "Show Password";
-            }
+            // Pass Flask URL to JS
+            const adminLoginUrl = "{{ url_for('admin_login') }}";
         </script>
+        <script src="{{ url_for('static', filename='user-login.js') }}"></script>
     </body> 
 </html>
