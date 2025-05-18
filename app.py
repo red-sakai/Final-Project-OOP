@@ -235,6 +235,15 @@ def admin_new_password():
             flash("Passwords do not match or do not meet requirements.")
     return render_template('admin-new-password.html', email=email)
 
+@app.route('/admin-resend-otp', methods=['POST'])
+def admin_resend_otp():
+    email = request.form.get('email')
+    if email:
+        otp = password_reset_manager.generate_otp(email)
+        password_reset_manager.send_admin_otp(email, otp)
+        return jsonify({'success': True, 'message': 'Verification code resent.'})
+    return jsonify({'success': False, 'message': 'Email not found.'}), 400
+
 # Truck routes
 @app.route("/truck")
 def truck_html():
