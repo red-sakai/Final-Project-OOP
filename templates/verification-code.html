@@ -4,8 +4,8 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <title>LogistIQ | HexaHaul</title>
-        <link rel="stylesheet" href="/static/verification-code.css" />
-        <link rel="icon" href="/assets/HexaHaul icon transparent.png" />
+        <link rel="stylesheet" href="{{ url_for('static', filename='verification-code.css') }}" />
+        <link rel="icon" href="{{ url_for('static', filename='images/HexaHaul icon transparent.png') }}" />
     </head>
     <body>
 
@@ -15,111 +15,81 @@
                 <div class="verification-code-panel">
                     <div class="verification-code-header">
                         <p class="verification-code">Verification Code</p>
-                        <p class="verification-code-text">A verification code has been sent to <strong id="email-display"></strong></p>
+                        <p class="verification-code-text">
+                            {% if is_admin %}
+                            An admin verification code has been sent to <strong id="email-display">{{ email }}</strong>
+                            {% else %}
+                            A verification code has been sent to <strong id="email-display">{{ email }}</strong>
+                            {% endif %}
+                        </p>
                     </div>
 
-                    <div class="otp-box">
-                        <input type="text" maxlength="1" class="otp-input">
-                        <input type="text" maxlength="1" class="otp-input">
-                        <input type="text" maxlength="1" class="otp-input">  
-                        <input type="text" maxlength="1" class="otp-input">
-                        <input type="text" maxlength="1" class="otp-input">
-                        <input type="text" maxlength="1" class="otp-input">
-                    </div>
-                    <div id="otp-error-message" class="error-message">Please enter a valid verification code.</div>
+                    <form method="post" autocomplete="off" id="otp-form">
+                        <input type="hidden" name="email" value="{{ email }}">
+                        <div class="otp-box">
+                            <input type="text" maxlength="1" name="otp1" class="otp-input" required pattern="[0-9]*" inputmode="numeric" autocomplete="off">
+                            <input type="text" maxlength="1" name="otp2" class="otp-input" required pattern="[0-9]*" inputmode="numeric" autocomplete="off">
+                            <input type="text" maxlength="1" name="otp3" class="otp-input" required pattern="[0-9]*" inputmode="numeric" autocomplete="off">
+                            <input type="text" maxlength="1" name="otp4" class="otp-input" required pattern="[0-9]*" inputmode="numeric" autocomplete="off">
+                            <input type="text" maxlength="1" name="otp5" class="otp-input" required pattern="[0-9]*" inputmode="numeric" autocomplete="off">
+                            <input type="text" maxlength="1" name="otp6" class="otp-input" required pattern="[0-9]*" inputmode="numeric" autocomplete="off">
+                        </div>
+                        <div id="otp-error-message" class="error-message">
+                            {% with messages = get_flashed_messages() %}
+                              {% if messages %}
+                                {{ messages[0] }}
+                              {% else %}
+                                Please enter a valid verification code.
+                              {% endif %}
+                            {% endwith %}
+                        </div>
+                        <button type="submit" class="reset-password-button" id="continue-btn" style="margin-top: 24px;">Continue</button>
+                    </form>
 
                     <div class="resend-code-container">
                         <p class="resend-code-gray" id="gray">
                             Didn't receive the code? 
                         </p>
-
                         <p class="resend-code-blue" id="blue">
                             Resend the code in <span class="timer" id="countdown">03:00</span>
                         </p>
-                    </div>
-
-                    <div class="reset-password-container">
-                        <a href="admin-new-password.html" button type="submit" class="reset-password-button" id="reset-password-btn" disabled>Reset Password</a>
                     </div>
                 </div>
             </div>
         </div>
         <script>
-        // Extract email from URL and display it
-        const params = new URLSearchParams(window.location.search);
-        const email = params.get("email");
-        if (email) {
-            document.getElementById("email-display").textContent = email;
-        }
-
-        // Countdown Timer and Resend Code Logic
-        let timeLeft = 180;
-        const countdownEl = document.getElementById("countdown");
-        const resendBlue = document.getElementById("blue");
-
-        function updateTimer() {
-            const minutes = String(Math.floor(timeLeft / 60)).padStart(2, '0');
-            const seconds = String(timeLeft % 60).padStart(2, '0');
-            countdownEl.textContent = `${minutes}:${seconds}`;
-            if (timeLeft > 0) {
-                timeLeft--;
-                setTimeout(updateTimer, 1000);
-            } else {
-                makeResendClickable();
-            }
-        }
-
-        function makeResendClickable() {
-            resendBlue.innerHTML = `<a href="#" id="resend-link" style="color:#095190; text-decoration:underline; cursor:pointer;">Resend the code</a>`
-            document.getElementById("resend-link").addEventListener("click", function(e) {
-                e.preventDefault();
-                sendVerificationCode();
+            // Autofocus next input
+            const inputs = document.querySelectorAll('.otp-input');
+            inputs.forEach((input, idx) => {
+                input.addEventListener('input', function() {
+                    if (this.value.length === 1 && idx < inputs.length - 1) {
+                        inputs[idx + 1].focus();
+                    }
+                });
+                input.addEventListener('keydown', function(e) {
+                    if (e.key === "Backspace" && this.value === "" && idx > 0) {
+                        inputs[idx - 1].focus();
+                    }
+                });
             });
 
-        }
-
-        function sendVerificationCode() {
-                resendBlue.innerHTML = `Resend the code in <span class="timer" id="countdown">03:00</span>`;
-                timeLeft = 180;
-                countdownEl = document.getElementById("countdown");
-                updateTimer();
-        };
-
-        updateTimer();
-
-        const systemCode = "123456"; // Replace with your backend-generated code
-        const errorMessage = document.getElementById("otp-error-message");
-        const resetBtn = document.getElementById("reset-password-btn");
-        const otpInputs = document.querySelectorAll(".otp-input");
-
-        // Function to get user code
-        function getUserCode() {
-            let userCode = "";
-            otpInputs.forEach(input => userCode += input.value);
-            return userCode;
-        }
-
-        // Enable/disable button as user types
-        otpInputs.forEach(input => {
-            input.addEventListener("input", function() {
-                if (getUserCode() === systemCode) {
-                    resetBtn.disabled = false;
-                } else {
-                    resetBtn.disabled = true;
-                }
-                // Do NOT show/hide error message here
+            // Optional: On form submit, combine OTP and POST to Flask
+            document.getElementById('otp-form').addEventListener('submit', function(e) {
+                // Combine OTP fields into one value for backend
+                let otp = '';
+                inputs.forEach(input => otp += input.value);
+                // Add a hidden input with the full OTP
+                let otpHidden = document.createElement('input');
+                otpHidden.type = 'hidden';
+                otpHidden.name = 'otp';
+                otpHidden.value = otp;
+                this.appendChild(otpHidden);
             });
-        });
-
-        resetBtn.addEventListener("click", function(e) {
-            e.preventDefault();
-            if (getUserCode() === systemCode) {
-                errorMessage.classList.remove("visible"); // Hide error if previously shown
-                window.location.href = "admin-new-password.html?email=" + encodeURIComponent(email);
-            } else {
-                errorMessage.classList.add("visible"); // Show error only on invalid code and click
-            }
-        });
         </script>
+        <script>
+            const email = "{{ email|e }}";
+            const isAdmin = {{ 'true' if is_admin else 'false' }};
+        </script>
+        <script src="{{ url_for('static', filename='verification-code.js') }}"></script>
     </body>
 </html>
