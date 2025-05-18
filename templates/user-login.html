@@ -16,18 +16,14 @@
                     <p class="logistiq-slogan">Delivering excellence. No matter the situation.</p>
                     <center><img src="{{ url_for('static', filename='images/HexaHaul logo.png') }}" alt="Logo" /></center>
                 </div>
-                {% with messages = get_flashed_messages() %}
-                  {% if messages %}
-                    <div class="flash-messages">
-                      {% for message in messages %}
-                        <p style="color: red;">{{ message }}</p>
-                      {% endfor %}
+                <form action="index.html" method="post" class="user-login-form">
+                    <input type="text" placeholder="Username" class="user-username-input" required />  
+                    <div class="user-password-container">
+                        <input type="password" placeholder="Password" class="user-password-input" id="user-password" required />
+                        <span class="toggle-password" onclick="togglePassword()">
+                            <img src="/assets/visible.png" alt="Show Password" id="show-password-icon">
+                        </span>
                     </div>
-                  {% endif %}
-                {% endwith %}
-                <form action="{{ url_for('user_login_html') }}" method="post" class="user-login-form">
-                    <input type="text" name="username" placeholder="Username" class="user-username-input" required />
-                    <input type="password" name="password" placeholder="Password" class="user-password-input" required />
                     <button type="submit" class="signin-button">Sign In</button>
                     <a href="{{ url_for('forgot_password') }}" class="forgot-password-link">Forgot Password?</a>
                 </form>
@@ -37,8 +33,22 @@
             </div>
         </div>
         <script>
-            const adminDashboardUrl = "{{ url_for('admin_dashboard') }}";
+            let isVisible = false;
+
+            function togglePassword() {
+                const input = document.getElementById("user-password");
+                const icon = document.getElementById("show-password-icon");
+
+                if (!input || !icon) {
+                    console.warn("Password input or icon not found");
+                    return;
+                }
+
+                isVisible = !isVisible;
+                input.type = isVisible ? "text" : "password";
+                icon.src = isVisible ? "/assets/hide.png" : "/assets/visible.png";
+                icon.alt = isVisible ? "Hide Password" : "Show Password";
+            }
         </script>
-        <script src="{{ url_for('static', filename='admin-dashboard.js') }}"></script>
     </body> 
 </html>

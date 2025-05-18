@@ -48,7 +48,6 @@ body {
     margin: 0;
     justify-content: center;
     align-items: center;
-    display: flex;
 }
 
 * {
@@ -57,31 +56,9 @@ body {
     box-sizing: border-box;
 }
 
-.logistiq-text {
-    padding-top: 50px;
-    text-align: center;
-    font-family: "Futura", sans-serif;
-    font-size: 30px;
-    font-weight: bold;
-    color: var(--primary-color);
-}
+/* Verification Code */
 
-.logistiq-slogan {
-    text-align: center;
-    font-family: "Inter", sans-serif;
-    font-size: 15px;
-    font-weight: normal;
-    color: var(--primary-color);
-}
-
-.required-asterisk {
-    color: red;
-}
-
-
-/* Admin Login Page */
-
-.admin-login-background {
+.verification-code-background {
     background-color: #bebebe;
     width: 100vw;
     height: 100vh;
@@ -92,7 +69,7 @@ body {
 
 }
 
-.admin-login-panel {
+.verification-code-panel {
     background-color: var(--bg-color);
     padding: 5px;
     text-align: center;
@@ -104,49 +81,80 @@ body {
     align-items: center;
 }
 
-.admin-login-header {
+.verification-code-header {
     margin-bottom: 30px;;
 }
 
-.admin-login-form {
-    width: 100%;
-    max-width: 185px;
+.verification-code {
+    padding-top: 20px;
+    text-align: center;
+    font-family: "Futura", sans-serif;
+    font-size: 30px;
+    font-weight: bold;
+    color: var(--primary-color);
+}
+
+.verification-code-text {
+    padding-top: 20px;
+    padding-left: 30px;
+    padding-right: 30px;
+    text-align: center;
+    font-family: "Inter", sans-serif;
+    font-size: 15px;
+    font-weight: normal;
+    color: var(--primary-color);
+}
+
+.otp-box {
     display: flex;
-    flex-direction: column;
-    align-items: stretch;
-    margin-bottom: 20px;
+    justify-content: space-between;
+    gap: 12px;
+    margin-bottom: 25px;
 }
 
-.admin-username-input,
-.admin-password-input {
-    display: block;
-    padding: 10px;
-    margin: 10px auto;
-    border: 1px solid var(--form-box-color);
-    border-radius: 6px;
+.otp-box input {
+    width: 50px;
+    height: 50px;
+    text-align: center;
+    font-size: 20px;
+    border: 2px solid var(--form-box-color);
+    border-radius: 8px;
+    background-color: transparent;
+    color: var(--primary-color);
+    transition: border-color 0.2s;
 }
 
-.admin-password-container {
-    position: relative;
-    width: 100%;
+.otp-box input:focus {
+    border-color: var(--primary-color);
+    outline: none;
 }
 
-.toggle-password {
-    position: absolute;
-    right: 10px;
-    top: 50%;
-    transform: translateY(-50%);
-    cursor: pointer;
+.resend-code-gray {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 10px;
+    margin-left: 80px;
+    margin-right: 80px;
+    color: var(--form-box-color);
 }
 
-.toggle-password img {
-    width: 20px;
-    height: 20px;
+.resend-code-blue {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 8px;
+    margin-left: 80px;
+    margin-right: 80px;
 }
 
-.signin-button {
-    width: 80px;
-    margin: 0 auto;
+.timer {
+    margin-left: 5px;
+    font-weight: bold;
+}
+
+.reset-password-button {
+    width: 150px;
     margin-top: 20px;
     padding: 10px;
     display: block;
@@ -155,33 +163,31 @@ body {
     border: none;
     border-radius: 6px;
     cursor: pointer;
+    text-decoration: none;
     font-family: "Inter", sans-serif;
     font-size: 15px;
     transition: background 0.2s, color 0.2s;
 }
 
-.signin-button:hover {
+.reset-password-button:hover {
     background-color: var(--secondary-color);
 }
 
-.admin-forgot-password {
-    width: 100%;
-    display: block;
-    font-size: 15px;
-    justify-content: center;
-    margin-top: 10px;
-    padding: 0;
-    margin-left: auto;
-    margin-right: auto;
-    text-align: center;
+.input-error {
+    border: 1px solid red !important;
 }
 
-.admin-forgot-password a {
-    text-decoration: none;
-    color: #bebebe;
+.error-message {
+    color: #e74c3c;
+    min-height: 18px;
+    font-size: 13px;
+    margin-top: 4px;
+    margin-left: 4px;
     font-family: "Inter", sans-serif;
+    display: block;
+    visibility: hidden;
 }
 
-.admin-forgot-password a:hover {
-    color: var(--primary-color);
+.error-message.visible {
+    visibility: visible;
 }
