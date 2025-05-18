@@ -283,6 +283,18 @@ def admin_hexaboxes():
 def admin_utilities():
     return render_template('admin_utilities.html')
 
+@app.route('/admin-forgot-password', methods=['GET', 'POST'])
+def admin_forgot_password():
+    error = None
+    if request.method == 'POST':
+        email = request.form.get('email')
+        if not email or not re.match(r'^[^@]+@[^@]+\.[^@]+$', email):
+            error = "Please enter a valid email address."
+        else:
+            # send verification code logic here
+            return redirect(url_for('verification_code', email=email))
+    return render_template('admin-forgot-password.html', error=error)
+
 # predefined quick replies and their answers
 QUICK_REPLY_ANSWERS = {
     "about hexahaul": "HexaHaul is a logistics company founded and operated by a passionate team of six people: Jhered, Carl, Patricia, Kris, Sandrine, and CJ. We provide efficient and reliable transportation solutions for businesses and individuals.",

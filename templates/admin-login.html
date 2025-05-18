@@ -5,7 +5,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <title>LogistIQ | HexaHaul</title>
         <link rel="stylesheet" href="{{ url_for('static', filename='admin-login.css') }}">
-        <link rel="icon" href="/assets/HexaHaul icon transparent.png" />
+        <link rel="icon" href="{{ url_for('static', filename='images/HexaHaul icon transparent.png') }}" />
     </head>
     <body>
     
@@ -18,39 +18,28 @@
                         <p class="logistiq-slogan">Delivering excellence. No matter the situation.</p>
                     </div>
 
-                    <form action="admin.html" method="post" class="admin-login-form">
+                    <form action="{{ url_for('admin_login') }}" method="post" class="admin-login-form">
                         <input type="text" placeholder="Username" class="admin-username-input" required />
                         <div class="admin-password-container">
                             <input type="password" placeholder="Password" class="admin-password-input" id="admin-password" required />
                             <span class="toggle-password" onclick="togglePassword()">
-                                <img src="/assets/visible.png" alt="Show Password" id="show-password-icon">
+                                <img src="{{ url_for('static', filename='images/visible.png') }}"
+                                     data-visible="{{ url_for('static', filename='images/visible.png') }}"
+                                     data-hide="{{ url_for('static', filename='images/hide.png') }}"
+                                     alt="Show Password" id="show-password-icon">
                             </span>
                         </div>
                         <button type="submit" class="signin-button">Sign In</button>
                     </form>
                     <div class="admin-forgot-password">
-                        <a href=admin-forgot-password.html>Forgot Password?</a>
+                        <a href="{{ url_for('admin_forgot_password') }}">Forgot Password?</a>
                     </div> 
                 </div>
             </div>
         </div> 
         <script>
-            let isVisible = false;
-
-            function togglePassword() {
-                const input = document.getElementById("admin-password");
-                const icon = document.getElementById("show-password-icon");
-
-                if (!input || !icon) {
-                    console.warn("Password input or icon not found");
-                    return;
-                }
-
-                isVisible = !isVisible;
-                input.type = isVisible ? "text" : "password";
-                icon.src = isVisible ? "/assets/hide.png" : "/assets/visible.png";
-                icon.alt = isVisible ? "Hide Password" : "Show Password";
-            }
+            // No inline JS, handled in admin-login.js
         </script>
+        <script src="{{ url_for('static', filename='admin-login.js') }}"></script>
     </body>
 </html>
