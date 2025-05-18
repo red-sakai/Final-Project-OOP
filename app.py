@@ -68,6 +68,37 @@ class PasswordResetManager:
         """
         mail.send(msg)
 
+    def send_admin_otp(self, email, otp):
+        logo_url = "https://i.imgur.com/upLAusA.png"
+        msg = Message("Admin Password Reset Code: " + otp,
+                      sender="hexahaulprojects@gmail.com",
+                      recipients=[email])
+        msg.html = f"""
+        <div style="background:#f7f7f7;padding:40px 0;">
+          <div style="max-width:480px;margin:0 auto;background:#fff;border-radius:8px;overflow:hidden;box-shadow:0 2px 8px rgba(0,0,0,0.05);">
+            <div style="background:#e6e9ef;padding:24px 0;text-align:center;">
+              <img src="{logo_url}" alt="HexaHaul Logo" style="width:64px;height:64px;margin-bottom:8px;">
+              <h2 style="margin:0;font-family:sans-serif;color:#03335e;">Admin Password Reset Code</h2>
+            </div>
+            <div style="padding:32px 24px;text-align:center;">
+              <p style="font-family:sans-serif;color:#333;font-size:16px;margin-bottom:24px;">
+                Here is your admin password reset code:
+              </p>
+              <div style="font-size:36px;letter-spacing:12px;font-family:monospace;color:#03335e;font-weight:bold;margin-bottom:16px;">
+                {otp}
+              </div>
+              <p style="font-family:sans-serif;color:#888;font-size:14px;">
+                This code is for admin use only and will expire soon.
+              </p>
+            </div>
+            <div style="padding:16px 24px 24px 24px;font-family:sans-serif;font-size:13px;color:#888;text-align:center;">
+              If you did not request this, please contact HexaHaul support immediately.
+            </div>
+          </div>
+        </div>
+        """
+        mail.send(msg)
+
     def verify_otp(self, email, otp):
         return self.__user_otps.get(email) == otp
 
@@ -155,9 +186,16 @@ def forgot_password():
 def verify_otp():
     email = request.args.get("email")
     if request.method == "POST":
-        input_otp = request.form.get("otp")
+        otp = ''.join([
+            request.form.get('otp1', ''),
+            request.form.get('otp2', ''),
+            request.form.get('otp3', ''),
+            request.form.get('otp4', ''),
+            request.form.get('otp5', ''),
+            request.form.get('otp6', ''),
+        ])
         new_password = request.form.get("new_password")
-        if password_reset_manager.verify_otp(email, input_otp):
+        if password_reset_manager.verify_otp(email, otp):
             # TODO: Update user's password in your database
             password_reset_manager.clear_otp(email)
             flash("Password changed successfully. Please login.")
@@ -165,6 +203,37 @@ def verify_otp():
         else:
             flash("Invalid OTP. Please try again.")
     return render_template("verify-otp.html", email=email)
+
+@app.route('/verification-code')
+def verification_code():
+    email = request.args.get('email')
+    return render_template('verification-code.html', email=email)
+
+@app.route('/admin-verification-code', methods=['GET', 'POST'])
+def admin_verification_code():
+    email = request.values.get('email')
+    if request.method == 'POST':
+        otp = ''.join([request.form.get(f'otp{i}', '') for i in range(1, 7)])
+        if password_reset_manager.verify_otp(email, otp):
+            password_reset_manager.clear_otp(email)
+            return redirect(url_for('admin_new_password', email=email))
+        else:
+            flash("Invalid verification code. Please try again.")
+    return render_template('verification-code.html', email=email, is_admin=True)
+
+@app.route('/admin-new-password', methods=['GET', 'POST'])
+def admin_new_password():
+    email = request.values.get('email')
+    if request.method == 'POST':
+        new_password = request.form.get('new_password')
+        confirm_password = request.form.get('confirm_password')
+        if new_password == confirm_password and len(new_password) >= 8:
+            # Save new password logic here
+            flash("Password reset successful. Please login.")
+            return redirect(url_for('admin_login'))
+        else:
+            flash("Passwords do not match or do not meet requirements.")
+    return render_template('admin-new-password.html', email=email)
 
 # Truck routes
 @app.route("/truck")
@@ -296,8 +365,9 @@ def admin_forgot_password():
         if not email or not re.match(r'^[^@]+@[^@]+\.[^@]+$', email):
             error = "Please enter a valid email address."
         else:
-            # send verification code logic here
-            return redirect(url_for('verification_code', email=email))
+            otp = password_reset_manager.generate_otp(email)
+            password_reset_manager.send_admin_otp(email, otp)
+            return redirect(url_for('admin_verification_code', email=email))
     return render_template('admin-forgot-password.html', error=error)
 
 # predefined quick replies and their answers
