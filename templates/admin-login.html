@@ -18,10 +18,20 @@
                         <p class="logistiq-slogan">Delivering excellence. No matter the situation.</p>
                     </div>
 
+                    {% with messages = get_flashed_messages(with_categories=true) %}
+                      {% if messages %}
+                        <ul class="flashes">
+                          {% for category, message in messages %}
+                            <li class="{{ category }}">{{ message }}</li>
+                          {% endfor %}
+                        </ul>
+                      {% endif %}
+                    {% endwith %}
+
                     <form action="{{ url_for('admin_login') }}" method="post" class="admin-login-form">
-                        <input type="text" placeholder="Username" class="admin-username-input" required />
+                        <input type="text" name="username" placeholder="Username" class="admin-username-input" required />
                         <div class="admin-password-container">
-                            <input type="password" placeholder="Password" class="admin-password-input" id="admin-password" required />
+                            <input type="password" name="password" placeholder="Password" class="admin-password-input" id="admin-password" required />
                             <span class="toggle-password" onclick="togglePassword()">
                                 <img src="{{ url_for('static', filename='images/visible.png') }}"
                                      data-visible="{{ url_for('static', filename='images/visible.png') }}"
