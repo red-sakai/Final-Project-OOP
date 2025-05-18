@@ -108,11 +108,16 @@ def faq_html():
     print("FAQ route accessed")
     return render_template("FAQ.html")
 
-@app.route("/admin-login")
-@app.route("/admin-login.html")
+@app.route("/admin-login", methods=["GET", "POST"])
 def admin_login():
-    print("Admin login route accessed")
-    return render_template("admin-login.html")
+    if request.method == 'POST':
+        username = request.form.get('username')
+        password = request.form.get('password')
+        if username == 'admin' and password == 'admin123':
+            return redirect(url_for('admin_dashboard'))
+        else:
+            flash('Invalid username or password', 'error')
+    return render_template('admin-login.html')
 
 @app.route("/user-login", methods=["GET", "POST"])
 @app.route("/user-login.html", methods=["GET", "POST"])
