@@ -52,6 +52,12 @@
             <img src="{{ url_for('static', filename='images/10 Wheeler.png') }}" alt="10 Wheeler">
         </div>
     </div>
+    <div id="loading-popup" class="loading-popup" style="display:none;">
+        <div class="loading-popup-content">
+            <img src="{{ url_for('static', filename='images/pop out box.gif') }}" alt="Loading..." class="loading-gif">
+            <p class="loading-message">Packaging your items in a HexaBox!</p>
+        </div>
+    </div>
     <script src="{{ url_for('static', filename='truck.js') }}"></script>
 </body>
 </html>
