@@ -53,12 +53,14 @@
 
     <!-- Popup -->
     <div class="popup" id="popup" style="display:none;">
-        <img src="{{ url_for('static', filename='images/tick.png') }}" alt="img">
-        <div class="pcontent">
-            <h2 class="you">Thank You!</h2>
-            <p class="TD">Your tracking ID is 0123ab</p>
+        <div class="popup-content">
+            <img src="{{ url_for('static', filename='images/tick.png') }}" alt="img">
+            <div class="pcontent">
+                <h2 class="you">Thank You!</h2>
+                <p class="TD">Your tracking ID is 0123ab</p>
+            </div>
+            <button type="button" class="OK" id="okBtn" onclick="closePpopup()" disabled>OK(<span id="okTimer">3</span>)</button>
         </div>
-        <button type="button" class="OK" id="okBtn" onclick="closePpopup()" disabled>OK(<span id="okTimer">3</span>)</button>
     </div>
 
     <script>

@@ -27,3 +27,13 @@ document.querySelectorAll('.motorcycle-book-btn').forEach(btn => {
         }, 1800); // 1.8 seconds
     });
 });
+
+document.querySelector('.btn').addEventListener('mousedown', function() {
+    this.style.transform = 'scale(0.97)';
+});
+document.querySelector('.btn').addEventListener('mouseup', function() {
+    this.style.transform = '';
+});
+document.querySelector('.btn').addEventListener('mouseleave', function() {
+    this.style.transform = '';
+});
