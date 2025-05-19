@@ -344,3 +344,50 @@ body {
     .truck-card img { width: 100%; }
 }
 
+/* Loading Popup Styles */
+
+.loading-popup {
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: rgba(3, 51, 94, 0.25); /* darker overlay for more pop */
+    z-index: 9999;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    animation: fadeInBg 0.3s;
+}
+@keyframes fadeInBg {
+    from { background: rgba(3,51,94,0); }
+    to   { background: rgba(3,51,94,0.25); }
+}
+.loading-popup-content {
+    background: #E9EDF0;
+    border-radius: 22px;
+    padding: 48px 40px 40px 40px;
+    box-shadow: 0 12px 48px #03335e55, 0 2px 12px #03335e22;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-width: 320px;
+    animation: popIn 0.35s cubic-bezier(.4,2,.3,1);
+    border: 2.5px solid #b2dbf8;
+}
+@keyframes popIn {
+    0% { transform: scale(0.85) translateY(30px); opacity: 0; }
+    100% { transform: scale(1) translateY(0); opacity: 1; }
+}
+.loading-gif {
+    width: 180px;
+    height: 130px;
+    margin-bottom: 22px;
+}
+.loading-message {
+    font-size: 1.25rem;
+    color: #03335e;
+    font-family: 'Inter', sans-serif;
+    font-weight: 700;
+    text-align: center;
+    letter-spacing: 0.5px;
+    text-shadow: 0 2px 8px #b2dbf8aa;
+}
+
