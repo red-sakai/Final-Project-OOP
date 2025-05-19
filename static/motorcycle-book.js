@@ -9,13 +9,13 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 
     function openPopup() {
-        document.getElementById("popup").style.display = "block";
+        document.getElementById("popup").classList.add("show");
         document.querySelector('.book-container').classList.add('blurred');
         startOkTimer();
     }
 
     window.closePpopup = function() {
-        document.getElementById("popup").style.display = "none";
+        document.getElementById("popup").classList.remove("show");
         document.querySelector('.book-container').classList.remove('blurred');
         window.location.href = motorcycleHomeUrl;
     }
