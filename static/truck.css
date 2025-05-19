@@ -121,9 +121,9 @@
 }
 
 .book-btn:hover {
-    background-color: #8ecae6;
-    color: #222;
-
+    background-color: #095190;
+    color: #fff;
+    box-shadow: 0 6px 24px #03335e44;
 }
 
 
@@ -224,5 +224,123 @@
     margin-right: 300px;
     height: 200px;
     transform: scaleX(-1);
-} 
+}
+
+/* Truck Page Styles */
+
+body {
+    background: #f7f7f7;
+    font-family: 'Inter', sans-serif;
+    margin: 0;
+    padding: 0;
+}
+.truck-header {
+    background: #03335e;
+    color: #fff;
+    padding: 40px 0 30px 0;
+    text-align: center;
+}
+.truck-header h1 {
+    font-size: 2.5rem;
+    margin: 0;
+    font-weight: 800;
+    letter-spacing: 1px;
+}
+.truck-header p {
+    font-size: 1.2rem;
+    margin: 0;
+    color: #b2dbf8;
+    font-weight: 500;
+}
+.truck-navbar {
+    background: #095190;
+    color: #fff;
+    display: flex;
+    justify-content: center;
+    gap: 40px;
+    padding: 16px 0;
+}
+.truck-navbar a {
+    color: #fff;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 1.1rem;
+    padding: 8px 24px;
+    border-radius: 90px;
+    transition: background 0.2s, color 0.2s;
+}
+.truck-navbar a.active,
+.truck-navbar a:hover {
+    background: #b2dbf8;
+    color: #03335e;
+}
+.truck-cards {
+    max-width: 900px;
+    margin: 40px auto;
+}
+.truck-card {
+    background: #fff;
+    border-radius: 16px;
+    box-shadow: 0 2px 12px #03335e11;
+    display: flex;
+    align-items: center;
+    margin-bottom: 32px;
+    overflow: hidden;
+    transition: box-shadow 0.3s cubic-bezier(.4,2,.3,1), transform 0.3s cubic-bezier(.4,2,.3,1);
+    cursor: pointer;
+}
+.truck-card:hover {
+    box-shadow: 0 8px 32px #03335e33;
+    transform: translateY(-6px) scale(1.02);
+}
+.truck-card > div {
+    flex: 1;
+    padding: 32px;
+}
+.truck-card span {
+    color: #8ecae6;
+    font-weight: 700;
+    font-size: 1rem;
+}
+.truck-card h2 {
+    margin: 8px 0 0 0;
+    font-size: 1.4rem;
+    font-weight: 600;
+    color: #03335e;
+}
+.book-btn {
+    display: inline-block;
+    margin-top: 18px;
+    padding: 8px 32px;
+    background-color: #b2dbf8;
+    border-radius: 15px;
+    border: none;
+    color: #03335e;
+    text-decoration: none;
+    font-family: 'Inter', sans-serif;
+    font-weight: 600;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background 0.2s, color 0.2s, box-shadow 0.2s;
+    box-shadow: 4px 4px 8px #b2dbf8aa;
+}
+.book-btn:hover {
+    background-color: #095190;
+    color: #fff;
+    box-shadow: 0 6px 24px #03335e44;
+}
+.truck-card img {
+    width: 320px;
+    object-fit: contain;
+    background: #f7f7f7;
+    transition: transform 0.4s cubic-bezier(.4,2,.3,1);
+}
+.truck-card:hover img {
+    transform: scale(1.07) rotate(-2deg);
+}
+@media (max-width: 900px) {
+    .truck-cards { max-width: 98vw; }
+    .truck-card { flex-direction: column; }
+    .truck-card img { width: 100%; }
+}
 
