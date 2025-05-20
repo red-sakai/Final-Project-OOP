@@ -53,11 +53,11 @@
                             </div>
                         </div>
                         <div class="pay-fields" id="credit-fields">
-                            <input type="text" placeholder="Cardholder Name" required>
-                            <input type="text" placeholder="Card Number" maxlength="19" required>
+                            <input type="text" placeholder="Cardholder Name">
+                            <input type="text" placeholder="Card Number" maxlength="19">
                             <div class="pay-row">
-                                <input type="text" placeholder="MM/YY" maxlength="5" required>
-                                <input type="text" placeholder="CVV" maxlength="4" required>
+                                <input type="text" placeholder="MM/YY" maxlength="5">
+                                <input type="text" placeholder="CVV" maxlength="4">
                             </div>
                         </div>
                         <div class="pay-fields" id="gcash-fields" style="display:none;">
@@ -70,9 +70,13 @@
                             <div id="paypal-button-container"></div>
                         </div>
                         <div class="pay-fields" id="cod-fields" style="display:none;">
+                            <div class="cod-inputs">
+                                <input type="text" placeholder="Address Line 1" id="cod-address1" autocomplete="off">
+                                <input type="text" placeholder="Address Line 2 (optional)" id="cod-address2" autocomplete="off">
+                            </div>
                             <div class="cod-info">You will pay the rider upon delivery.</div>
                         </div>
-                        <button type="submit" class="pay-btn" id="payBtn">Pay Now</button>
+                        <button type="submit" class="pay-btn" id="payBtn">Order Now</button>
                     </form>
                 </div>
             </div>
