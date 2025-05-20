@@ -58,7 +58,7 @@ document.addEventListener("DOMContentLoaded", () => {
             chatBody.appendChild(typingBubble);
             chatBody.scrollTop = chatBody.scrollHeight;
 
-            fetch('/faq-bot', {
+            fetch('/hexabot', {
                 method: 'POST',
                 body: new URLSearchParams({ question: message }),
                 headers: {
