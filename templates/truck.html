@@ -21,14 +21,27 @@
         <!-- 4 Wheeler -->
         <div class="truck-card">
             <div>
-                <span>Your</span>
-                <h2>4-Wheeler</h2>
-                <p>
+                <span class="truck-label">Your</span>
+                <h2 class="truck-title">4-Wheeler</h2>
+                <p class="truck-desc">
                     The 4-Wheeler is a compact delivery truck ideal for light cargo and urban deliveries. 
                     Perfect for navigating tight streets and making quick drop-offs efficiently.
                 </p>
                 <div>
                     <a href="{{ url_for('truck_book_html') }}" class="book-btn">Book Now</a>
+                </div>
+                <!-- Load Bar Explanation -->
+                <div class="loadbar-explanation">
+                    <small>
+                        <span style="color:#3cc878;font-weight:600;">Light load:</span>
+                        For small, light deliveries and quick trips.
+                    </small>
+                </div>
+                <!-- Load Bar for Light -->
+                <div class="loadbar-row">
+                    <div class="loadbar-track">
+                        <div class="loadbar-fill" id="loadbar-light"></div>
+                    </div>
                 </div>
             </div>
             <img src="{{ url_for('static', filename='images/4 wheeler.png') }}" alt="4 Wheeler">
@@ -36,14 +49,27 @@
         <!-- 6 Wheeler -->
         <div class="truck-card">
             <div>
-                <span>Your</span>
-                <h2>6-Wheeler</h2>
-                <p>
+                <span class="truck-label">Your</span>
+                <h2 class="truck-title">6-Wheeler</h2>
+                <p class="truck-desc">
                     The 6-Wheeler is a medium-sized truck designed for moderate cargo loads. 
                     It balances capacity and maneuverability, making it great for regional deliveries.
                 </p>
                 <div>
                     <a href="{{ url_for('truck_book2_html') }}" class="book-btn">Book Now</a>
+                </div>
+                <!-- Load Bar Explanation -->
+                <div class="loadbar-explanation">
+                    <small>
+                        <span style="color:#ffd23c;font-weight:600;">Medium load:</span>
+                        For average-sized shipments and regional routes.
+                    </small>
+                </div>
+                <!-- Load Bar for Medium -->
+                <div class="loadbar-row">
+                    <div class="loadbar-track">
+                        <div class="loadbar-fill" id="loadbar-medium"></div>
+                    </div>
                 </div>
             </div>
             <img src="{{ url_for('static', filename='images/6 Wheeler.png') }}" alt="6 Wheeler">
@@ -51,14 +77,27 @@
         <!-- 10 Wheeler -->
         <div class="truck-card">
             <div>
-                <span>Your</span>
-                <h2>10-Wheeler</h2>
-                <p>
+                <span class="truck-label">Your</span>
+                <h2 class="truck-title">10-Wheeler</h2>
+                <p class="truck-desc">
                     The 10-Wheeler is a heavy-duty truck built for large and bulky shipments. 
                     Ideal for long-distance hauls and industrial-scale deliveries with maximum efficiency.
                 </p>
                 <div>
                     <a href="{{ url_for('truck_book3_html') }}" class="book-btn">Book Now</a>
+                </div>
+                <!-- Load Bar Explanation -->
+                <div class="loadbar-explanation">
+                    <small>
+                        <span style="color:#dc3232;font-weight:600;">Heavy load:</span>
+                        For large, heavy, or industrial cargo.
+                    </small>
+                </div>
+                <!-- Load Bar for Heavy -->
+                <div class="loadbar-row">
+                    <div class="loadbar-track">
+                        <div class="loadbar-fill" id="loadbar-heavy"></div>
+                    </div>
                 </div>
             </div>
             <img src="{{ url_for('static', filename='images/10 Wheeler.png') }}" alt="10 Wheeler">
