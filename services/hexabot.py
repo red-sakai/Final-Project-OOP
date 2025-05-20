@@ -73,7 +73,7 @@ def contains_profanity(text):
 # Helper: Detect if input is Tagalog (very basic, can be improved)
 def detect_language(text):
     tagalog_keywords = [
-        "kamusta", "kumusta", "ano", "paano", "saan", "kailan", "bakit", "ikaw", "ako", "siya", "tayo", "kayo", "nila", "natin", "ng", "sa", "ang", "mga", "at", "hindi", "oo", "opo", "po"
+        "kamusta", "kumusta", "ano", "paano", "saan", "kailan", "bakit", "ikaw", "ako", "siya", "tayo", "kayo", "nila", "natin", "ng", "sa", "ang", "mga", "at", "hindi", "oo", "opo", "po", "hoy"
     ]
     text = text.lower()
     for word in tagalog_keywords:
