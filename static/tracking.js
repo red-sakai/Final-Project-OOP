@@ -46,6 +46,31 @@ document.addEventListener("DOMContentLoaded", () => {
         return msg;
     }
 
+    // Language switcher logic
+    const langToggle = document.getElementById("chatbox-lang-toggle");
+    const langLabelEn = document.getElementById("lang-label-en");
+    const langLabelTl = document.getElementById("lang-label-tl");
+    let chatLang = "en";
+
+    function updateLangLabels() {
+        if (langToggle && langLabelEn && langLabelTl) {
+            if (langToggle.checked) {
+                chatLang = "tl";
+                langLabelEn.classList.remove("active");
+                langLabelTl.classList.add("active");
+            } else {
+                chatLang = "en";
+                langLabelEn.classList.add("active");
+                langLabelTl.classList.remove("active");
+            }
+        }
+    }
+    if (langToggle) {
+        langToggle.addEventListener("change", updateLangLabels);
+        // Set initial state
+        updateLangLabels();
+    }
+
     function sendMessage(messageText) {
         const message = (messageText !== undefined) ? messageText : chatInput.value.trim();
         if (message !== "") {
@@ -60,7 +85,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
             fetch('/hexabot', {
                 method: 'POST',
-                body: new URLSearchParams({ question: message }),
+                body: new URLSearchParams({ question: message, lang: chatLang }),
                 headers: {
                     'Content-Type': 'application/x-www-form-urlencoded'
                 }

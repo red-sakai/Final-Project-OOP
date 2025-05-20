@@ -740,6 +740,82 @@ nav {
     display: inline-block;
 }
 
+/* Chatbox language switcher styles */
+.chatbox-lang-switch-row {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    padding: 10px 0 2px 0;
+    background: #f7faff;
+    border-radius: 0 0 12px 12px;
+    margin-bottom: 2px;
+    animation: langSwitchFadeIn 0.7s cubic-bezier(.4,2,.6,1);
+}
+
+@keyframes langSwitchFadeIn {
+    from { opacity: 0; transform: translateY(-18px);}
+    to { opacity: 1; transform: translateY(0);}
+}
+
+.chatbox-lang-switch {
+    position: relative;
+    display: inline-block;
+    width: 48px;
+    height: 24px;
+}
+
+.chatbox-lang-switch input[type="checkbox"] {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.chatbox-lang-slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: #b2dbf8;
+    border-radius: 24px;
+    transition: background 0.4s cubic-bezier(.4,2,.6,1);
+}
+
+.chatbox-lang-slider:before {
+    content: "";
+    position: absolute;
+    left: 4px;
+    top: 4px;
+    width: 16px;
+    height: 16px;
+    background: #fff;
+    border-radius: 50%;
+    transition: transform 0.4s cubic-bezier(.4,2,.6,1);
+    box-shadow: 0 2px 8px #03335e22;
+}
+
+.chatbox-lang-switch input:checked + .chatbox-lang-slider {
+    background: #03335e;
+}
+
+.chatbox-lang-switch input:checked + .chatbox-lang-slider:before {
+    transform: translateX(24px) scale(1.08);
+}
+
+.lang-label {
+    font-size: 13px;
+    font-weight: 600;
+    color: #03335e;
+    min-width: 48px;
+    text-align: center;
+    transition: color 0.3s;
+    user-select: none;
+}
+
+#lang-label-en.active, #lang-label-tl.active {
+    color: #1579c0;
+    text-shadow: 0 1px 8px #b2dbf8;
+}
+
 /* Sidebar styles */
 .user-sidebar {
     position: fixed;
