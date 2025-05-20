@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=width=device-width, initial-scale=1.0">
     <title>Get Started | Car</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='car.css') }}">
 </head>
@@ -27,6 +27,19 @@
                 <div>
                     <a href="{{ url_for('carbook_html') }}" class="car-book-btn">Book Now</a>
                 </div>
+                <!-- Light Load Legend -->
+                <div class="loadbar-legend">
+                    <small>
+                        <span style="color:#3cc85a;font-weight:600;">Light load:</span>
+                        For small, urgent cargo deliveries.
+                    </small>
+                </div>
+                <!-- Load Bar for Toyota Vios -->
+                <div class="loadbar-row card-loadbar-row">
+                    <div class="loadbar-track">
+                        <div class="loadbar-fill" id="loadbar-light"></div>
+                    </div>
+                </div>
             </div>
             <img src="{{ url_for('static', filename='images/vioshd.png') }}" alt="Toyota Vios">
         </div>
@@ -38,6 +51,19 @@
                 <p>The Honda Civic is a stylish and sporty compact sedan that blends performance, comfort, and advanced tech—perfect for smooth-sailing operation.</p>
                 <div>
                     <a href="{{ url_for('carbook2_html') }}" class="car-book-btn">Book Now</a>
+                </div>
+                <!-- Medium Load Legend -->
+                <div class="loadbar-legend">
+                    <small>
+                        <span style="color:#ffd23c;font-weight:600;">Medium load:</span>
+                        For moderate-sized cargo or multiple packages.
+                    </small>
+                </div>
+                <!-- Load Bar for Honda Civic -->
+                <div class="loadbar-row card-loadbar-row">
+                    <div class="loadbar-track">
+                        <div class="loadbar-fill" id="loadbar-medium"></div>
+                    </div>
                 </div>
             </div>
             <img src="{{ url_for('static', filename='images/hondaupscaled.png') }}" alt="Honda Civic">
@@ -51,6 +77,19 @@
                 <div>
                     <a href="{{ url_for('carbook3_html') }}" class="car-book-btn">Book Now</a>
                 </div>
+                <!-- Heavy Load Legend -->
+                <div class="loadbar-legend">
+                    <small>
+                        <span style="color:#dc3c3c;font-weight:600;">Heavy load:</span>
+                        For bulk cargo or large/heavy deliveries.
+                    </small>
+                </div>
+                <!-- Load Bar for MG 5 -->
+                <div class="loadbar-row card-loadbar-row">
+                    <div class="loadbar-track">
+                        <div class="loadbar-fill" id="loadbar-heavy"></div>
+                    </div>
+                </div>
             </div>
             <img src="{{ url_for('static', filename='images/MG5BGremoveUp.png') }}" alt="MG 5">
         </div>
@@ -63,5 +102,6 @@
         </div>
     </div>
     <script src="{{ url_for('static', filename='car.js') }}"></script>
+    <script src="{{ url_for('static', filename='loadbar.js') }}"></script>
 </body>
 </html>
