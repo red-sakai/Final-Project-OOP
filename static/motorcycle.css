@@ -516,6 +516,91 @@ body, .motorcycle-header, .motorcycle-navbar, .motorcycle-card, .motorcycle-card
     text-shadow: 0 2px 8px #b2dbf8aa;
 }
 
+/* Load Bar Animation Styles */
+.motorcycle-loadbar-container {
+    width: 100%;
+    max-width: 520px;
+    margin: 32px auto 0 auto;
+    padding: 0 16px 24px 16px;
+    box-sizing: border-box;
+}
+.motorcycle-loadbar-row {
+    display: flex;
+    align-items: center;
+    margin-bottom: 18px;
+}
+.motorcycle-loadbar-label {
+    width: 70px;
+    font-size: 1.05rem;
+    font-weight: 600;
+    color: #03335e;
+    margin-right: 18px;
+    font-family: 'Inter', sans-serif;
+    letter-spacing: 0.5px;
+}
+.motorcycle-loadbar-bg {
+    width: 490px;
+    height: 17px; /* slightly thicker bar */
+    background: #e0e0e0;
+    border-radius: 10px;
+    overflow: hidden;
+    margin-left: 0;
+    margin-right: 0;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    box-shadow: 0 1px 2px #b2dbf8aa;
+    display: flex;
+    align-items: center;
+}
+.motorcycle-loadbar-fill {
+    height: 100%;
+    width: 0%;
+    background: #bdbdbd;
+    border-radius: 4px;
+    transition: width 0.2s linear, background 0.3s linear;
+}
+
+/* Color classes for JS transitions */
+.motorcycle-loadbar-fill.green {
+    background: linear-gradient(90deg, #7be495 0%, #3ec97b 100%);
+    transition: background 0.3s linear;
+}
+.motorcycle-loadbar-fill.yellow {
+    background: linear-gradient(90deg, #ffe066 0%, #ffd23f 100%);
+    transition: background 0.3s linear;
+}
+.motorcycle-loadbar-fill.red {
+    background: linear-gradient(90deg, #ff6b6b 0%, #e63946 100%);
+    transition: background 0.3s linear;
+}
+.motorcycle-loadbar-fill.gray {
+    background: #bdbdbd;
+    transition: background 0.3s linear;
+}
+
+/* Loadbar message styles */
+.motorcycle-loadbar-message {
+    font-size: 1rem;
+    font-weight: 600;
+    margin-top: 10px;
+    margin-bottom: 0px;
+    letter-spacing: 0.1px;
+}
+.motorcycle-loadbar-message-green {
+    color: #3ec97b;
+}
+.motorcycle-loadbar-message-yellow {
+    color: #ffd23c;
+}
+.motorcycle-loadbar-message-red {
+    color: #e63946;
+}
+.motorcycle-loadbar-desc {
+    color: #222 !important;
+    font-weight: 400;
+    margin-left: 4px;
+}
+
 /* Remove default body margin */
 body {
     margin: 0;
