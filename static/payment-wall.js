@@ -97,16 +97,18 @@ document.addEventListener('DOMContentLoaded', function () {
         const method = getSelectedMethod();
         if (!method) return false;
         if (method === 'credit' && creditFields.style.display !== 'none') {
-            // Only validate credit fields if visible
             const inputs = creditFields.querySelectorAll('input');
             return Array.from(inputs).every(input => input.value.trim() !== '');
         }
         if (method === 'cod' && codFields.style.display !== 'none') {
-            // Only Address Line 1 is required for COD if visible
             const addr1 = document.getElementById('cod-address1');
             return addr1 && addr1.value.trim() !== '';
         }
-        // For GCash, PayPal: just need method selected
+        if (method === 'gcash' && gcashFields.style.display !== 'none') {
+            const refnum = document.getElementById('gcash-refnum');
+            return refnum && /^\d{13}$/.test(refnum.value.trim());
+        }
+        // For PayPal: just need method selected
         return true;
     }
 
