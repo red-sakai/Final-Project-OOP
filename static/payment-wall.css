@@ -207,6 +207,16 @@ body {
     margin-bottom: 6px;
 }
 
+#credit-fields input,
+#gcash-refnum {
+    width: 70%;
+    min-width: 140px;
+    max-width: 260px;
+    margin-left: auto;
+    margin-right: auto;
+    display: block;
+}
+
 .pay-fields input {
     width: 100%;
     padding: 7px 10px;
