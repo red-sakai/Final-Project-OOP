@@ -1,5 +1,16 @@
+/* Color variables from services.css */
+:root {
+    --bg-color: #ffffff;
+    --second-bg-color: #fcfcfc;
+    --primary-color: #03335e;
+    --secondary-color: #095190;
+    --tertiary-color: #1579c0;
+    --quaternary-color: #598cb8;
+    --quinary-color: #b2dbf8;
+}
+
 body {
-    background: linear-gradient(120deg, #b2dbf8 0%, #03335e 100%);
+    background: linear-gradient(120deg, var(--quinary-color) 0%, var(--primary-color) 100%);
     min-height: 100vh;
     margin: 0;
     font-family: 'Inter', sans-serif;
@@ -23,9 +34,9 @@ body {
 }
 
 .payment-wall-card {
-    background: #fff;
+    background: var(--bg-color);
     border-radius: 28px;
-    box-shadow: 0 8px 40px #03335e33, 0 2px 12px #b2dbf822;
+    box-shadow: 0 8px 40px var(--primary-color)33, 0 2px 12px var(--quinary-color)22;
     padding: 48px 40px 32px 40px;
     width: 400px;
     max-width: 95vw;
@@ -41,9 +52,9 @@ body {
     padding: 28px 24px 24px 24px;
     min-height: unset;
     border-radius: 22px;
-    box-shadow: 0 8px 40px #03335e33, 0 2px 12px #b2dbf822, 0 0px 0px #fff;
-    background: linear-gradient(120deg, #f7fbfd 70%, #eaf6fb 100%);
-    border: 1.5px solid #b2dbf8;
+    box-shadow: 0 8px 40px var(--primary-color)33, 0 2px 12px var(--quinary-color)22, 0 0px 0px #fff;
+    background: linear-gradient(120deg, #f7fbfd 70%, var(--quinary-color) 100%);
+    border: 1.5px solid var(--quinary-color);
 }
 
 @keyframes popInCard {
@@ -52,8 +63,8 @@ body {
 }
 
 @keyframes wallGlow {
-    0% { box-shadow: 0 8px 40px #03335e33, 0 2px 12px #b2dbf822; }
-    100% { box-shadow: 0 12px 60px #b2dbf8cc, 0 4px 24px #b2dbf855; }
+    0% { box-shadow: 0 8px 40px var(--primary-color)33, 0 2px 12px var(--quinary-color)22; }
+    100% { box-shadow: 0 12px 60px var(--quinary-color)cc, 0 4px 24px var(--quinary-color)55; }
 }
 
 .total-amount {
@@ -64,11 +75,11 @@ body {
     border-radius: 10px;
     min-width: 180px;
     max-width: 260px;
-    background: linear-gradient(90deg, #b2dbf8 0%, #eaf6fb 100%);
-    color: #03335e;
+    background: linear-gradient(90deg, var(--quinary-color) 0%, #eaf6fb 100%);
+    color: var(--primary-color);
     font-weight: 800;
-    border: 1.5px solid #b2dbf8;
-    box-shadow: 0 2px 8px #b2dbf822;
+    border: 1.5px solid var(--quinary-color);
+    box-shadow: 0 2px 8px var(--quinary-color)22;
     text-align: center;
     letter-spacing: 1px;
 }
@@ -78,7 +89,7 @@ body {
     text-align: center;
     font-size: 1.6rem;
     font-weight: 800;
-    color: #03335e;
+    color: var(--primary-color);
     letter-spacing: 1px;
     animation: fadeInDown 0.8s;
 }
@@ -87,7 +98,7 @@ body {
     margin-bottom: 10px;
     font-size: 1rem;
     text-align: left;
-    color: #095190;
+    color: var(--secondary-color);
     font-weight: 500;
 }
 
@@ -116,8 +127,8 @@ body {
     border-radius: 8px;
     font-size: 0.97rem;
     background: #f7fbfd;
-    border: 1.5px solid #b2dbf8;
-    box-shadow: 0 1px 4px #b2dbf822;
+    border: 1.5px solid var(--quinary-color);
+    box-shadow: 0 1px 4px var(--quinary-color)22;
     display: flex;
     align-items: center;
     transition: border 0.2s, box-shadow 0.2s, background 0.2s;
@@ -125,16 +136,16 @@ body {
 }
 
 .pay-method-card.selected {
-    border: 2px solid #095190;
+    border: 2px solid var(--secondary-color);
     background: #eaf6fb;
-    box-shadow: 0 2px 8px #b2dbf855;
+    box-shadow: 0 2px 8px var(--quinary-color)55;
 }
 
 .pay-method-card label {
     display: flex;
     align-items: center;
     font-weight: 600;
-    color: #095190;
+    color: var(--secondary-color);
     gap: 8px;
     width: 100%;
     cursor: pointer;
@@ -156,16 +167,16 @@ body {
     width: 180px;
     height: 180px;
     border-radius: 14px;
-    border: 2.5px solid #b2dbf8;
+    border: 2.5px solid var(--quinary-color);
     margin-bottom: 10px;
-    box-shadow: 0 4px 16px #b2dbf822;
+    box-shadow: 0 4px 16px var(--quinary-color)22;
     background: #fff;
     object-fit: contain;
     transition: width 0.2s, height 0.2s;
 }
 
 .gcash-instructions {
-    color: #095190;
+    color: var(--secondary-color);
     font-size: 0.97rem;
     font-weight: 500;
     text-align: center;
@@ -173,7 +184,7 @@ body {
 }
 
 .cod-info {
-    color: #095190;
+    color: var(--secondary-color);
     font-size: 0.97rem;
     font-weight: 600;
     text-align: center;
@@ -183,23 +194,36 @@ body {
     padding: 6px 0;
 }
 
+.cod-inputs {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+}
+.cod-inputs input {
+    width: 70%;
+    min-width: 140px;
+    max-width: 260px;
+    margin-bottom: 6px;
+}
+
 .pay-fields input {
     width: 100%;
     padding: 7px 10px;
     border-radius: 7px;
-    border: 1.2px solid #b2dbf8;
+    border: 1.2px solid var(--quinary-color);
     background: #f7fbfd;
     font-size: 0.97rem;
-    color: #03335e;
+    color: var(--primary-color);
     margin-bottom: 2px;
     transition: border 0.2s, box-shadow 0.2s;
     outline: none;
-    box-shadow: 0 1px 4px #b2dbf822;
+    box-shadow: 0 1px 4px var(--quinary-color)22;
 }
 
 .pay-fields input:focus {
-    border: 2px solid #095190;
-    box-shadow: 0 2px 8px #b2dbf855;
+    border: 2px solid var(--secondary-color);
+    box-shadow: 0 2px 8px var(--quinary-color)55;
 }
 
 .pay-row {
@@ -216,8 +240,8 @@ body {
     max-width: 260px;
     box-sizing: border-box;
     background: #f9fbfc;
-    border: 1.5px solid #b2dbf8;
-    box-shadow: 0 2px 12px #b2dbf822;
+    border: 1.5px solid var(--quinary-color);
+    box-shadow: 0 2px 12px var(--quinary-color)22;
     display: flex;
     flex-direction: column;
     gap: 10px;
@@ -229,7 +253,7 @@ body {
     position: absolute;
     top: 10px; left: 10px;
     width: 32px; height: 32px;
-    background: radial-gradient(circle, #b2dbf8 0%, #eaf6fb00 80%);
+    background: radial-gradient(circle, var(--quinary-color) 0%, #eaf6fb00 80%);
     opacity: 0.18;
     z-index: 0;
     pointer-events: none;
@@ -239,17 +263,17 @@ body {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    color: #03335e;
+    color: var(--primary-color);
     font-weight: 600;
     font-size: 1.07rem;
     background: #eaf6fb;
     border-radius: 8px;
     padding: 7px 12px;
     margin-bottom: 0;
-    box-shadow: 0 1px 4px #b2dbf822;
+    box-shadow: 0 1px 4px var(--quinary-color)22;
     position: relative;
     z-index: 1;
-    border-left: 4px solid #b2dbf8;
+    border-left: 4px solid var(--quinary-color);
     transition: background 0.2s, border-color 0.2s;
 }
 
@@ -272,7 +296,7 @@ body {
 .fee-row span:last-child {
     font-family: 'Inter', monospace;
     font-weight: 700;
-    color: #095190;
+    color: var(--secondary-color);
     letter-spacing: 0.5px;
     font-size: 1.08em;
 }
@@ -286,11 +310,11 @@ body {
     padding: 8px 0;
     border-radius: 10px;
     font-size: 1rem;
-    background: linear-gradient(90deg, #b2dbf8 0%, #095190 100%);
+    background: linear-gradient(90deg, var(--quinary-color) 0%, var(--secondary-color) 100%);
     color: #fff;
     font-weight: 700;
     border: none;
-    box-shadow: 0 2px 8px #b2dbf8aa;
+    box-shadow: 0 2px 8px var(--quinary-color)aa;
     transition: background 0.2s, transform 0.15s, color 0.2s;
     letter-spacing: 1px;
     width: 100%;
@@ -305,7 +329,7 @@ body {
 }
 
 @keyframes pulse {
-    0% { box-shadow: 0 0 0 0 #b2dbf8aa; }
+    0% { box-shadow: 0 0 0 0 var(--quinary-color)aa; }
     70% { box-shadow: 0 0 0 10px rgba(178,219,248,0); }
     100% { box-shadow: 0 0 0 0 rgba(178,219,248,0); }
 }
@@ -331,7 +355,7 @@ body {
     background: none;
     border-radius: 16px;
     overflow: hidden;
-    box-shadow: 0 1px 8px #b2dbf822;
+    box-shadow: 0 1px 8px var(--quinary-color)22;
 }
 
 .pay-left {
@@ -346,7 +370,7 @@ body {
     padding: 18px 18px 18px 18px;
     border-radius: 16px 0 0 16px;
     border-right: 1.5px solid #eaf6fb;
-    box-shadow: 2px 0 8px #b2dbf822;
+    box-shadow: 2px 0 8px var(--quinary-color)22;
 }
 
 .pay-right {
@@ -357,10 +381,10 @@ body {
     flex-direction: column;
     align-items: stretch;
     justify-content: flex-start;
-    background: #fff;
+    background: var(--bg-color);
     padding: 18px 18px 18px 18px;
     border-radius: 0 16px 16px 0;
-    box-shadow: -2px 0 8px #b2dbf822;
+    box-shadow: -2px 0 8px var(--quinary-color)22;
 }
 
 @media (max-width: 800px) {
