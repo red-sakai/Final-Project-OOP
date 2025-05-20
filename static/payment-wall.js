@@ -96,16 +96,28 @@ document.addEventListener('DOMContentLoaded', function () {
     function isFormValid() {
         const method = getSelectedMethod();
         if (!method) return false;
-        if (method === 'credit') {
-            // Check all credit fields are filled
+        if (method === 'credit' && creditFields.style.display !== 'none') {
+            // Only validate credit fields if visible
             const inputs = creditFields.querySelectorAll('input');
             return Array.from(inputs).every(input => input.value.trim() !== '');
         }
-        // For GCash, PayPal, COD: just need method selected
+        if (method === 'cod' && codFields.style.display !== 'none') {
+            // Only Address Line 1 is required for COD if visible
+            const addr1 = document.getElementById('cod-address1');
+            return addr1 && addr1.value.trim() !== '';
+        }
+        // For GCash, PayPal: just need method selected
         return true;
     }
 
     function updatePayBtnState() {
+        const method = getSelectedMethod();
+        // Change button text for COD
+        if (method === 'cod') {
+            payBtn.textContent = "Order Now";
+        } else {
+            payBtn.textContent = "Pay Now";
+        }
         if (isFormValid()) {
             payBtn.disabled = false;
             payBtn.classList.remove('btn-disabled');
@@ -205,13 +217,15 @@ document.addEventListener('DOMContentLoaded', function () {
             const radio = this.querySelector('input[type="radio"]');
             radio.checked = true;
             showFields(radio.value);
+            updatePayBtnState();
         });
     });
 
     // Initial state
     showFields(getSelectedMethod());
+    updatePayBtnState();
 
-    // Listen for input changes to enable/disable Pay Now
+    // Listen for input changes to enable/disable Pay Now/Order Now
     paymentForm.addEventListener('input', updatePayBtnState);
 
     // PayPal integration
@@ -246,16 +260,30 @@ document.addEventListener('DOMContentLoaded', function () {
     paymentForm.addEventListener('submit', function(e) {
         e.preventDefault();
         if (!isFormValid()) return;
-        payBtn.textContent = "Processing...";
-        payBtn.disabled = true;
-        payBtn.classList.add('processing');
-        setTimeout(() => {
-            payBtn.textContent = "Paid!";
-            payBtn.classList.remove('processing');
-            payBtn.classList.add('paid');
-            // Show modal
-            createModal(generateTrackingId());
-        }, 1200);
+        const method = getSelectedMethod();
+        if (method === 'cod') {
+            payBtn.textContent = "Processing...";
+            payBtn.disabled = true;
+            payBtn.classList.add('processing');
+            setTimeout(() => {
+                payBtn.textContent = "Order Now";
+                payBtn.classList.remove('processing');
+                payBtn.disabled = false;
+                // Show modal
+                createModal(generateTrackingId());
+            }, 1200);
+        } else {
+            payBtn.textContent = "Processing...";
+            payBtn.disabled = true;
+            payBtn.classList.add('processing');
+            setTimeout(() => {
+                payBtn.textContent = "Paid!";
+                payBtn.classList.remove('processing');
+                payBtn.classList.add('paid');
+                // Show modal
+                createModal(generateTrackingId());
+            }, 1200);
+        }
     });
 
     // Initial button state
