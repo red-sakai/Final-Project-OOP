@@ -49,6 +49,7 @@
     <script>
         const carHomeUrl = "{{ url_for('index_html') }}";
     </script>
+    <script src="{{ url_for('static', filename='carbook-date.js') }}"></script>
     <script src="{{ url_for('static', filename='carbook.js') }}"></script>
     <script>
 document.getElementById('bookingForm').addEventListener('submit', function(e) {
