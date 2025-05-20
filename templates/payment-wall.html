@@ -8,66 +8,76 @@
 </head>
 <body>
     <div class="payment-wall-container">
-        <div class="payment-wall-card">
+        <div class="payment-wall-card compact-layout">
             <h2 class="pay-title">Complete Your Payment</h2>
-            <p class="pay-desc">Please select your payment method and enter your details to proceed.</p>
-            <div id="total-amount" class="total-amount">Total: ₱<span id="amount-value">299.00</span></div>
-            <form class="payment-form" id="paymentForm" autocomplete="off">
-                <div class="pay-methods">
-                    <div class="pay-method-card selected" data-method="credit">
-                        <label>
-                            <input type="radio" name="method" value="credit" checked hidden>
-                            <span class="pay-method-icon">&#128179;</span>
-                            <span>Credit/Debit Card</span>
-                        </label>
+            <div class="pay-content-row">
+                <div class="pay-left">
+                    <div id="fee-breakdown" class="fee-breakdown">
+                        <div class="fee-row"><span>Base Fare:</span><span id="base-fare">₱200.00</span></div>
+                        <div class="fee-row"><span>Shipping Fee:</span><span id="shipping-fee">₱79.00</span></div>
+                        <div class="fee-row"><span>Service Fee:</span><span id="service-fee">₱20.00</span></div>
                     </div>
-                    <div class="pay-method-card" data-method="gcash">
-                        <label>
-                            <input type="radio" name="method" value="gcash" hidden>
-                            <span class="pay-method-icon">&#128184;</span>
-                            <span>GCash</span>
-                        </label>
-                    </div>
-                    <div class="pay-method-card" data-method="paypal">
-                        <label>
-                            <input type="radio" name="method" value="paypal" hidden>
-                            <span class="pay-method-icon">&#128176;</span>
-                            <span>PayPal</span>
-                        </label>
-                    </div>
-                    <div class="pay-method-card" data-method="cod">
-                        <label>
-                            <input type="radio" name="method" value="cod" hidden>
-                            <span class="pay-method-icon">&#128184;</span>
-                            <span>Cash on Delivery</span>
-                        </label>
-                    </div>
+                    <div id="total-amount" class="total-amount">Total: ₱<span id="amount-value">299.00</span></div>
                 </div>
-                <div class="pay-fields" id="credit-fields">
-                    <input type="text" placeholder="Cardholder Name" required>
-                    <input type="text" placeholder="Card Number" maxlength="19" required>
-                    <div class="pay-row">
-                        <input type="text" placeholder="MM/YY" maxlength="5" required>
-                        <input type="text" placeholder="CVV" maxlength="4" required>
-                    </div>
+                <div class="pay-right">
+                    <p class="pay-desc">Select your payment method and enter your details.</p>
+                    <form class="payment-form" id="paymentForm" autocomplete="off">
+                        <div class="pay-methods">
+                            <div class="pay-method-card selected" data-method="credit">
+                                <label>
+                                    <input type="radio" name="method" value="credit" checked hidden>
+                                    <span class="pay-method-icon">&#128179;</span>
+                                    <span>Credit/Debit Card</span>
+                                </label>
+                            </div>
+                            <div class="pay-method-card" data-method="gcash">
+                                <label>
+                                    <input type="radio" name="method" value="gcash" hidden>
+                                    <span class="pay-method-icon">&#128184;</span>
+                                    <span>GCash</span>
+                                </label>
+                            </div>
+                            <div class="pay-method-card" data-method="paypal">
+                                <label>
+                                    <input type="radio" name="method" value="paypal" hidden>
+                                    <span class="pay-method-icon">&#128176;</span>
+                                    <span>PayPal</span>
+                                </label>
+                            </div>
+                            <div class="pay-method-card" data-method="cod">
+                                <label>
+                                    <input type="radio" name="method" value="cod" hidden>
+                                    <span class="pay-method-icon">&#128184;</span>
+                                    <span>Cash on Delivery</span>
+                                </label>
+                            </div>
+                        </div>
+                        <div class="pay-fields" id="credit-fields">
+                            <input type="text" placeholder="Cardholder Name" required>
+                            <input type="text" placeholder="Card Number" maxlength="19" required>
+                            <div class="pay-row">
+                                <input type="text" placeholder="MM/YY" maxlength="5" required>
+                                <input type="text" placeholder="CVV" maxlength="4" required>
+                            </div>
+                        </div>
+                        <div class="pay-fields" id="gcash-fields" style="display:none;">
+                            <div class="gcash-qr-container">
+                                <img src="{{ url_for('static', filename='images/GCASH QR.jpg') }}" alt="GCash QR" class="gcash-qr-img">
+                                <div class="gcash-instructions">Scan this QR code with your GCash app to pay.</div>
+                            </div>
+                        </div>
+                        <div class="pay-fields" id="paypal-fields" style="display:none;">
+                            <div id="paypal-button-container"></div>
+                        </div>
+                        <div class="pay-fields" id="cod-fields" style="display:none;">
+                            <div class="cod-info">You will pay the rider upon delivery.</div>
+                        </div>
+                        <button type="submit" class="pay-btn" id="payBtn">Pay Now</button>
+                    </form>
                 </div>
-                <div class="pay-fields" id="gcash-fields" style="display:none;">
-                    <div class="gcash-qr-container">
-                        <img src="{{ url_for('static', filename='images/GCASH QR.jpg') }}" alt="GCash QR" class="gcash-qr-img">
-                        <div class="gcash-instructions">Scan this QR code with your GCash app to pay.</div>
-                    </div>
-                </div>
-                <div class="pay-fields" id="paypal-fields" style="display:none;">
-                    <div id="paypal-button-container"></div>
-                </div>
-                <div class="pay-fields" id="cod-fields" style="display:none;">
-                    <div class="cod-info">You will pay the rider upon delivery.</div>
-                </div>
-                <button type="submit" class="pay-btn" id="payBtn">Pay Now</button>
-            </form>
+            </div>
         </div>
     </div>
-    <!-- PayPal JS SDK (replace YOUR_CLIENT_ID with your real client id) -->
     <script src="https://www.paypal.com/sdk/js?client-id=AWQhDw0tETk8-y8na38hRNqbtfoQbweYUuOMHuDTVCl-ZrcUimDcnoHgKqNEyetQM_oXJS60ivTOrjux&currency=PHP"></script>
     <script src="{{ url_for('static', filename='payment-wall.js') }}"></script>
 </body>
