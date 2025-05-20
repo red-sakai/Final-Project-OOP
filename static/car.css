@@ -349,3 +349,89 @@ body {
     letter-spacing: 0.5px;
     text-shadow: 0 2px 8px #b2dbf8aa;
 }
+
+/* Card-specific Load Bar */
+.card-loadbar-row {
+    margin-top: 18px;
+    margin-bottom: 0;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 0;
+}
+.card-loadbar-row .loadbar-track {
+    width: 180px;
+    height: 18px;
+    margin-left: 0;
+    margin-right: 0;
+    background: #e9edf0;
+    border-radius: 10px;
+    box-shadow: 0 1px 4px #b2dbf822;
+}
+.card-loadbar-row .loadbar-fill {
+    height: 100%;
+    width: 0%;
+    background: #b2b2b2;
+    border-radius: 10px;
+    transition: width 0.2s linear;
+}
+
+/* Load Bar Sequence Styles */
+.loadbar-sequence {
+    width: 100%;
+    max-width: 520px;
+    margin: 32px auto 24px auto;
+    padding: 18px 24px 10px 24px;
+    background: #fff;
+    border-radius: 18px;
+    box-shadow: 0 2px 16px #03335e11;
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+}
+.loadbar-row {
+    display: flex;
+    align-items: center;
+    gap: 18px;
+}
+.loadbar-label {
+    width: 70px;
+    font-weight: 700;
+    color: #03335e;
+    font-size: 1.05rem;
+    letter-spacing: 0.5px;
+}
+.loadbar-track {
+    flex: 1;
+    height: 22px;
+    background: #e9edf0;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 1px 4px #b2dbf822;
+    position: relative;
+}
+.loadbar-fill {
+    height: 100%;
+    width: 0%;
+    background: #b2b2b2;
+    border-radius: 12px;
+    transition: width 0.2s linear;
+    /* Color will be animated via JS */
+}
+.loadbar-legend {
+    margin-top: 10px;
+    margin-bottom: 2px;
+    font-size: 0.93rem;
+    letter-spacing: 0.1px;
+    opacity: 0.85;
+}
+
+/* Responsive */
+@media (max-width: 600px) {
+    .loadbar-sequence {
+        max-width: 98vw;
+        padding: 10px 4vw 8px 4vw;
+    }
+    .loadbar-label { width: 54px; font-size: 0.98rem; }
+    .loadbar-track { height: 16px; }
+}
