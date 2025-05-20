@@ -80,5 +80,41 @@
     </div>
     <script src="https://www.paypal.com/sdk/js?client-id=AWQhDw0tETk8-y8na38hRNqbtfoQbweYUuOMHuDTVCl-ZrcUimDcnoHgKqNEyetQM_oXJS60ivTOrjux&currency=PHP"></script>
     <script src="{{ url_for('static', filename='payment-wall.js') }}"></script>
+    <script>
+// Show Thank You popup and handle OK button timer
+function showThankYouModal() {
+    document.getElementById('popup').style.display = 'block';
+    let timer = 3;
+    const okBtn = document.getElementById('okBtn');
+    const okTimer = document.getElementById('okTimer');
+    okBtn.disabled = true;
+    okTimer.textContent = timer;
+    okBtn.textContent = `OK(${timer})`;
+    const interval = setInterval(() => {
+        timer--;
+        okTimer.textContent = timer;
+        okBtn.textContent = timer === 0 ? "OK" : `OK(${timer})`;
+        if (timer === 0) {
+            clearInterval(interval);
+            okBtn.disabled = false;
+            okBtn.textContent = "OK";
+        }
+    }, 1000);
+}
+
+// Redirect after OK
+function closePpopup() {
+    window.location.href = "{{ url_for('index_html') }}";
+}
+
+// Show popup on Pay Now button click
+document.getElementById('paymentForm').addEventListener('submit', function(e) {
+    e.preventDefault();
+    showThankYouModal();
+});
+
+// Optionally, if you want to show popup when clicking any payment method button directly (like PayPal), 
+// call showThankYouModal() in those handlers as well.
+</script>
 </body>
 </html>
