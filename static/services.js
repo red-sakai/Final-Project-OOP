@@ -69,7 +69,7 @@ document.addEventListener("DOMContentLoaded", () => {
             chatBody.scrollTop = chatBody.scrollHeight;
 
             // Simulate delay before bot responds
-            fetch('/faq-bot', {
+            fetch('/hexabot', {
                 method: 'POST',
                 body: new URLSearchParams({ question: message }),
                 headers: {
