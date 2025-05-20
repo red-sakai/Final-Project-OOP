@@ -65,6 +65,7 @@
                                 <img src="{{ url_for('static', filename='images/GCASH QR.jpg') }}" alt="GCash QR" class="gcash-qr-img">
                                 <div class="gcash-instructions">Scan this QR code with your GCash app to pay.</div>
                             </div>
+                            <input type="text" id="gcash-refnum" placeholder="Reference Number (13 digits)" maxlength="13" pattern="\d{13}" autocomplete="off">
                         </div>
                         <div class="pay-fields" id="paypal-fields" style="display:none;">
                             <div id="paypal-button-container"></div>
