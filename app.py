@@ -480,6 +480,10 @@ def faq_bot():
 def admin_dashboard():
     return render_template("admin-dashboard.html")
 
+@app.route("/payment-wall")
+def payment_wall():
+    return render_template("payment-wall.html")
+
 analytics_bp = Blueprint('analytics', __name__)
 
 @analytics_bp.route('/analytics/employee_statuses.png')
