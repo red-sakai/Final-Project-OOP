@@ -3,6 +3,7 @@ from models.admin import Admin
 from models.analytics_backend import plot_employee_statuses, plot_vehicles_deployed
 from models.vehicle_database import VehicleDatabase, Vehicle
 from models.employee_database import EmployeeDatabase, Employee
+from models.hexaboxes_database import HexaBoxesDatabase, Order
 from abc import ABC, abstractmethod
 from enum import Enum
 from flask_mail import Mail, Message
@@ -147,6 +148,7 @@ class HexaHaulApp:
         self.admin_account = Admin(username="admin", password="admin123", otp_authentication=False)
         self.vehicle_db = VehicleDatabase()
         self.employee_db = EmployeeDatabase()
+        self.hexabox_db = HexaBoxesDatabase()
         self.register_routes()
         self.register_blueprints()
 
@@ -610,7 +612,127 @@ class HexaHaulApp:
 
         @app.route('/admin/hexaboxes')
         def admin_hexaboxes():
-            return render_template('admin_hexaboxes.html')
+            # Get all packages from database
+            session = self.hexabox_db.connect()
+            packages = session.query(Order).all()
+            
+            # Count packages by status
+            total_count = len(packages)
+            transit_count = sum(1 for p in packages if p.delivery_status == "Shipping on time" or 
+                                p.delivery_status == "Late delivery" or p.delivery_status == "Advance shipping")
+            delivered_count = sum(1 for p in packages if p.order_status == "COMPLETE" or p.order_status == "CLOSED")
+            pending_count = sum(1 for p in packages if p.order_status == "PENDING" or p.order_status == "PENDING_PAYMENT" or 
+                                 p.order_status == "PAYMENT_REVIEW" or p.order_status == "ON_HOLD")
+            
+            # Get available vehicles for assignments
+            vehicle_session = self.vehicle_db.connect()
+            available_vehicles = vehicle_session.query(Vehicle).filter_by(status='Available').all()
+            
+            # Convert packages to JSON for JavaScript use
+            packages_json = json.dumps([{
+                'tracking_id': p.tracking_id,
+                'order_id': p.order_id,
+                'order_item_id': p.order_item_id,
+                'sender': p.sender,
+                'recipient': p.recipient,
+                'origin': p.origin,
+                'destination': p.destination,
+                'package_size': p.package_size,
+                'weight': p.weight,
+                'date_shipped': p.date_shipped,
+                'eta': p.eta,
+                'assigned_vehicle': p.assigned_vehicle,
+                'delivery_status': p.delivery_status,
+                'order_status': p.order_status,
+                'late_delivery_risk': p.late_delivery_risk,
+                'notes': p.notes
+            } for p in packages])
+            
+            self.hexabox_db.disconnect()
+            self.vehicle_db.disconnect()
+            
+            return render_template('admin_hexaboxes.html', 
+                                  packages=packages,
+                                  total_count=total_count,
+                                  transit_count=transit_count,
+                                  delivered_count=delivered_count,
+                                  pending_count=pending_count,
+                                  available_vehicles=available_vehicles,
+                                  packages_json=packages_json)
+
+        @app.route('/admin/hexaboxes/add', methods=['POST'])
+        def add_package():
+            # Get form data
+            data = {
+                'tracking_id': request.form.get('tracking_id'),
+                'sender': request.form.get('sender'),
+                'recipient': request.form.get('recipient'),
+                'origin': request.form.get('origin'),
+                'destination': request.form.get('destination'),
+                'package_size': request.form.get('size'),
+                'weight': float(request.form.get('weight')),
+                'date_shipped': request.form.get('date_shipped'),
+                'eta': request.form.get('eta'),
+                'assigned_vehicle': request.form.get('assigned_vehicle_text'),
+                'order_status': 'PENDING',
+                'delivery_status': 'Shipping on time',
+                'late_delivery_risk': False,
+                'notes': request.form.get('notes', '')
+            }
+            
+            # Add package to database
+            self.hexabox_db.add_order(**data)
+            
+            return redirect(url_for('admin_hexaboxes'))
+
+        @app.route('/admin/hexaboxes/update', methods=['POST'])
+        def update_package():
+            # Get tracking ID
+            tracking_id = request.form.get('tracking_id')
+            
+            # Get form data
+            data = {
+                'sender': request.form.get('sender'),
+                'recipient': request.form.get('recipient'),
+                'origin': request.form.get('origin'),
+                'destination': request.form.get('destination'),
+                'package_size': request.form.get('size'),
+                'weight': float(request.form.get('weight')),
+                'date_shipped': request.form.get('date_shipped'),
+                'eta': request.form.get('eta'),
+                'assigned_vehicle': request.form.get('assigned_vehicle_text'),
+                'notes': request.form.get('notes', '')
+            }
+            
+            # Map UI status to database statuses
+            status = request.form.get('status')
+            if status == 'Delivered':
+                data['order_status'] = 'COMPLETE'
+                data['delivery_status'] = 'Shipping on time'
+            elif status == 'In Transit':
+                data['order_status'] = 'PROCESSING'
+                data['delivery_status'] = 'Shipping on time'
+            elif status == 'Pending':
+                data['order_status'] = 'PENDING'
+                data['delivery_status'] = 'Shipping on time'
+            elif status == 'Returned':
+                data['order_status'] = 'CANCELED'
+                data['delivery_status'] = 'Shipping canceled'
+            
+            # Update package in database
+            self.hexabox_db.update_order(tracking_id, **data)
+            
+            return redirect(url_for('admin_hexaboxes'))
+
+        @app.route('/admin/hexaboxes/delete', methods=['POST'])
+        def delete_package():
+            # Get tracking ID
+            tracking_id = request.form.get('tracking_id')
+            
+            # Delete package from database
+            self.hexabox_db.delete_order(tracking_id)
+            
+            return redirect(url_for('admin_hexaboxes'))
 
         @app.route('/admin/utilities')
         def admin_utilities():

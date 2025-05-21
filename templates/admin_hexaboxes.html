@@ -1,10 +1,234 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>HexaBoxes | Admin</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='admin_hexaboxes.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
 <body>
-    <h1>HexaBoxes Management</h1>
-    <p>This is the HexaBoxes admin page.</p>
-</body>
-</html>
+    <div class="admin-container">
+        <div class="sidebar">
+            <div class="logo">
+                <i class="fas fa-truck-monster"></i>
+                <h2>HexaHaul</h2>
+            </div>
+            <ul class="menu">
+                <li><a href="{{ url_for('admin_vehicles') }}"><i class="fas fa-car"></i> Vehicles</a></li>
+                <li><a href="{{ url_for('admin_employees') }}"><i class="fas fa-users"></i> Employees</a></li>
+                <li class="active"><a href="{{ url_for('admin_hexaboxes') }}"><i class="fas fa-box"></i> HexaBoxes</a></li>
+                <li><a href="{{ url_for('admin_utilities') }}"><i class="fas fa-tools"></i> Utilities</a></li>
+            </ul>
+            <div class="logout">
+                <a href="{{ url_for('admin_login') }}"><i class="fas fa-sign-out-alt"></i> Logout</a>
+            </div>
+        </div>
+        
+        <div class="main-content">
+            <div class="header">
+                <h1><i class="fas fa-box"></i> HexaBoxes Management</h1>
+                <div class="search-container">
+                    <input type="text" id="searchInput" placeholder="Search packages...">
+                    <button class="search-btn"><i class="fas fa-search"></i></button>
+                </div>
+                <div class="user-info">
+                    <img src="https://via.placeholder.com/40" alt="Admin">
+                    <span>Admin User</span>
+                </div>
+            </div>
+            
+            <div class="actions">
+                <button class="add-package-btn"><i class="fas fa-plus"></i> Add New Package</button>
+                <div class="filter-container">
+                    <select id="sizeFilter">
+                        <option value="all">All Sizes</option>
+                        <option value="Small">Small</option>
+                        <option value="Medium">Medium</option>
+                        <option value="Large">Large</option>
+                        <option value="Extra Large">Extra Large</option>
+                    </select>
+                    <select id="statusFilter">
+                        <option value="all">All Statuses</option>
+                        <option value="Pending">Pending</option>
+                        <option value="In Transit">In Transit</option>
+                        <option value="Delivered">Delivered</option>
+                        <option value="Returned">Returned</option>
+                    </select>
+                </div>
+            </div>
+            
+            <div class="stats-container">
+                <div class="stat-card">
+                    <i class="fas fa-box"></i>
+                    <h3>Total Packages</h3>
+                    <p class="count">{{ total_count|default(156) }}</p>
+                </div>
+                <div class="stat-card">
+                    <i class="fas fa-shipping-fast"></i>
+                    <h3>In Transit</h3>
+                    <p class="count">{{ transit_count|default(42) }}</p>
+                </div>
+                <div class="stat-card">
+                    <i class="fas fa-check-circle"></i>
+                    <h3>Delivered</h3>
+                    <p class="count">{{ delivered_count|default(98) }}</p>
+                </div>
+                <div class="stat-card">
+                    <i class="fas fa-clock"></i>
+                    <h3>Pending</h3>
+                    <p class="count">{{ pending_count|default(16) }}</p>
+                </div>
+            </div>
+            
+            <div class="package-tabs">
+                <div class="tab active" data-status="all">All Packages</div>
+                <div class="tab" data-status="Pending">Pending</div>
+                <div class="tab" data-status="In Transit">In Transit</div>
+                <div class="tab" data-status="Delivered">Delivered</div>
+            </div>
+            
+            <div class="packages-table-container">
+                <table class="packages-table">
+                    <thead>
+                        <tr>
+                            <th>Tracking ID</th>
+                            <th>Sender</th>
+                            <th>Recipient</th>
+                            <th>Origin</th>
+                            <th>Destination</th>
+                            <th>Size</th>
+                            <th>Weight (kg)</th>
+                            <th>Date Shipped</th>
+                            <th>ETA</th>
+                            <th>Assigned Vehicle</th>
+                            <th>Status</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="packagesTableBody">
+                        {% for package in packages %}
+                        {% set status = "Delivered" if package.order_status in ["COMPLETE", "CLOSED"] else "In Transit" if package.order_status in ["PROCESSING"] else "Returned" if package.order_status in ["SUSPECTED_FRAUD", "CANCELED"] else "Pending" %}
+                        <tr class="package-row" data-status="{{ status }}">
+                            <td>{{ package.tracking_id }}</td>
+                            <td>{{ package.sender }}</td>
+                            <td>{{ package.recipient }}</td>
+                            <td>{{ package.origin }}</td>
+                            <td>{{ package.destination }}</td>
+                            <td>{{ package.package_size }}</td>
+                            <td>{{ package.weight }}</td>
+                            <td>{{ package.date_shipped }}</td>
+                            <td>{{ package.eta }}</td>
+                            <td>{{ package.assigned_vehicle if package.assigned_vehicle else 'Not Assigned' }}</td>
+                            <td><span class="status {{ status.lower().replace(' ', '-') }}">{{ status }}</span></td>
+                            <td>
+                                <button class="action-btn edit" data-id="{{ package.tracking_id }}"><i class="fas fa-edit"></i></button>
+                                <button class="action-btn delete" data-id="{{ package.tracking_id }}"><i class="fas fa-trash"></i></button>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Modal for adding/editing packages -->
+    <div class="modal" id="packageModal">
+        <div class="modal-content">
+            <span class="close-modal">&times;</span>
+            <h2 id="modalTitle">Add New Package</h2>Add New Package</h2>
+            <form id="packageForm" method="POST" action="{{ url_for('update_package') if editing else url_for('add_package') }}">
+                <div class="form-columns">
+                    <div class="form-column">orm-column">
+                        <div class="form-group">class="form-group">
+                            <label for="trackingId">Tracking ID:</label>l>
+                            <input type="text" id="trackingId" name="tracking_id" required>d="trackingId" name="tracking_id" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="sender">Sender:</label>/label>
+                            <input type="text" id="sender" name="sender" required>" name="sender" required>
+                        </div>
+                        <div class="form-group">-group">
+                            <label for="recipient">Recipient:</label>nt">Recipient:</label>
+                            <input type="text" id="recipient" name="recipient" required>id="recipient" name="recipient" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="origin">Origin:</label>el for="origin">Origin:</label>
+                            <input type="text" id="origin" name="origin" required>
+                        </div>
+                        <div class="form-group">s="form-group">
+                            <label for="destination">Destination:</label>label for="destination">Destination:</label>
+                            <input type="text" id="destination" name="destination" required><input type="text" id="destination" name="destination" required>
+                        </div></div>
+                        <div class="form-group">      <div class="form-group">
+                            <label for="size">Size:</label>              <label for="size">Size:</label>
+                            <select id="size" name="size" required>                  <select id="size" name="size" required>
+                                <option value="Small">Small</option>                            <option value="Small">Small</option>
+                                <option value="Medium">Medium</option>"Medium">Medium</option>
+                                <option value="Large">Large</option>alue="Large">Large</option>
+                                <option value="Extra Large">Extra Large</option>tion value="Extra Large">Extra Large</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-column">n">
+                        <div class="form-group">p">
+                            <label for="weight">Weight (kg):</label>Weight (kg):</label>
+                            <input type="number" id="weight" name="weight" step="0.1" min="0" required>t" step="0.1" min="0" required>
+                        </div>
+                        <div class="form-group">lass="form-group">
+                            <label for="dateShipped">Date Shipped:</label>ped">Date Shipped:</label>
+                            <input type="date" id="dateShipped" name="date_shipped" required> name="date_shipped" required>
+                        </div>
+                        <div class="form-group">lass="form-group">
+                            <label for="eta">Estimated Arrival:</label>imated Arrival:</label>
+                            <input type="date" id="eta" name="eta" required>quired>
+                        </div>
+                        <div class="form-group">
+                            <label for="assignedVehicle">Assigned Vehicle:</label>
+                            <select id="assignedVehicle" name="assigned_vehicle">
+                                <option value="">Not Assigned</option>
+                                {% for vehicle in available_vehicles %}
+                                <option value="{{ vehicle.id }}">{{ vehicle.unit_brand }} {{ vehicle.unit_model }} (ID: {{ vehicle.id }})</option>
+                                {% endfor %}
+                            </select>
+                            <input type="hidden" id="assignedVehicleText" name="assigned_vehicle_text">
+                        </div>
+                        <div class="form-group">
+                            <label for="status">Status:</label>
+                            <select id="status" name="status" required>ed>
+                                <option value="Pending">Pending</option>n>
+                                <option value="In Transit">In Transit</option>t</option>
+                                <option value="Delivered">Delivered</option>
+                                <option value="Returned">Returned</option>on value="Returned">Returned</option>
+                            </select>select>
+                        </div>div>
+                        <div class="form-group">p">
+                            <label for="notes">Special Instructions:</label>pecial Instructions:</label>
+                            <textarea id="notes" name="notes" rows="4"></textarea>4"></textarea>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-actions">
+                    <button type="submit" class="save-btn">Save Package</button>
+                    <button type="button" class="cancel-btn">Cancel</button>pe="button" class="cancel-btn">Cancel</button>
+                </div>
+            </form>
+        </div>
+    </div>
+    
+    <!-- Confirmation Modal -->
+    <div class="modal" id="confirmationModal">
+        <div class="modal-content">
+            <h2>Confirm Deletion</h2>
+            <p>Are you sure you want to delete this package? This action cannot be undone.</p>not be undone.</p>
+            <div class="form-actions">
+                <form method="POST" action="{{ url_for('delete_package') }}" id="deletePackageForm">
+                    <input type="hidden" id="deleteTrackingId" name="tracking_id"> class="cancel-btn">Cancel</button>
+                    <button type="submit" class="delete-confirm-btn">Delete</button>
+                    <button type="button" class="cancel-btn">Cancel</button>
+                </form>
+            </div>
+        </div>></script>
+    </div>
+        <script src="{{ url_for('static', filename='admin_hexaboxes.js') }}"></script>    <script>        // Store package data for JavaScript use        const packageData = {{ packages_json|safe }};    </script></body></html>
