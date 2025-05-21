@@ -7,63 +7,62 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='truck-book.css') }}">
 </head>
 <body>
-    <!--Square-->
-    <div class="book-container">
-        <div class="book">
-            <div class="book-header">
-                <div>
-                    <h3>You are almost ready <br>to book!</h3>
-                    <p>Let's get your details</p>
-                </div>
-                <img src="{{ url_for('static', filename='images/delivery-truck.png') }}" alt="img" />
+    <div class="mobile-card truck-ui">
+        <div class="header-row">
+            <button class="icon-btn" onclick="window.history.back();">
+                <span>&larr;</span>
+            </button>
+            <span class="header-title">Book Now</span>
+        </div>
+        <form class="TypeBox" id="bookingForm">
+            <div class="input-row">
+                <span class="input-icon">&#128205;</span>
+                <select id="dropoff" class="truck-input" required>
+                    <option value="" disabled selected>Select drop off point</option>
+                    <option>Location A</option>
+                    <option>Location B</option>
+                    <option>Location C</option>
+                </select>
             </div>
-            <form class="TypeBox" id="bookingForm">
-                <div>
-                     <label class="Drop" for="dropoff">Drop off point</label>
-                    <select id="dropoff" class="truck-input" required>
-                        <option value="" disabled selected>Select drop off point</option>
-                        <option>Location A</option>
-                        <option>Location B</option>
-                        <option>Location C</option>
-                    </select>
-                </div>
-                <div>
-                    <label class="schedule" for="schedule">Schedule</label>
-                    <input type="date" id="schedule" class="truck-input" placeholder="Select Schedule" required />
-                </div>
-                <div>
-                    <label class="weight" for="weight">Specify Weight</label>
-                    <select id="weight" class="truck-input" required>
-                        <option value="" disabled selected>Select weight range</option>
-                        <option>7000kg - 15000kg </option>
-                    </select>
-                </div>
-                 <div>
-                    <label class="quantity" for="quantity">Quantity</label>
-                    <input type="number" id="quantity" class="truck-input" placeholder="Enter Quantity" required min="1" step="1" />
-                 </div>
-                <div>
-                    <label class="special" for="special">Special Instructions</label>
-                    <input type="text" id="special" class="truck-input" placeholder="Enter Any Additional Details (Optional)"/>
-                </div>
-                <button type="submit" class="btn">Confirm Booking</button>
-            </form>
-        </div>
+            <div class="input-row">
+                <span class="input-icon">&#128197;</span>
+                <input type="date" id="schedule" class="truck-input" required />
+            </div>
+            <div class="input-row">
+                <span class="input-icon">&#9878;</span>
+                <select id="weight" class="truck-input" required>
+                    <option value="" disabled selected>Select weight range</option>
+                    <option>7000k-15000Kg</option>
+                </select>
+            </div>
+            <div class="input-row">
+                <span class="input-icon">&#128230;</span>
+                <input type="number" id="quantity" class="truck-input" placeholder="Enter Quantity" required min="1" step="1" />
+            </div>
+            <div class="input-row">
+                <span class="input-icon">&#9998;</span>
+                <input type="text" id="special" class="truck-input" placeholder="Special Instructions (Optional)"/>
+            </div>
+            <button type="submit" class="btn main-btn">Confirm Booking</button>
+        </form>
     </div>
-
-    <!-- Popup -->
-    <div class="popup" id="popup">
-        <img src="{{ url_for('static', filename='images/tick.png') }}" alt="img">
-        <div class="pcontent">
-            <h2 class="you">Thank You!</h2>
-            <p class="TD">Your tracking ID is 0123ab</p>
-        </div>
-        <button type="button" class="OK" id="okBtn" onclick="closePpopup()" disabled>OK(<span id="okTimer">3</span>)</button>
-    </div>
-
     <script>
-        const truckHomeUrl = "{{ url_for('index_html') }}";
+        const carHomeUrl = "{{ url_for('index_html') }}";
     </script>
-    <script src="{{ url_for('static', filename='truck-book.js') }}"></script>
+    <script src="{{ url_for('static', filename='carbook-date.js') }}"></script>
+    <script src="{{ url_for('static', filename='carbook.js') }}"></script>
+    <script>
+document.getElementById('bookingForm').addEventListener('submit', function(e) {
+    e.preventDefault();
+    // Set a flag to show modal after payment
+    // Redirect to payment wall
+    window.location.href = "{{ url_for('payment_wall') }}";
+});
+
+// Make OK button go to payment wall
+function closePpopup() {
+    window.location.href = "{{ url_for('payment_wall') }}";
+}
+</script>
 </body>
 </html>

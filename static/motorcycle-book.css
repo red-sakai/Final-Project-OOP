@@ -1,312 +1,283 @@
+/* Font */
 @font-face {
     font-family: "Inter";
-    src: url("fonts/Inter-28pt-SemiBoldtalic.ttf");
-    src: url("fonts/Inter-28pt-SemiBoldtalic.ttf") format("truetype"); 
+    src: url("fonts/Inter-28pt-SemiBoldtalic.ttf") format("truetype");
     font-weight: normal;
     font-style: normal;
 }
 
+/* Body background and centering */
 body {
-    background: linear-gradient(120deg, #b2dbf8 0%, #03335e 100%);
+    background: linear-gradient(135deg, #e0e7ff 0%, #b6c6f5 100%);
     min-height: 100vh;
-    margin: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     font-family: 'Inter', sans-serif;
 }
 
-.card-container{
-    display: flex;
-    justify-content: center;
-    height: 400px;
-    opacity: 100%;
-}
-
-.card{
-    width: 1520px;
-    background-color: #d9d9d9;
-    border-radius: 0px;
-    overflow: hidden;
-    margin-top: -10px;
-    margin-left: -10px;
-    margin-right: -10px;
-    height: 80px;
-    opacity: 20%;
-    position: absolute;
-}
-
-/*Nav*/
-
-.book-container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    min-height: 100vh;
-}
-
-.book {
+/* Card */
+.mobile-card.truck-ui {
+    width: 370px;
     background: #fff;
-    border-radius: 28px;
-    box-shadow: 0 8px 40px #03335e33, 0 2px 12px #b2dbf822;
-    padding: 48px 40px 32px 40px;
-    width: 420px;           /* Fixed width for all boxes */
-    min-width: 320px;
-    max-width: 100vw;
-    animation: popInBook 0.7s cubic-bezier(.4,2,.3,1);
+    border-radius: 36px;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.18);
+    padding: 32px 24px 32px 24px;
+    color: #003355;
     position: relative;
-    box-sizing: border-box;
+    margin-top: 40px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    overflow: visible;
 }
 
-@keyframes popInBook {
-    0% { transform: scale(0.92) translateY(40px); opacity: 0; }
-    100% { transform: scale(1) translateY(0); opacity: 1; }
-}
-
-.book-header {
+/* Header */
+.header-row {
+    width: 100%;
     display: flex;
     align-items: center;
-    justify-content: space-between;
-    margin-bottom: 32px;
+    justify-content: center;
+    margin-bottom: 16px;
+    margin-top: 12px;
+    position: relative;
 }
 
-.book-header h3 {
-    font-size: 2rem;
-    font-weight: 800;
-    color: #03335e;
-    margin: 0 0 8px 0;
+.header-title {
+    font-size: 1.7em;
+    font-weight: 700;
+    color: #3b82f6;
     letter-spacing: 1px;
-    animation: fadeInDown 0.8s;
-}
-
-.book-header p {
-    color: #8ecae6;
-    font-size: 1.1rem;
+    text-align: center;
+    flex: 1;
     margin: 0;
-    font-weight: 500;
-    animation: fadeInDown 1s;
 }
 
-.book-header img {
-    width: 80px;
-    height: 80px;
-    object-fit: contain;
-    animation: floatBike 2.5s infinite ease-in-out;
+.icon-btn {
+    background: #f6f8ff;
+    border: none;
+    border-radius: 8px;
+    width: 36px;
+    height: 36px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.3em;
+    color: #3b82f6;
+    cursor: pointer;
+    box-shadow: 0 2px 8px rgba(59,130,246,0.08);
+    margin-right: 0;
+    position: absolute;
+    left: 0;
 }
 
-@keyframes floatBike {
-    0%, 100% { transform: translateY(0);}
-    50% { transform: translateY(-10px);}
-}
-
-@keyframes fadeInDown {
-    0% { opacity: 0; transform: translateY(-20px);}
-    100% { opacity: 1; transform: translateY(0);}
-}
-
+/* Form */
 .TypeBox {
+    width: 100%;
     display: flex;
     flex-direction: column;
     gap: 18px;
-    animation: fadeInUp 1.2s;
-}
-
-.TypeBox, .TypeBox > div {
-    width: 100%;
-    box-sizing: border-box;
-}
-
-@keyframes fadeInUp {
-    0% { opacity: 0; transform: translateY(30px);}
-    100% { opacity: 1; transform: translateY(0);}
-}
-
-.TypeBox label {
-    font-weight: 600;
-    color: #095190;
-    margin-bottom: 4px;
-    letter-spacing: 0.5px;
-}
-
-.truck-input, .TypeBox select, .TypeBox input[type="date"] {
-    width: 100%;
-    padding: 12px 14px;
-    border-radius: 12px;
-    border: 1.5px solid #b2dbf8;
-    background: #f7fbfd;
-    font-size: 1rem;
-    color: #03335e;
-    margin-bottom: 2px;
-    transition: border 0.2s, box-shadow 0.2s;
-    outline: none;
-    box-shadow: 0 2px 8px #b2dbf822;
-}
-
-.truck-input:focus {
-    border: 2px solid #095190;
-    box-shadow: 0 4px 16px #b2dbf855;
-}
-
-.btn {
-    margin-top: 18px;
-    padding: 12px 0;
-    background: linear-gradient(90deg, #b2dbf8 0%, #095190 100%);
-    color: #fff;
-    font-weight: 700;
-    font-size: 1.1rem;
+    margin-top: 0;
     border: none;
-    border-radius: 16px;
-    cursor: pointer;
-    box-shadow: 0 4px 16px #b2dbf8aa;
-    transition: background 0.2s, transform 0.15s, color 0.2s;
-    letter-spacing: 1px;
-    animation: fadeInUp 1.5s;
-    width: 100%;
-}
-
-.btn:disabled,
-.btn[disabled] {
-    background: #bfc8d1 !important;
-    color: #7a869a !important;
-    cursor: not-allowed !important;
+    background: none;
     box-shadow: none;
-    pointer-events: none;
-    filter: grayscale(0.3);
+    padding: 0;
 }
 
-.popup {
-    position: fixed;
-    top: 0; left: 0; right: 0; bottom: 0;
-    background: rgba(3, 51, 94, 0.32); /* darker overlay for more pop */
-    z-index: 9999;
-    display: none;
+.input-row {
+    display: flex;
+    align-items: center;
+    background: #fff;            
+    border-radius: 10px;
+    box-shadow: 0 2px 8px rgba(59,130,246,0.06);
+    padding: 0 8px;
+    margin-bottom: 0;
+    height: 44px;              
+    position: relative;
+    border: 2px solid #e0e7ff;   
+    gap: 0;
+}
+
+.input-icon {
+    font-size: 1.2em;
+    color: #3b82f6;
+    margin-right: 8px;
+    background: transparent;
+    width: 32px;              
+    height: 32px;
+    display: flex;
     align-items: center;
     justify-content: center;
-    animation: fadeInBg 0.3s;
-    backdrop-filter: blur(2px) brightness(0.95); /* subtle glass effect */
 }
 
-.popup.show {
-    display: flex !important;
-}
-
-.popup-content {
-    background: #fff;
-    border-radius: 24px;
-    box-shadow: 0 8px 40px #03335e55, 0 2px 12px #b2dbf855;
-    padding: 48px 40px 32px 40px;
-    min-width: 320px;
-    max-width: 90vw;
+.truck-input,
+.TypeBox select,
+.TypeBox input[type="date"] {
+    width: 100%;
+    font-family: 'Inter', monospace;
+    font-size: 1em;
+    padding: 0 0;              
+    border: none;                  
+    background: transparent; 
+    margin: 0;
+    box-sizing: border-box;
+    outline: none;
+    color: #003355;
+    height: 32px;             
+    line-height: 32px;
+    transition: border-color 0.2s, box-shadow 0.2s;
+    border-radius: 6px;
+    box-shadow: none;
     display: flex;
-    flex-direction: column;
     align-items: center;
-    animation: popInModal 0.5s cubic-bezier(.4,2,.3,1);
-    border: 3px solid #b2dbf8;
+
+}
+
+/* Focus effect */
+.truck-input:focus,
+.TypeBox select:focus,
+.TypeBox input[type="date"]:focus {
+    border-color: #3b82f6;
+    box-shadow: 0 0 0 3px rgba(59,130,246,0.2);
+}
+
+/* Remove default date input padding and icon alignment */
+input[type="date"].truck-input {
+    padding: 0 12px;
+    height: 40px;
+    line-height: 40px;
+    background: transparent;
+    border: none;
+    box-sizing: border-box;
+    font-family: 'Inter', monospace;
+    font-size: 1em;
+    color: #003355;
+    display: flex;
+    align-items: center;
     position: relative;
 }
 
-@keyframes popInModal {
-    0% { transform: scale(0.85) translateY(30px); opacity: 0; }
-    100% { transform: scale(1) translateY(0); opacity: 1; }
+/* Style the date input so the calendar icon is at the end, like the dropdown arrow */
+input[type="date"].truck-input::-webkit-calendar-picker-indicator {
+    position: absolute;
+    right: 12px;
+    color: #003355;
+    opacity: 1;
+    cursor: pointer;
+    width: 22px;
+    height: 22px;
+}
+input[type="date"].truck-input::-moz-calendar-picker-indicator {
+    position: absolute;
+    right: 12px;
+    color: #003355;
+    opacity: 1;
+    cursor: pointer;
+    width: 22px;
+    height: 22px;
+}
+input[type="date"].truck-input::-webkit-input-placeholder { color: #003355; }
+input[type="date"].truck-input::-webkit-datetime-edit { line-height: 32px; padding: 0; }
+
+/* Custom dropdown arrow for select */
+.TypeBox select.truck-input {
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    background: #fff url('data:image/svg+xml;utf8,<svg fill="none" stroke="black" stroke-width="2" viewBox="0 0 24 24" width="24" height="24" xmlns="http://www.w3.org/2000/svg"><polyline points="6 9 12 15 18 9"/></svg>') no-repeat right 14px center/24px 24px;
+    padding-right: 50px;
+    cursor: pointer;
+    border-radius: 4px;
 }
 
-.popup > img, .popup .pcontent, .popup .OK {
-    z-index: 10001;
-}
-
-.popup > img {
-    display: none; /* hide old img, use inside .popup-content */
-}
-
-.popup .popup-content img {
-    width: 70px;
-    margin-bottom: 18px;
-    animation: popTick 0.7s cubic-bezier(.4,2,.3,1);
-    display: block;
-}
-
-@keyframes fadeInBg {
-    from { background: rgba(3,51,94,0); }
-    to   { background: rgba(3,51,94,0.18); }
-}
-
-@keyframes popTick {
-    0% { transform: scale(0.7) rotate(-20deg); opacity: 0;}
-    100% { transform: scale(1) rotate(0); opacity: 1;}
-}
-
-.pcontent {
-    text-align: center;
-    margin-bottom: 18px;
-}
-
-.pcontent h2 {
-    color: #03335e;
-    font-size: 2rem;
-    margin: 0 0 8px 0;
-    font-weight: 800;
-    letter-spacing: 1px;
-}
-
-.pcontent p {
-    color: #095190;
-    font-size: 1.1rem;
-    margin: 0;
-    font-weight: 600;
-}
-
-.pcontent p.TD {
-    color: #fff;
-    background: linear-gradient(90deg, #095190 0%, #b2dbf8 100%);
-    font-size: 1.3rem;
-    margin: 16px 0 0 0;
-    font-weight: 800;
-    border-radius: 12px;
-    padding: 12px 28px;
-    box-shadow: 0 4px 16px #b2dbf8aa;
-    letter-spacing: 2px;
-    text-shadow: 0 2px 8px #03335e44;
-    display: inline-block;
-    animation: popTracking 0.7s cubic-bezier(.4,2,.3,1);
-    border: 2px solid #03335e;
-}
-
-@keyframes popTracking {
-    0% { transform: scale(0.7) rotate(-2deg); opacity: 0; }
-    100% { transform: scale(1) rotate(0); opacity: 1; }
-}
-
-.OK {
-    background: #b2dbf8;
-    color: #03335e;
+/* Button */
+.main-btn, .btn {
+    margin-top: 24px;
+    width: 100%;
+    font-size: 1.1em;
+    padding: 16px 0;
+    background: #00567f;
     border: none;
-    border-radius: 12px;
-    padding: 10px 32px;
-    font-size: 1rem;
+    color: #fff;
     font-weight: 700;
     cursor: pointer;
-    box-shadow: 0 2px 8px #b2dbf8aa;
-    transition: background 0.2s, color 0.2s, transform 0.15s;
-    margin-top: 10px;
+    transition: background 0.2s;
+    box-shadow: 0 2px 8px rgba(59,130,246,0.08);
+    letter-spacing: 1px;
+    border-radius: 32px;
+    text-align: center;
 }
 
-.OK:enabled:hover {
-    background: #095190;
-    color: #fff;
-    transform: scale(1.04);
+.main-btn:hover, .btn:hover {
+    background: linear-gradient(90deg, #2563eb 0%, #6366f1 100%);
+}
+
+.btn:disabled,
+.btn.btn-disabled {
+    background: #cccccc !important;
+    color: #888 !important;
+    cursor: not-allowed !important;
+    border: none;
+}
+
+/* Popup */
+.popup {
+    width: 320px;
+    background: #fff;
+    border-radius: 10px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    box-shadow: 0 -8px 24px rgba(0,0,0,0.18), 0 8px 24px rgba(0,0,0,0.12);
+    padding: 32px 24px 24px 24px;
+    display: none;
+    margin-top: 200px;
+}
+
+.open-popup {
+    display: block;
+    top: 50%;
+    transform: translate(-50%, -50%) scale(1);
 }
 
 .blurred {
-    filter: blur(4px) brightness(0.95);
+    filter: blur(6px);
     pointer-events: none;
     user-select: none;
-    transition: filter 0.3s;
 }
 
-@media (max-width: 600px) {
-    .book {
-        padding: 24px 10px;
-        max-width: 98vw;
-    }
-    .book-header img {
-        width: 50px;
-        height: 50px;
-    }
+.OK {
+    display: block;
+    margin: 32px auto 0 auto;
+    width: 70%;
+    font-size: 1.2em;
+    padding: 14px 0;
+    background-color: #003355;
+    border-radius: 32px;
+    border: none;
+    color: #fff;
+    text-align: center;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background 0.2s;
+    font-family: 'Inter', serif;
 }
+
+.pcontent {
+    margin-top: 40px;
+    position: relative;
+}
+
+.popup img {
+    width: 70px;
+    height: 70px;
+    margin-bottom: 16px;
+    position: absolute;
+    margin-left: -30px;
+    margin-top: -25px;
+}
+
+
+
