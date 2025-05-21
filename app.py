@@ -1,6 +1,7 @@
 from flask import Flask, render_template, url_for, request, redirect, flash, jsonify, Blueprint, send_from_directory
 from models.admin import Admin
 from models.analytics_backend import plot_employee_statuses, plot_vehicles_deployed
+from models.vehicle_database import VehicleDatabase, Vehicle
 from abc import ABC, abstractmethod
 from enum import Enum
 from flask_mail import Mail, Message
@@ -8,6 +9,7 @@ import random
 from transformers import pipeline
 import os
 import re
+import json
 from services.hexabot import hexabot_bp
 
 # Initialize DistilBERT QA pipeline
@@ -142,6 +144,7 @@ class HexaHaulApp:
         self.user_password_reset_manager = UserPasswordResetManager(self.mail)
         self.admin_password_reset_manager = AdminPasswordResetManager(self.mail)
         self.admin_account = Admin(username="admin", password="admin123", otp_authentication=False)
+        self.vehicle_db = VehicleDatabase()
         self.register_routes()
         self.register_blueprints()
 
@@ -158,6 +161,7 @@ class HexaHaulApp:
         user_password_reset_manager = self.user_password_reset_manager
         admin_password_reset_manager = self.admin_password_reset_manager
         admin_account = self.admin_account
+        vehicle_db = self.vehicle_db
 
         @app.route("/")
         def home():
@@ -393,7 +397,101 @@ class HexaHaulApp:
 
         @app.route('/admin/vehicles')
         def admin_vehicles():
-            return render_template('admin_vehicles.html')
+            # Get all vehicles from database
+            session = vehicle_db.connect()
+            vehicles = session.query(Vehicle).all()
+            
+            # Count vehicles by category
+            motorcycle_count = sum(1 for v in vehicles if v.category == 'Motorcycle')
+            car_count = sum(1 for v in vehicles if v.category == 'Car')
+            truck_count = sum(1 for v in vehicles if v.category == 'Truck')
+            available_count = sum(1 for v in vehicles if v.status == 'Available')
+            
+            # Convert vehicles to JSON for JavaScript use
+            vehicles_json = json.dumps([{
+                'id': v.id,
+                'unit_brand': v.unit_brand,
+                'unit_model': v.unit_model,
+                'unit_type': v.unit_type,
+                'category': v.category,
+                'distance': v.distance,
+                'driver_employee_id': v.driver_employee_id,
+                'license_expiration_date': v.license_expiration_date,
+                'order_id': v.order_id,
+                'max_weight': v.max_weight,
+                'min_weight': v.min_weight,
+                'status': v.status,
+                'year': v.year
+            } for v in vehicles])
+            
+            vehicle_db.disconnect()
+            
+            return render_template('admin_vehicles.html', 
+                                  vehicles=vehicles,
+                                  motorcycle_count=motorcycle_count,
+                                  car_count=car_count,
+                                  truck_count=truck_count,
+                                  available_count=available_count,
+                                  vehicles_json=vehicles_json)
+
+        @app.route('/admin/vehicles/add', methods=['POST'])
+        def add_vehicle():
+            # Get form data
+            data = {
+                'unit_brand': request.form.get('unit_brand'),
+                'unit_model': request.form.get('unit_model'),
+                'unit_type': request.form.get('unit_type'),
+                'category': request.form.get('category'),
+                'distance': int(request.form.get('distance', 0)),
+                'driver_employee_id': int(request.form.get('driver_employee_id')) if request.form.get('driver_employee_id') else None,
+                'license_expiration_date': request.form.get('license_expiration_date'),
+                'order_id': int(request.form.get('order_id')) if request.form.get('order_id') else None,
+                'max_weight': float(request.form.get('max_weight')),
+                'min_weight': float(request.form.get('min_weight', 0)),
+                'status': request.form.get('status', 'Available'),
+                'year': int(request.form.get('year'))
+            }
+            
+            # Add vehicle to database
+            vehicle_db.add_vehicle(**data)
+            
+            return redirect(url_for('admin_vehicles'))
+
+        @app.route('/admin/vehicles/update', methods=['POST'])
+        def update_vehicle():
+            # Get vehicle ID
+            vehicle_id = int(request.form.get('vehicle_id'))
+            
+            # Get form data
+            data = {
+                'unit_brand': request.form.get('unit_brand'),
+                'unit_model': request.form.get('unit_model'),
+                'unit_type': request.form.get('unit_type'),
+                'category': request.form.get('category'),
+                'distance': int(request.form.get('distance', 0)),
+                'driver_employee_id': int(request.form.get('driver_employee_id')) if request.form.get('driver_employee_id') else None,
+                'license_expiration_date': request.form.get('license_expiration_date'),
+                'order_id': int(request.form.get('order_id')) if request.form.get('order_id') else None,
+                'max_weight': float(request.form.get('max_weight')),
+                'min_weight': float(request.form.get('min_weight', 0)),
+                'status': request.form.get('status'),
+                'year': int(request.form.get('year'))
+            }
+            
+            # Update vehicle in database
+            vehicle_db.update_vehicle(vehicle_id, **data)
+            
+            return redirect(url_for('admin_vehicles'))
+
+        @app.route('/admin/vehicles/delete', methods=['POST'])
+        def delete_vehicle():
+            # Get vehicle ID
+            vehicle_id = int(request.form.get('vehicle_id'))
+            
+            # Delete vehicle from database
+            vehicle_db.delete_vehicle(vehicle_id)
+            
+            return redirect(url_for('admin_vehicles'))
 
         @app.route('/admin/employees')
         def admin_employees():
