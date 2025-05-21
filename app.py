@@ -13,25 +13,27 @@ from services.hexabot import hexabot_bp
 # Initialize DistilBERT QA pipeline
 qa_pipeline = pipeline("question-answering", model="distilbert-base-uncased-distilled-squad")
 
-# Initialize Flask app and set static folder
-app = Flask(__name__, 
-            static_url_path='',
-            static_folder='static')
-app.secret_key = "your_secret_key"
+class BaseManager(ABC):
+    @abstractmethod
+    def generate_otp(self, email):
+        pass
 
-# flask-mail config
-app.config['MAIL_SERVER'] = 'smtp.gmail.com'
-app.config['MAIL_PORT'] = 587
-app.config['MAIL_USE_TLS'] = True
-app.config['MAIL_USERNAME'] = 'hexahaulprojects@gmail.com'
-app.config['MAIL_PASSWORD'] = 'ikai nagb zyna hjoc'
+    @abstractmethod
+    def send_otp(self, email, otp):
+        pass
 
-mail = Mail(app)
+    @abstractmethod
+    def verify_otp(self, email, otp):
+        pass
 
-# encapsulated password reset manager
-class PasswordResetManager:
-    def __init__(self):
-        self.__user_otps = {}  # double underscore for strong encapsulation
+    @abstractmethod
+    def clear_otp(self, email):
+        pass
+
+class PasswordResetManager(BaseManager):
+    def __init__(self, mail):
+        self.__user_otps = {}
+        self.mail = mail
 
     def generate_otp(self, email):
         otp = str(random.randint(100000, 999999))
@@ -67,7 +69,7 @@ class PasswordResetManager:
           </div>
         </div>
         """
-        mail.send(msg)
+        self.mail.send(msg)
 
     def send_admin_otp(self, email, otp):
         logo_url = "https://i.imgur.com/upLAusA.png"
@@ -98,7 +100,7 @@ class PasswordResetManager:
           </div>
         </div>
         """
-        mail.send(msg)
+        self.mail.send(msg)
 
     def verify_otp(self, email, otp):
         return self.__user_otps.get(email) == otp
@@ -106,287 +108,318 @@ class PasswordResetManager:
     def clear_otp(self, email):
         self.__user_otps.pop(email, None)
 
-password_reset_manager = PasswordResetManager()
+class UserPasswordResetManager(PasswordResetManager):
+    def send_otp(self, email, otp):
+        super().send_otp(email, otp)
 
-# hard coded admin acccount; use database soon
-admin_account = Admin(username="admin", password="admin123", otp_authentication=False)
+class AdminPasswordResetManager(PasswordResetManager):
+    def send_otp(self, email, otp):
+        self.send_admin_otp(email, otp)
 
-@app.route("/")
-def home():
-    print("Home route accessed")
-    return render_template("user-login.html")
+class HexaHaulApp:
+    def __init__(self):
+        self.app = Flask(__name__, static_url_path='', static_folder='static')
+        self.app.secret_key = "your_secret_key"
+        self.configure_mail()
+        self.user_password_reset_manager = UserPasswordResetManager(self.mail)
+        self.admin_password_reset_manager = AdminPasswordResetManager(self.mail)
+        self.admin_account = Admin(username="admin", password="admin123", otp_authentication=False)
+        self.register_routes()
+        self.register_blueprints()
 
-@app.route("/index")
-@app.route("/index.html")
-def index_html():
-    print("Index route accessed")
-    return render_template("index.html")
+    def configure_mail(self):
+        self.app.config['MAIL_SERVER'] = 'smtp.gmail.com'
+        self.app.config['MAIL_PORT'] = 587
+        self.app.config['MAIL_USE_TLS'] = True
+        self.app.config['MAIL_USERNAME'] = 'hexahaulprojects@gmail.com'
+        self.app.config['MAIL_PASSWORD'] = 'ikai nagb zyna hjoc'
+        self.mail = Mail(self.app)
 
-@app.route("/services")
-@app.route("/services.html")
-def services_html():
-    print("Services route accessed")
-    return render_template("services.html")
+    def register_routes(self):
+        app = self.app
+        user_password_reset_manager = self.user_password_reset_manager
+        admin_password_reset_manager = self.admin_password_reset_manager
+        admin_account = self.admin_account
 
-@app.route("/tracking")
-@app.route("/tracking.html")
-def tracking_html():
-    print("Tracking route accessed")
-    return render_template("tracking.html")
-
-@app.route("/FAQ")
-@app.route("/FAQ.html")
-def faq_html():
-    print("FAQ route accessed")
-    return render_template("FAQ.html")
-
-@app.route("/admin-login", methods=["GET", "POST"])
-def admin_login():
-    if request.method == 'POST':
-        username = request.form.get('username')
-        password = request.form.get('password')
-        if username == 'admin' and password == 'admin123':
-            return redirect(url_for('admin_dashboard'))
-        else:
-            flash('Invalid username or password', 'error')
-    return render_template('admin-login.html')
-
-@app.route("/user-login", methods=["GET", "POST"])
-@app.route("/user-login.html", methods=["GET", "POST"])
-def user_login_html():
-    print("User login route accessed")
-    if request.method == "POST":
-        username = request.form.get("username")
-        password = request.form.get("password")
-        if admin_account.login(username, password):
-            print("Admin login successful")
-            return redirect(url_for("index_html"))
-        else:
-            flash("Wrong username or password.")
+        @app.route("/")
+        def home():
+            print("Home route accessed")
             return render_template("user-login.html")
-    return render_template("user-login.html")
 
-@app.route("/user-signup")
-@app.route("/user-signup.html")
-def user_signup_html():
-    print("User signup route accessed")
-    return render_template("user-signup.html")
+        @app.route("/index")
+        @app.route("/index.html")
+        def index_html():
+            print("Index route accessed")
+            return render_template("index.html")
 
-@app.route("/forgot-password", methods=["GET", "POST"])
-def forgot_password():
-    if request.method == "POST":
-        email = request.form.get("email")
-        # TODO: Check if email exists in your user database
-        otp = password_reset_manager.generate_otp(email)
-        password_reset_manager.send_otp(email, otp)
-        flash("OTP sent to your email. Please check your inbox.")
-        return redirect(url_for("verify_otp", email=email))
-    return render_template("forgot-password.html")
+        @app.route("/services")
+        @app.route("/services.html")
+        def services_html():
+            print("Services route accessed")
+            return render_template("services.html")
 
-@app.route("/verify-otp", methods=["GET", "POST"])
-def verify_otp():
-    email = request.args.get("email")
-    if request.method == "POST":
-        otp = ''.join([
-            request.form.get('otp1', ''),
-            request.form.get('otp2', ''),
-            request.form.get('otp3', ''),
-            request.form.get('otp4', ''),
-            request.form.get('otp5', ''),
-            request.form.get('otp6', ''),
-        ])
-        new_password = request.form.get("new_password")
-        if password_reset_manager.verify_otp(email, otp):
-            # TODO: Update user's password in your database
-            password_reset_manager.clear_otp(email)
-            flash("Password changed successfully. Please login.")
-            return redirect(url_for("user_login_html"))
-        else:
-            flash("Invalid OTP. Please try again.")
-    return render_template("verify-otp.html", email=email)
+        @app.route("/tracking")
+        @app.route("/tracking.html")
+        def tracking_html():
+            print("Tracking route accessed")
+            return render_template("tracking.html")
 
-@app.route('/verification-code')
-def verification_code():
-    email = request.args.get('email')
-    return render_template('verification-code.html', email=email)
+        @app.route("/FAQ")
+        @app.route("/FAQ.html")
+        def faq_html():
+            print("FAQ route accessed")
+            return render_template("FAQ.html")
 
-@app.route('/admin-verification-code', methods=['GET', 'POST'])
-def admin_verification_code():
-    email = request.values.get('email')
-    if request.method == 'POST':
-        otp = ''.join([request.form.get(f'otp{i}', '') for i in range(1, 7)])
-        if password_reset_manager.verify_otp(email, otp):
-            password_reset_manager.clear_otp(email)
-            return redirect(url_for('admin_new_password', email=email))
-        else:
-            flash("Invalid verification code. Please try again.")
-    return render_template('verification-code.html', email=email, is_admin=True)
+        @app.route("/admin-login", methods=["GET", "POST"])
+        def admin_login():
+            if request.method == 'POST':
+                username = request.form.get('username')
+                password = request.form.get('password')
+                if username == 'admin' and password == 'admin123':
+                    return redirect(url_for('admin_dashboard'))
+                else:
+                    flash('Invalid username or password', 'error')
+            return render_template('admin-login.html')
 
-@app.route('/admin-new-password', methods=['GET', 'POST'])
-def admin_new_password():
-    email = request.values.get('email')
-    if request.method == 'POST':
-        new_password = request.form.get('new_password')
-        confirm_password = request.form.get('confirm_password')
-        if new_password == confirm_password and len(new_password) >= 8:
-            # Save new password logic here
-            flash("Password reset successful. Please login.")
-            return redirect(url_for('admin_login'))
-        else:
-            flash("Passwords do not match or do not meet requirements.")
-    return render_template('admin-new-password.html', email=email)
+        @app.route("/user-login", methods=["GET", "POST"])
+        @app.route("/user-login.html", methods=["GET", "POST"])
+        def user_login_html():
+            print("User login route accessed")
+            if request.method == "POST":
+                username = request.form.get("username")
+                password = request.form.get("password")
+                if admin_account.login(username, password):
+                    print("Admin login successful")
+                    return redirect(url_for("index_html"))
+                else:
+                    flash("Wrong username or password.")
+                    return render_template("user-login.html")
+            return render_template("user-login.html")
 
-@app.route('/admin-resend-otp', methods=['POST'])
-def admin_resend_otp():
-    email = request.form.get('email')
-    if email:
-        otp = password_reset_manager.generate_otp(email)
-        password_reset_manager.send_admin_otp(email, otp)
-        return jsonify({'success': True, 'message': 'Verification code resent.'})
-    return jsonify({'success': False, 'message': 'Email not found.'}), 400
+        @app.route("/user-signup")
+        @app.route("/user-signup.html")
+        def user_signup_html():
+            print("User signup route accessed")
+            return render_template("user-signup.html")
 
-# Truck routes
-@app.route("/truck")
-def truck_html():
-    return render_template("truck.html")
+        @app.route("/forgot-password", methods=["GET", "POST"])
+        def forgot_password():
+            if request.method == "POST":
+                email = request.form.get("email")
+                otp = user_password_reset_manager.generate_otp(email)
+                user_password_reset_manager.send_otp(email, otp)
+                flash("OTP sent to your email. Please check your inbox.")
+                return redirect(url_for("verify_otp", email=email))
+            return render_template("forgot-password.html")
 
-@app.route("/truck-book")
-def truck_book_html():
-    return render_template("truck-book.html")
+        @app.route("/verify-otp", methods=["GET", "POST"])
+        def verify_otp():
+            email = request.args.get("email")
+            if request.method == "POST":
+                otp = ''.join([
+                    request.form.get('otp1', ''),
+                    request.form.get('otp2', ''),
+                    request.form.get('otp3', ''),
+                    request.form.get('otp4', ''),
+                    request.form.get('otp5', ''),
+                    request.form.get('otp6', ''),
+                ])
+                new_password = request.form.get("new_password")
+                if user_password_reset_manager.verify_otp(email, otp):
+                    user_password_reset_manager.clear_otp(email)
+                    flash("Password changed successfully. Please login.")
+                    return redirect(url_for("user_login_html"))
+                else:
+                    flash("Invalid OTP. Please try again.")
+            return render_template("verify-otp.html", email=email)
 
-@app.route("/truck-book2")
-def truck_book2_html():
-    return render_template("truck-book2.html")
+        @app.route('/verification-code')
+        def verification_code():
+            email = request.args.get('email')
+            return render_template('verification-code.html', email=email)
 
-@app.route("/truck-book3")
-def truck_book3_html():
-    return render_template("truck-book3.html")
-#-----------------------------------------------
-# Motorcycle routes
-@app.route("/motorcycle")
-def motorcycle_html():
-    return render_template("motorcycle.html")
+        @app.route('/admin-verification-code', methods=['GET', 'POST'])
+        def admin_verification_code():
+            email = request.values.get('email')
+            if request.method == 'POST':
+                otp = ''.join([request.form.get(f'otp{i}', '') for i in range(1, 7)])
+                if admin_password_reset_manager.verify_otp(email, otp):
+                    admin_password_reset_manager.clear_otp(email)
+                    return redirect(url_for('admin_new_password', email=email))
+                else:
+                    flash("Invalid verification code. Please try again.")
+            return render_template('verification-code.html', email=email, is_admin=True)
 
-@app.route("/motorcycle-book")
-def motorcycle_book_html():
-    return render_template("motorcycle-book.html")
+        @app.route('/admin-new-password', methods=['GET', 'POST'])
+        def admin_new_password():
+            email = request.values.get('email')
+            if request.method == 'POST':
+                new_password = request.form.get('new_password')
+                confirm_password = request.form.get('confirm_password')
+                if new_password == confirm_password and len(new_password) >= 8:
+                    flash("Password reset successful. Please login.")
+                    return redirect(url_for('admin_login'))
+                else:
+                    flash("Passwords do not match or do not meet requirements.")
+            return render_template('admin-new-password.html', email=email)
 
-@app.route("/motorcycle-book2")
-def motorcycle_book2_html():
-    return render_template("motorcycle-book2.html")
+        @app.route('/admin-resend-otp', methods=['POST'])
+        def admin_resend_otp():
+            email = request.form.get('email')
+            if email:
+                otp = admin_password_reset_manager.generate_otp(email)
+                admin_password_reset_manager.send_otp(email, otp)
+                return jsonify({'success': True, 'message': 'Verification code resent.'})
+            return jsonify({'success': False, 'message': 'Email not found.'}), 400
 
-@app.route("/motorcycle-book3")
-def motorcycle_book3_html():
-    return render_template("motorcycle-book3.html")
-#------------------------------------------------
-# Car routes
-@app.route("/car")
-def car_html():
-    return render_template("car.html")
+        @app.route("/truck")
+        def truck_html():
+            return render_template("truck.html")
 
-@app.route("/carbook")
-def carbook_html():
-    return render_template("carbook.html")
+        @app.route("/truck-book")
+        def truck_book_html():
+            return render_template("truck-book.html")
 
-@app.route("/carbook2")
-def carbook2_html():
-    return render_template("carbook2.html")
+        @app.route("/truck-book2")
+        def truck_book2_html():
+            return render_template("truck-book2.html")
 
-@app.route("/carbook3")
-def carbook3_html():
-    return render_template("carbook3.html")
+        @app.route("/truck-book3")
+        def truck_book3_html():
+            return render_template("truck-book3.html")
 
-@app.route("/parcel-tracker")
-def parcel_tracker():
-    tracking_id = request.args.get("tracking_id", "")
-    return render_template("parcel-tracker.html", tracking_id=tracking_id)
+        @app.route("/motorcycle")
+        def motorcycle_html():
+            return render_template("motorcycle.html")
 
-@app.route("/parceltracking")
-def parceltracking():
-    tracking_id = request.args.get("tracking_id", "")
-    return render_template("parceltracking.html", tracking_id=tracking_id)
+        @app.route("/motorcycle-book")
+        def motorcycle_book_html():
+            return render_template("motorcycle-book.html")
 
-@app.route("/submit-ticket", methods=["GET", "POST"])
-def submit_ticket():
-    if request.method == "POST":
-        user_email = request.form.get("email")
-        issue = request.form.get("issue")
-        # Send the issue to the support email
-        msg = Message(
-            subject="New Support Ticket",
-            sender="hexahaulprojects@gmail.com",
-            recipients=["hexahaulprojects@gmail.com"]
-        )
-        msg.body = f"Support ticket submitted by: {user_email}\n\nIssue Description:\n{issue}"
-        mail.send(msg)
-        # Pass a query parameter to trigger the modal on index.html
-        return redirect(url_for("index_html", ticket_submitted="1"))
-    return render_template("submit-ticket.html")
+        @app.route("/motorcycle-book2")
+        def motorcycle_book2_html():
+            return render_template("motorcycle-book2.html")
 
-@app.route("/personal-info")
-def personal_info():
-    return render_template("personal-info.html")
+        @app.route("/motorcycle-book3")
+        def motorcycle_book3_html():
+            return render_template("motorcycle-book3.html")
 
-@app.route("/change-password")
-def change_password():
-    return render_template("change-password.html")
+        @app.route("/car")
+        def car_html():
+            return render_template("car.html")
 
-@app.route("/update-email")
-def update_email():
-    return render_template("update-email.html")
+        @app.route("/carbook")
+        def carbook_html():
+            return render_template("carbook.html")
 
-@app.route("/privacy-settings")
-def privacy_settings():
-    return render_template("privacy-settings.html")
+        @app.route("/carbook2")
+        def carbook2_html():
+            return render_template("carbook2.html")
 
-@app.route("/language-region")
-def language_region():
-    return render_template("language-region.html")
+        @app.route("/carbook3")
+        def carbook3_html():
+            return render_template("carbook3.html")
 
-@app.route("/recent-logins")
-def recent_logins():
-    return render_template("recent-logins.html")
+        @app.route("/parcel-tracker")
+        def parcel_tracker():
+            tracking_id = request.args.get("tracking_id", "")
+            return render_template("parcel-tracker.html", tracking_id=tracking_id)
 
-@app.route("/recent-bookings")
-def recent_bookings():
-    return render_template("recent-bookings.html")
+        @app.route("/parceltracking")
+        def parceltracking():
+            tracking_id = request.args.get("tracking_id", "")
+            return render_template("parceltracking.html", tracking_id=tracking_id)
 
-@app.route('/admin/vehicles')
-def admin_vehicles():
-    return render_template('admin_vehicles.html')
+        @app.route("/submit-ticket", methods=["GET", "POST"])
+        def submit_ticket():
+            if request.method == "POST":
+                user_email = request.form.get("email")
+                issue = request.form.get("issue")
+                msg = Message(
+                    subject="New Support Ticket",
+                    sender="hexahaulprojects@gmail.com",
+                    recipients=["hexahaulprojects@gmail.com"]
+                )
+                msg.body = f"Support ticket submitted by: {user_email}\n\nIssue Description:\n{issue}"
+                self.mail.send(msg)
+                return redirect(url_for("index_html", ticket_submitted="1"))
+            return render_template("submit-ticket.html")
 
-@app.route('/admin/employees')
-def admin_employees():
-    return render_template('admin_employees.html')
+        @app.route("/personal-info")
+        def personal_info():
+            return render_template("personal-info.html")
 
-@app.route('/admin/hexaboxes')
-def admin_hexaboxes():
-    return render_template('admin_hexaboxes.html')
+        @app.route("/change-password")
+        def change_password():
+            return render_template("change-password.html")
 
-@app.route('/admin/utilities')
-def admin_utilities():
-    return render_template('admin_utilities.html')
+        @app.route("/update-email")
+        def update_email():
+            return render_template("update-email.html")
 
-@app.route('/admin-forgot-password', methods=['GET', 'POST'])
-def admin_forgot_password():
-    error = None
-    if request.method == 'POST':
-        email = request.form.get('email')
-        if not email or not re.match(r'^[^@]+@[^@]+\.[^@]+$', email):
-            error = "Please enter a valid email address."
-        else:
-            otp = password_reset_manager.generate_otp(email)
-            password_reset_manager.send_admin_otp(email, otp)
-            return redirect(url_for('admin_verification_code', email=email))
-    return render_template('admin-forgot-password.html', error=error)
+        @app.route("/privacy-settings")
+        def privacy_settings():
+            return render_template("privacy-settings.html")
 
-@app.route("/admin-dashboard")
-def admin_dashboard():
-    return render_template("admin-dashboard.html")
+        @app.route("/language-region")
+        def language_region():
+            return render_template("language-region.html")
 
-@app.route("/payment-wall")
-def payment_wall():
-    return render_template("payment-wall.html")
+        @app.route("/recent-logins")
+        def recent_logins():
+            return render_template("recent-logins.html")
+
+        @app.route("/recent-bookings")
+        def recent_bookings():
+            return render_template("recent-bookings.html")
+
+        @app.route('/admin/vehicles')
+        def admin_vehicles():
+            return render_template('admin_vehicles.html')
+
+        @app.route('/admin/employees')
+        def admin_employees():
+            return render_template('admin_employees.html')
+
+        @app.route('/admin/hexaboxes')
+        def admin_hexaboxes():
+            return render_template('admin_hexaboxes.html')
+
+        @app.route('/admin/utilities')
+        def admin_utilities():
+            return render_template('admin_utilities.html')
+
+        @app.route('/admin-forgot-password', methods=['GET', 'POST'])
+        def admin_forgot_password():
+            error = None
+            if request.method == 'POST':
+                email = request.form.get('email')
+                if not email or not re.match(r'^[^@]+@[^@]+\.[^@]+$', email):
+                    error = "Please enter a valid email address."
+                else:
+                    otp = admin_password_reset_manager.generate_otp(email)
+                    admin_password_reset_manager.send_otp(email, otp)
+                    return redirect(url_for('admin_verification_code', email=email))
+            return render_template('admin-forgot-password.html', error=error)
+
+        @app.route("/admin-dashboard")
+        def admin_dashboard():
+            return render_template("admin-dashboard.html")
+
+        @app.route("/payment-wall")
+        def payment_wall():
+            return render_template("payment-wall.html")
+
+    def register_blueprints(self):
+        self.app.register_blueprint(analytics_bp)
+        self.app.register_blueprint(hexabot_bp)
+
+    def run(self):
+        self.app.debug = True
+        print("Flask app routes:")
+        print(self.app.url_map)
+        port = int(os.environ.get("PORT", 5000))
+        self.app.run(host='0.0.0.0', port=port, debug=True)
 
 analytics_bp = Blueprint('analytics', __name__)
 
@@ -405,10 +438,5 @@ def vehicles_deployed_graph():
     return send_from_directory('static/graphs', 'vehicles_deployed.png')
 
 if __name__ == "__main__":
-    app.debug = True
-    print("Flask app routes:")
-    print(app.url_map)
-    port = int(os.environ.get("PORT", 5000))
-    app.register_blueprint(analytics_bp)
-    app.register_blueprint(hexabot_bp)
-    app.run(host='0.0.0.0', port=port, debug=True)
+    app_instance = HexaHaulApp()
+    app_instance.run()
