@@ -14,6 +14,7 @@ from services.hexabot import hexabot_bp
 qa_pipeline = pipeline("question-answering", model="distilbert-base-uncased-distilled-squad")
 
 class BaseManager(ABC):
+    # Abstraction: This is an abstract base class defining the interface for OTP managers.
     @abstractmethod
     def generate_otp(self, email):
         pass
@@ -31,9 +32,21 @@ class BaseManager(ABC):
         pass
 
 class PasswordResetManager(BaseManager):
+    # Inheritance: Inherits from BaseManager.
     def __init__(self, mail):
+        # Encapsulation: __user_otps is a private attribute.
         self.__user_otps = {}
         self.mail = mail
+
+    # Encapsulation: Getter for OTPs (for demonstration only).
+    def get_otp(self, email):
+        """Get the OTP for a given email (not recommended for production)."""
+        return self.__user_otps.get(email)
+
+    # Encapsulation: Setter for OTPs (for demonstration only).
+    def set_otp(self, email, otp):
+        """Set the OTP for a given email (not recommended for production)."""
+        self.__user_otps[email] = otp
 
     def generate_otp(self, email):
         otp = str(random.randint(100000, 999999))
@@ -109,14 +122,19 @@ class PasswordResetManager(BaseManager):
         self.__user_otps.pop(email, None)
 
 class UserPasswordResetManager(PasswordResetManager):
+    # Inheritance: Inherits from PasswordResetManager.
+    # Polymorphism: Overrides send_otp for user-specific behavior.
     def send_otp(self, email, otp):
         super().send_otp(email, otp)
 
 class AdminPasswordResetManager(PasswordResetManager):
+    # Inheritance: Inherits from PasswordResetManager.
+    # Polymorphism: Overrides send_otp for admin-specific behavior.
     def send_otp(self, email, otp):
         self.send_admin_otp(email, otp)
 
 class HexaHaulApp:
+    # Encapsulation: Groups all app setup/configuration in a class.
     def __init__(self):
         self.app = Flask(__name__, static_url_path='', static_folder='static')
         self.app.secret_key = "your_secret_key"
