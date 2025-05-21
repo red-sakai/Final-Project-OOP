@@ -98,6 +98,39 @@
                 <p>View analytics and operational statistics.</p>
                 <div class="card-arrow"><i class="fas fa-arrow-right"></i></div>
             </div>
+            <!-- New dashboard options -->
+            <div class="dashboard-card hover-lift" onclick="location.href='#'" title="Manage salary information">
+                <div class="icon-bg pulse">
+                    <img src="{{ url_for('static', filename='images/salary.png') }}" alt="Salary" onerror="this.src='https://img.icons8.com/ios-filled/50/ffffff/money-bag.png'">
+                </div>
+                <h2>Salary</h2>
+                <p>Manage employee compensation and payroll data.</p>
+                <div class="card-arrow"><i class="fas fa-arrow-right"></i></div>
+            </div>
+            <div class="dashboard-card hover-lift" onclick="location.href='#'" title="Manage product inventory">
+                <div class="icon-bg pulse">
+                    <img src="{{ url_for('static', filename='images/product.png') }}" alt="Products" onerror="this.src='https://img.icons8.com/ios-filled/50/ffffff/product.png'">
+                </div>
+                <h2>Products</h2>
+                <p>Track and manage product inventory and details.</p>
+                <div class="card-arrow"><i class="fas fa-arrow-right"></i></div>
+            </div>
+            <div class="dashboard-card hover-lift" onclick="location.href='#'" title="Review sales data">
+                <div class="icon-bg pulse">
+                    <img src="{{ url_for('static', filename='images/sales.png') }}" alt="Sales" onerror="this.src='https://img.icons8.com/ios-filled/50/ffffff/sales-performance.png'">
+                </div>
+                <h2>Sales</h2>
+                <p>Monitor sales data, trends, and performance metrics.</p>
+                <div class="card-arrow"><i class="fas fa-arrow-right"></i></div>
+            </div>
+            <div class="dashboard-card hover-lift" onclick="location.href='#'" title="Customer management">
+                <div class="icon-bg pulse">
+                    <img src="{{ url_for('static', filename='images/customer.png') }}" alt="Customers" onerror="this.src='https://img.icons8.com/ios-filled/50/ffffff/customer.png'">
+                </div>
+                <h2>Customers</h2>
+                <p>View and manage customer information and feedback.</p>
+                <div class="card-arrow"><i class="fas fa-arrow-right"></i></div>
+            </div>
         </div>
 
         <div class="dashboard-utilities fade-in" id="utilities-section">
