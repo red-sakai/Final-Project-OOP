@@ -1,10 +1,215 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>Vehicles | Admin</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vehicles Management | HexaHaul Admin</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='admin_vehicles.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="icon" href="{{ url_for('static', filename='images/screentake-removebg-preview.png') }}" />
 </head>
 <body>
-    <h1>Vehicles Management</h1>
-    <p>This is the Vehicles admin page.</p>
+    <nav class="navbar">
+        <div class="dashboard-header">
+            <img src="{{ url_for('static', filename='images/HexaHaul_icon-removebg-preview.png') }}" alt="Logo" />
+            <div class="dashboard-title">Vehicles Management</div>
+        </div>
+        <button class="back-btn" onclick="window.location.href='{{ url_for('admin_dashboard') }}'">
+            <i class="fas fa-arrow-left"></i> Back to Dashboard
+        </button>
+    </nav>
+
+    <div class="container">
+        <div class="page-header">
+            <h1>Fleet Vehicles Database</h1>
+            <div class="header-actions">
+                <button id="add-vehicle-btn" class="primary-btn">
+                    <i class="fas fa-plus"></i> Add New Vehicle
+                </button>
+                <div class="search-container">
+                    <input type="text" id="vehicle-search" placeholder="Search vehicles...">
+                    <i class="fas fa-search"></i>
+                </div>
+            </div>
+        </div>
+
+        <div class="filter-section">
+            <div class="filter-title">Filter by Category:</div>
+            <div class="filter-options">
+                <button class="filter-btn active" data-category="all">All Vehicles</button>
+                <button class="filter-btn" data-category="motorcycle">Motorcycles</button>
+                <button class="filter-btn" data-category="car">Cars</button>
+                <button class="filter-btn" data-category="truck">Trucks</button>
+                <button class="filter-btn" data-status="available">Available</button>
+                <button class="filter-btn" data-status="in-use">In Use</button>
+                <button class="filter-btn" data-status="maintenance">Maintenance</button>
+            </div>
+        </div>
+
+        <div class="vehicles-grid" id="vehicles-container">
+            <div class="loading-container">
+                <div class="loading-spinner"></div>
+                <p>Loading vehicles data...</p>
+            </div>
+        </div>
+
+        <div class="pagination-container">
+            <button class="pagination-btn" id="prev-page" disabled>
+                <i class="fas fa-chevron-left"></i> Previous
+            </button>
+            <div class="pagination-info">
+                Page <span id="current-page">1</span> of <span id="total-pages">1</span>
+            </div>
+            <button class="pagination-btn" id="next-page">
+                Next <i class="fas fa-chevron-right"></i>
+            </button>
+        </div>
+    </div>
+
+    <!-- Add/Edit Vehicle Modal -->
+    <div class="modal" id="vehicle-modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 id="modal-title">Add New Vehicle</h2>
+                <button class="close-modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <form id="vehicle-form">
+                    <input type="hidden" id="vehicle-id">
+                    <div class="form-group">
+                        <label for="unit-type">Vehicle Category</label>
+                        <select id="unit-type" required>
+                            <option value="">Select Category</option>
+                            <option value="motorcycle">Motorcycle</option>
+                            <option value="car">Car</option>
+                            <option value="truck">Truck</option>
+                        </select>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="unit-brand">Brand</label>
+                            <input type="text" id="unit-brand" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="unit-model">Model</label>
+                            <input type="text" id="unit-model" required>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="distance">Total Distance (km)</label>
+                            <input type="number" id="distance" min="0">
+                        </div>
+                        <div class="form-group">
+                            <label for="driver-id">Driver Employee ID</label>
+                            <input type="number" id="driver-id">
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="license-expiry">License Expiration</label>
+                            <input type="date" id="license-expiry">
+                        </div>
+                        <div class="form-group">
+                            <label for="order-id">Order ID</label>
+                            <input type="number" id="order-id">
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="min-weight">Min Weight (kg)</label>
+                            <input type="number" id="min-weight" min="0">
+                        </div>
+                        <div class="form-group">
+                            <label for="max-weight">Max Weight (kg)</label>
+                            <input type="number" id="max-weight" min="0">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="status">Status</label>
+                        <select id="status" required>
+                            <option value="available">Available</option>
+                            <option value="in-use">In Use</option>
+                            <option value="maintenance">Maintenance</option>
+                        </select>
+                    </div>
+                    <div class="form-buttons">
+                        <button type="button" class="secondary-btn" id="cancel-btn">Cancel</button>
+                        <button type="submit" class="primary-btn" id="save-btn">Save Vehicle</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Vehicle Details Modal -->
+    <div class="modal" id="vehicle-details-modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Vehicle Details</h2>
+                <button class="close-modal">&times;</button>
+            </div>
+            <div class="modal-body" id="vehicle-details">
+                <!-- Vehicle details will be shown here -->
+            </div>
+            <div class="modal-footer">
+                <button class="secondary-btn" id="delete-vehicle-btn">Delete</button>
+                <button class="primary-btn edit-vehicle-btn">Edit</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Delete Confirmation Modal -->
+    <div class="modal" id="delete-confirmation-modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Confirm Delete</h2>
+                <button class="close-modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <p>Are you sure you want to delete this vehicle?</p>
+                <p>This action cannot be undone.</p>
+            </div>
+            <div class="modal-footer">
+                <button class="secondary-btn" id="cancel-delete-btn">Cancel</button>
+                <button class="danger-btn" id="confirm-delete-btn">Delete</button>
+            </div>
+        </div>
+    </div>
+
+    <template id="vehicle-card-template">
+        <div class="vehicle-card" data-id="" data-type="">
+            <div class="vehicle-header">
+                <div class="vehicle-icon"></div>
+                <div class="vehicle-status"></div>
+            </div>
+            <div class="vehicle-info">
+                <h3 class="vehicle-name"></h3>
+                <div class="info-item brand-model">
+                    <span class="brand"></span> <span class="model"></span>
+                </div>
+                <div class="info-item">
+                    <i class="fas fa-road"></i>
+                    <span class="distance"></span> km
+                </div>
+                <div class="info-item">
+                    <i class="fas fa-weight-hanging"></i>
+                    <span class="max-weight"></span> kg max
+                </div>
+            </div>
+            <div class="vehicle-actions">
+                <button class="view-details">View Details</button>
+                <div class="action-menu">
+                    <button class="menu-toggle"><i class="fas fa-ellipsis-v"></i></button>
+                    <div class="dropdown-menu">
+                        <a href="#" class="edit-btn"><i class="fas fa-edit"></i> Edit</a>
+                        <a href="#" class="delete-btn"><i class="fas fa-trash-alt"></i> Delete</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </template>
+
+    <script src="{{ url_for('static', filename='admin_vehicles.js') }}"></script>
 </body>
 </html>

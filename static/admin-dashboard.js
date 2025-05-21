@@ -22,6 +22,10 @@ document.addEventListener('DOMContentLoaded', function() {
         employees: {
             img: document.getElementById('employees-graph'),
             loading: document.getElementById('employees-loading')
+        },
+        deliveries: {
+            img: document.getElementById('deliveries-graph'),
+            loading: document.getElementById('deliveries-loading')
         }
     };
     
@@ -49,6 +53,14 @@ document.addEventListener('DOMContentLoaded', function() {
                     // Handle error
                     element.loading.classList.remove('visible');
                     console.error('Failed to load graph image');
+                    
+                    // Show error message on the graph
+                    const errorMessage = document.createElement('div');
+                    errorMessage.className = 'graph-error';
+                    errorMessage.innerHTML = '<i class="fas fa-exclamation-circle"></i> Unable to load data';
+                    
+                    element.img.style.display = 'none';
+                    element.img.parentNode.appendChild(errorMessage);
                 };
                 
                 // Start loading the new image
@@ -101,10 +113,59 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
     
-    // Optionally, reload graphs every 2 minutes for live updates
+    // Set up quick action buttons
+    const quickActionBtns = document.querySelectorAll('.quick-action-btn');
+    if (quickActionBtns.length > 0) {
+        quickActionBtns.forEach(btn => {
+            btn.addEventListener('click', function() {
+                const action = this.querySelector('span').innerText;
+                
+                // Handle different actions
+                switch(action) {
+                    case 'Add Vehicle':
+                        window.location.href = '/admin/vehicles/add';
+                        break;
+                    case 'Add Employee':
+                        window.location.href = '/admin/employees/add';
+                        break;
+                    case 'Track Delivery':
+                        window.location.href = '/admin/hexaboxes/track';
+                        break;
+                    case 'Generate Report':
+                        window.location.href = '/admin/reports';
+                        break;
+                    default:
+                        console.log('Action not defined:', action);
+                }
+            });
+        });
+    }
+    
+    // Set up notification items
+    const notificationItems = document.querySelectorAll('.notification-item');
+    if (notificationItems.length > 0) {
+        notificationItems.forEach(item => {
+            item.addEventListener('click', function() {
+                this.classList.remove('unread');
+                // Update badge count
+                const badge = document.querySelector('.badge');
+                if (badge) {
+                    const currentCount = parseInt(badge.innerText);
+                    if (currentCount > 0) {
+                        badge.innerText = currentCount - 1;
+                        if (currentCount - 1 === 0) {
+                            badge.style.display = 'none';
+                        }
+                    }
+                }
+            });
+        });
+    }
+    
+    // Reload graphs every 2 minutes for live updates
     setInterval(refreshGraphs, 120000);
     
-    // Add CSS class for ripple effects
+    // Add CSS class for ripple effects and other dynamic styles
     const style = document.createElement('style');
     style.textContent = `
         .dashboard-card {
@@ -131,6 +192,17 @@ document.addEventListener('DOMContentLoaded', function() {
         @keyframes rotate {
             from { transform: rotate(0deg); }
             to { transform: rotate(360deg); }
+        }
+        .graph-error {
+            padding: 20px;
+            color: #d9534f;
+            text-align: center;
+            font-size: 0.9rem;
+        }
+        .graph-error i {
+            font-size: 2rem;
+            margin-bottom: 8px;
+            display: block;
         }
     `;
     document.head.appendChild(style);

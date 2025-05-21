@@ -69,7 +69,7 @@
             </div>
             <div class="utilities-graphs">
                 <div class="graph-card">
-                    <div class="graph-title">Vehicles Deployed</div>
+                    <div class="graph-title">Vehicles Deployed <span class="tooltip-icon" data-tooltip="Current status of fleet vehicles"><i class="fas fa-info-circle"></i></span></div>
                     <div class="graph-container">
                         <div class="loading-indicator" id="vehicles-loading">
                             <i class="fas fa-circle-notch fa-spin"></i>
@@ -78,12 +78,80 @@
                     </div>
                 </div>
                 <div class="graph-card">
-                    <div class="graph-title">Employee Statuses</div>
+                    <div class="graph-title">Employee Statuses <span class="tooltip-icon" data-tooltip="Current employee availability"><i class="fas fa-info-circle"></i></span></div>
                     <div class="graph-container">
                         <div class="loading-indicator" id="employees-loading">
                             <i class="fas fa-circle-notch fa-spin"></i>
                         </div>
                         <img class="graph-img" id="employees-graph" src="/analytics/employee_statuses.png" alt="Employee Statuses">
+                    </div>
+                </div>
+                <div class="graph-card">
+                    <div class="graph-title">Delivery Metrics <span class="tooltip-icon" data-tooltip="Delivery performance statistics"><i class="fas fa-info-circle"></i></span></div>
+                    <div class="graph-container">
+                        <div class="loading-indicator" id="deliveries-loading">
+                            <i class="fas fa-circle-notch fa-spin"></i>
+                        </div>
+                        <img class="graph-img" id="deliveries-graph" src="/analytics/delivery_metrics.png" alt="Delivery Metrics">
+                    </div>
+                </div>
+            </div>
+
+            <div class="dashboard-extras">
+                <div class="notifications-panel">
+                    <div class="panel-header">
+                        <h3>Recent Notifications</h3>
+                        <span class="badge">3</span>
+                    </div>
+                    <div class="notifications-list">
+                        <div class="notification-item unread">
+                            <div class="notification-icon"><i class="fas fa-truck"></i></div>
+                            <div class="notification-content">
+                                <div class="notification-text">Vehicle #246 requires maintenance</div>
+                                <div class="notification-time">2 hours ago</div>
+                            </div>
+                        </div>
+                        <div class="notification-item unread">
+                            <div class="notification-icon"><i class="fas fa-box"></i></div>
+                            <div class="notification-content">
+                                <div class="notification-text">10 new HexaBoxes added to the system</div>
+                                <div class="notification-time">3 hours ago</div>
+                            </div>
+                        </div>
+                        <div class="notification-item unread">
+                            <div class="notification-icon"><i class="fas fa-user"></i></div>
+                            <div class="notification-content">
+                                <div class="notification-text">New employee registration pending approval</div>
+                                <div class="notification-time">5 hours ago</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="view-all-link">
+                        <a href="#">View all notifications</a>
+                    </div>
+                </div>
+
+                <div class="quick-actions-panel">
+                    <div class="panel-header">
+                        <h3>Quick Actions</h3>
+                    </div>
+                    <div class="quick-actions-grid">
+                        <button class="quick-action-btn" title="Add new vehicle">
+                            <i class="fas fa-truck"></i>
+                            <span>Add Vehicle</span>
+                        </button>
+                        <button class="quick-action-btn" title="Add new employee">
+                            <i class="fas fa-user-plus"></i>
+                            <span>Add Employee</span>
+                        </button>
+                        <button class="quick-action-btn" title="Track delivery">
+                            <i class="fas fa-map-marker-alt"></i>
+                            <span>Track Delivery</span>
+                        </button>
+                        <button class="quick-action-btn" title="Generate reports">
+                            <i class="fas fa-chart-line"></i>
+                            <span>Generate Report</span>
+                        </button>
                     </div>
                 </div>
             </div>

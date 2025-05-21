@@ -9,6 +9,7 @@ from transformers import pipeline
 import os
 import re
 from services.hexabot import hexabot_bp
+from routes.vehicle_api import vehicle_api
 
 # Initialize DistilBERT QA pipeline
 qa_pipeline = pipeline("question-answering", model="distilbert-base-uncased-distilled-squad")
@@ -431,6 +432,7 @@ class HexaHaulApp:
     def register_blueprints(self):
         self.app.register_blueprint(analytics_bp)
         self.app.register_blueprint(hexabot_bp)
+        self.app.register_blueprint(vehicle_api)
 
     def run(self):
         self.app.debug = True
