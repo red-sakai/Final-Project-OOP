@@ -57,8 +57,41 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
     
-    // Initial load of graphs
+    // Load quick stats data with animation
+    function loadQuickStats() {
+        // Simulated data - in real app would fetch from server
+        const stats = {
+            'vehicle-count': { value: 24, prefix: '', suffix: '' },
+            'employee-count': { value: 48, prefix: '', suffix: '' },
+            'delivery-count': { value: 186, prefix: '', suffix: '' },
+            'efficiency-rate': { value: 94, prefix: '', suffix: '%' }
+        };
+        
+        // Animate the number counting up
+        Object.entries(stats).forEach(([id, data]) => {
+            const element = document.getElementById(id);
+            if (!element) return;
+            
+            const { value, prefix, suffix } = data;
+            const duration = 1500; // Animation duration in ms
+            const frameRate = 60; // Animation frame rate
+            const increment = value / (duration / 1000 * frameRate);
+            
+            let current = 0;
+            const timer = setInterval(() => {
+                current += increment;
+                if (current >= value) {
+                    clearInterval(timer);
+                    current = value;
+                }
+                element.textContent = `${prefix}${Math.floor(current)}${suffix}`;
+            }, 1000 / frameRate);
+        });
+    }
+    
+    // Initial load of graphs and stats
     refreshGraphs();
+    loadQuickStats();
     
     // Setup refresh button
     const refreshBtn = document.getElementById('refresh-graphs');
@@ -69,6 +102,7 @@ document.addEventListener('DOMContentLoaded', function() {
             btn.classList.add('rotating');
             
             refreshGraphs();
+            loadQuickStats();
             
             // Re-enable button after animation
             setTimeout(() => {
@@ -78,8 +112,8 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
     
-    // Add tooltip hover behavior for cards
-    const cards = document.querySelectorAll('.dashboard-card');
+    // Add ripple effect to cards
+    const cards = document.querySelectorAll('.dashboard-card, .stat-card');
     cards.forEach(card => {
         // Create ripple effect on click
         card.addEventListener('click', function(e) {
@@ -101,37 +135,31 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
     
-    // Optionally, reload graphs every 2 minutes for live updates
-    setInterval(refreshGraphs, 120000);
+    // Staggered animation for dashboard cards
+    const staggeredElements = document.querySelectorAll('.dashboard-options .dashboard-card');
+    staggeredElements.forEach((element, index) => {
+        element.style.opacity = '0';
+        element.style.transform = 'translateY(20px)';
+        
+        setTimeout(() => {
+            element.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+            element.style.opacity = '1';
+            element.style.transform = 'translateY(0)';
+        }, 300 + (index * 100));
+    });
     
-    // Add CSS class for ripple effects
-    const style = document.createElement('style');
-    style.textContent = `
-        .dashboard-card {
-            position: relative;
-            overflow: hidden;
-        }
-        .ripple {
-            position: absolute;
-            background: rgba(255, 255, 255, 0.7);
-            border-radius: 50%;
-            transform: scale(0);
-            animation: ripple 0.6s linear;
-            pointer-events: none;
-        }
-        @keyframes ripple {
-            to {
-                transform: scale(4);
-                opacity: 0;
-            }
-        }
-        .rotating {
-            animation: rotate 1s linear infinite;
-        }
-        @keyframes rotate {
-            from { transform: rotate(0deg); }
-            to { transform: rotate(360deg); }
-        }
-    `;
-    document.head.appendChild(style);
+    // Hover effect for graph cards
+    const graphCards = document.querySelectorAll('.graph-card');
+    graphCards.forEach(card => {
+        card.addEventListener('mouseenter', function() {
+            this.querySelector('.graph-img').style.transform = 'scale(1.02)';
+        });
+        
+        card.addEventListener('mouseleave', function() {
+            this.querySelector('.graph-img').style.transform = 'scale(1)';
+        });
+    });
+    
+    // Reload graphs every 2 minutes for live updates
+    setInterval(refreshGraphs, 120000);
 });
