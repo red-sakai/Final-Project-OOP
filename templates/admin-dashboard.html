@@ -6,58 +6,94 @@
     <title>Admin Dashboard | HexaHaul</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='admin-dashboard.css') }}">
     <link rel="icon" href="{{ url_for('static', filename='images/screentake-removebg-preview.png') }}" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
 <body>
-    <button class="back-btn" onclick="window.location.href='{{ url_for('user_login_html') }}'">&larr; Back</button>
     <nav class="navbar">
         <div class="dashboard-header">
             <img src="{{ url_for('static', filename='images/HexaHaul_icon-removebg-preview.png') }}" alt="Logo" />
             <div class="dashboard-title">Admin Dashboard</div>
         </div>
+        <button class="logout-btn" onclick="window.location.href='{{ url_for('user_login_html') }}'">
+            <i class="fas fa-sign-out-alt"></i> Logout
+        </button>
     </nav>
-    <div class="dashboard-options">
-        <div class="dashboard-card" onclick="location.href='{{ url_for('admin_vehicles') }}'">
-            <div class="icon-bg">
-                <img src="{{ url_for('static', filename='images/delivery-truck.png') }}" alt="Vehicles">
-            </div>
-            <h2>Vehicles</h2>
-            <p>Manage, add, or monitor all fleet vehicles.</p>
+    
+    <div class="container">
+        <div class="welcome-section">
+            <h1>Welcome, Admin</h1>
+            <p>Manage your logistics operations from this central dashboard.</p>
         </div>
-        <div class="dashboard-card" onclick="location.href='{{ url_for('admin_employees') }}'">
-            <div class="icon-bg">
-                <img src="{{ url_for('static', filename='images/profile-icon.png') }}" alt="Employees">
+
+        <div class="dashboard-options">
+            <div class="dashboard-card" onclick="location.href='{{ url_for('admin_vehicles') }}'" title="Manage fleet vehicles">
+                <div class="icon-bg">
+                    <img src="{{ url_for('static', filename='images/delivery-truck.png') }}" alt="Vehicles">
+                </div>
+                <h2>Vehicles</h2>
+                <p>Manage, add, or monitor all fleet vehicles.</p>
+                <div class="card-arrow"><i class="fas fa-arrow-right"></i></div>
             </div>
-            <h2>Employees</h2>
-            <p>View, update, or assign employee roles and statuses.</p>
+            <div class="dashboard-card" onclick="location.href='{{ url_for('admin_employees') }}'" title="Manage employee information">
+                <div class="icon-bg">
+                    <img src="{{ url_for('static', filename='images/profile-icon.png') }}" alt="Employees">
+                </div>
+                <h2>Employees</h2>
+                <p>View, update, or assign employee roles and statuses.</p>
+                <div class="card-arrow"><i class="fas fa-arrow-right"></i></div>
+            </div>
+            <div class="dashboard-card" onclick="location.href='{{ url_for('admin_hexaboxes') }}'" title="Manage deliveries">
+                <div class="icon-bg">
+                    <img src="{{ url_for('static', filename='images/fast-delivery.png') }}" alt="HexaBoxes">
+                </div>
+                <h2>HexaBoxes</h2>
+                <p>Track, assign, or update parcel deliveries.</p>
+                <div class="card-arrow"><i class="fas fa-arrow-right"></i></div>
+            </div>
+            <div class="dashboard-card" onclick="location.href='{{ url_for('admin_utilities') }}'" title="View analytics">
+                <div class="icon-bg">
+                    <img src="{{ url_for('static', filename='images/analysis.png') }}" alt="Utilities">
+                </div>
+                <h2>Utilities</h2>
+                <p>View analytics and operational statistics.</p>
+                <div class="card-arrow"><i class="fas fa-arrow-right"></i></div>
+            </div>
         </div>
-        <div class="dashboard-card" onclick="location.href='{{ url_for('admin_hexaboxes') }}'">
-            <div class="icon-bg">
-                <img src="{{ url_for('static', filename='images/fast-delivery.png') }}" alt="HexaBoxes">
+
+        <div class="dashboard-utilities" id="utilities-section">
+            <div class="utilities-header">
+                <div class="utilities-title">Operational Analytics</div>
+                <button class="refresh-btn" id="refresh-graphs" title="Refresh data">
+                    <i class="fas fa-sync-alt"></i>
+                </button>
             </div>
-            <h2>HexaBoxes</h2>
-            <p>Track, assign, or update parcel deliveries.</p>
-        </div>
-        <div class="dashboard-card" onclick="location.href='{{ url_for('admin_utilities') }}'">
-            <div class="icon-bg">
-                <img src="{{ url_for('static', filename='images/analysis.png') }}" alt="Utilities">
+            <div class="utilities-graphs">
+                <div class="graph-card">
+                    <div class="graph-title">Vehicles Deployed</div>
+                    <div class="graph-container">
+                        <div class="loading-indicator" id="vehicles-loading">
+                            <i class="fas fa-circle-notch fa-spin"></i>
+                        </div>
+                        <img class="graph-img" id="vehicles-graph" src="/analytics/vehicles_deployed.png" alt="Vehicles Deployed">
+                    </div>
+                </div>
+                <div class="graph-card">
+                    <div class="graph-title">Employee Statuses</div>
+                    <div class="graph-container">
+                        <div class="loading-indicator" id="employees-loading">
+                            <i class="fas fa-circle-notch fa-spin"></i>
+                        </div>
+                        <img class="graph-img" id="employees-graph" src="/analytics/employee_statuses.png" alt="Employee Statuses">
+                    </div>
+                </div>
             </div>
-            <h2>Utilities</h2>
-            <p>View analytics and operational statistics.</p>
         </div>
     </div>
-    <div class="dashboard-utilities" id="utilities-section">
-        <div class="utilities-title">Operational Analytics</div>
-        <div class="utilities-graphs">
-            <div class="graph-card">
-                <div class="graph-title">Vehicles Deployed</div>
-                <img class="graph-img" id="vehicles-graph" src="/analytics/vehicles_deployed.png" alt="Vehicles Deployed">
-            </div>
-            <div class="graph-card">
-                <div class="graph-title">Employee Statuses</div>
-                <img class="graph-img" id="employees-graph" src="/analytics/employee_statuses.png" alt="Employee Statuses">
-            </div>
-        </div>
-    </div>
+
+    <footer class="dashboard-footer">
+        <p>&copy; 2023 HexaHaul. All rights reserved.</p>
+    </footer>
+    
     <script src="{{ url_for('static', filename='admin-dashboard.js') }}"></script>
 </body>
 </html>
