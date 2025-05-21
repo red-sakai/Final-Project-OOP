@@ -2,6 +2,7 @@ from flask import Flask, render_template, url_for, request, redirect, flash, jso
 from models.admin import Admin
 from models.analytics_backend import plot_employee_statuses, plot_vehicles_deployed
 from models.vehicle_database import VehicleDatabase, Vehicle
+from models.employee_database import EmployeeDatabase, Employee
 from abc import ABC, abstractmethod
 from enum import Enum
 from flask_mail import Mail, Message
@@ -145,6 +146,7 @@ class HexaHaulApp:
         self.admin_password_reset_manager = AdminPasswordResetManager(self.mail)
         self.admin_account = Admin(username="admin", password="admin123", otp_authentication=False)
         self.vehicle_db = VehicleDatabase()
+        self.employee_db = EmployeeDatabase()
         self.register_routes()
         self.register_blueprints()
 
@@ -495,7 +497,116 @@ class HexaHaulApp:
 
         @app.route('/admin/employees')
         def admin_employees():
-            return render_template('admin_employees.html')
+            # Get all employees from database
+            session = self.employee_db.connect()
+            employees = session.query(Employee).all()
+            
+            # Count employees by role
+            total_count = len(employees)
+            manager_count = sum(1 for e in employees if e.role == 'Manager')
+            driver_count = sum(1 for e in employees if e.role == 'Driver')
+            active_count = sum(1 for e in employees if e.status == 'Active')
+            
+            # Get available vehicles for driver assignments
+            session2 = self.vehicle_db.connect()
+            available_vehicles = session2.query(Vehicle).filter_by(status='Available').all()
+            
+            # Convert employees to JSON for JavaScript use
+            employees_json = json.dumps([{
+                'id': e.id,
+                'employee_id': e.employee_id,
+                'first_name': e.first_name,
+                'last_name': e.last_name,
+                'full_name': e.full_name,
+                'gender': e.gender,
+                'age': e.age,
+                'birthdate': e.birthdate,
+                'contact_number': e.contact_number,
+                'email': e.email,
+                'department': e.department,
+                'role': e.role,
+                'hire_date': e.hire_date,
+                'license_number': e.license_number,
+                'license_expiry': e.license_expiry,
+                'assigned_vehicle': e.assigned_vehicle,
+                'status': e.status
+            } for e in employees])
+            
+            self.employee_db.disconnect()
+            self.vehicle_db.disconnect()
+            
+            return render_template('admin_employees.html', 
+                                  employees=employees,
+                                  total_count=total_count,
+                                  manager_count=manager_count,
+                                  driver_count=driver_count,
+                                  active_count=active_count,
+                                  available_vehicles=available_vehicles,
+                                  employees_json=employees_json)
+
+        @app.route('/admin/employees/add', methods=['POST'])
+        def add_employee():
+            # Get form data
+            data = {
+                'employee_id': int(request.form.get('employee_id', 0)),
+                'first_name': request.form.get('first_name'),
+                'last_name': request.form.get('last_name'),
+                'gender': request.form.get('gender', 'Male'),
+                'age': int(request.form.get('age', 0)),
+                'birthdate': request.form.get('birthdate'),
+                'contact_number': request.form.get('phone_number'),
+                'email': request.form.get('email'),
+                'department': request.form.get('department'),
+                'role': request.form.get('role'),
+                'hire_date': request.form.get('hire_date'),
+                'license_number': request.form.get('license_number'),
+                'license_expiry': request.form.get('license_expiry'),
+                'assigned_vehicle': int(request.form.get('assigned_vehicle')) if request.form.get('assigned_vehicle') else None,
+                'status': request.form.get('status', 'Active')
+            }
+            
+            # Add employee to database
+            self.employee_db.add_employee(**data)
+            
+            return redirect(url_for('admin_employees'))
+
+        @app.route('/admin/employees/update', methods=['POST'])
+        def update_employee():
+            # Get employee ID
+            employee_id = int(request.form.get('employee_id'))
+            
+            # Get form data
+            data = {
+                'first_name': request.form.get('first_name'),
+                'last_name': request.form.get('last_name'),
+                'gender': request.form.get('gender', 'Male'),
+                'age': int(request.form.get('age', 0)),
+                'birthdate': request.form.get('birthdate'),
+                'contact_number': request.form.get('phone_number'),
+                'email': request.form.get('email'),
+                'department': request.form.get('department'),
+                'role': request.form.get('role'),
+                'hire_date': request.form.get('hire_date'),
+                'license_number': request.form.get('license_number'),
+                'license_expiry': request.form.get('license_expiry'),
+                'assigned_vehicle': int(request.form.get('assigned_vehicle')) if request.form.get('assigned_vehicle') else None,
+                'status': request.form.get('status')
+            }
+            
+            # Update employee in database
+            self.employee_db.update_employee(employee_id, **data)
+            
+            return redirect(url_for('admin_employees'))
+
+        @app.route('/admin/employees/delete', methods=['POST'])
+        def delete_employee():
+            # Get employee ID
+            employee_id = int(request.form.get('employee_id'))
+            
+            # Delete employee from database
+            self.employee_db.delete_employee(employee_id)
+            
+            return redirect(url_for('admin_employees'))
 
         @app.route('/admin/hexaboxes')
         def admin_hexaboxes():

@@ -1,10 +1,232 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Employees | Admin</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='admin_employees.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
 <body>
-    <h1>Employees Management</h1>
-    <p>This is the Employees admin page.</p>
+    <div class="admin-container">
+        <div class="sidebar">
+            <div class="logo">
+                <i class="fas fa-truck-monster"></i>
+                <h2>HexaHaul</h2>
+            </div>
+            <ul class="menu">
+                <li><a href="{{ url_for('admin_vehicles') }}"><i class="fas fa-car"></i> Vehicles</a></li>
+                <li class="active"><a href="{{ url_for('admin_employees') }}"><i class="fas fa-users"></i> Employees</a></li>
+                <li><a href="{{ url_for('admin_hexaboxes') }}"><i class="fas fa-box"></i> HexaBoxes</a></li>
+                <li><a href="{{ url_for('admin_utilities') }}"><i class="fas fa-tools"></i> Utilities</a></li>
+            </ul>
+            <div class="logout">
+                <a href="{{ url_for('admin_login') }}"><i class="fas fa-sign-out-alt"></i> Logout</a>
+            </div>
+        </div>
+        
+        <div class="main-content">
+            <div class="header">
+                <h1><i class="fas fa-users"></i> Employees Management</h1>
+                <div class="search-container">
+                    <input type="text" id="searchInput" placeholder="Search employees...">
+                    <button class="search-btn"><i class="fas fa-search"></i></button>
+                </div>
+                <div class="user-info">
+                    <img src="https://via.placeholder.com/40" alt="Admin">
+                    <span>Admin User</span>
+                </div>
+            </div>
+            
+            <div class="actions">
+                <button class="add-employee-btn"><i class="fas fa-plus"></i> Add New Employee</button>
+                <div class="filter-container">
+                    <select id="departmentFilter">
+                        <option value="all">All Departments</option>
+                        <option value="Logistics">Logistics</option>
+                        <option value="Operations">Operations</option>
+                        <option value="Management">Management</option>
+                        <option value="Admin">Admin</option>
+                    </select>
+                    <select id="roleFilter">
+                        <option value="all">All Roles</option>
+                        <option value="Driver">Driver</option>
+                        <option value="Manager">Manager</option>
+                        <option value="Dispatcher">Dispatcher</option>
+                        <option value="Admin">Admin</option>
+                    </select>
+                </div>
+            </div>
+            
+            <div class="stats-container">
+                <div class="stat-card">
+                    <i class="fas fa-id-card"></i>
+                    <h3>Total Employees</h3>
+                    <p class="count">{{ total_count }}</p>
+                </div>
+                <div class="stat-card">
+                    <i class="fas fa-user-tie"></i>
+                    <h3>Managers</h3>
+                    <p class="count">{{ manager_count }}</p>
+                </div>
+                <div class="stat-card">
+                    <i class="fas fa-truck-moving"></i>
+                    <h3>Drivers</h3>
+                    <p class="count">{{ driver_count }}</p>
+                </div>
+                <div class="stat-card">
+                    <i class="fas fa-check-circle"></i>
+                    <h3>Active</h3>
+                    <p class="count">{{ active_count }}</p>
+                </div>
+            </div>
+            
+            <div class="employee-tabs">
+                <div class="tab active" data-role="all">All Employees</div>
+                <div class="tab" data-role="Driver">Drivers</div>
+                <div class="tab" data-role="Dispatcher">Dispatchers</div>
+                <div class="tab" data-role="Manager">Managers</div>
+            </div>
+            
+            <div class="employees-table-container">
+                <table class="employees-table">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Name</th>
+                            <th>Email</th>
+                            <th>Phone</th>
+                            <th>Department</th>
+                            <th>Role</th>
+                            <th>Date Hired</th>
+                            <th>License</th>
+                            <th>Assigned Vehicle</th>
+                            <th>Status</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="employeesTableBody">
+                        {% for employee in employees %}
+                        <tr class="employee-row" data-role="{{ employee.role }}">
+                            <td>{{ employee.id }}</td>
+                            <td>{{ employee.full_name }}</td>
+                            <td>{{ employee.email }}</td>
+                            <td>{{ employee.phone_number }}</td>
+                            <td>{{ employee.department }}</td>
+                            <td>{{ employee.role }}</td>
+                            <td>{{ employee.hire_date }}</td>
+                            <td>{{ employee.license_number if employee.license_number else '-' }}</td>
+                            <td>{{ employee.assigned_vehicle if employee.assigned_vehicle else '-' }}</td>
+                            <td><span class="status {{ employee.status.lower().replace(' ', '-') }}">{{ employee.status }}</span></td>
+                            <td>
+                                <button class="action-btn edit" data-id="{{ employee.id }}"><i class="fas fa-edit"></i></button>
+                                <button class="action-btn delete" data-id="{{ employee.id }}"><i class="fas fa-trash"></i></button>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Modal for adding/editing employees -->
+    <div class="modal" id="employeeModal">
+        <div class="modal-content">
+            <span class="close-modal">&times;</span>
+            <h2 id="modalTitle">Add New Employee</h2>
+            <form id="employeeForm" method="POST" action="{{ url_for('update_employee') if editing else url_for('add_employee') }}">
+                <input type="hidden" id="employeeId" name="employee_id">
+                <div class="form-group">
+                    <label for="firstName">First Name:</label>
+                    <input type="text" id="firstName" name="first_name" required>
+                </div>
+                <div class="form-group">
+                    <label for="lastName">Last Name:</label>
+                    <input type="text" id="lastName" name="last_name" required>
+                </div>
+                <div class="form-group">
+                    <label for="email">Email:</label>
+                    <input type="email" id="email" name="email" required>
+                </div>
+                <div class="form-group">
+                    <label for="phone">Phone Number:</label>
+                    <input type="tel" id="phone" name="phone_number" required>
+                </div>
+                <div class="form-group">
+                    <label for="department">Department:</label>
+                    <select id="department" name="department" required>
+                        <option value="Logistics">Logistics</option>
+                        <option value="Operations">Operations</option>
+                        <option value="Management">Management</option>
+                        <option value="Admin">Admin</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="role">Role:</label>
+                    <select id="role" name="role" required>
+                        <option value="Driver">Driver</option>
+                        <option value="Manager">Manager</option>
+                        <option value="Dispatcher">Dispatcher</option>
+                        <option value="Admin">Admin</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="hireDate">Hire Date:</label>
+                    <input type="date" id="hireDate" name="hire_date" required>
+                </div>
+                <div class="form-group driver-field">
+                    <label for="licenseNumber">License Number:</label>
+                    <input type="text" id="licenseNumber" name="license_number">
+                </div>
+                <div class="form-group driver-field">
+                    <label for="licenseExpiry">License Expiration Date:</label>
+                    <input type="date" id="licenseExpiry" name="license_expiry">
+                </div>
+                <div class="form-group driver-field">
+                    <label for="assignedVehicle">Assigned Vehicle:</label>
+                    <select id="assignedVehicle" name="assigned_vehicle">
+                        <option value="">None</option>
+                        {% for vehicle in available_vehicles %}
+                        <option value="{{ vehicle.id }}">{{ vehicle.unit_brand }} {{ vehicle.unit_model }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="status">Status:</label>
+                    <select id="status" name="status" required>
+                        <option value="Active">Active</option>
+                        <option value="On Leave">On Leave</option>
+                        <option value="Inactive">Inactive</option>
+                    </select>
+                </div>
+                <div class="form-actions">
+                    <button type="submit" class="save-btn">Save Employee</button>
+                    <button type="button" class="cancel-btn">Cancel</button>
+                </div>
+            </form>
+        </div>
+    </div>
+    
+    <!-- Confirmation Modal -->
+    <div class="modal" id="confirmationModal">
+        <div class="modal-content">
+            <h2>Confirm Deletion</h2>
+            <p>Are you sure you want to delete this employee? This action cannot be undone.</p>
+            <div class="form-actions">
+                <form method="POST" action="{{ url_for('delete_employee') }}" id="deleteEmployeeForm">
+                    <input type="hidden" id="deleteEmployeeId" name="employee_id">
+                    <button type="submit" class="delete-confirm-btn">Delete</button>
+                    <button type="button" class="cancel-btn">Cancel</button>
+                </form>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        // Store employee data for JavaScript use
+        const employeeData = {{ employees_json|safe }};
+    </script>
+    <script src="{{ url_for('static', filename='admin_employees.js') }}"></script>
 </body>
 </html>

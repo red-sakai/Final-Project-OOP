@@ -12,18 +12,16 @@
         <div class="sidebar">
             <div class="logo">
                 <i class="fas fa-truck-monster"></i>
-                <h2>Fleet Admin</h2>
+                <h2>HexaHaul</h2>
             </div>
             <ul class="menu">
-                <li class="active"><a href="#"><i class="fas fa-car"></i> Vehicles</a></li>
-                <li><a href="#"><i class="fas fa-users"></i> Drivers</a></li>
-                <li><a href="#"><i class="fas fa-route"></i> Routes</a></li>
-                <li><a href="#"><i class="fas fa-clipboard-list"></i> Orders</a></li>
-                <li><a href="#"><i class="fas fa-chart-line"></i> Analytics</a></li>
-                <li><a href="#"><i class="fas fa-cog"></i> Settings</a></li>
+                <li class="active"><a href="{{ url_for('admin_vehicles') }}"><i class="fas fa-car"></i> Vehicles</a></li>
+                <li><a href="{{ url_for('admin_employees') }}"><i class="fas fa-users"></i> Employees</a></li>
+                <li><a href="{{ url_for('admin_hexaboxes') }}"><i class="fas fa-box"></i> HexaBoxes</a></li>
+                <li><a href="{{ url_for('admin_utilities') }}"><i class="fas fa-tools"></i> Utilities</a></li>
             </ul>
             <div class="logout">
-                <a href="#"><i class="fas fa-sign-out-alt"></i> Logout</a>
+                <a href="{{ url_for('admin_login') }}"><i class="fas fa-sign-out-alt"></i> Logout</a>
             </div>
         </div>
         
