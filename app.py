@@ -1,9 +1,10 @@
-from flask import Flask, render_template, url_for, request, redirect, flash, jsonify, Blueprint, send_from_directory
+from flask import Flask, render_template, url_for, request, redirect, flash, jsonify, Blueprint, send_from_directory, session
 from models.admin import Admin
 from models.analytics_backend import plot_employee_statuses, plot_vehicles_deployed
 from models.vehicle_database import VehicleDatabase, Vehicle
 from models.employee_database import EmployeeDatabase, Employee
 from models.hexaboxes_database import HexaBoxesDatabase, Order
+from models.user_login_database import init_db, load_users_from_csv, authenticate_user
 from abc import ABC, abstractmethod
 from enum import Enum
 from flask_mail import Mail, Message
@@ -18,7 +19,6 @@ from services.hexabot import hexabot_bp
 qa_pipeline = pipeline("question-answering", model="distilbert-base-uncased-distilled-squad")
 
 class BaseManager(ABC):
-    # Abstraction: This is an abstract base class defining the interface for OTP managers.
     @abstractmethod
     def generate_otp(self, email):
         pass
@@ -36,20 +36,14 @@ class BaseManager(ABC):
         pass
 
 class PasswordResetManager(BaseManager):
-    # Inheritance: Inherits from BaseManager.
     def __init__(self, mail):
-        # Encapsulation: __user_otps is a private attribute.
         self.__user_otps = {}
         self.mail = mail
 
-    # Encapsulation: Getter for OTPs (for demonstration only).
     def get_otp(self, email):
-        """Get the OTP for a given email (not recommended for production)."""
         return self.__user_otps.get(email)
 
-    # Encapsulation: Setter for OTPs (for demonstration only).
     def set_otp(self, email, otp):
-        """Set the OTP for a given email (not recommended for production)."""
         self.__user_otps[email] = otp
 
     def generate_otp(self, email):
@@ -126,21 +120,21 @@ class PasswordResetManager(BaseManager):
         self.__user_otps.pop(email, None)
 
 class UserPasswordResetManager(PasswordResetManager):
-    # Inheritance: Inherits from PasswordResetManager.
-    # Polymorphism: Overrides send_otp for user-specific behavior.
     def send_otp(self, email, otp):
         super().send_otp(email, otp)
 
 class AdminPasswordResetManager(PasswordResetManager):
-    # Inheritance: Inherits from PasswordResetManager.
-    # Polymorphism: Overrides send_otp for admin-specific behavior.
     def send_otp(self, email, otp):
         self.send_admin_otp(email, otp)
 
 class HexaHaulApp:
-    # Encapsulation: Groups all app setup/configuration in a class.
     def __init__(self):
-        self.app = Flask(__name__, static_url_path='', static_folder='static')
+        template_dir = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'templates')
+        self.app = Flask(__name__, 
+                         static_url_path='', 
+                         static_folder='static',
+                         template_folder=template_dir)
+        
         self.app.secret_key = "your_secret_key"
         self.configure_mail()
         self.user_password_reset_manager = UserPasswordResetManager(self.mail)
@@ -149,6 +143,14 @@ class HexaHaulApp:
         self.vehicle_db = VehicleDatabase()
         self.employee_db = EmployeeDatabase()
         self.hexabox_db = HexaBoxesDatabase()
+        
+        print(f"Template folder: {template_dir}")
+        print(f"Template folder exists: {os.path.exists(template_dir)}")
+        
+        with self.app.app_context():
+            init_db()
+            load_users_from_csv()
+            
         self.register_routes()
         self.register_blueprints()
 
@@ -166,6 +168,44 @@ class HexaHaulApp:
         admin_password_reset_manager = self.admin_password_reset_manager
         admin_account = self.admin_account
         vehicle_db = self.vehicle_db
+
+        @app.route("/user-login", methods=["GET", "POST"])
+        @app.route("/user-login.html", methods=["GET", "POST"])
+        def user_login_html():
+            error = None
+            print(f"User login route accessed, method: {request.method}")
+            try:
+                if request.method == "POST":
+                    username = request.form["username"]
+                    password = request.form["password"]
+
+                    user = authenticate_user(username, password)
+
+                    if user:
+                        session["user_id"] = user.customer_id
+                        session["username"] = user.username
+                        session["user_name"] = f"{user.customer_fname} {user.customer_lname}"
+
+                        return redirect(url_for("index_html"))
+                    else:
+                        error = "Invalid username or password. Please try again."
+                
+                return render_template("user-login.html", error=error)
+            except Exception as e:
+                print(f"Error in user_login_html route: {e}")
+                return f"Error loading template: {str(e)}", 500
+
+        @app.route("/user-dashboard")
+        def user_dashboard():
+            if "user_id" not in session:
+                return redirect(url_for("user_login_html"))
+
+            return render_template("user-dashboard.html", user_name=session.get("user_name"))
+
+        @app.route("/logout")
+        def logout():
+            session.clear()
+            return redirect(url_for("user_login_html"))
 
         @app.route("/")
         def home():
@@ -206,21 +246,6 @@ class HexaHaulApp:
                 else:
                     flash('Invalid username or password', 'error')
             return render_template('admin-login.html')
-
-        @app.route("/user-login", methods=["GET", "POST"])
-        @app.route("/user-login.html", methods=["GET", "POST"])
-        def user_login_html():
-            print("User login route accessed")
-            if request.method == "POST":
-                username = request.form.get("username")
-                password = request.form.get("password")
-                if admin_account.login(username, password):
-                    print("Admin login successful")
-                    return redirect(url_for("index_html"))
-                else:
-                    flash("Wrong username or password.")
-                    return render_template("user-login.html")
-            return render_template("user-login.html")
 
         @app.route("/user-signup")
         @app.route("/user-signup.html")
@@ -401,17 +426,14 @@ class HexaHaulApp:
 
         @app.route('/admin/vehicles')
         def admin_vehicles():
-            # Get all vehicles from database
             session = vehicle_db.connect()
             vehicles = session.query(Vehicle).all()
             
-            # Count vehicles by category
             motorcycle_count = sum(1 for v in vehicles if v.category == 'Motorcycle')
             car_count = sum(1 for v in vehicles if v.category == 'Car')
             truck_count = sum(1 for v in vehicles if v.category == 'Truck')
             available_count = sum(1 for v in vehicles if v.status == 'Available')
             
-            # Convert vehicles to JSON for JavaScript use
             vehicles_json = json.dumps([{
                 'id': v.id,
                 'unit_brand': v.unit_brand,
@@ -440,7 +462,6 @@ class HexaHaulApp:
 
         @app.route('/admin/vehicles/add', methods=['POST'])
         def add_vehicle():
-            # Get form data
             data = {
                 'unit_brand': request.form.get('unit_brand'),
                 'unit_model': request.form.get('unit_model'),
@@ -456,17 +477,14 @@ class HexaHaulApp:
                 'year': int(request.form.get('year'))
             }
             
-            # Add vehicle to database
             vehicle_db.add_vehicle(**data)
             
             return redirect(url_for('admin_vehicles'))
 
         @app.route('/admin/vehicles/update', methods=['POST'])
         def update_vehicle():
-            # Get vehicle ID
             vehicle_id = int(request.form.get('vehicle_id'))
             
-            # Get form data
             data = {
                 'unit_brand': request.form.get('unit_brand'),
                 'unit_model': request.form.get('unit_model'),
@@ -482,38 +500,31 @@ class HexaHaulApp:
                 'year': int(request.form.get('year'))
             }
             
-            # Update vehicle in database
             vehicle_db.update_vehicle(vehicle_id, **data)
             
             return redirect(url_for('admin_vehicles'))
 
         @app.route('/admin/vehicles/delete', methods=['POST'])
         def delete_vehicle():
-            # Get vehicle ID
             vehicle_id = int(request.form.get('vehicle_id'))
             
-            # Delete vehicle from database
             vehicle_db.delete_vehicle(vehicle_id)
             
             return redirect(url_for('admin_vehicles'))
 
         @app.route('/admin/employees')
         def admin_employees():
-            # Get all employees from database
             session = self.employee_db.connect()
             employees = session.query(Employee).all()
             
-            # Count employees by role
             total_count = len(employees)
             manager_count = sum(1 for e in employees if e.role == 'Manager')
             driver_count = sum(1 for e in employees if e.role == 'Driver')
             active_count = sum(1 for e in employees if e.status == 'Active')
             
-            # Get available vehicles for driver assignments
             session2 = self.vehicle_db.connect()
             available_vehicles = session2.query(Vehicle).filter_by(status='Available').all()
             
-            # Convert employees to JSON for JavaScript use
             employees_json = json.dumps([{
                 'id': e.id,
                 'employee_id': e.employee_id,
@@ -548,7 +559,6 @@ class HexaHaulApp:
 
         @app.route('/admin/employees/add', methods=['POST'])
         def add_employee():
-            # Get form data
             data = {
                 'employee_id': int(request.form.get('employee_id', 0)),
                 'first_name': request.form.get('first_name'),
@@ -567,17 +577,14 @@ class HexaHaulApp:
                 'status': request.form.get('status', 'Active')
             }
             
-            # Add employee to database
             self.employee_db.add_employee(**data)
             
             return redirect(url_for('admin_employees'))
 
         @app.route('/admin/employees/update', methods=['POST'])
         def update_employee():
-            # Get employee ID
             employee_id = int(request.form.get('employee_id'))
             
-            # Get form data
             data = {
                 'first_name': request.form.get('first_name'),
                 'last_name': request.form.get('last_name'),
@@ -595,28 +602,23 @@ class HexaHaulApp:
                 'status': request.form.get('status')
             }
             
-            # Update employee in database
             self.employee_db.update_employee(employee_id, **data)
             
             return redirect(url_for('admin_employees'))
 
         @app.route('/admin/employees/delete', methods=['POST'])
         def delete_employee():
-            # Get employee ID
             employee_id = int(request.form.get('employee_id'))
             
-            # Delete employee from database
             self.employee_db.delete_employee(employee_id)
             
             return redirect(url_for('admin_employees'))
 
         @app.route('/admin/hexaboxes')
         def admin_hexaboxes():
-            # Get all packages from database
             session = self.hexabox_db.connect()
             packages = session.query(Order).all()
             
-            # Count packages by status
             total_count = len(packages)
             transit_count = sum(1 for p in packages if p.delivery_status == "Shipping on time" or 
                                 p.delivery_status == "Late delivery" or p.delivery_status == "Advance shipping")
@@ -624,11 +626,9 @@ class HexaHaulApp:
             pending_count = sum(1 for p in packages if p.order_status == "PENDING" or p.order_status == "PENDING_PAYMENT" or 
                                  p.order_status == "PAYMENT_REVIEW" or p.order_status == "ON_HOLD")
             
-            # Get available vehicles for assignments
             vehicle_session = self.vehicle_db.connect()
             available_vehicles = vehicle_session.query(Vehicle).filter_by(status='Available').all()
             
-            # Convert packages to JSON for JavaScript use
             packages_json = json.dumps([{
                 'tracking_id': p.tracking_id,
                 'order_id': p.order_id,
@@ -662,7 +662,6 @@ class HexaHaulApp:
 
         @app.route('/admin/hexaboxes/add', methods=['POST'])
         def add_package():
-            # Get form data
             data = {
                 'tracking_id': request.form.get('tracking_id'),
                 'sender': request.form.get('sender'),
@@ -680,17 +679,14 @@ class HexaHaulApp:
                 'notes': request.form.get('notes', '')
             }
             
-            # Add package to database
             self.hexabox_db.add_order(**data)
             
             return redirect(url_for('admin_hexaboxes'))
 
         @app.route('/admin/hexaboxes/update', methods=['POST'])
         def update_package():
-            # Get tracking ID
             tracking_id = request.form.get('tracking_id')
             
-            # Get form data
             data = {
                 'sender': request.form.get('sender'),
                 'recipient': request.form.get('recipient'),
@@ -704,7 +700,6 @@ class HexaHaulApp:
                 'notes': request.form.get('notes', '')
             }
             
-            # Map UI status to database statuses
             status = request.form.get('status')
             if status == 'Delivered':
                 data['order_status'] = 'COMPLETE'
@@ -719,17 +714,14 @@ class HexaHaulApp:
                 data['order_status'] = 'CANCELED'
                 data['delivery_status'] = 'Shipping canceled'
             
-            # Update package in database
             self.hexabox_db.update_order(tracking_id, **data)
             
             return redirect(url_for('admin_hexaboxes'))
 
         @app.route('/admin/hexaboxes/delete', methods=['POST'])
         def delete_package():
-            # Get tracking ID
             tracking_id = request.form.get('tracking_id')
             
-            # Delete package from database
             self.hexabox_db.delete_order(tracking_id)
             
             return redirect(url_for('admin_hexaboxes'))
@@ -737,7 +729,7 @@ class HexaHaulApp:
         @app.route('/admin/utilities')
         def admin_utilities():
             return render_template('admin_utilities.html')
-
+            
         @app.route('/admin-forgot-password', methods=['GET', 'POST'])
         def admin_forgot_password():
             error = None
@@ -767,6 +759,22 @@ class HexaHaulApp:
         self.app.debug = True
         print("Flask app routes:")
         print(self.app.url_map)
+        
+        template_dir = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'templates')
+        if os.path.exists(template_dir):
+            print("Available templates:")
+            for file in os.listdir(template_dir):
+                print(f"  - {file}")
+            
+            @self.app.route('/test-template/<template_name>')
+            def test_template(template_name):
+                try:
+                    return render_template(template_name)
+                except Exception as e:
+                    return f"Error rendering template {template_name}: {str(e)}"
+        else:
+            print("Template directory not found!")
+            
         port = int(os.environ.get("PORT", 5000))
         self.app.run(host='0.0.0.0', port=port, debug=True)
 
