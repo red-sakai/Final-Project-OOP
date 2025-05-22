@@ -33,8 +33,8 @@
                     <button class="search-btn"><i class="fas fa-search"></i></button>
                 </div>
                 <div class="user-info">
-                    <img src="https://via.placeholder.com/40" alt="Admin">
-                    <span>Admin User</span>
+                    <img src="{{ url_for('static', filename='images/profile-icon.png') }}" alt="Admin Profile">
+                    <span>{{ admin_name }}</span>
                 </div>
             </div>
             
@@ -137,7 +137,7 @@
         <div class="modal-content">
             <span class="close-modal">&times;</span>
             <h2 id="modalTitle">Add New Vehicle</h2>
-            <form id="vehicleForm" method="POST" action="{{ url_for('update_vehicle') if editing else url_for('add_vehicle') }}">
+            <form id="vehicleForm" method="POST" action="{{ url_for('admin_vehicles') }}/add">
                 <input type="hidden" id="vehicleId" name="vehicle_id">
                 <div class="form-group">
                     <label for="brand">Brand:</label>
@@ -209,7 +209,7 @@
             <h2>Confirm Deletion</h2>
             <p>Are you sure you want to delete this vehicle? This action cannot be undone.</p>
             <div class="form-actions">
-                <form method="POST" action="{{ url_for('delete_vehicle') }}" id="deleteVehicleForm">
+                <form method="POST" action="{{ url_for('admin_vehicles') }}/delete" id="deleteVehicleForm">
                     <input type="hidden" id="deleteVehicleId" name="vehicle_id">
                     <button type="submit" class="delete-confirm-btn">Delete</button>
                     <button type="button" class="cancel-btn">Cancel</button>
