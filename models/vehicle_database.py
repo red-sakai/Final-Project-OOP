@@ -106,39 +106,39 @@ class VehicleDatabase:
         motorcycles = [
             Vehicle(unit_brand='Honda', unit_model='Click 125i', unit_type='Motorcycle', category='Motorcycle', 
                    distance=0, driver_employee_id=None, license_expiration_date=None, order_id=None, 
-                   max_weight=150, min_weight=0, status='Available'),
+                   max_weight=150, min_weight=0, status='Available', year=2020),
             Vehicle(unit_brand='Yamaha', unit_model='Mio Sporty', unit_type='Motorcycle', category='Motorcycle', 
                    distance=0, driver_employee_id=None, license_expiration_date=None, order_id=None, 
-                   max_weight=120, min_weight=0, status='Available'),
+                   max_weight=120, min_weight=0, status='Available', year=2019),
             Vehicle(unit_brand='Yamaha', unit_model='NMAX', unit_type='Motorcycle', category='Motorcycle', 
                    distance=0, driver_employee_id=None, license_expiration_date=None, order_id=None, 
-                   max_weight=170, min_weight=0, status='Available')
+                   max_weight=170, min_weight=0, status='Available', year=2021)
         ]
         
         # Cars
         cars = [
             Vehicle(unit_brand='Toyota', unit_model='Vios', unit_type='Sedan', category='Car', 
                    distance=0, driver_employee_id=None, license_expiration_date=None, order_id=None, 
-                   max_weight=500, min_weight=0, status='Available'),
+                   max_weight=500, min_weight=0, status='Available', year=2018),
             Vehicle(unit_brand='Honda', unit_model='Civic', unit_type='Sedan', category='Car', 
                    distance=0, driver_employee_id=None, license_expiration_date=None, order_id=None, 
-                   max_weight=450, min_weight=0, status='Available'),
+                   max_weight=450, min_weight=0, status='Available', year=2017),
             Vehicle(unit_brand='MG', unit_model='5', unit_type='Sedan', category='Car', 
                    distance=0, driver_employee_id=None, license_expiration_date=None, order_id=None, 
-                   max_weight=480, min_weight=0, status='Available')
+                   max_weight=480, min_weight=0, status='Available', year=2019)
         ]
         
         # Trucks
         trucks = [
             Vehicle(unit_brand='Isuzu', unit_model='4 Wheeler', unit_type='Truck', category='Truck', 
                    distance=0, driver_employee_id=None, license_expiration_date=None, order_id=None, 
-                   max_weight=3000, min_weight=500, status='Available'),
+                   max_weight=3000, min_weight=500, status='Available', year=2015),
             Vehicle(unit_brand='Isuzu', unit_model='6 Wheeler', unit_type='Truck', category='Truck', 
                    distance=0, driver_employee_id=None, license_expiration_date=None, order_id=None, 
-                   max_weight=7000, min_weight=3000, status='Available'),
+                   max_weight=7000, min_weight=3000, status='Available', year=2016),
             Vehicle(unit_brand='Isuzu', unit_model='10 Wheeler', unit_type='Truck', category='Truck', 
                    distance=0, driver_employee_id=None, license_expiration_date=None, order_id=None, 
-                   max_weight=15000, min_weight=7000, status='Available')
+                   max_weight=15000, min_weight=7000, status='Available', year=2014)
         ]
         
         vehicles = motorcycles + cars + trucks
@@ -153,8 +153,8 @@ class VehicleDatabase:
         session = self.connect()
         vehicles = session.query(Vehicle).all()
         result = [(v.id, v.unit_brand, v.unit_model, v.unit_type, v.category, v.distance, 
-                  v.driver_employee_id, v.license_expiration_date, v.order_id, 
-                  v.max_weight, v.min_weight, v.status) for v in vehicles]
+                  v.driver_employee_id, v.license_expiration_date, 
+                  v.max_weight, v.min_weight, v.status, v.year) for v in vehicles]
         self.disconnect()
         return result
         
@@ -162,8 +162,8 @@ class VehicleDatabase:
         session = self.connect()
         vehicles = session.query(Vehicle).filter_by(category=category).all()
         result = [(v.id, v.unit_brand, v.unit_model, v.unit_type, v.category, v.distance, 
-                  v.driver_employee_id, v.license_expiration_date, v.order_id, 
-                  v.max_weight, v.min_weight, v.status) for v in vehicles]
+                  v.driver_employee_id, v.license_expiration_date, 
+                  v.max_weight, v.min_weight, v.status, v.year) for v in vehicles]
         self.disconnect()
         return result
         

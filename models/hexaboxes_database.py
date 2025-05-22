@@ -48,6 +48,39 @@ class Order(Base):
     eta = Column(String)
     assigned_vehicle = Column(String)
     notes = Column(String)
+    
+    def __getattr__(self, name):
+        """Dynamically handle attributes that don't exist in the model"""
+        if name == 'display_tracking_id':
+            # If order_item_id exists and isn't empty, use it as display_tracking_id
+            if hasattr(self, 'order_item_id') and self.order_item_id and self.order_item_id.strip():
+                return self.order_item_id
+            # Otherwise use the internal tracking_id
+            return self.tracking_id
+        
+        # For any other attribute, raise AttributeError as normal
+        raise AttributeError(f"'Order' object has no attribute '{name}'")
+    
+    @property
+    def status(self):
+        """Return a standardized status for the UI based on order_status and delivery_status"""
+        if self.order_status in ["COMPLETE", "CLOSED"]:
+            return "Delivered"
+        elif self.order_status in ["SUSPECTED_FRAUD", "CANCELED"]:
+            return "Returned"
+        elif self.order_status in ["PROCESSING"]:
+            return "In Transit"
+        elif self.order_status in ["PENDING", "ON_HOLD", "PAYMENT_REVIEW", "PENDING_PAYMENT"]:
+            return "Pending"
+        
+        # Fallback to delivery_status
+        status_mapping = {
+            "Shipping on time": "In Transit",
+            "Advance shipping": "In Transit",
+            "Late delivery": "In Transit",
+            "Shipping canceled": "Returned"
+        }
+        return status_mapping.get(self.delivery_status, "Pending")
 
 class HexaBoxesDatabase:
     def __init__(self, db_path="hexaboxes.db"):
@@ -118,8 +151,22 @@ class HexaBoxesDatabase:
                 
                 for _, row in batch.iterrows():
                     try:
-                        # Generate unique tracking ID
-                        tracking_id = self.generate_unique_tracking_id(row['Order Id'])
+                        # Format the tracking ID with HX- prefix to match UI format
+                        # If order_id is available, use it to create a tracking ID; otherwise create a random one
+                        if 'Order Id' in row and not pd.isna(row['Order Id']):
+                            order_id = int(row['Order Id'])
+                            tracking_id = f"HX-{order_id:012d}"  # Zero-pad to 12 digits
+                        else:
+                            # Generate a random order ID
+                            random_id = random.randint(1000000, 9999999)
+                            tracking_id = f"HX-{random_id:012d}"
+                        
+                        # If we have a Tracking ID column in the CSV, use its value instead of the generated value
+                        if 'Tracking ID' in row and not pd.isna(row['Tracking ID']):
+                            # Store the original tracking ID from CSV as order_item_id
+                            csv_tracking_id = str(row['Tracking ID']).strip()
+                        else:
+                            csv_tracking_id = ""
                         
                         # Generate random sender and recipient
                         sender = f"{random.choice(first_names)} {random.choice(last_names)}"
@@ -184,8 +231,8 @@ class HexaBoxesDatabase:
                         # Create new Order object
                         order = Order(
                             tracking_id=tracking_id,
-                            order_id=row['Order Id'],
-                            order_item_id=row['Order Item Id'],
+                            order_id=int(row['Order Id']) if 'Order Id' in row and not pd.isna(row['Order Id']) else 0,
+                            order_item_id=csv_tracking_id,  # Store the original tracking ID from CSV
                             days_for_shipping_real=row['Days for shipping (real)'],
                             days_for_shipment_scheduled=row['Days for shipment (scheduled)'],
                             delivery_status=row['Delivery Status'],
@@ -368,7 +415,7 @@ class HexaBoxesDatabase:
         orders = session.query(Order).all()
         self.disconnect()
         return orders
-        
+    
     def get_orders_by_status(self, status):
         session = self.connect()
         orders = session.query(Order).filter_by(order_status=status).all()

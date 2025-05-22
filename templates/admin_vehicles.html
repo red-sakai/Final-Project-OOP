@@ -33,8 +33,8 @@
                     <button class="search-btn"><i class="fas fa-search"></i></button>
                 </div>
                 <div class="user-info">
-                    <img src="https://via.placeholder.com/40" alt="Admin">
-                    <span>Admin User</span>
+                    <img src="{{ url_for('static', filename='images/profile-icon.png') }}" alt="Admin Profile">
+                    <span>{{ admin_name }}</span>
                 </div>
             </div>
             
@@ -98,7 +98,6 @@
                             <th>Distance (km)</th>
                             <th>Driver ID</th>
                             <th>License Expiry</th>
-                            <th>Order ID</th>
                             <th>Min Weight (kg)</th>
                             <th>Max Weight (kg)</th>
                             <th>Status</th>
@@ -116,7 +115,6 @@
                             <td>{{ vehicle.distance }}</td>
                             <td>{{ vehicle.driver_employee_id if vehicle.driver_employee_id else '-' }}</td>
                             <td>{{ vehicle.license_expiration_date if vehicle.license_expiration_date else '-' }}</td>
-                            <td>{{ vehicle.order_id if vehicle.order_id else '-' }}</td>
                             <td>{{ vehicle.min_weight }}</td>
                             <td>{{ vehicle.max_weight }}</td>
                             <td><span class="status {{ vehicle.status.lower().replace(' ', '-') }}">{{ vehicle.status }}</span></td>
@@ -137,7 +135,7 @@
         <div class="modal-content">
             <span class="close-modal">&times;</span>
             <h2 id="modalTitle">Add New Vehicle</h2>
-            <form id="vehicleForm" method="POST" action="{{ url_for('update_vehicle') if editing else url_for('add_vehicle') }}">
+            <form id="vehicleForm" method="POST" action="{{ url_for('admin_vehicles') }}/add">
                 <input type="hidden" id="vehicleId" name="vehicle_id">
                 <div class="form-group">
                     <label for="brand">Brand:</label>
@@ -176,10 +174,6 @@
                     <input type="date" id="licenseExpiry" name="license_expiration_date">
                 </div>
                 <div class="form-group">
-                    <label for="orderId">Order ID:</label>
-                    <input type="number" id="orderId" name="order_id">
-                </div>
-                <div class="form-group">
                     <label for="minWeight">Minimum Weight (kg):</label>
                     <input type="number" id="minWeight" name="min_weight" step="0.1" value="0" required>
                 </div>
@@ -209,7 +203,7 @@
             <h2>Confirm Deletion</h2>
             <p>Are you sure you want to delete this vehicle? This action cannot be undone.</p>
             <div class="form-actions">
-                <form method="POST" action="{{ url_for('delete_vehicle') }}" id="deleteVehicleForm">
+                <form method="POST" action="{{ url_for('admin_vehicles') }}/delete" id="deleteVehicleForm">
                     <input type="hidden" id="deleteVehicleId" name="vehicle_id">
                     <button type="submit" class="delete-confirm-btn">Delete</button>
                     <button type="button" class="cancel-btn">Cancel</button>
