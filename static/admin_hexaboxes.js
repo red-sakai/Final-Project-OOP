@@ -16,6 +16,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const deleteConfirmBtn = document.querySelector('.delete-confirm-btn');
     
     let currentPackageId = null;
+    const packageData = []; // Assuming packageData is defined elsewhere or fetched dynamically
 
     // Tab functionality
     tabs.forEach(tab => {
@@ -140,7 +141,12 @@ document.addEventListener('DOMContentLoaded', function() {
             const cells = row.cells;
             
             // Get values from table row
-            const trackingId = cells[0].textContent;
+            const displayTrackingId = cells[0].textContent;
+            
+            // Find the original tracking ID from packageData
+            const packageInfo = packageData.find(p => p.tracking_id === displayTrackingId);
+            const originalTrackingId = packageInfo ? packageInfo.original_tracking_id : displayTrackingId;
+            
             const sender = cells[1].textContent;
             const recipient = cells[2].textContent;
             const origin = cells[3].textContent;
@@ -156,7 +162,7 @@ document.addEventListener('DOMContentLoaded', function() {
             document.getElementById('modalTitle').textContent = 'Edit Package';
             
             // Populate form
-            document.getElementById('trackingId').value = trackingId;
+            document.getElementById('trackingId').value = originalTrackingId;
             document.getElementById('trackingId').readOnly = true; // Can't edit tracking ID
             document.getElementById('sender').value = sender;
             document.getElementById('recipient').value = recipient;
@@ -164,18 +170,39 @@ document.addEventListener('DOMContentLoaded', function() {
             document.getElementById('destination').value = destination;
             document.getElementById('size').value = size;
             document.getElementById('weight').value = weight;
-            document.getElementById('dateShipped').value = dateShipped;
-            document.getElementById('eta').value = eta;
             
-            // Extract vehicle ID from text
-            const vehicleId = vehicle.match(/ID: (\d+)/);
-            if (vehicleId && vehicleId[1]) {
-                document.getElementById('assignedVehicle').value = vehicleId[1];
-            } else {
-                document.getElementById('assignedVehicle').value = '';
+            // Format dates if needed
+            try {
+                // Try to parse and format the date if it's not already in YYYY-MM-DD format
+                const shipDateParts = dateShipped.split('-');
+                if (shipDateParts.length === 3) {
+                    document.getElementById('dateShipped').value = dateShipped;
+                }
+            } catch (e) {
+                // Default to today if parsing fails
+                const today = new Date();
+                document.getElementById('dateShipped').value = today.toISOString().split('T')[0];
             }
             
+            try {
+                // Try to parse and format the ETA date
+                const etaDateParts = eta.split('-');
+                if (etaDateParts.length === 3) {
+                    document.getElementById('eta').value = eta;
+                }
+            } catch (e) {
+                // Default to today+3 if parsing fails
+                const etaDate = new Date();
+                etaDate.setDate(etaDate.getDate() + 3);
+                document.getElementById('eta').value = etaDate.toISOString().split('T')[0];
+            }
+            
+            // Handle assigned vehicle
+            document.getElementById('assignedVehicleText').value = vehicle;
             document.getElementById('status').value = status;
+            
+            // Change form action to update instead of add
+            packageForm.action = '/update_package';
             
             // Open modal
             openModal(packageModal);
@@ -186,6 +213,12 @@ document.addEventListener('DOMContentLoaded', function() {
     deleteBtns.forEach(btn => {
         btn.addEventListener('click', function() {
             const id = this.getAttribute('data-id');
+            
+            // Find the original tracking ID
+            const packageInfo = packageData.find(p => p.tracking_id === id);
+            const originalTrackingId = packageInfo ? packageInfo.original_tracking_id : id;
+            
+            document.getElementById('deleteTrackingId').value = originalTrackingId;
             currentPackageId = id;
             
             // Open confirmation modal
