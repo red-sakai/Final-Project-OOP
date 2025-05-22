@@ -77,7 +77,7 @@
         <button class="sidebar-close" id="sidebar-close" aria-label="Close sidebar">&times;</button>
         <div class="sidebar-profile">
             <img src="{{ url_for('static', filename='images/profile-icon.png') }}" alt="Profile Icon" class="profile-icon">
-            <div class="profile-name">User Name</div>
+            <div class="profile-name">{{ session.get('user_name', 'User Name') }}</div>
         </div>
         <div class="sidebar-section dropdown">
             <a href="{{ url_for('sidebar_html') }}#profile" class="dropdown-toggle">Profile</a>
