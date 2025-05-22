@@ -6,6 +6,40 @@
         <title>LogistIQ | HexaHaul</title>
         <link rel="stylesheet" href="{{ url_for('static', filename='admin-login.css') }}">
         <link rel="icon" href="{{ url_for('static', filename='images/HexaHaul icon transparent.png') }}" />
+        <style>
+            .flashes {
+                list-style: none;
+                padding: 0;
+                margin: 0 0 20px 0;
+                width: 100%;
+                text-align: center;
+            }
+            
+            .flashes li {
+                padding: 8px 12px;
+                border-radius: 4px;
+                margin-bottom: 8px;
+                font-size: 14px;
+            }
+            
+            .flashes li.error {
+                background-color: #ffebee;
+                color: #c62828;
+                border: 1px solid #ef9a9a;
+            }
+            
+            .flashes li.success {
+                background-color: #e8f5e9;
+                color: #2e7d32;
+                border: 1px solid #a5d6a7;
+            }
+            
+            .flashes li.info {
+                background-color: #e3f2fd;
+                color: #1565c0;
+                border: 1px solid #90caf9;
+            }
+        </style>
     </head>
     <body>
     
@@ -42,14 +76,11 @@
                         <button type="submit" class="signin-button">Sign In</button>
                     </form>
                     <div class="admin-forgot-password">
-                        <a href="{{ url_for('admin_forgot_password') }}">Forgot Password?</a>
+                        <a href="{{ url_for('admin_forgot_password_submit') }}">Forgot Password?</a>
                     </div> 
                 </div>
             </div>
         </div> 
-        <script>
-            // No inline JS, handled in admin-login.js
-        </script>
         <script src="{{ url_for('static', filename='admin-login.js') }}"></script>
     </body>
 </html>

@@ -5,6 +5,7 @@ from models.vehicle_database import VehicleDatabase, Vehicle
 from models.employee_database import EmployeeDatabase, Employee
 from models.hexaboxes_database import HexaBoxesDatabase, Order
 from models.user_login_database import init_db, load_users_from_csv, authenticate_user
+from models.admin_database import init_admin_db, get_db_session, Admin, get_default_admin
 from abc import ABC, abstractmethod
 from enum import Enum
 from flask_mail import Mail, Message
@@ -139,7 +140,13 @@ class HexaHaulApp:
         self.configure_mail()
         self.user_password_reset_manager = UserPasswordResetManager(self.mail)
         self.admin_password_reset_manager = AdminPasswordResetManager(self.mail)
-        self.admin_account = Admin(username="admin", password="admin123", otp_authentication=False)
+        
+        # Initialize admin database
+        init_admin_db()
+        
+        # Get or create default admin account
+        self.admin_account = get_default_admin()
+        
         self.vehicle_db = VehicleDatabase()
         self.employee_db = EmployeeDatabase()
         self.hexabox_db = HexaBoxesDatabase()
@@ -245,16 +252,66 @@ class HexaHaulApp:
             print("Sidebar route accessed")
             return render_template("sidebar.html")
 
-        @app.route("/admin-login", methods=["GET", "POST"])
+        @app.route("/admin-login")
+        @app.route("/admin-login.html")
+        def admin_login_redirect():
+            """Redirect from /admin-login to /admin/login"""
+            return redirect(url_for('admin_login'))
+
+        @app.route("/admin/login", methods=["GET", "POST"])
         def admin_login():
             if request.method == 'POST':
                 username = request.form.get('username')
                 password = request.form.get('password')
-                if username == 'admin' and password == 'admin123':
-                    return redirect(url_for('admin_dashboard'))
-                else:
-                    flash('Invalid username or password', 'error')
+                
+                # Get database session
+                db_session = get_db_session()
+                
+                try:
+                    # Authenticate admin
+                    admin = Admin.authenticate(db_session, username, password)
+                    
+                    if admin:
+                        # Set admin session
+                        session['admin_id'] = admin.id
+                        session['admin_username'] = admin.admin_username
+                        session['admin_name'] = f"{admin.admin_fname} {admin.admin_lname}"
+                        
+                        # Redirect to admin dashboard
+                        return redirect(url_for('admin_dashboard'))
+                    else:
+                        flash('Invalid username or password', 'error')
+                finally:
+                    db_session.close()
+                    
             return render_template('admin-login.html')
+
+        @app.route("/admin/dashboard")
+        def admin_dashboard():
+            # Check if admin is logged in
+            if 'admin_id' not in session:
+                flash('Please login to access the admin dashboard', 'error')
+                return redirect(url_for('admin_login'))
+                
+            # Get admin info from session
+            admin_name = session.get('admin_name')
+            
+            return render_template('admin-dashboard.html', admin_name=admin_name)
+
+        @app.route("/admin/forgot-password")
+        def admin_forgot_password_page():
+            """Route for admin forgot password page"""
+            return render_template("admin-forgot-password.html")
+
+        @app.route("/admin/logout")
+        def admin_logout():
+            # Clear admin session
+            session.pop('admin_id', None)
+            session.pop('admin_username', None)
+            session.pop('admin_name', None)
+            
+            flash('You have been logged out', 'success')
+            return redirect(url_for('admin_login'))
 
         @app.route("/user-signup")
         @app.route("/user-signup.html")
@@ -740,7 +797,8 @@ class HexaHaulApp:
             return render_template('admin_utilities.html')
             
         @app.route('/admin-forgot-password', methods=['GET', 'POST'])
-        def admin_forgot_password():
+        def admin_forgot_password_submit():
+            """Route for admin forgot password form submission"""
             error = None
             if request.method == 'POST':
                 email = request.form.get('email')
@@ -751,10 +809,6 @@ class HexaHaulApp:
                     admin_password_reset_manager.send_otp(email, otp)
                     return redirect(url_for('admin_verification_code', email=email))
             return render_template('admin-forgot-password.html', error=error)
-
-        @app.route("/admin-dashboard")
-        def admin_dashboard():
-            return render_template("admin-dashboard.html")
 
         @app.route("/payment-wall")
         def payment_wall():
