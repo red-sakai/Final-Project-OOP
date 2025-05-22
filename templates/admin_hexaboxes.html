@@ -62,22 +62,22 @@
                 <div class="stat-card">
                     <i class="fas fa-box"></i>
                     <h3>Total Packages</h3>
-                    <p class="count">{{ total_count|default(156) }}</p>
+                    <p class="count">{{ total_count }}</p>
                 </div>
                 <div class="stat-card">
                     <i class="fas fa-shipping-fast"></i>
                     <h3>In Transit</h3>
-                    <p class="count">{{ transit_count|default(42) }}</p>
+                    <p class="count">{{ transit_count }}</p>
                 </div>
                 <div class="stat-card">
                     <i class="fas fa-check-circle"></i>
                     <h3>Delivered</h3>
-                    <p class="count">{{ delivered_count|default(98) }}</p>
+                    <p class="count">{{ delivered_count }}</p>
                 </div>
                 <div class="stat-card">
                     <i class="fas fa-clock"></i>
                     <h3>Pending</h3>
-                    <p class="count">{{ pending_count|default(16) }}</p>
+                    <p class="count">{{ pending_count }}</p>
                 </div>
             </div>
             
@@ -108,9 +108,8 @@
                     </thead>
                     <tbody id="packagesTableBody">
                         {% for package in packages %}
-                        {% set status = "Delivered" if package.order_status in ["COMPLETE", "CLOSED"] else "In Transit" if package.order_status in ["PROCESSING"] else "Returned" if package.order_status in ["SUSPECTED_FRAUD", "CANCELED"] else "Pending" %}
-                        <tr class="package-row" data-status="{{ status }}">
-                            <td>{{ package.tracking_id }}</td>
+                        <tr class="package-row" data-status="{{ package.status }}">
+                            <td>{{ package.display_tracking_id }}</td>
                             <td>{{ package.sender }}</td>
                             <td>{{ package.recipient }}</td>
                             <td>{{ package.origin }}</td>
@@ -120,7 +119,7 @@
                             <td>{{ package.date_shipped }}</td>
                             <td>{{ package.eta }}</td>
                             <td>{{ package.assigned_vehicle if package.assigned_vehicle else 'Not Assigned' }}</td>
-                            <td><span class="status {{ status.lower().replace(' ', '-') }}">{{ status }}</span></td>
+                            <td><span class="status {{ package.status.lower().replace(' ', '-') }}">{{ package.status }}</span></td>
                             <td>
                                 <button class="action-btn edit" data-id="{{ package.tracking_id }}"><i class="fas fa-edit"></i></button>
                                 <button class="action-btn delete" data-id="{{ package.tracking_id }}"><i class="fas fa-trash"></i></button>
@@ -137,81 +136,79 @@
     <div class="modal" id="packageModal">
         <div class="modal-content">
             <span class="close-modal">&times;</span>
-            <h2 id="modalTitle">Add New Package</h2>Add New Package</h2>
-            <form id="packageForm" method="POST" action="{{ url_for('update_package') if editing else url_for('add_package') }}">
+            <h2 id="modalTitle">Add New Package</h2>
+            <form id="packageForm" method="POST" action="{{ url_for('add_package') }}">
                 <div class="form-columns">
-                    <div class="form-column">orm-column">
-                        <div class="form-group">class="form-group">
-                            <label for="trackingId">Tracking ID:</label>l>
-                            <input type="text" id="trackingId" name="tracking_id" required>d="trackingId" name="tracking_id" required>
+                    <div class="form-column">
+                        <div class="form-group">
+                            <label for="trackingId">Tracking ID:</label>
+                            <input type="text" id="trackingId" name="tracking_id" required>
                         </div>
                         <div class="form-group">
-                            <label for="sender">Sender:</label>/label>
-                            <input type="text" id="sender" name="sender" required>" name="sender" required>
-                        </div>
-                        <div class="form-group">-group">
-                            <label for="recipient">Recipient:</label>nt">Recipient:</label>
-                            <input type="text" id="recipient" name="recipient" required>id="recipient" name="recipient" required>
+                            <label for="sender">Sender:</label>
+                            <input type="text" id="sender" name="sender" required>
                         </div>
                         <div class="form-group">
-                            <label for="origin">Origin:</label>el for="origin">Origin:</label>
+                            <label for="recipient">Recipient:</label>
+                            <input type="text" id="recipient" name="recipient" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="origin">Origin:</label>
                             <input type="text" id="origin" name="origin" required>
                         </div>
-                        <div class="form-group">s="form-group">
-                            <label for="destination">Destination:</label>label for="destination">Destination:</label>
-                            <input type="text" id="destination" name="destination" required><input type="text" id="destination" name="destination" required>
-                        </div></div>
-                        <div class="form-group">      <div class="form-group">
-                            <label for="size">Size:</label>              <label for="size">Size:</label>
-                            <select id="size" name="size" required>                  <select id="size" name="size" required>
-                                <option value="Small">Small</option>                            <option value="Small">Small</option>
-                                <option value="Medium">Medium</option>"Medium">Medium</option>
-                                <option value="Large">Large</option>alue="Large">Large</option>
-                                <option value="Extra Large">Extra Large</option>tion value="Extra Large">Extra Large</option>
+                        <div class="form-group">
+                            <label for="destination">Destination:</label>
+                            <input type="text" id="destination" name="destination" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="size">Size:</label>
+                            <select id="size" name="size" required>
+                                <option value="Small">Small</option>
+                                <option value="Medium">Medium</option>
+                                <option value="Large">Large</option>
+                                <option value="Extra Large">Extra Large</option>
                             </select>
                         </div>
                     </div>
-                    <div class="form-column">n">
-                        <div class="form-group">p">
-                            <label for="weight">Weight (kg):</label>Weight (kg):</label>
-                            <input type="number" id="weight" name="weight" step="0.1" min="0" required>t" step="0.1" min="0" required>
+                    <div class="form-column">
+                        <div class="form-group">
+                            <label for="weight">Weight (kg):</label>
+                            <input type="number" id="weight" name="weight" step="0.1" min="0" required>
                         </div>
-                        <div class="form-group">lass="form-group">
-                            <label for="dateShipped">Date Shipped:</label>ped">Date Shipped:</label>
-                            <input type="date" id="dateShipped" name="date_shipped" required> name="date_shipped" required>
+                        <div class="form-group">
+                            <label for="dateShipped">Date Shipped:</label>
+                            <input type="date" id="dateShipped" name="date_shipped" required>
                         </div>
-                        <div class="form-group">lass="form-group">
-                            <label for="eta">Estimated Arrival:</label>imated Arrival:</label>
-                            <input type="date" id="eta" name="eta" required>quired>
+                        <div class="form-group">
+                            <label for="eta">Estimated Arrival:</label>
+                            <input type="date" id="eta" name="eta" required>
                         </div>
                         <div class="form-group">
                             <label for="assignedVehicle">Assigned Vehicle:</label>
                             <select id="assignedVehicle" name="assigned_vehicle">
                                 <option value="">Not Assigned</option>
-                                {% for vehicle in available_vehicles %}
-                                <option value="{{ vehicle.id }}">{{ vehicle.unit_brand }} {{ vehicle.unit_model }} (ID: {{ vehicle.id }})</option>
-                                {% endfor %}
+                                <!-- Vehicle options would be populated here -->
                             </select>
                             <input type="hidden" id="assignedVehicleText" name="assigned_vehicle_text">
                         </div>
                         <div class="form-group">
                             <label for="status">Status:</label>
-                            <select id="status" name="status" required>ed>
-                                <option value="Pending">Pending</option>n>
-                                <option value="In Transit">In Transit</option>t</option>
+                            <select id="status" name="status" required>
+                                <option value="Pending">Pending</option>
+                                <option value="In Transit">In Transit</option>
                                 <option value="Delivered">Delivered</option>
-                                <option value="Returned">Returned</option>on value="Returned">Returned</option>
-                            </select>select>
-                        </div>div>
-                        <div class="form-group">p">
-                            <label for="notes">Special Instructions:</label>pecial Instructions:</label>
-                            <textarea id="notes" name="notes" rows="4"></textarea>4"></textarea>
+                                <option value="Returned">Returned</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="notes">Special Instructions:</label>
+                            <textarea id="notes" name="notes" rows="4"></textarea>
                         </div>
                     </div>
                 </div>
                 <div class="form-actions">
                     <button type="submit" class="save-btn">Save Package</button>
-                    <button type="button" class="cancel-btn">Cancel</button>pe="button" class="cancel-btn">Cancel</button>
+                    <button type="button" class="cancel-btn">Cancel</button>
                 </div>
             </form>
         </div>
@@ -221,14 +218,21 @@
     <div class="modal" id="confirmationModal">
         <div class="modal-content">
             <h2>Confirm Deletion</h2>
-            <p>Are you sure you want to delete this package? This action cannot be undone.</p>not be undone.</p>
+            <p>Are you sure you want to delete this package? This action cannot be undone.</p>
             <div class="form-actions">
                 <form method="POST" action="{{ url_for('delete_package') }}" id="deletePackageForm">
-                    <input type="hidden" id="deleteTrackingId" name="tracking_id"> class="cancel-btn">Cancel</button>
+                    <input type="hidden" id="deleteTrackingId" name="tracking_id">
                     <button type="submit" class="delete-confirm-btn">Delete</button>
                     <button type="button" class="cancel-btn">Cancel</button>
                 </form>
             </div>
-        </div>></script>
+        </div>
     </div>
-        <script src="{{ url_for('static', filename='admin_hexaboxes.js') }}"></script>    <script>        // Store package data for JavaScript use        const packageData = {{ packages_json|safe }};    </script></body></html>
+    
+    <script>
+        // Store package data for JavaScript use
+        const packageData = {{ packages_json|safe }};
+    </script>
+    <script src="{{ url_for('static', filename='admin_hexaboxes.js') }}"></script>
+</body>
+</html>
