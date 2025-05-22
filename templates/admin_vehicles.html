@@ -98,7 +98,6 @@
                             <th>Distance (km)</th>
                             <th>Driver ID</th>
                             <th>License Expiry</th>
-                            <th>Order ID</th>
                             <th>Min Weight (kg)</th>
                             <th>Max Weight (kg)</th>
                             <th>Status</th>
@@ -116,7 +115,6 @@
                             <td>{{ vehicle.distance }}</td>
                             <td>{{ vehicle.driver_employee_id if vehicle.driver_employee_id else '-' }}</td>
                             <td>{{ vehicle.license_expiration_date if vehicle.license_expiration_date else '-' }}</td>
-                            <td>{{ vehicle.order_id if vehicle.order_id else '-' }}</td>
                             <td>{{ vehicle.min_weight }}</td>
                             <td>{{ vehicle.max_weight }}</td>
                             <td><span class="status {{ vehicle.status.lower().replace(' ', '-') }}">{{ vehicle.status }}</span></td>
@@ -174,10 +172,6 @@
                 <div class="form-group">
                     <label for="licenseExpiry">License Expiration Date:</label>
                     <input type="date" id="licenseExpiry" name="license_expiration_date">
-                </div>
-                <div class="form-group">
-                    <label for="orderId">Order ID:</label>
-                    <input type="number" id="orderId" name="order_id">
                 </div>
                 <div class="form-group">
                     <label for="minWeight">Minimum Weight (kg):</label>

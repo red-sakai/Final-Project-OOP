@@ -622,7 +622,8 @@ class HexaHaulApp:
             available_vehicles = vehicle_session.query(Vehicle).filter_by(status='Available').all()
             
             packages_json = json.dumps([{
-                'tracking_id': p.tracking_id,
+                'tracking_id': p.order_item_id if p.order_item_id and p.order_item_id.strip() else p.tracking_id,
+                'original_tracking_id': p.tracking_id,
                 'order_id': p.order_id,
                 'order_item_id': p.order_item_id,
                 'sender': p.sender,

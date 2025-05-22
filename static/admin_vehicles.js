@@ -123,12 +123,13 @@ document.addEventListener('DOMContentLoaded', function() {
             const brand = cells[1].textContent;
             const model = cells[2].textContent;
             const type = cells[3].textContent;
-            const distance = parseInt(cells[4].textContent);
-            const driverId = cells[5].textContent !== '-' ? cells[5].textContent : '';
-            const licenseExpiry = cells[6].textContent !== '-' ? cells[6].textContent : '';
-            const orderId = cells[7].textContent !== '-' ? cells[7].textContent : '';
-            const maxWeight = parseInt(cells[8].textContent);
-            const status = cells[9].querySelector('.status').textContent;
+            const year = cells[4].textContent;
+            const distance = parseInt(cells[5].textContent);
+            const driverId = cells[6].textContent !== '-' ? cells[6].textContent : '';
+            const licenseExpiry = cells[7].textContent !== '-' ? cells[7].textContent : '';
+            const minWeight = parseFloat(cells[8].textContent);
+            const maxWeight = parseFloat(cells[9].textContent);
+            const status = cells[10].querySelector('.status').textContent;
             
             // Set modal title
             document.getElementById('modalTitle').textContent = 'Edit Vehicle';
@@ -138,8 +139,11 @@ document.addEventListener('DOMContentLoaded', function() {
             document.getElementById('brand').value = brand;
             document.getElementById('model').value = model;
             document.getElementById('type').value = type;
+            document.getElementById('year').value = year;
             document.getElementById('distance').value = distance || 0;
             document.getElementById('driverId').value = driverId;
+            document.getElementById('licenseExpiry').value = licenseExpiry;
+            document.getElementById('minWeight').value = minWeight || 0;
             document.getElementById('maxWeight').value = maxWeight || 0;
             document.getElementById('status').value = status;
             
@@ -194,18 +198,18 @@ document.addEventListener('DOMContentLoaded', function() {
         const model = document.getElementById('model').value;
         const category = document.getElementById('category').value;
         const type = document.getElementById('type').value;
+        const year = document.getElementById('year').value;
         const distance = document.getElementById('distance').value;
         const driverId = document.getElementById('driverId').value;
         const licenseExpiry = document.getElementById('licenseExpiry').value;
-        const orderId = document.getElementById('orderId').value;
-        const maxWeight = document.getElementById('maxWeight').value;
         const minWeight = document.getElementById('minWeight').value;
+        const maxWeight = document.getElementById('maxWeight').value;
         const status = document.getElementById('status').value;
         
         // In a real app, send AJAX request to save the data
         console.log('Vehicle data:', {
-            id, brand, model, category, type, distance, driverId, 
-            licenseExpiry, orderId, maxWeight, minWeight, status
+            id, brand, model, category, type, year, distance, driverId, 
+            licenseExpiry, minWeight, maxWeight, status
         });
         
         if (id) {
@@ -216,13 +220,14 @@ document.addEventListener('DOMContentLoaded', function() {
                 row.cells[1].textContent = brand;
                 row.cells[2].textContent = model;
                 row.cells[3].textContent = type;
-                row.cells[4].textContent = `${distance} km`;
-                row.cells[5].textContent = driverId || '-';
-                row.cells[6].textContent = licenseExpiry || '-';
-                row.cells[7].textContent = orderId || '-';
-                row.cells[8].textContent = `${maxWeight} kg`;
+                row.cells[4].textContent = year;
+                row.cells[5].textContent = distance;
+                row.cells[6].textContent = driverId || '-';
+                row.cells[7].textContent = licenseExpiry || '-';
+                row.cells[8].textContent = minWeight;
+                row.cells[9].textContent = maxWeight;
                 
-                const statusSpan = row.cells[9].querySelector('.status');
+                const statusSpan = row.cells[10].querySelector('.status');
                 statusSpan.textContent = status;
                 statusSpan.className = 'status';
                 
@@ -263,11 +268,12 @@ document.addEventListener('DOMContentLoaded', function() {
                 <td>${brand}</td>
                 <td>${model}</td>
                 <td>${type}</td>
-                <td>${distance} km</td>
+                <td>${year}</td>
+                <td>${distance}</td>
                 <td>${driverId || '-'}</td>
                 <td>${licenseExpiry || '-'}</td>
-                <td>${orderId || '-'}</td>
-                <td>${maxWeight} kg</td>
+                <td>${minWeight}</td>
+                <td>${maxWeight}</td>
                 <td><span class="status ${status.toLowerCase().replace(' ', '-')}">${status}</span></td>
                 <td>
                     <button class="action-btn edit"><i class="fas fa-edit"></i></button>
