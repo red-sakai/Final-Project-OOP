@@ -490,98 +490,15 @@ class HexaHaulApp:
         def recent_bookings():
             return render_template("recent-bookings.html")
 
-        @app.route('/admin/vehicles')
-        def admin_vehicles():
-            session = vehicle_db.connect()
-            vehicles = session.query(Vehicle).all()
-            
-            motorcycle_count = sum(1 for v in vehicles if v.category == 'Motorcycle')
-            car_count = sum(1 for v in vehicles if v.category == 'Car')
-            truck_count = sum(1 for v in vehicles if v.category == 'Truck')
-            available_count = sum(1 for v in vehicles if v.status == 'Available')
-            
-            vehicles_json = json.dumps([{
-                'id': v.id,
-                'unit_brand': v.unit_brand,
-                'unit_model': v.unit_model,
-                'unit_type': v.unit_type,
-                'category': v.category,
-                'distance': v.distance,
-                'driver_employee_id': v.driver_employee_id,
-                'license_expiration_date': v.license_expiration_date,
-                'order_id': v.order_id,
-                'max_weight': v.max_weight,
-                'min_weight': v.min_weight,
-                'status': v.status,
-                'year': v.year
-            } for v in vehicles])
-            
-            vehicle_db.disconnect()
-            
-            return render_template('admin_vehicles.html', 
-                                  vehicles=vehicles,
-                                  motorcycle_count=motorcycle_count,
-                                  car_count=car_count,
-                                  truck_count=truck_count,
-                                  available_count=available_count,
-                                  vehicles_json=vehicles_json)
-
-        @app.route('/admin/vehicles/add', methods=['POST'])
-        def add_vehicle():
-            data = {
-                'unit_brand': request.form.get('unit_brand'),
-                'unit_model': request.form.get('unit_model'),
-                'unit_type': request.form.get('unit_type'),
-                'category': request.form.get('category'),
-                'distance': int(request.form.get('distance', 0)),
-                'driver_employee_id': int(request.form.get('driver_employee_id')) if request.form.get('driver_employee_id') else None,
-                'license_expiration_date': request.form.get('license_expiration_date'),
-                'order_id': int(request.form.get('order_id')) if request.form.get('order_id') else None,
-                'max_weight': float(request.form.get('max_weight')),
-                'min_weight': float(request.form.get('min_weight', 0)),
-                'status': request.form.get('status', 'Available'),
-                'year': int(request.form.get('year'))
-            }
-            
-            vehicle_db.add_vehicle(**data)
-            
-            return redirect(url_for('admin_vehicles'))
-
-        @app.route('/admin/vehicles/update', methods=['POST'])
-        def update_vehicle():
-            vehicle_id = int(request.form.get('vehicle_id'))
-            
-            data = {
-                'unit_brand': request.form.get('unit_brand'),
-                'unit_model': request.form.get('unit_model'),
-                'unit_type': request.form.get('unit_type'),
-                'category': request.form.get('category'),
-                'distance': int(request.form.get('distance', 0)),
-                'driver_employee_id': int(request.form.get('driver_employee_id')) if request.form.get('driver_employee_id') else None,
-                'license_expiration_date': request.form.get('license_expiration_date'),
-                'order_id': int(request.form.get('order_id')) if request.form.get('order_id') else None,
-                'max_weight': float(request.form.get('max_weight')),
-                'min_weight': float(request.form.get('min_weight', 0)),
-                'status': request.form.get('status'),
-                'year': int(request.form.get('year'))
-            }
-            
-            vehicle_db.update_vehicle(vehicle_id, **data)
-            
-            return redirect(url_for('admin_vehicles'))
-
-        @app.route('/admin/vehicles/delete', methods=['POST'])
-        def delete_vehicle():
-            vehicle_id = int(request.form.get('vehicle_id'))
-            
-            vehicle_db.delete_vehicle(vehicle_id)
-            
-            return redirect(url_for('admin_vehicles'))
-
         @app.route('/admin/employees')
         def admin_employees():
-            session = self.employee_db.connect()
-            employees = session.query(Employee).all()
+            # Check if admin is logged in
+            if 'admin_id' not in session:
+                flash('Please login to access the admin dashboard', 'error')
+                return redirect(url_for('admin_login'))
+                
+            session_db = self.employee_db.connect()
+            employees = session_db.query(Employee).all()
             
             total_count = len(employees)
             manager_count = sum(1 for e in employees if e.role == 'Manager')
@@ -614,6 +531,9 @@ class HexaHaulApp:
             self.employee_db.disconnect()
             self.vehicle_db.disconnect()
             
+            # Get admin name from Flask session
+            admin_name = session.get('admin_name', 'Admin User')
+            
             return render_template('admin_employees.html', 
                                   employees=employees,
                                   total_count=total_count,
@@ -621,7 +541,8 @@ class HexaHaulApp:
                                   driver_count=driver_count,
                                   active_count=active_count,
                                   available_vehicles=available_vehicles,
-                                  employees_json=employees_json)
+                                  employees_json=employees_json,
+                                  admin_name=admin_name)
 
         @app.route('/admin/employees/add', methods=['POST'])
         def add_employee():
@@ -682,8 +603,13 @@ class HexaHaulApp:
 
         @app.route('/admin/hexaboxes')
         def admin_hexaboxes():
-            session = self.hexabox_db.connect()
-            packages = session.query(Order).all()
+            # Check if admin is logged in
+            if 'admin_id' not in session:
+                flash('Please login to access the admin dashboard', 'error')
+                return redirect(url_for('admin_login'))
+                
+            session_db = self.hexabox_db.connect()
+            packages = session_db.query(Order).all()
             
             total_count = len(packages)
             transit_count = sum(1 for p in packages if p.delivery_status == "Shipping on time" or 
@@ -717,6 +643,9 @@ class HexaHaulApp:
             self.hexabox_db.disconnect()
             self.vehicle_db.disconnect()
             
+            # Get admin name from Flask session
+            admin_name = session.get('admin_name', 'Admin User')
+            
             return render_template('admin_hexaboxes.html', 
                                   packages=packages,
                                   total_count=total_count,
@@ -724,7 +653,8 @@ class HexaHaulApp:
                                   delivered_count=delivered_count,
                                   pending_count=pending_count,
                                   available_vehicles=available_vehicles,
-                                  packages_json=packages_json)
+                                  packages_json=packages_json,
+                                  admin_name=admin_name)
 
         @app.route('/admin/hexaboxes/add', methods=['POST'])
         def add_package():
@@ -813,6 +743,104 @@ class HexaHaulApp:
         @app.route("/payment-wall")
         def payment_wall():
             return render_template("payment-wall.html")
+
+        @app.route('/admin/vehicles')
+        def admin_vehicles():
+            # Check if admin is logged in
+            if 'admin_id' not in session:
+                flash('Please login to access the admin dashboard', 'error')
+                return redirect(url_for('admin_login'))
+                
+            # Get database session (SQLAlchemy)
+            db_session = vehicle_db.connect()
+            vehicles = db_session.query(Vehicle).all()
+            
+            motorcycle_count = sum(1 for v in vehicles if v.category == 'Motorcycle')
+            car_count = sum(1 for v in vehicles if v.category == 'Car')
+            truck_count = sum(1 for v in vehicles if v.category == 'Truck')
+            available_count = sum(1 for v in vehicles if v.status == 'Available')
+            
+            vehicles_json = json.dumps([{
+                'id': v.id,
+                'unit_brand': v.unit_brand,
+                'unit_model': v.unit_model,
+                'unit_type': v.unit_type,
+                'category': v.category,
+                'distance': v.distance,
+                'driver_employee_id': v.driver_employee_id,
+                'license_expiration_date': v.license_expiration_date,
+                'order_id': v.order_id,
+                'max_weight': v.max_weight,
+                'min_weight': v.min_weight,
+                'status': v.status,
+                'year': v.year
+            } for v in vehicles])
+            
+            vehicle_db.disconnect()
+            
+            # Get admin name from Flask session
+            admin_name = session.get('admin_name', 'Admin User')
+            
+            return render_template('admin_vehicles.html', 
+                                  vehicles=vehicles,
+                                  motorcycle_count=motorcycle_count,
+                                  car_count=car_count,
+                                  truck_count=truck_count,
+                                  available_count=available_count,
+                                  vehicles_json=vehicles_json,
+                                  admin_name=admin_name)
+
+        @app.route('/admin/vehicles/add', methods=['POST'])
+        def admin_add_vehicle():
+            data = {
+                'unit_brand': request.form.get('unit_brand'),
+                'unit_model': request.form.get('unit_model'),
+                'unit_type': request.form.get('unit_type'),
+                'category': request.form.get('category'),
+                'distance': int(request.form.get('distance', 0)),
+                'driver_employee_id': int(request.form.get('driver_employee_id')) if request.form.get('driver_employee_id') else None,
+                'license_expiration_date': request.form.get('license_expiration_date'),
+                'order_id': int(request.form.get('order_id')) if request.form.get('order_id') else None,
+                'max_weight': float(request.form.get('max_weight')),
+                'min_weight': float(request.form.get('min_weight', 0)),
+                'status': request.form.get('status', 'Available'),
+                'year': int(request.form.get('year'))
+            }
+            
+            vehicle_db.add_vehicle(**data)
+            
+            return redirect(url_for('admin_vehicles'))
+
+        @app.route('/admin/vehicles/update', methods=['POST'])
+        def admin_update_vehicle():
+            vehicle_id = int(request.form.get('vehicle_id'))
+            
+            data = {
+                'unit_brand': request.form.get('unit_brand'),
+                'unit_model': request.form.get('unit_model'),
+                'unit_type': request.form.get('unit_type'),
+                'category': request.form.get('category'),
+                'distance': int(request.form.get('distance', 0)),
+                'driver_employee_id': int(request.form.get('driver_employee_id')) if request.form.get('driver_employee_id') else None,
+                'license_expiration_date': request.form.get('license_expiration_date'),
+                'order_id': int(request.form.get('order_id')) if request.form.get('order_id') else None,
+                'max_weight': float(request.form.get('max_weight')),
+                'min_weight': float(request.form.get('min_weight', 0)),
+                'status': request.form.get('status'),
+                'year': int(request.form.get('year'))
+            }
+            
+            vehicle_db.update_vehicle(vehicle_id, **data)
+            
+            return redirect(url_for('admin_vehicles'))
+
+        @app.route('/admin/vehicles/delete', methods=['POST'])
+        def admin_delete_vehicle():
+            vehicle_id = int(request.form.get('vehicle_id'))
+            
+            vehicle_db.delete_vehicle(vehicle_id)
+            
+            return redirect(url_for('admin_vehicles'))
 
     def register_blueprints(self):
         self.app.register_blueprint(analytics_bp)
