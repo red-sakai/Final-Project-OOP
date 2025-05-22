@@ -196,6 +196,12 @@ class HexaHaulApp:
             print("FAQ route accessed")
             return render_template("FAQ.html")
 
+        @app.route("/sidebar")
+        @app.route("/sidebar.html")
+        def sidebar_html():
+            print("Sidebar route accessed")
+            return render_template("sidebar.html")
+
         @app.route("/admin-login", methods=["GET", "POST"])
         def admin_login():
             if request.method == 'POST':
