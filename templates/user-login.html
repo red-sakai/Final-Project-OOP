@@ -17,6 +17,11 @@
                     <center><img src="{{ url_for('static', filename='images/HexaHaul logo.png') }}" alt="Logo" /></center>
                 </div>
                 <form action="{{ url_for('user_login_html') }}" method="post" class="user-login-form">
+                    {% if error %}
+                    <div class="error-message">
+                        {{ error }}
+                    </div>
+                    {% endif %}
                     <input type="text" name="username" placeholder="Username" class="user-username-input" required />  
                     <div class="user-password-container">
                         <input type="password" name="password" placeholder="Password" class="user-password-input" id="user-password" required />
