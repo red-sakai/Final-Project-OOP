@@ -6,6 +6,7 @@ from models.employee_database import EmployeeDatabase, Employee
 from models.hexaboxes_database import HexaBoxesDatabase, Order
 from models.user_login_database import init_db, load_users_from_csv, authenticate_user
 from models.admin_database import init_admin_db, get_db_session, Admin, get_default_admin
+from models.utilities_database import UtilitiesDatabase
 from abc import ABC, abstractmethod
 from enum import Enum
 from flask_mail import Mail, Message
@@ -160,6 +161,7 @@ class HexaHaulApp:
             
         self.register_routes()
         self.register_blueprints()
+        self.register_template_filters()
 
     def configure_mail(self):
         self.app.config['MAIL_SERVER'] = 'smtp.gmail.com'
@@ -168,6 +170,15 @@ class HexaHaulApp:
         self.app.config['MAIL_USERNAME'] = 'hexahaulprojects@gmail.com'
         self.app.config['MAIL_PASSWORD'] = 'ikai nagb zyna hjoc'
         self.mail = Mail(self.app)
+
+    def register_template_filters(self):
+        """Register custom template filters for the application"""
+        
+        @self.app.template_filter('number_format')
+        def number_format_filter(value):
+            if isinstance(value, (int, float)):
+                return "{:,}".format(value)
+            return value
 
     def register_routes(self):
         app = self.app
@@ -725,21 +736,98 @@ class HexaHaulApp:
 
         @app.route('/admin/utilities')
         def admin_utilities():
-            return render_template('admin_utilities.html')
+            # Check if user is logged in as admin
+            if 'admin_id' not in session:
+                return redirect(url_for('admin_login'))
             
-        @app.route('/admin-forgot-password', methods=['GET', 'POST'])
-        def admin_forgot_password_submit():
-            """Route for admin forgot password form submission"""
-            error = None
-            if request.method == 'POST':
-                email = request.form.get('email')
-                if not email or not re.match(r'^[^@]+@[^@]+\.[^@]+$', email):
-                    error = "Please enter a valid email address."
-                else:
-                    otp = admin_password_reset_manager.generate_otp(email)
-                    admin_password_reset_manager.send_otp(email, otp)
-                    return redirect(url_for('admin_verification_code', email=email))
-            return render_template('admin-forgot-password.html', error=error)
+            # Get admin name from session
+            admin_name = session.get('admin_name', 'Admin')
+            
+            # Use an absolute path for the database
+            db_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'database', 'hexahaul.db')
+            os.makedirs(os.path.dirname(db_path), exist_ok=True)
+            
+            # Initialize utilities database
+            utilities_db = UtilitiesDatabase(db_path)
+            
+            # Get dashboard stats
+            dashboard_stats = utilities_db.get_dashboard_stats()
+            
+            # Get initial chart data
+            sales_data = utilities_db.get_sales_data()
+            vehicle_status_data = utilities_db.get_vehicle_status_data()
+            employee_performance_data = utilities_db.get_employee_performance_data()
+            customer_growth_data = utilities_db.get_customer_growth_data()
+            
+            # Get table data
+            sales_detail = utilities_db.get_sales_detail_data()
+            vehicle_detail = utilities_db.get_vehicle_detail_data()
+            employee_detail = utilities_db.get_employee_detail_data()
+            
+            # Convert chart data to JSON for JavaScript
+            chart_data = {
+                'sales': sales_data,
+                'vehicles': vehicle_status_data,
+                'employees': employee_performance_data,
+                'customers': customer_growth_data
+            }
+            
+            return render_template(
+                'admin_utilities.html',
+                admin_name=admin_name,
+                stats=dashboard_stats,
+                chart_data=json.dumps(chart_data),
+                sales_detail=sales_detail,
+                vehicle_detail=vehicle_detail,
+                employee_detail=employee_detail
+            )
+
+        @app.route('/api/utilities/chart-data')
+        def utilities_chart_data():
+            # Check if user is logged in as admin
+            if 'admin_id' not in session:
+                return jsonify({'error': 'Unauthorized'}), 401
+            
+            chart_type = request.args.get('type', 'sales')
+            time_range = request.args.get('timeRange', 'month')
+            
+            # Use an absolute path for the database
+            db_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'database', 'hexahaul.db')
+            
+            # Initialize utilities database
+            utilities_db = UtilitiesDatabase(db_path)
+            
+            if chart_type == 'sales':
+                data = utilities_db.get_sales_data(time_range)
+            elif chart_type == 'vehicles':
+                data = utilities_db.get_vehicle_status_data()
+            elif chart_type == 'employees':
+                data = utilities_db.get_employee_performance_data()
+            elif chart_type == 'customers':
+                data = utilities_db.get_customer_growth_data(time_range)
+            else:
+                return jsonify({'error': 'Invalid chart type'}), 400
+            
+            return jsonify(data)
+
+        @app.route('/api/utilities/generate-report', methods=['POST'])
+        def generate_report():
+            # Check if user is logged in as admin
+            if 'admin_id' not in session:
+                return jsonify({'error': 'Unauthorized'}), 401
+            
+            report_type = request.form.get('reportType')
+            time_range = request.form.get('reportTimeRange')
+            report_format = request.form.get('reportFormat')
+            
+            # Use an absolute path for the database
+            db_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'database', 'hexahaul.db')
+            
+            # Initialize utilities database
+            utilities_db = UtilitiesDatabase(db_path)
+            result = utilities_db.generate_report(report_type, time_range, report_format)
+            
+            return jsonify(result)
 
         @app.route("/payment-wall")
         def payment_wall():
