@@ -188,6 +188,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const logoutBtn = document.getElementById("logout-btn");
     const themeToggle = document.getElementById("theme-toggle");
     const themeLabel = document.getElementById("theme-label");
+    const profileName = document.querySelector(".profile-name");
 
     // Open sidebar
     if (sidebarToggle && sidebar) {
@@ -196,6 +197,12 @@ document.addEventListener("DOMContentLoaded", () => {
             sidebar.classList.add("open");
             sidebarOverlay.classList.add("active");
             document.body.style.overflow = "hidden";
+            
+            // Update the profile name from session data if available
+            if (profileName) {
+                // The name is already set by the Jinja template, so we don't need
+                // to do anything here, but we could add additional customization
+            }
         });
     }
     // Close sidebar

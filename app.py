@@ -182,10 +182,13 @@ class HexaHaulApp:
                     user = authenticate_user(username, password)
 
                     if user:
+                        # Set user session data
                         session["user_id"] = user.customer_id
                         session["username"] = user.username
+                        # Format the full name properly
                         session["user_name"] = f"{user.customer_fname} {user.customer_lname}"
 
+                        # Redirect to index.html instead of user-dashboard
                         return redirect(url_for("index_html"))
                     else:
                         error = "Invalid username or password. Please try again."
