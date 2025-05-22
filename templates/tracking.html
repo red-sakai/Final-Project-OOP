@@ -70,53 +70,27 @@
     </nav>
 
     <!-- User Sidebar -->
-    <div id="user-sidebar" class="user-sidebar">
-        <div class="sidebar-content">
-            <button class="sidebar-close" id="sidebar-close" aria-label="Close sidebar">&times;</button>
-            <div class="sidebar-profile">
-                <img src="{{ url_for('static', filename='images/profile-icon.png') }}" alt="Profile Icon" class="profile-icon">
-                <div class="profile-name">User Name</div>
-            </div>
-            <div class="sidebar-section dropdown">
-                <button class="dropdown-toggle" type="button">Profile <span class="arrow">&#9662;</span></button>
-                <ul class="dropdown-menu">
-                    <li><a href="{{ url_for('personal_info') }}">View/Edit Personal Info</a></li>
-                    <li><a href="{{ url_for('change_password') }}">Change Password</a></li>
-                    <li><a href="{{ url_for('update_email') }}">Update Email</a></li>
-                </ul>
-            </div>
-            <div class="sidebar-section dropdown">
-                <button class="dropdown-toggle" type="button">Settings <span class="arrow">&#9662;</span></button>
-                <ul class="dropdown-menu">
-                    <li><a href="{{ url_for('privacy_settings') }}">Privacy Settings</a></li>
-                    <li><a href="{{ url_for('language_region') }}">Language and Region</a></li>
-                    <li class="theme-switch-row">
-                        <span>Theme:</span>
-                        <label class="theme-switch">
-                            <input type="checkbox" id="theme-toggle">
-                            <span class="slider"></span>
-                            <span class="theme-label" id="theme-label">Light</span>
-                        </label>
-                    </li>
-                </ul>
-            </div>
-            <div class="sidebar-section dropdown">
-                <button class="dropdown-toggle" type="button">Activity Log/History <span class="arrow">&#9662;</span></button>
-                <ul class="dropdown-menu">
-                    <li><a href="{{ url_for('recent_logins') }}">Recent Logins</a></li>
-                    <li><a href="{{ url_for('recent_bookings') }}">Recent Bookings</a></li>
-                </ul>
-            </div>
-            <div class="sidebar-section dropdown">
-                <button class="dropdown-toggle" type="button">Support/Help Center <span class="arrow">&#9662;</span></button>
-                <ul class="dropdown-menu">
-                    <li><a href="{{ url_for('submit_ticket') }}">Submit a Ticket</a></li>
-                </ul>
-            </div>
-            <button class="logout-btn" id="logout-btn">Logout</button>
+     <div id="user-sidebar" class="user-sidebar">
+    <div class="sidebar-content">
+        <button class="sidebar-close" id="sidebar-close" aria-label="Close sidebar">&times;</button>
+        <div class="sidebar-profile">
+            <img src="{{ url_for('static', filename='images/profile-icon.png') }}" alt="Profile Icon" class="profile-icon">
+            <div class="profile-name">User Name</div>
         </div>
+        <div class="sidebar-section dropdown">
+            <a href="{{ url_for('sidebar_html') }}#profile" class="dropdown-toggle">Profile</a>
+        </div>
+        <div class="sidebar-section dropdown">
+            <a href="{{ url_for('sidebar_html') }}#activity" class="dropdown-toggle">Activity Log/History</a>
+        </div>
+        <div class="sidebar-section dropdown">
+            <a href="{{ url_for('sidebar_html') }}#ticket" class="dropdown-toggle">Support/Help Center</a>
+        </div>
+        <button class="logout-btn" id="logout-btn">Logout</button>
     </div>
-    <div id="sidebar-overlay" class="sidebar-overlay"></div>
+</div>
+    <div id="sidebar-overlay" class="sidebar-overlay">
+    </div>
 
     <!-- Logout Modal -->
     <div id="logout-loading" class="logout-loading-overlay" style="display:none;">
