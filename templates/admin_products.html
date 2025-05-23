@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Products | Admin</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='admin_products.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <div class="admin-container">
+        <div class="sidebar">
+            <div class="logo">
+                <i class="fas fa-truck-monster"></i>
+                <h2>HexaHaul</h2>
+            </div>
+            <ul class="menu">
+                <li><a href="{{ url_for('admin_vehicles') }}"><i class="fas fa-car"></i> Vehicles</a></li>
+                <li><a href="{{ url_for('admin_employees') }}"><i class="fas fa-users"></i> Employees</a></li>
+                <li><a href="{{ url_for('admin_hexaboxes') }}"><i class="fas fa-box"></i> HexaBoxes</a></li>
+                <li><a href="{{ url_for('admin_utilities') }}"><i class="fas fa-tools"></i> Utilities</a></li>
+                <li><a href="{{ url_for('admin_employee_salary') }}"><i class="fas fa-money-bill-wave"></i> Salary</a></li>
+                <li class="active"><a href="{{ url_for('admin_products') }}"><i class="fas fa-box-open"></i> Products</a></li>
+                <li><a href="#"><i class="fas fa-chart-line"></i> Sales</a></li>
+                <li><a href="#"><i class="fas fa-user-friends"></i> Customers</a></li>
+            </ul>
+            <div class="logout">
+                <a href="{{ url_for('admin_login') }}"><i class="fas fa-sign-out-alt"></i> Logout</a>
+            </div>
+        </div>
+        
+        <div class="main-content">
+            <div class="header">
+                <h1><i class="fas fa-box-open"></i> Products Management</h1>
+                <div class="search-container">
+                    <input type="text" id="searchInput" placeholder="Search products...">
+                    <button class="search-btn"><i class="fas fa-search"></i></button>
+                </div>
+                <div class="user-info">
+                    <img src="{{ url_for('static', filename='images/profile-icon.png') }}" alt="Admin Profile">
+                    <span>{{ admin_name }}</span>
+                </div>
+            </div>
+            
+            <div class="actions">
+                <button class="add-product-btn"><i class="fas fa-plus"></i> Add New Product</button>
+                <div class="filter-container">
+                    <select id="departmentFilter">
+                        <option value="all">All Departments</option>
+                        {% for dept in departments %}
+                        <option value="{{ dept }}">{{ dept }}</option>
+                        {% endfor %}
+                    </select>
+                    <select id="categoryFilter">
+                        <option value="all">All Categories</option>
+                        {% for cat in categories %}
+                        <option value="{{ cat }}">{{ cat }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+            </div>
+            
+            <div class="stats-container">
+                <div class="stat-card">
+                    <i class="fas fa-boxes"></i>
+                    <h3>Total Products</h3>
+                    <p class="count">{{ total_count }}</p>
+                </div>
+                <div class="stat-card">
+                    <i class="fas fa-store"></i>
+                    <h3>Departments</h3>
+                    <p class="count">{{ department_count }}</p>
+                </div>
+                <div class="stat-card">
+                    <i class="fas fa-tags"></i>
+                    <h3>Categories</h3>
+                    <p class="count">{{ category_count }}</p>
+                </div>
+                <div class="stat-card">
+                    <i class="fas fa-shopping-cart"></i>
+                    <h3>Top Department</h3>
+                    <p class="count">{{ top_department }}</p>
+                </div>
+            </div>
+            
+            <div class="product-tabs">
+                <div class="tab active" data-category="all">All Products</div>
+                {% for dept in main_departments %}
+                <div class="tab" data-category="{{ dept }}">{{ dept }}</div>
+                {% endfor %}
+            </div>
+            
+            <div class="chart-section">
+                <div class="chart-container">
+                    <h3>Products by Department</h3>
+                    <canvas id="departmentChart"></canvas>
+                </div>
+                <div class="chart-container">
+                    <h3>Products by Category</h3>
+                    <canvas id="categoryChart"></canvas>
+                </div>
+            </div>
+            
+            <div class="products-table-container">
+                <table class="products-table">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Product Name</th>
+                            <th>Order Item ID</th>
+                            <th>Category ID</th>
+                            <th>Category Name</th>
+                            <th>Department ID</th>
+                            <th>Department Name</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="productsTableBody">
+                        {% for product in products %}
+                        <tr class="product-row" data-department="{{ product.department_name }}">
+                            <td>{{ product.id }}</td>
+                            <td>{{ product.product_name }}</td>
+                            <td>{{ product.order_item_id }}</td>
+                            <td>{{ product.product_category_id }}</td>
+                            <td>{{ product.product_category_name }}</td>
+                            <td>{{ product.department_id }}</td>
+                            <td>{{ product.department_name }}</td>
+                            <td>
+                                <button class="action-btn edit" data-id="{{ product.id }}"><i class="fas fa-edit"></i></button>
+                                <button class="action-btn delete" data-id="{{ product.id }}"><i class="fas fa-trash"></i></button>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Modal for adding/editing products -->
+    <div class="modal" id="productModal">
+        <div class="modal-content">
+            <span class="close-modal">&times;</span>
+            <h2 id="modalTitle">Add New Product</h2>
+            <form id="productForm" method="POST" action="{{ url_for('add_product') }}">
+                <input type="hidden" id="productId" name="id">
+                <div class="form-group">
+                    <label for="productName">Product Name:</label>
+                    <input type="text" id="productName" name="product_name" required>
+                </div>
+                <div class="form-group">
+                    <label for="orderItemId">Order Item ID:</label>
+                    <input type="text" id="orderItemId" name="order_item_id" required>
+                </div>
+                <div class="form-group">
+                    <label for="productCategoryId">Category ID:</label>
+                    <input type="number" id="productCategoryId" name="product_category_id" required>
+                </div>
+                <div class="form-group">
+                    <label for="productCategoryName">Category Name:</label>
+                    <input type="text" id="productCategoryName" name="product_category_name" required>
+                </div>
+                <div class="form-group">
+                    <label for="departmentId">Department ID:</label>
+                    <input type="number" id="departmentId" name="department_id" required>
+                </div>
+                <div class="form-group">
+                    <label for="departmentName">Department Name:</label>
+                    <input type="text" id="departmentName" name="department_name" required>
+                </div>
+                <div class="form-actions">
+                    <button type="submit" class="save-btn">Save Product</button>
+                    <button type="button" class="cancel-btn">Cancel</button>
+                </div>
+            </form>
+        </div>
+    </div>
+    
+    <!-- Confirmation Modal -->
+    <div class="modal" id="confirmationModal">
+        <div class="modal-content">
+            <h2>Confirm Deletion</h2>
+            <p>Are you sure you want to delete this product? This action cannot be undone.</p>
+            <div class="form-actions">
+                <form method="POST" action="{{ url_for('delete_product') }}" id="deleteProductForm">
+                    <input type="hidden" id="deleteProductId" name="id">
+                    <button type="submit" class="delete-confirm-btn">Delete</button>
+                    <button type="button" class="cancel-btn">Cancel</button>
+                </form>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        // Store product data for JavaScript use
+        const productData = {{ products_json|safe }};
+        const departmentStats = {{ department_stats|safe }};
+        const categoryStats = {{ category_stats|safe }};
+    </script>
+    <script src="{{ url_for('static', filename='admin_products.js') }}"></script>
+</body>
+</html>
