@@ -7,6 +7,7 @@ from models.hexaboxes_database import HexaBoxesDatabase, Order
 from models.user_login_database import init_db, load_users_from_csv, authenticate_user
 from models.admin_database import init_admin_db, get_db_session, Admin, get_default_admin
 from models.utilities_database import UtilitiesDatabase
+from models.salary_database import SalaryDatabase, EmployeeSalary
 from abc import ABC, abstractmethod
 from enum import Enum
 from flask_mail import Mail, Message
@@ -151,6 +152,7 @@ class HexaHaulApp:
         self.vehicle_db = VehicleDatabase()
         self.employee_db = EmployeeDatabase()
         self.hexabox_db = HexaBoxesDatabase()
+        self.salary_db = SalaryDatabase()
         
         print(f"Template folder: {template_dir}")
         print(f"Template folder exists: {os.path.exists(template_dir)}")
@@ -313,6 +315,21 @@ class HexaHaulApp:
         def admin_forgot_password_page():
             """Route for admin forgot password page"""
             return render_template("admin-forgot-password.html")
+            
+        @app.route("/admin/forgot-password/submit", methods=["POST"])
+        def admin_forgot_password_submit():
+            """Handle admin forgot password form submission"""
+            email = request.form.get("email")
+            if email:
+                # Generate OTP
+                otp = admin_password_reset_manager.generate_otp(email)
+                # Send OTP to admin email
+                admin_password_reset_manager.send_otp(email, otp)
+                # Redirect to verification code page
+                return redirect(url_for('admin_verification_code', email=email))
+            else:
+                flash("Please enter a valid email address", "error")
+                return redirect(url_for('admin_forgot_password_page'))
 
         @app.route("/admin/logout")
         def admin_logout():
@@ -930,6 +947,140 @@ class HexaHaulApp:
             vehicle_db.delete_vehicle(vehicle_id)
             
             return redirect(url_for('admin_vehicles'))
+
+        @app.route('/admin/employee-salary')
+        def admin_employee_salary():
+            # Check if admin is logged in
+            if 'admin_id' not in session:
+                flash('Please login to access the admin dashboard', 'error')
+                return redirect(url_for('admin_login'))
+            
+            session_db = self.salary_db.connect()
+            salaries = session_db.query(EmployeeSalary).all()
+            
+            # Calculate statistics
+            total_count = len(salaries)
+            
+            total_salary = sum(s.salary_yearly for s in salaries)
+            avg_salary = total_salary / total_count if total_count > 0 else 0
+            
+            total_bonus = sum(s.bonus_amount for s in salaries)
+            avg_bonus = total_bonus / total_count if total_count > 0 else 0
+            
+            high_performers = sum(1 for s in salaries if s.performance_rating >= 4)
+            
+            # Get list of all departments
+            departments = set()
+            for salary in salaries:
+                if salary.department:
+                    departments.add(salary.department)
+                else:
+                    departments.add('Other')
+            
+            # Get the top 5 most frequent departments for tabs
+            department_counts = {}
+            for salary in salaries:
+                dept = salary.department if salary.department else 'Other'
+                if dept in department_counts:
+                    department_counts[dept] += 1
+                else:
+                    department_counts[dept] = 1
+            
+            sorted_departments = sorted(department_counts.items(), key=lambda x: x[1], reverse=True)
+            main_departments = [dept for dept, count in sorted_departments[:5]]
+            
+            # Get department statistics
+            department_stats = self.salary_db.get_department_stats()
+            
+            # Get performance statistics
+            performance_stats = self.salary_db.get_performance_stats()
+            
+            # Convert data to JSON for JavaScript
+            salaries_json = json.dumps([s.to_dict() for s in salaries])
+            department_stats_json = json.dumps(department_stats)
+            performance_stats_json = json.dumps(performance_stats)
+            
+            self.salary_db.disconnect(session_db)
+            
+            # Get admin name from Flask session
+            admin_name = session.get('admin_name', 'Admin User')
+            
+            return render_template('admin_employee_salary.html', 
+                                  salaries=salaries,
+                                  departments=sorted(departments),
+                                  main_departments=main_departments,
+                                  total_count=total_count,
+                                  avg_salary=avg_salary,
+                                  avg_bonus=avg_bonus,
+                                  high_performers=high_performers,
+                                  department_stats=department_stats_json,
+                                  performance_stats=performance_stats_json,
+                                  salaries_json=salaries_json,
+                                  admin_name=admin_name)
+
+        @app.route('/admin/employee-salary/add', methods=['POST'])
+        def add_salary():
+            try:
+                data = {
+                    'employee_id': int(request.form.get('employee_id')),
+                    'job_title': request.form.get('job_title'),
+                    'department': request.form.get('department'),
+                    'salary_yearly': float(request.form.get('salary_yearly')),
+                    'salary_monthly': float(request.form.get('salary_monthly')),
+                    'hire_date': request.form.get('hire_date'),
+                    'years_of_experience': int(request.form.get('years_of_experience')),
+                    'years_of_experience_company': float(request.form.get('years_of_experience_company')),
+                    'performance_rating': int(request.form.get('performance_rating')),
+                    'bonus_amount': float(request.form.get('bonus_amount')),
+                    'total_compensation': float(request.form.get('total_compensation'))
+                }
+                
+                self.salary_db.add_salary(**data)
+                flash('Salary record added successfully', 'success')
+                
+            except Exception as e:
+                flash(f'Error adding salary record: {str(e)}', 'error')
+            
+            return redirect(url_for('admin_employee_salary'))
+
+        @app.route('/admin/employee-salary/update', methods=['POST'])
+        def update_salary():
+            try:
+                employee_id = int(request.form.get('employee_id'))
+                
+                data = {
+                    'job_title': request.form.get('job_title'),
+                    'department': request.form.get('department'),
+                    'salary_yearly': float(request.form.get('salary_yearly')),
+                    'salary_monthly': float(request.form.get('salary_monthly')),
+                    'hire_date': request.form.get('hire_date'),
+                    'years_of_experience': int(request.form.get('years_of_experience')),
+                    'years_of_experience_company': float(request.form.get('years_of_experience_company')),
+                    'performance_rating': int(request.form.get('performance_rating')),
+                    'bonus_amount': float(request.form.get('bonus_amount')),
+                    'total_compensation': float(request.form.get('total_compensation'))
+                }
+                
+                self.salary_db.update_salary(employee_id, **data)
+                flash('Salary record updated successfully', 'success')
+                
+            except Exception as e:
+                flash(f'Error updating salary record: {str(e)}', 'error')
+            
+            return redirect(url_for('admin_employee_salary'))
+
+        @app.route('/admin/employee-salary/delete', methods=['POST'])
+        def delete_salary():
+            try:
+                employee_id = int(request.form.get('employee_id'))
+                
+                self.salary_db.delete_salary(employee_id)
+                flash('Salary record deleted successfully', 'success')
+                
+            except Exception as e:
+                flash(f'Error deleting salary record: {str(e)}', 'error')
+            
+            return redirect(url_for('admin_employee_salary'))
 
     def register_blueprints(self):
         self.app.register_blueprint(analytics_bp)
