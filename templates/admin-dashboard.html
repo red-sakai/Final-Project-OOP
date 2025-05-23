@@ -99,7 +99,7 @@
                 <div class="card-arrow"><i class="fas fa-arrow-right"></i></div>
             </div>
             <!-- New dashboard options -->
-            <div class="dashboard-card hover-lift" onclick="location.href='#'" title="Manage salary information">
+            <div class="dashboard-card hover-lift" onclick="location.href='{{ url_for('admin_employee_salary') }}'" title="Manage salary information">
                 <div class="icon-bg pulse">
                     <img src="{{ url_for('static', filename='images/salary.png') }}" alt="Salary" onerror="this.src='https://img.icons8.com/ios-filled/50/ffffff/money-bag.png'">
                 </div>
