@@ -8,6 +8,7 @@ from models.user_login_database import init_db, load_users_from_csv, authenticat
 from models.admin_database import init_admin_db, get_db_session, Admin, get_default_admin
 from models.utilities_database import UtilitiesDatabase
 from models.salary_database import SalaryDatabase, EmployeeSalary
+from models.products_database import ProductsDatabase, Product
 from abc import ABC, abstractmethod
 from enum import Enum
 from flask_mail import Mail, Message
@@ -153,6 +154,7 @@ class HexaHaulApp:
         self.employee_db = EmployeeDatabase()
         self.hexabox_db = HexaBoxesDatabase()
         self.salary_db = SalaryDatabase()
+        self.product_db = ProductsDatabase()
         
         print(f"Template folder: {template_dir}")
         print(f"Template folder exists: {os.path.exists(template_dir)}")
@@ -1081,6 +1083,121 @@ class HexaHaulApp:
                 flash(f'Error deleting salary record: {str(e)}', 'error')
             
             return redirect(url_for('admin_employee_salary'))
+
+        @app.route('/admin/products')
+        def admin_products():
+            # Check if admin is logged in
+            if 'admin_id' not in session:
+                flash('Please login to access the admin dashboard', 'error')
+                return redirect(url_for('admin_login'))
+            
+            session_db = self.product_db.connect()
+            products = session_db.query(Product).all()
+            
+            total_count = len(products)
+            
+            # Get unique departments and categories
+            departments = set()
+            categories = set()
+            for product in products:
+                departments.add(product.department_name)
+                categories.add(product.product_category_name)
+            
+            department_count = len(departments)
+            category_count = len(categories)
+            
+            # Get department statistics
+            department_stats = self.product_db.get_department_stats()
+            
+            # Get category statistics
+            category_stats = self.product_db.get_category_stats()
+            
+            # Find top department
+            top_department = max(department_stats.items(), key=lambda x: x[1]['count'])[0] if department_stats else "None"
+            
+            # Get the top 5 most frequent departments for tabs
+            department_counts = {dept: department_stats[dept]['count'] for dept in department_stats}
+            sorted_departments = sorted(department_counts.items(), key=lambda x: x[1], reverse=True)
+            main_departments = [dept for dept, count in sorted_departments[:5]]
+            
+            # Convert data to JSON for JavaScript
+            products_json = json.dumps([p.to_dict() for p in products])
+            department_stats_json = json.dumps(department_stats)
+            category_stats_json = json.dumps(category_stats)
+            
+            self.product_db.disconnect(session_db)
+            
+            # Get admin name from Flask session
+            admin_name = session.get('admin_name', 'Admin User')
+            
+            return render_template('admin_products.html', 
+                                  products=products,
+                                  departments=sorted(departments),
+                                  categories=sorted(categories),
+                                  main_departments=main_departments,
+                                  total_count=total_count,
+                                  department_count=department_count,
+                                  category_count=category_count,
+                                  top_department=top_department,
+                                  department_stats=department_stats_json,
+                                  category_stats=category_stats_json,
+                                  products_json=products_json,
+                                  admin_name=admin_name)
+
+        @app.route('/admin/products/add', methods=['POST'])
+        def add_product():
+            try:
+                data = {
+                    'product_name': request.form.get('product_name'),
+                    'order_item_id': request.form.get('order_item_id'),
+                    'product_category_id': int(request.form.get('product_category_id')),
+                    'product_category_name': request.form.get('product_category_name'),
+                    'department_id': int(request.form.get('department_id')),
+                    'department_name': request.form.get('department_name')
+                }
+                
+                self.product_db.add_product(**data)
+                flash('Product added successfully', 'success')
+                
+            except Exception as e:
+                flash(f'Error adding product: {str(e)}', 'error')
+            
+            return redirect(url_for('admin_products'))
+
+        @app.route('/admin/products/update', methods=['POST'])
+        def update_product():
+            try:
+                product_id = int(request.form.get('id'))
+                
+                data = {
+                    'product_name': request.form.get('product_name'),
+                    'order_item_id': request.form.get('order_item_id'),
+                    'product_category_id': int(request.form.get('product_category_id')),
+                    'product_category_name': request.form.get('product_category_name'),
+                    'department_id': int(request.form.get('department_id')),
+                    'department_name': request.form.get('department_name')
+                }
+                
+                self.product_db.update_product(product_id, **data)
+                flash('Product updated successfully', 'success')
+                
+            except Exception as e:
+                flash(f'Error updating product: {str(e)}', 'error')
+            
+            return redirect(url_for('admin_products'))
+
+        @app.route('/admin/products/delete', methods=['POST'])
+        def delete_product():
+            try:
+                product_id = int(request.form.get('id'))
+                
+                self.product_db.delete_product(product_id)
+                flash('Product deleted successfully', 'success')
+                
+            except Exception as e:
+                flash(f'Error deleting product: {str(e)}', 'error')
+            
+            return redirect(url_for('admin_products'))
 
     def register_blueprints(self):
         self.app.register_blueprint(analytics_bp)
