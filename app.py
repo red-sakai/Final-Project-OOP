@@ -1199,6 +1199,123 @@ class HexaHaulApp:
             
             return redirect(url_for('admin_products'))
 
+        @app.route('/admin/sales')
+        def admin_sales():
+            # Check if admin is logged in
+            if 'admin_id' not in session:
+                flash('Please login to access the admin dashboard', 'error')
+                return redirect(url_for('admin_login'))
+            
+            from models.sales_database import SalesDatabase
+            
+            # Initialize sales database and get sales data
+            sales_db = SalesDatabase()
+            sales = sales_db.get_all_sales()
+            
+            # Get sales statistics
+            stats = sales_db.get_sales_stats()
+            
+            # Get admin name from Flask session
+            admin_name = session.get('admin_name', 'Admin User')
+            
+            return render_template('admin_sales.html',
+                                  sales=sales,
+                                  total_sales=stats['total_sales'],
+                                  total_revenue=stats['total_revenue'],
+                                  total_profit=stats['total_profit'],
+                                  admin_name=admin_name)
+        
+        @app.route('/admin/sales/add', methods=['POST'])
+        def admin_add_sale():
+            from models.sales_database import SalesDatabase
+            
+            try:
+                data = {
+                    'order_item_id': request.form.get('order_item_id'),
+                    'payment_type': request.form.get('payment_type'),
+                    'benefit_per_order': float(request.form.get('benefit_per_order', 0)),
+                    'sales_per_customer': float(request.form.get('sales_per_customer', 0)),
+                    'order_item_discount_rate': float(request.form.get('discount_rate', 0)) / 100,
+                    'order_item_product_price': float(request.form.get('product_price', 0)),
+                    'order_item_profit_ratio': float(request.form.get('profit_ratio', 0)),
+                    'order_item_quantity': int(request.form.get('quantity', 1)),
+                    'sales': float(request.form.get('product_price', 0)) * int(request.form.get('quantity', 1)),
+                    'order_item_total': float(request.form.get('product_price', 0)) * int(request.form.get('quantity', 1)) * (1 - float(request.form.get('discount_rate', 0)) / 100),
+                    'order_profit_per_order': float(request.form.get('product_price', 0)) * int(request.form.get('quantity', 1)) * (1 - float(request.form.get('discount_rate', 0)) / 100) * float(request.form.get('profit_ratio', 0)),
+                    'product_price': float(request.form.get('product_price', 0)),
+                    'order_date': request.form.get('order_date'),
+                }
+                
+                # Initialize sales database
+                sales_db = SalesDatabase()
+                
+                # Add new sale
+                sales_db.add_sale(**data)
+                
+                flash('Sale added successfully', 'success')
+                
+            except Exception as e:
+                flash(f'Error adding sale: {str(e)}', 'error')
+                
+            return redirect(url_for('admin_sales'))
+        
+        @app.route('/admin/sales/update', methods=['POST'])
+        def admin_update_sale():
+            from models.sales_database import SalesDatabase
+            
+            try:
+                sale_id = int(request.form.get('sale_id'))
+                
+                data = {
+                    'order_item_id': request.form.get('order_item_id'),
+                    'payment_type': request.form.get('payment_type'),
+                    'order_item_discount_rate': float(request.form.get('discount_rate', 0)) / 100,
+                    'order_item_product_price': float(request.form.get('product_price', 0)),
+                    'order_item_profit_ratio': float(request.form.get('profit_ratio', 0)),
+                    'order_item_quantity': int(request.form.get('quantity', 1)),
+                    'product_price': float(request.form.get('product_price', 0)),
+                    'order_date': request.form.get('order_date'),
+                }
+                
+                # Calculate derived fields
+                data['sales'] = data['order_item_product_price'] * data['order_item_quantity']
+                data['order_item_total'] = data['sales'] * (1 - data['order_item_discount_rate'])
+                data['order_profit_per_order'] = data['order_item_total'] * data['order_item_profit_ratio']
+                
+                # Initialize sales database
+                sales_db = SalesDatabase()
+                
+                # Update sale
+                sales_db.update_sale(sale_id, **data)
+                
+                flash('Sale updated successfully', 'success')
+                
+            except Exception as e:
+                flash(f'Error updating sale: {str(e)}', 'error')
+                
+            return redirect(url_for('admin_sales'))
+        
+        @app.route('/admin/sales/delete', methods=['POST'])
+        def admin_delete_sale():
+            from models.sales_database import SalesDatabase
+            
+            try:
+                sale_id = int(request.form.get('sale_id'))
+                
+                # Initialize sales database
+                sales_db = SalesDatabase()
+                
+                # Delete sale
+                sales_db.delete_sale(sale_id)
+                
+                flash('Sale deleted successfully', 'success')
+                
+            except Exception as e:
+                flash(f'Error deleting sale: {str(e)}', 'error')
+                
+            return redirect(url_for('admin_sales'))
+                
+        # ...existing code...
     def register_blueprints(self):
         self.app.register_blueprint(analytics_bp)
         self.app.register_blueprint(hexabot_bp)
