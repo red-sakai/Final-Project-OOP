@@ -11,6 +11,16 @@
     <body>
         <div class="user-signin-container">
             <div class="user-signin-panel">
+                <!-- Flashed messages go here -->
+                {% with messages = get_flashed_messages(with_categories=true) %}
+                  {% if messages %}
+                    {% for category, message in messages %}
+                      <div class="alert alert-{{ category }}">{{ message }}</div>
+                    {% endfor %}
+                  {% endif %}
+                {% endwith %}
+
+                <!-- Your signup form starts here -->
                 <div class="user-signin-header">
                     <p class="logistiq-text">LogistIQ</p>
                     <p class="logistiq-slogan">Delivering excellence. No matter the situation.</p>
