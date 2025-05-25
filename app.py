@@ -18,6 +18,8 @@ import os
 import re
 import json
 from services.hexabot import hexabot_bp
+import csv
+
 
 # Initialize DistilBERT QA pipeline
 qa_pipeline = pipeline("question-answering", model="distilbert-base-uncased-distilled-squad")
@@ -194,35 +196,50 @@ class HexaHaulApp:
         @app.route("/user-login", methods=["GET", "POST"])
         @app.route("/user-login.html", methods=["GET", "POST"])
         def user_login_html():
-            error = None
-            print(f"User login route accessed, method: {request.method}")
-            try:
-                if request.method == "POST":
-                    username = request.form["username"]
-                    password = request.form["password"]
-
-                    user = authenticate_user(username, password)
-
-                    if user:
-                        # Set user session data
-                        session["user_id"] = user.customer_id
-                        session["username"] = user.username
-                        # Format the full name properly
-                        session["user_name"] = f"{user.customer_fname} {user.customer_lname}"
-
-                        # Redirect to index.html instead of user-dashboard
-                        return redirect(url_for("index_html"))
-                    else:
-                        error = "Invalid username or password. Please try again."
+            if request.method == "POST":
+                username = request.form.get("username")
+                password = request.form.get("password")
                 
-                return render_template("user-login.html", error=error)
+                
+                user = authenticate_user_csv(username, password)
+                
+                if user:
+                
+                    session["username"] = user['Username']
+                    session["user_name"] = user['Full Name']
+                    session["user_email"] = user['Email Address']
+                    session["logged_in"] = True
+                    
+                    flash('Login successful!', 'success')
+                    return redirect(url_for('index_html'))  
+                else:
+                    flash('Invalid username or password', 'error')
+                    return render_template("user-login.html", error="Invalid username or password")
+            
+            return render_template("user-login.html")
+
+        def authenticate_user_csv(username, password):
+            """Authenticate user against CSV file"""
+    
+            
+            csv_path = os.path.join('hexahaul_db', 'hh_user-login.csv')
+            
+            try:
+                with open(csv_path, 'r', newline='', encoding='utf-8') as csvfile:
+                    reader = csv.DictReader(csvfile)
+                    for row in reader:
+                        if row['Username'] == username and row['Password'] == password:
+                            return row
+            except FileNotFoundError:
+                print(f"CSV file not found: {csv_path}")
             except Exception as e:
-                print(f"Error in user_login_html route: {e}")
-                return f"Error loading template: {str(e)}", 500
+                print(f"Error reading CSV: {e}")
+            
+            return None
 
         @app.route("/user-dashboard")
         def user_dashboard():
-            if "user_id" not in session:
+            if "logged_in" not in session or not session["logged_in"]:
                 return redirect(url_for("user_login_html"))
 
             return render_template("user-dashboard.html", user_name=session.get("user_name"))
@@ -348,6 +365,10 @@ class HexaHaulApp:
         def user_signup_html():
             print("User signup route accessed")
             return render_template("user-signup.html")
+
+        @app.route('/register', methods=['GET'])
+        def register_form():
+            return render_template('user-signup.html')
 
         @app.route("/forgot-password", methods=["GET", "POST"])
         def forgot_password():
@@ -1431,6 +1452,49 @@ class HexaHaulApp:
                 flash(f'Error deleting sale: {str(e)}', 'error')
                 
             return redirect(url_for('admin_sales'))
+
+        @app.route('/add-user', methods=['POST'])
+        def add_user():
+            full_name = request.form.get('full_name')
+            email = request.form.get('email')
+            username = request.form.get('username')
+            password = request.form.get('password')
+
+            print("DEBUG - Received data:", full_name, email, username, password)
+
+            # Validate all fields are provided
+            if not all([full_name, email, username, password]):
+                flash('All fields are required.', 'error')
+                return redirect(url_for('user_signup_html'))
+
+            new_user = [full_name, email, username, password]
+            
+            import os
+            csv_path = os.path.join('hexahaul_db', 'hh_user-login.csv')
+            
+            try:
+                # Ensure file ends with newline before appending
+                with open(csv_path, 'r+', encoding='utf-8') as f:
+                    f.seek(0, 2)  # Go to end of file
+                    if f.tell() > 0:  # If file is not empty
+                        f.seek(f.tell() - 1)  # Go back one character
+                        last_char = f.read(1)
+                        if last_char != '\n':  # If last character is not newline
+                            f.write('\n')  # Add newline
+        
+        # Now append the new user
+                with open(csv_path, 'a', newline='', encoding='utf-8') as csvfile:
+                    writer = csv.writer(csvfile)
+                    writer.writerow(new_user)
+                    
+                print("DEBUG - Successfully wrote to CSV")
+                flash('User added successfully!', 'success')
+                
+            except Exception as e:
+                print(f"ERROR writing to CSV: {e}")
+                flash(f'Error adding user: {str(e)}', 'error')
+                
+            return redirect(url_for('user_login_html'))
                 
         # ...existing code...
     def register_blueprints(self):
