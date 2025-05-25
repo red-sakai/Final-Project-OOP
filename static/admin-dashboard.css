@@ -63,6 +63,12 @@ body {
     color: var(--ultra-light);
 }
 
+.logo-icon {
+    width: 40px;
+    height: 40px;
+    object-fit: contain;
+}
+
 .logo h2 {
     font-size: 24px;
     font-weight: 700;
@@ -423,6 +429,10 @@ body {
     }
     .logo h2, .user-details, .logout a span {
         display: none;
+    }
+    .logo-icon {
+        width: 30px;
+        height: 30px;
     }
     .user-profile {
         justify-content: center;
