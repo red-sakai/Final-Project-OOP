@@ -1489,6 +1489,7 @@ class HexaHaulApp:
                     
                 print("DEBUG - Successfully wrote to CSV")
                 flash('User added successfully!', 'success')
+                return redirect(url_for('user_signup_html')) 
                 
             except Exception as e:
                 print(f"ERROR writing to CSV: {e}")
