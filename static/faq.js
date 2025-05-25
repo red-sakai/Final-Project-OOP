@@ -1,28 +1,5 @@
 document.addEventListener('DOMContentLoaded', function () {
-    // --- FAQ arrow logic (existing) ---
-    const arrows = document.querySelectorAll('.arrow img');
-    const arrowDivs = document.querySelectorAll('.arrow');
-    const cardAnswers = document.querySelectorAll('.card_answer');
-
-    arrows.forEach((arrow, index) => {
-        arrow.addEventListener('click', function () {
-            const answer = cardAnswers[index];
-            const arrowDiv = arrowDivs[index];
-            if (answer) {
-                const isActive = answer.classList.contains('active');
-                // Remove hidden class always, only toggle active for animation
-                answer.classList.remove('hidden');
-                if (isActive) {
-                    answer.classList.remove('active');
-                } else {
-                    answer.classList.add('active');
-                }
-                arrowDiv.classList.toggle('rotated');
-            }
-        });
-    });
-
-    // --- Chatbox logic (copy from services.js) ---
+        // --- Chatbox logic (copy from services.js) ---
     const sendBtn = document.getElementById("send-btn");
     const chatInput = document.getElementById("chat-input");
     const chatBody = document.getElementById("chatbox-body");
