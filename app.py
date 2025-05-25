@@ -1224,6 +1224,123 @@ class HexaHaulApp:
                                   total_revenue=stats['total_revenue'],
                                   total_profit=stats['total_profit'],
                                   admin_name=admin_name)
+                                  
+        @app.route('/admin/customers')
+        def admin_customers():
+            # Check if admin is logged in
+            if 'admin_id' not in session:
+                flash('Please login to access the admin dashboard', 'error')
+                return redirect(url_for('admin_login'))
+            
+            from models.customers_database import CustomerDatabase
+            
+            # Initialize customer database and get customer data
+            customer_db = CustomerDatabase()
+            customers = customer_db.get_all_customers()
+            
+            # Get customer statistics
+            stats = customer_db.get_customer_stats()
+            
+            # Get unique cities for the filter
+            cities = list(set(customer.city for customer in customers if customer.city))
+            
+            # Get admin name from Flask session
+            admin_name = session.get('admin_name', 'Admin User')
+            
+            # Convert customer data to JSON for JavaScript use
+            customers_json = json.dumps([customer.to_dict() for customer in customers])
+            
+            return render_template('admin_customers.html',
+                                  customers=customers,
+                                  customers_json=customers_json,
+                                  total_count=stats['total_count'],
+                                  corporate_count=stats['corporate_count'],
+                                  consumer_count=stats['consumer_count'],
+                                  home_office_count=stats['home_office_count'],
+                                  top_city=stats['top_city'],
+                                  cities=cities,
+                                  admin_name=admin_name)
+
+        @app.route('/admin/customers/add', methods=['POST'])
+        def admin_add_customer():
+            from models.customers_database import CustomerDatabase
+            
+            try:
+                # Generate a unique customer ID (in a real app, this would be more systematic)
+                import random
+                customer_id = f"CUST-{random.randint(10000, 99999)}"
+                
+                data = {
+                    'customer_id': customer_id,
+                    'order_item_id': request.form.get('order_item_id'),
+                    'first_name': request.form.get('first_name'),
+                    'last_name': request.form.get('last_name'),
+                    'city': request.form.get('city'),
+                    'country': request.form.get('country'),
+                    'segment': request.form.get('segment')
+                }
+                
+                # Initialize customer database
+                customer_db = CustomerDatabase()
+                
+                # Add new customer
+                customer_db.add_customer(**data)
+                
+                flash('Customer added successfully', 'success')
+                
+            except Exception as e:
+                flash(f'Error adding customer: {str(e)}', 'error')
+                
+            return redirect(url_for('admin_customers'))
+        
+        @app.route('/admin/customers/update', methods=['POST'])
+        def admin_update_customer():
+            from models.customers_database import CustomerDatabase
+            
+            try:
+                customer_id = request.form.get('customer_id')
+                
+                data = {
+                    'order_item_id': request.form.get('order_item_id'),
+                    'first_name': request.form.get('first_name'),
+                    'last_name': request.form.get('last_name'),
+                    'city': request.form.get('city'),
+                    'country': request.form.get('country'),
+                    'segment': request.form.get('segment')
+                }
+                
+                # Initialize customer database
+                customer_db = CustomerDatabase()
+                
+                # Update customer
+                customer_db.update_customer(customer_id, **data)
+                
+                flash('Customer updated successfully', 'success')
+                
+            except Exception as e:
+                flash(f'Error updating customer: {str(e)}', 'error')
+                
+            return redirect(url_for('admin_customers'))
+        
+        @app.route('/admin/customers/delete', methods=['POST'])
+        def admin_delete_customer():
+            from models.customers_database import CustomerDatabase
+            
+            try:
+                customer_id = request.form.get('customer_id')
+                
+                # Initialize customer database
+                customer_db = CustomerDatabase()
+                
+                # Delete customer
+                customer_db.delete_customer(customer_id)
+                
+                flash('Customer deleted successfully', 'success')
+                
+            except Exception as e:
+                flash(f'Error deleting customer: {str(e)}', 'error')
+                
+            return redirect(url_for('admin_customers'))
         
         @app.route('/admin/sales/add', methods=['POST'])
         def admin_add_sale():
