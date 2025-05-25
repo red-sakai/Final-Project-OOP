@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>HexaHaul - Sales Management</title>
+    <title>Sales | Admin</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     <link rel="stylesheet" href="{{ url_for('static', filename='admin_sales.css') }}">
 </head>
@@ -102,7 +102,6 @@
                             <th>Payment Type</th>
                             <th>Order Date</th>
                             <th>Product Price</th>
-                            <th>Discount Rate</th>
                             <th>Quantity</th>
                             <th>Total</th>
                             <th>Profit</th>
@@ -118,7 +117,6 @@
                             <td>{{ sale.payment_type }}</td>
                             <td>{{ sale.order_date.strftime('%Y-%m-%d') }}</td>
                             <td>${{ '{:,.2f}'.format(sale.product_price) }}</td>
-                            <td>{{ '{:.1f}'.format(sale.order_item_discount_rate * 100) }}%</td>
                             <td>{{ sale.order_item_quantity }}</td>
                             <td>${{ '{:,.2f}'.format(sale.order_item_total) }}</td>
                             <td>${{ '{:,.2f}'.format(sale.order_profit_per_order) }}</td>
