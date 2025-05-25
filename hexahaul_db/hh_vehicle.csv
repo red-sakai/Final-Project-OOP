@@ -1,0 +1,41 @@
+"Employee Id",unit_name,unit_brand,year,km_driven,min_weight,max_weight
+201,"Honda Civic",Honda,2016,63463,25,350
+202,"Yamaha Mio Sporty",Yamaha,2011,164606,0.1,20
+203,"Yamaha NMAX",Yamaha,2024,85484,25,80
+204,"Toyota Vios",Toyota,2018,84126,20,300
+205,"Toyota Vios",Toyota,2016,89033,20,300
+206,"Honda Click 125i",Honda,2016,152252,0.1,25
+207,"Honda Click 125i",Honda,2018,9142,0.1,25
+208,"Yamaha Mio Sporty",Yamaha,2011,171637,0.1,20
+209,"Honda Click 125i",Honda,2009,195747,0.1,25
+210,"Honda Click 125i",Honda,2020,41700,0.1,25
+211,"Honda Civic",Honda,2008,194958,25,350
+212,"MG 5",SAIC,2019,20036,25,350
+213,"Toyota Vios",Toyota,2015,84817,20,300
+214,"Yamaha Mio Sporty",Yamaha,2010,156259,0.1,20
+215,"Yamaha Mio Sporty",Yamaha,2013,154282,0.1,20
+216,"Honda Civic",Honda,2014,190389,25,350
+217,"Honda Click 125i",Honda,2014,131976,0.1,25
+218,"Honda Click 125i",Honda,2016,156245,0.1,25
+219,"Toyota Vios",Toyota,2022,58374,20,300
+220,"Toyota Vios",Toyota,2023,189369,20,300
+221,"Honda Click 125i",Honda,2016,62991,0.1,25
+222,"Toyota Vios",Toyota,2016,192182,20,300
+223,"Yamaha NMAX",Yamaha,2007,175346,25,80
+224,"Honda Civic",Honda,2022,2370,25,350
+225,"Yamaha Mio Sporty",Yamaha,2007,194306,0.1,20
+226,"Yamaha Mio Sporty",Yamaha,2018,56233,0.1,20
+227,"Yamaha NMAX",Yamaha,2024,64226,25,80
+228,"Honda Click 125i",Honda,2023,110436,0.1,25
+229,"Toyota Vios",Toyota,2021,31281,20,300
+230,"Honda Civic",Honda,2019,155815,25,350
+231,"Honda Civic",Honda,2011,46693,25,350
+232,"Yamaha Mio Sporty",Yamaha,2021,27082,0.1,20
+233,"Honda Civic",Honda,2010,34565,25,350
+234,"Yamaha NMAX",Yamaha,2021,123187,25,80
+235,"Mitsubishi Fuso Fighter",Mitsubishi,2020,16768,3000,7000
+236,"Hino 700 Series Dump Truck",Hino,2022,56336,7000,15000
+237,"Isuzu ELF NHR 55",Isuzu,2009,151604,350,3000
+238,"Mitsubishi Fuso Fighter",Mitsubishi,2008,12040,3000,7000
+239,"Hino 700 Series Dump Truck",Hino,2022,93217,7000,15000
+240,"Isuzu ELF NHR 55",Isuzu,2015,85225,350,3000

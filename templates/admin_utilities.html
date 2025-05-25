@@ -1,10 +1,307 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Utilities | Admin</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='admin_utilities.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body>
-    <h1>Utilities Management</h1>
-    <p>This is the Utilities admin page.</p>
+    <div class="admin-container">
+        <div class="sidebar">
+            <div class="logo">
+                <img src="{{ url_for('static', filename='images/HexaHaul icon transparent.png') }}" alt="HexaHaul Logo" class="logo-icon">
+                <h2>HexaHaul</h2>
+            </div>
+            <ul class="menu">
+                <li><a href="{{ url_for('admin_vehicles') }}"><i class="fas fa-car"></i> Vehicles</a></li>
+                <li><a href="{{ url_for('admin_employees') }}"><i class="fas fa-users"></i> Employees</a></li>
+                <li><a href="{{ url_for('admin_hexaboxes') }}"><i class="fas fa-box"></i> HexaBoxes</a></li>
+                <li class="active"><a href="{{ url_for('admin_utilities') }}"><i class="fas fa-tools"></i> Utilities</a></li>
+                <li><a href="{{ url_for('admin_employee_salary') }}"><i class="fas fa-money-bill-wave"></i> Salary</a></li>
+                <li><a href="{{ url_for('admin_products') }}"><i class="fas fa-box-open"></i> Products</a></li>
+                <li><a href="{{ url_for('admin_sales') }}"><i class="fas fa-chart-line"></i> Sales</a></li>
+                <li><a href="{{ url_for('admin_customers') }}"><i class="fas fa-user-friends"></i> Customers</a></li>
+            </ul>
+            <div class="logout">
+                <a href="{{ url_for('admin_login') }}"><i class="fas fa-sign-out-alt"></i> Logout</a>
+            </div>
+        </div>
+        
+        <div class="main-content">
+            <div class="header">
+                <h1><i class="fas fa-tools"></i> Utilities Dashboard</h1>
+                <div class="search-container">
+                    <input type="text" id="searchInput" placeholder="Search utilities...">
+                    <button class="search-btn"><i class="fas fa-search"></i></button>
+                </div>
+                <div class="user-info">
+                    <img src="{{ url_for('static', filename='images/profile-icon.png') }}" alt="Admin Profile">
+                    <span>{{ admin_name }}</span>
+                </div>
+            </div>
+            
+            <div class="actions">
+                <button class="generate-report-btn"><i class="fas fa-file-export"></i> Generate Report</button>
+                <div class="filter-container">
+                    <select id="timeRangeFilter">
+                        <option value="week">Last Week</option>
+                        <option value="month" selected>Last Month</option>
+                        <option value="quarter">Last Quarter</option>
+                        <option value="year">Last Year</option>
+                    </select>
+                    <select id="dataTypeFilter">
+                        <option value="all">All Data</option>
+                        <option value="sales">Sales</option>
+                        <option value="vehicles">Vehicles</option>
+                        <option value="employees">Employees</option>
+                    </select>
+                </div>
+            </div>
+            
+            <div class="stats-container">
+                <div class="stat-card">
+                    <i class="fas fa-peso-sign"></i>
+                    <h3>Total Revenue</h3>
+                    <p class="count">₱{{ stats.total_revenue|number_format }}</p>
+                </div>
+                <div class="stat-card">
+                    <i class="fas fa-shipping-fast"></i>
+                    <h3>Deliveries</h3>
+                    <p class="count">{{ stats.deliveries|number_format }}</p>
+                </div>
+                <div class="stat-card">
+                    <i class="fas fa-user-friends"></i>
+                    <h3>Customers</h3>
+                    <p class="count">{{ stats.customers|number_format }}</p>
+                </div>
+                <div class="stat-card">
+                    <i class="fas fa-box"></i>
+                    <h3>HexaBoxes</h3>
+                    <p class="count">{{ stats.hexaboxes|number_format }}</p>
+                </div>
+            </div>
+            
+            <div class="chart-tabs">
+                <div class="tab active" data-chart="sales">Sales Analysis</div>
+                <div class="tab" data-chart="vehicles">Vehicle Status</div>
+                <div class="tab" data-chart="employees">Employee Performance</div>
+                <div class="tab" data-chart="customers">Customer Growth</div>
+            </div>
+            
+            <div class="charts-container">
+                <div class="chart-wrapper active" id="salesChartWrapper">
+                    <div class="chart-header">
+                        <h2>Sales Analysis</h2>
+                        <div class="chart-controls">
+                            <button class="chart-type-btn active" data-type="line">Line</button>
+                            <button class="chart-type-btn" data-type="bar">Bar</button>
+                        </div>
+                    </div>
+                    <div class="chart-container">
+                        <canvas id="salesChart"></canvas>
+                    </div>
+                </div>
+                
+                <div class="chart-wrapper" id="vehiclesChartWrapper">
+                    <div class="chart-header">
+                        <h2>Vehicle Status</h2>
+                        <div class="chart-controls">
+                            <button class="chart-type-btn active" data-type="pie">Pie</button>
+                            <button class="chart-type-btn" data-type="doughnut">Doughnut</button>
+                        </div>
+                    </div>
+                    <div class="chart-container">
+                        <canvas id="vehiclesChart"></canvas>
+                    </div>
+                </div>
+                
+                <div class="chart-wrapper" id="employeesChartWrapper">
+                    <div class="chart-header">
+                        <h2>Employee Performance</h2>
+                        <div class="chart-controls">
+                            <button class="chart-type-btn active" data-type="bar">Bar</button>
+                            <button class="chart-type-btn" data-type="radar">Radar</button>
+                        </div>
+                    </div>
+                    <div class="chart-container">
+                        <canvas id="employeesChart"></canvas>
+                    </div>
+                </div>
+                
+                <div class="chart-wrapper" id="customersChartWrapper">
+                    <div class="chart-header">
+                        <h2>Customer Growth</h2>
+                        <div class="chart-controls">
+                            <button class="chart-type-btn active" data-type="line">Line</button>
+                            <button class="chart-type-btn" data-type="bar">Bar</button>
+                        </div>
+                    </div>
+                    <div class="chart-container">
+                        <canvas id="customersChart"></canvas>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="data-tables-section">
+                <h2><i class="fas fa-table"></i> Detailed Statistics</h2>
+                
+                <div class="tables-tabs">
+                    <div class="tab active" data-table="salesTable">Sales Data</div>
+                    <div class="tab" data-table="vehiclesTable">Vehicle Data</div>
+                    <div class="tab" data-table="employeesTable">Employee Data</div>
+                </div>
+                
+                <div class="data-table-container active" id="salesTableContainer">
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>Date</th>
+                                <th>Product</th>
+                                <th>Category</th>
+                                <th>Quantity</th>
+                                <th>Revenue</th>
+                                <th>Cost</th>
+                                <th>Profit</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for sale in sales_detail %}
+                            <tr>
+                                <td>{{ sale.date }}</td>
+                                <td>{{ sale.product }}</td>
+                                <td>{{ sale.category }}</td>
+                                <td>{{ sale.quantity }}</td>
+                                <td>${{ sale.revenue|number_format }}</td>
+                                <td>${{ sale.cost|number_format }}</td>
+                                <td>${{ sale.profit|number_format }}</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+                
+                <div class="data-table-container" id="vehiclesTableContainer">
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Type</th>
+                                <th>Brand</th>
+                                <th>Model</th>
+                                <th>Status</th>
+                                <th>Distance (km)</th>
+                                <th>Efficiency</th>
+                                <th>Last Maintenance</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for vehicle in vehicle_detail %}
+                            <tr>
+                                <td>{{ vehicle.id }}</td>
+                                <td>{{ vehicle.type }}</td>
+                                <td>{{ vehicle.brand }}</td>
+                                <td>{{ vehicle.model }}</td>
+                                <td><span class="status {{ vehicle.status|lower }}">{{ vehicle.status }}</span></td>
+                                <td>{{ vehicle.distance|number_format }}</td>
+                                <td>{{ vehicle.efficiency }}</td>
+                                <td>{{ vehicle.last_maintenance }}</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+                
+                <div class="data-table-container" id="employeesTableContainer">
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Name</th>
+                                <th>Position</th>
+                                <th>Department</th>
+                                <th>Performance</th>
+                                <th>Tasks Completed</th>
+                                <th>Efficiency</th>
+                                <th>Status</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for employee in employee_detail %}
+                            <tr>
+                                <td>{{ employee.id }}</td>
+                                <td>{{ employee.name }}</td>
+                                <td>{{ employee.position }}</td>
+                                <td>{{ employee.department }}</td>
+                                <td>{{ employee.performance }}</td>
+                                <td>{{ employee.tasks_completed }}</td>
+                                <td>{{ employee.efficiency }}</td>
+                                <td>{{ employee.status }}</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Modal for exporting reports -->
+    <div class="modal" id="reportModal">
+        <div class="modal-content">
+            <span class="close-modal">&times;</span>
+            <h2>Generate Report</h2>
+            <form id="reportForm">
+                <div class="form-group">
+                    <label for="reportType">Report Type:</label>
+                    <select id="reportType" name="reportType" required>
+                        <option value="sales">Sales Report</option>
+                        <option value="vehicles">Vehicle Status Report</option>
+                        <option value="employees">Employee Performance Report</option>
+                        <option value="customers">Customer Growth Report</option>
+                        <option value="comprehensive">Comprehensive Report</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="reportTimeRange">Time Range:</label>
+                    <select id="reportTimeRange" name="reportTimeRange" required>
+                        <option value="week">Last Week</option>
+                        <option value="month" selected>Last Month</option>
+                        <option value="quarter">Last Quarter</option>
+                        <option value="year">Last Year</option>
+                        <option value="custom">Custom Range</option>
+                    </select>
+                </div>
+                <div class="form-group date-range" style="display: none;">
+                    <label for="startDate">Start Date:</label>
+                    <input type="date" id="startDate" name="startDate">
+                </div>
+                <div class="form-group date-range" style="display: none;">
+                    <label for="endDate">End Date:</label>
+                    <input type="date" id="endDate" name="endDate">
+                </div>
+                <div class="form-group">
+                    <label for="reportFormat">Format:</label>
+                    <select id="reportFormat" name="reportFormat" required>
+                        <option value="pdf">PDF</option>
+                        <option value="excel">Excel</option>
+                        <option value="csv">CSV</option>
+                    </select>
+                </div>
+                <div class="form-actions">
+                    <button type="submit" class="save-btn">Generate</button>
+                    <button type="button" class="cancel-btn">Cancel</button>
+                </div>
+            </form>
+        </div>
+    </div>
+    
+    <!-- Initialize chart data from backend -->
+    <script>
+        const initialChartData = {{ chart_data|safe }};
+    </script>
+    <script src="{{ url_for('static', filename='admin_utilities.js') }}"></script>
 </body>
 </html>

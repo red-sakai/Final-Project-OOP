@@ -43,64 +43,41 @@
         </nav>
 
         <!-- User Sidebar -->
-        <div id="user-sidebar" class="user-sidebar">
-            <div class="sidebar-content">
-                <button class="sidebar-close" id="sidebar-close" aria-label="Close sidebar">&times;</button>
-                <div class="sidebar-profile">
-                    <img src="{{ url_for('static', filename='images/profile-icon.png') }}" alt="Profile Icon" class="profile-icon">
-                    <div class="profile-name">User Name</div>
-                </div>
-                <div class="sidebar-section dropdown">
-                    <button class="dropdown-toggle" type="button">Profile <span class="arrow">&#9662;</span></button>
-                    <ul class="dropdown-menu">
-                        <li><a href="{{ url_for('personal_info') }}">View/Edit Personal Info</a></li>
-                        <li><a href="{{ url_for('change_password') }}">Change Password</a></li>
-                        <li><a href="{{ url_for('update_email') }}">Update Email</a></li>
-                    </ul>
-                </div>
-                <div class="sidebar-section dropdown">
-                    <button class="dropdown-toggle" type="button">Settings <span class="arrow">&#9662;</span></button>
-                    <ul class="dropdown-menu">
-                        <li><a href="{{ url_for('privacy_settings') }}">Privacy Settings</a></li>
-                        <li><a href="{{ url_for('language_region') }}">Language and Region</a></li>
-                        <li class="theme-switch-row">
-                            <span>Theme:</span>
-                            <label class="theme-switch">
-                                <input type="checkbox" id="theme-toggle">
-                                <span class="slider"></span>
-                                <span class="theme-label" id="theme-label">Light</span>
-                            </label>
-                        </li>
-                    </ul>
-                </div>
-                <div class="sidebar-section dropdown">
-                    <button class="dropdown-toggle" type="button">Activity Log/History <span class="arrow">&#9662;</span></button>
-                    <ul class="dropdown-menu">
-                        <li><a href="{{ url_for('recent_logins') }}">Recent Logins</a></li>
-                        <li><a href="{{ url_for('recent_bookings') }}">Recent Bookings</a></li>
-                    </ul>
-                </div>
-                <div class="sidebar-section dropdown">
-                    <button class="dropdown-toggle" type="button">Support/Help Center <span class="arrow">&#9662;</span></button>
-                    <ul class="dropdown-menu">
-                        <li><a href="{{ url_for('submit_ticket') }}">Submit a Ticket</a></li>
-                    </ul>
-                </div>
-                <button class="logout-btn" id="logout-btn">Logout</button>
+       <div id="user-sidebar" class="user-sidebar">
+    <div class="sidebar-content">
+        <button class="sidebar-close" id="sidebar-close" aria-label="Close sidebar">&times;</button>
+        <div class="sidebar-profile">
+            <img src="{{ url_for('static', filename='images/profile-icon.png') }}" alt="Profile Icon" class="profile-icon">
+            <div class="profile-name">{{ session.get('user_name', 'User Name') }}</div>
+        </div>
+        <div class="sidebar-section dropdown">
+            <a href="{{ url_for('sidebar_html') }}#profile" class="dropdown-toggle">Profile</a>
+        </div>
+        <div class="sidebar-section dropdown">
+            <a href="{{ url_for('sidebar_html') }}#activity" class="dropdown-toggle">Activity Log/History</a>
+        </div>
+        <div class="sidebar-section dropdown">
+            <a href="{{ url_for('sidebar_html') }}#ticket" class="dropdown-toggle">Support/Help Center</a>
+        </div>
+        <button class="logout-btn" id="logout-btn">Logout</button>
+    </div>
+</div>
+    <div id="sidebar-overlay" class="sidebar-overlay">
+    </div>
+
+     <!-- Logout Modal -->
+     <div id="logout-loading" class="logout-loading-overlay" style="display:none;">
+        <div class="logout-loading-content">
+            <div class="truck-animation">
+                <img src="{{ url_for('static', filename='images/moving-truck.gif') }}" alt="Moving Truck" class="truck-img">
+                <div class="road"></div>
+            </div>
+            <div class="logout-message">
+                <h2>You've reached your last stop. Logged out!</h2>
             </div>
         </div>
-        <div id="sidebar-overlay" class="sidebar-overlay"></div>
-        <div id="logout-loading" class="logout-loading-overlay" style="display:none;">
-            <div class="logout-loading-content">
-                <div class="truck-animation">
-                    <img src="{{ url_for('static', filename='images/moving-truck.gif') }}" alt="Moving Truck" class="truck-img">
-                    <div class="road"></div>
-                </div>
-                <div class="logout-message">
-                    <h2>You've reached your last stop. Logged out!</h2>
-                </div>
-            </div>
-        </div>
+    </div>
+    </div>
 
         <!--Slogan with Media-->
         <div class="slogan-about">
@@ -297,7 +274,50 @@
             };
         });
         </script>
+        <script>
+document.addEventListener("DOMContentLoaded", function() {
+    function showSectionFromHash() {
+        document.querySelectorAll('.content-section').forEach(sec => sec.classList.remove('active'));
+        let section = window.location.hash.replace('#','') || 'profile';
+        let sectionDiv = document.getElementById(section);
+        if(sectionDiv) sectionDiv.classList.add('active');
+    }
+    showSectionFromHash();
+    window.addEventListener('hashchange', showSectionFromHash);
+});
+</script>
         <script src="{{ url_for('static', filename='ticket-modal.js') }}"></script>
         <script src="{{ url_for('static', filename='index.js') }}"></script>
+        <script>
+function activateSection(section) {
+    // Remove 'active' from all nav links and sections
+    document.querySelectorAll('.sidebar-nav a').forEach(l => l.classList.remove('active'));
+    document.querySelectorAll('.content-section').forEach(sec => sec.classList.remove('active'));
+
+    // Activate the correct nav link and section
+    const navLink = document.querySelector('.sidebar-nav a[data-section="' + section + '"]');
+    const sectionDiv = document.getElementById(section);
+    if (navLink) navLink.classList.add('active');
+    if (sectionDiv) sectionDiv.classList.add('active');
+}
+
+// On nav click
+document.querySelectorAll('.sidebar-nav a').forEach(link => {
+    link.addEventListener('click', function(e) {
+        e.preventDefault();
+        const section = this.dataset.section;
+        window.location.hash = section; // Update the URL hash
+        activateSection(section);
+    });
+});
+
+// On page load and hash change
+function handleHash() {
+    let section = window.location.hash.replace('#','') || 'profile';
+    activateSection(section);
+}
+window.addEventListener('DOMContentLoaded', handleHash);
+window.addEventListener('hashchange', handleHash);
+</script>
     </body>
 </html>

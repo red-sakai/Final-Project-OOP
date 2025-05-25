@@ -4,31 +4,62 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <title>LogistIQ | HexaHaul</title>
-        <link rel="stylesheet" href="user-signup.css" />
-        <link rel="icon" href="/images/screentake-removebg-preview.png" />
+        <link rel="stylesheet" href="{{ url_for('static', filename='user-signup.css') }}" />
+        <link rel="icon" href="{{ url_for('static', filename='images/screentake-removebg-preview.png') }}" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
     </head>
     <body>
-        <!--User Login-->
         <div class="user-signin-container">
             <div class="user-signin-panel">
+                <!-- Flashed messages go here -->
+                {% with messages = get_flashed_messages(with_categories=true) %}
+                  {% if messages %}
+                    {% for category, message in messages %}
+                      <div class="alert alert-{{ category }}">{{ message }}</div>
+                    {% endfor %}
+                  {% endif %}
+                {% endwith %}
+
+                <!-- Your signup form starts here -->
                 <div class="user-signin-header">
                     <p class="logistiq-text">LogistIQ</p>
                     <p class="logistiq-slogan">Delivering excellence. No matter the situation.</p>
-                    <center><img src="{{ url_for('static', filename='images/HexaHaul logo.png') }}" alt="Logo" /></center>
+                    <div class="logo-container">
+                        <img src="{{ url_for('static', filename='images/HexaHaul logo.png') }}" alt="Logo" class="logo animate-fade-in"/>
+                    </div>
                 </div>
-                <form action="index.html" method="post" class="user-signin-form">
-                    <input type="text" placeholder="Name" class="user-username-input" required />
-                    <input type="password" placeholder="Username" class="user-password-input" required />
-                    <input type="text" placeholder="Password" class="user-username-input" required />
-                    <input type="password" placeholder="Confirm Password" class="user-password-input" required />
+                <form action="/add-user" method="post" class="user-signin-form animate-slide-up">
+                    <div class="input-group">
+                        <i class="fas fa-user input-icon"></i>
+                        <input type="text" name="full_name" placeholder="Full Name" class="user-input" required />
+                    </div>
+                    <div class="input-group">
+                        <i class="fas fa-envelope input-icon"></i>
+                        <input type="email" name="email" placeholder="Email Address" class="user-input" required />
+                    </div>
+                    <div class="input-group">
+                        <i class="fas fa-user-circle input-icon"></i>
+                        <input type="text" name="username" placeholder="Username" class="user-input" required />
+                    </div>
+                    <div class="input-group">
+                        <i class="fas fa-lock input-icon"></i>
+                        <input type="password" name="password" placeholder="Password" class="user-input" required />
+                    </div>
+                    <div class="input-group">
+                        <i class="fas fa-lock input-icon"></i>
+                        <input type="password" placeholder="Confirm Password" class="user-input" required />
+                    </div>
                     <button type="submit" class="signin-button">Sign Up</button>
                 </form>
-                <p class="user-signin">Already have an account? <a href="user-login.html">Sign In</a></p>
+                <p class="user-signin animate-fade-in">Already have an account? <a href="user-login.html">Sign In</a></p>
             </div> 
             <div class="user-signin-media">
+                <div class="media-content">
+                    <h2 class="animate-slide-right">Join LogistIQ</h2>
+                    <p class="animate-slide-right-delay">Take control of your logistics with our powerful platform</p>
+                </div>
             </div>
-         <div class="card-container">
-            <div class="card">
         </div>
+        <script src="{{ url_for('static', filename='js/signup-animations.js') }}"></script>
     </body> 
 </html>
