@@ -1,13 +1,16 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
 
 :root {
-    --primary-color: #4361ee;
-    --secondary-color: #3f37c9;
+    --primary-color: #03335e;
+    --secondary-color: #095190;
+    --tertiary-color: #1579c0;
+    --quaternary-color: #598cb8;
+    --quinary-color: #b2dbf8;
     --success-color: #4caf50;
     --danger-color: #f44336;
     --warning-color: #ff9800;
-    --info-color: #2196f3;
-    --light-color: #f8f9fa;
+    --info-color: #1579c0; /* Updated to match tertiary-color */
+    --light-color: #fcfcfc;
     --dark-color: #343a40;
     --text-color: #333;
     --sidebar-width: 250px;
@@ -56,9 +59,11 @@ body {
     border-bottom: 1px solid rgba(255, 255, 255, 0.1);
 }
 
-.sidebar .logo i {
-    font-size: 24px;
+.sidebar .logo img.logo-icon {
+    width: 32px;
+    height: 32px;
     margin-right: 10px;
+    object-fit: contain; /* Ensures the image maintains its aspect ratio */
 }
 
 .sidebar .logo h2 {
@@ -188,7 +193,7 @@ body {
 }
 
 .search-btn:hover {
-    background: var(--secondary-color);
+    background: var(--tertiary-color);
 }
 
 .user-info {
@@ -228,7 +233,7 @@ body {
 }
 
 .add-package-btn:hover {
-    background: var(--secondary-color);
+    background: var(--tertiary-color);
     transform: translateY(-2px);
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
@@ -369,7 +374,7 @@ body {
 }
 
 .status.in-transit {
-    background: rgba(33, 150, 243, 0.1);
+    background: rgba(21, 121, 192, 0.1);
     color: var(--info-color);
 }
 
@@ -509,7 +514,7 @@ body {
 }
 
 .save-btn:hover {
-    background: var(--secondary-color);
+    background: var(--tertiary-color);
 }
 
 .cancel-btn {
