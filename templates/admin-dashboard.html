@@ -14,16 +14,13 @@
                 <i class="fas fa-truck-monster"></i>
                 <h2>HexaHaul</h2>
             </div>
-            <ul class="menu">
-                <li><a href="{{ url_for('admin_vehicles') }}"><i class="fas fa-car"></i> Vehicles</a></li>
-                <li><a href="{{ url_for('admin_employees') }}"><i class="fas fa-users"></i> Employees</a></li>
-                <li><a href="{{ url_for('admin_hexaboxes') }}"><i class="fas fa-box"></i> HexaBoxes</a></li>
-                <li><a href="{{ url_for('admin_utilities') }}"><i class="fas fa-tools"></i> Utilities</a></li>
-                <li><a href="{{ url_for('admin_employee_salary') }}"><i class="fas fa-money-bill-wave"></i> Salary</a></li>
-                <li><a href="{{ url_for('admin_products') }}"><i class="fas fa-box-open"></i> Products</a></li>
-                <li><a href="{{ url_for('admin_sales') }}"><i class="fas fa-chart-line"></i> Sales</a></li>
-                <li><a href="{{ url_for('admin_customers') }}"><i class="fas fa-user-friends"></i> Customers</a></li>
-            </ul>
+            <div class="user-profile">
+                <img src="{{ url_for('static', filename='images/profile-icon.png') }}" alt="Admin Profile">
+                <div class="user-details">
+                    <span class="user-name">{{ admin_name }}</span>
+                    <span class="user-role">Administrator</span>
+                </div>
+            </div>
             <div class="logout">
                 <a href="{{ url_for('admin_login') }}"><i class="fas fa-sign-out-alt"></i> Logout</a>
             </div>
@@ -31,21 +28,197 @@
         
         <div class="main-content">
             <div class="header">
-                <h1><i class="fas fa-tachometer-alt"></i> Admin Dashboard</h1>
-                <div class="user-info">
-                    <img src="{{ url_for('static', filename='images/profile-icon.png') }}" alt="Admin Profile">
-                    <span>{{ admin_name }}</span>
+                <h1><i class="fas fa-th-large"></i> Admin Control Center</h1>
+                <div class="header-stats">
+                    <div class="quick-stat">
+                        <i class="fas fa-car"></i>
+                        <span id="vehicle-count">24</span>
+                        <label>Vehicles</label>
+                    </div>
+                    <div class="quick-stat">
+                        <i class="fas fa-users"></i>
+                        <span id="employee-count">48</span>
+                        <label>Employees</label>
+                    </div>
+                    <div class="quick-stat">
+                        <i class="fas fa-box"></i>
+                        <span id="delivery-count">186</span>
+                        <label>Deliveries</label>
+                    </div>
                 </div>
             </div>
             
-            <div class="dashboard-stats">
-                <!-- Dashboard stats content here -->
-            </div>
-            
-            <div class="dashboard-content">
-                <!-- Dashboard main content here -->
+            <div class="menu-container">
+                <div class="menu-section">
+                    <div class="section-header">
+                        <i class="fas fa-cogs"></i>
+                        <h2>Fleet Management</h2>
+                        <p>Manage vehicles, equipment and logistics</p>
+                    </div>
+                    <div class="menu-grid">
+                        <a href="{{ url_for('admin_vehicles') }}" class="menu-card">
+                            <div class="card-icon">
+                                <i class="fas fa-car"></i>
+                            </div>
+                            <div class="card-content">
+                                <h3>Vehicles</h3>
+                                <p>Manage fleet vehicles and maintenance</p>
+                            </div>
+                            <div class="card-arrow">
+                                <i class="fas fa-chevron-right"></i>
+                            </div>
+                        </a>
+                        
+                        <a href="{{ url_for('admin_hexaboxes') }}" class="menu-card">
+                            <div class="card-icon">
+                                <i class="fas fa-box"></i>
+                            </div>
+                            <div class="card-content">
+                                <h3>HexaBoxes</h3>
+                                <p>Track delivery containers and status</p>
+                            </div>
+                            <div class="card-arrow">
+                                <i class="fas fa-chevron-right"></i>
+                            </div>
+                        </a>
+                        
+                        <a href="{{ url_for('admin_utilities') }}" class="menu-card">
+                            <div class="card-icon">
+                                <i class="fas fa-tools"></i>
+                            </div>
+                            <div class="card-content">
+                                <h3>Utilities</h3>
+                                <p>System utilities and maintenance tools</p>
+                            </div>
+                            <div class="card-arrow">
+                                <i class="fas fa-chevron-right"></i>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+
+                <div class="menu-section">
+                    <div class="section-header">
+                        <i class="fas fa-users-cog"></i>
+                        <h2>Human Resources</h2>
+                        <p>Employee management and payroll</p>
+                    </div>
+                    <div class="menu-grid">
+                        <a href="{{ url_for('admin_employees') }}" class="menu-card">
+                            <div class="card-icon">
+                                <i class="fas fa-users"></i>
+                            </div>
+                            <div class="card-content">
+                                <h3>Employees</h3>
+                                <p>Manage staff and employee records</p>
+                            </div>
+                            <div class="card-arrow">
+                                <i class="fas fa-chevron-right"></i>
+                            </div>
+                        </a>
+                        
+                        <a href="{{ url_for('admin_employee_salary') }}" class="menu-card">
+                            <div class="card-icon">
+                                <i class="fas fa-money-bill-wave"></i>
+                            </div>
+                            <div class="card-content">
+                                <h3>Salary Management</h3>
+                                <p>Process payroll and compensation</p>
+                            </div>
+                            <div class="card-arrow">
+                                <i class="fas fa-chevron-right"></i>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+
+                <div class="menu-section">
+                    <div class="section-header">
+                        <i class="fas fa-chart-pie"></i>
+                        <h2>Business Operations</h2>
+                        <p>Sales, products and customer management</p>
+                    </div>
+                    <div class="menu-grid">
+                        <a href="{{ url_for('admin_products') }}" class="menu-card">
+                            <div class="card-icon">
+                                <i class="fas fa-box-open"></i>
+                            </div>
+                            <div class="card-content">
+                                <h3>Products</h3>
+                                <p>Manage inventory and product catalog</p>
+                            </div>
+                            <div class="card-arrow">
+                                <i class="fas fa-chevron-right"></i>
+                            </div>
+                        </a>
+                        
+                        <a href="{{ url_for('admin_sales') }}" class="menu-card">
+                            <div class="card-icon">
+                                <i class="fas fa-chart-line"></i>
+                            </div>
+                            <div class="card-content">
+                                <h3>Sales Analytics</h3>
+                                <p>View sales reports and trends</p>
+                            </div>
+                            <div class="card-arrow">
+                                <i class="fas fa-chevron-right"></i>
+                            </div>
+                        </a>
+                        
+                        <a href="{{ url_for('admin_customers') }}" class="menu-card">
+                            <div class="card-icon">
+                                <i class="fas fa-user-friends"></i>
+                            </div>
+                            <div class="card-content">
+                                <h3>Customers</h3>
+                                <p>Manage customer relationships</p>
+                            </div>
+                            <div class="card-arrow">
+                                <i class="fas fa-chevron-right"></i>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+
+                <div class="menu-section analytics-section">
+                    <div class="section-header">
+                        <i class="fas fa-chart-bar"></i>
+                        <h2>Performance Dashboard</h2>
+                        <p>Real-time analytics and insights</p>
+                    </div>
+                    <div class="analytics-container">
+                        <div class="analytics-card">
+                            <div class="analytics-header">
+                                <h3>System Overview</h3>
+                                <button id="refresh-analytics" class="refresh-btn">
+                                    <i class="fas fa-sync-alt"></i>
+                                </button>
+                            </div>
+                            <div class="metrics-grid">
+                                <div class="metric">
+                                    <div class="metric-value" id="efficiency-rate">94%</div>
+                                    <div class="metric-label">Efficiency Rate</div>
+                                </div>
+                                <div class="metric">
+                                    <div class="metric-value" id="uptime">99.8%</div>
+                                    <div class="metric-label">System Uptime</div>
+                                </div>
+                                <div class="metric">
+                                    <div class="metric-value" id="revenue">$12.4K</div>
+                                    <div class="metric-label">Daily Revenue</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
+    
+    <script>
+        // Set URL for the Easter egg
+        const adminDashboardUrl = "{{ url_for('admin_dashboard') }}";
+    </script>
+    <script src="{{ url_for('static', filename='admin-dashboard.js') }}"></script>
 </body>
 </html>
