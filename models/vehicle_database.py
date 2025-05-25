@@ -1,133 +1,204 @@
-import sqlite3
 import os
 import datetime
+import pandas as pd
+from sqlalchemy import create_engine, Column, Integer, String, Float, ForeignKey
+from sqlalchemy.ext.declarative import declarative_base
+from sqlalchemy.orm import sessionmaker, scoped_session
+
+Base = declarative_base()
+
+class Vehicle(Base):
+    __tablename__ = 'vehicles'
+    
+    id = Column(Integer, primary_key=True, autoincrement=True)
+    unit_brand = Column(String)
+    unit_model = Column(String)
+    unit_type = Column(String)
+    category = Column(String)
+    distance = Column(Integer, default=0)
+    driver_employee_id = Column(Integer)
+    license_expiration_date = Column(String)
+    order_id = Column(Integer)
+    max_weight = Column(Integer)
+    min_weight = Column(Integer)
+    status = Column(String, default='Available')
+    year = Column(Integer)
 
 class VehicleDatabase:
     def __init__(self, db_path="vehicles.db"):
         self.db_path = db_path
-        self.conn = None
-        self.cursor = None
+        self.engine = create_engine(f'sqlite:///{db_path}')
+        self.session_factory = sessionmaker(bind=self.engine)
+        self.Session = scoped_session(self.session_factory)
         self.initialize_database()
         
     def connect(self):
-        self.conn = sqlite3.connect(self.db_path)
-        self.cursor = self.conn.cursor()
+        return self.Session()
         
     def disconnect(self):
-        if self.conn:
-            self.conn.close()
+        self.Session.remove()
             
     def initialize_database(self):
-        self.connect()
+        Base.metadata.create_all(self.engine)
         
-        # Create vehicles table
-        self.cursor.execute('''
-        CREATE TABLE IF NOT EXISTS vehicles (
-            id INTEGER PRIMARY KEY AUTOINCREMENT,
-            unit_brand TEXT,
-            unit_model TEXT,
-            unit_type TEXT,
-            category TEXT,
-            distance INTEGER DEFAULT 0,
-            driver_employee_id INTEGER,
-            license_expiration_date TEXT,
-            order_id INTEGER,
-            max_weight INTEGER,
-            min_weight INTEGER,
-            status TEXT DEFAULT 'Available'
-        )
-        ''')
-        
-        # Initial data for motorcycles, cars, and trucks
-        self.populate_initial_data()
-        
-        self.conn.commit()
+        # Check if data already exists
+        session = self.connect()
+        count = session.query(Vehicle).count()
+        if count == 0:
+            self.populate_from_csv()
         self.disconnect()
         
-    def populate_initial_data(self):
-        # Check if data already exists
-        self.cursor.execute("SELECT COUNT(*) FROM vehicles")
-        count = self.cursor.fetchone()[0]
+    def populate_from_csv(self):
+        csv_path = os.path.join('hexahaul_db', 'hh_vehicle.csv')
         
-        if count > 0:
+        # Check if the CSV file exists
+        if not os.path.exists(csv_path):
+            # If CSV file is not found, use default data
+            self.populate_initial_data()
             return
             
+        # Read data from CSV file using pandas
+        try:
+            df = pd.read_csv(csv_path)
+            session = self.connect()
+            
+            # Map CSV columns to our database schema
+            for _, row in df.iterrows():
+                # Determine category based on model or weight
+                if 'Mio' in row['unit_name'] or 'Click' in row['unit_name'] or 'NMAX' in row['unit_name']:
+                    category = 'Motorcycle'
+                    unit_type = 'Motorcycle'
+                elif 'Vios' in row['unit_name'] or 'Civic' in row['unit_name'] or 'MG 5' in row['unit_name']:
+                    category = 'Car'
+                    unit_type = 'Sedan'
+                else:
+                    category = 'Truck'
+                    unit_type = 'Truck'
+                
+                # Create new Vehicle object
+                vehicle = Vehicle(
+                    unit_brand=row['unit_brand'],
+                    unit_model=row['unit_name'].replace(row['unit_brand'] + ' ', ''),
+                    unit_type=unit_type,
+                    category=category,
+                    distance=row['km_driven'],
+                    driver_employee_id=row['Employee Id'],
+                    license_expiration_date=None,
+                    order_id=None,
+                    max_weight=row['max_weight'],
+                    min_weight=row['min_weight'],
+                    status='Available',
+                    year=row['year']
+                )
+                session.add(vehicle)
+            
+            session.commit()
+            self.disconnect()
+        except Exception as e:
+            print(f"Error loading data from CSV: {e}")
+            # Fallback to default data if CSV loading fails
+            self.populate_initial_data()
+    
+    def populate_initial_data(self):
+        session = self.connect()
+        
         # Motorcycles
         motorcycles = [
-            ('Honda', 'Click 125i', 'Motorcycle', 'Motorcycle', 0, None, None, None, 150, 0, 'Available'),
-            ('Yamaha', 'Mio Sporty', 'Motorcycle', 'Motorcycle', 0, None, None, None, 120, 0, 'Available'),
-            ('Yamaha', 'NMAX', 'Motorcycle', 'Motorcycle', 0, None, None, None, 170, 0, 'Available')
+            Vehicle(unit_brand='Honda', unit_model='Click 125i', unit_type='Motorcycle', category='Motorcycle', 
+                   distance=0, driver_employee_id=None, license_expiration_date=None, order_id=None, 
+                   max_weight=150, min_weight=0, status='Available', year=2020),
+            Vehicle(unit_brand='Yamaha', unit_model='Mio Sporty', unit_type='Motorcycle', category='Motorcycle', 
+                   distance=0, driver_employee_id=None, license_expiration_date=None, order_id=None, 
+                   max_weight=120, min_weight=0, status='Available', year=2019),
+            Vehicle(unit_brand='Yamaha', unit_model='NMAX', unit_type='Motorcycle', category='Motorcycle', 
+                   distance=0, driver_employee_id=None, license_expiration_date=None, order_id=None, 
+                   max_weight=170, min_weight=0, status='Available', year=2021)
         ]
         
         # Cars
         cars = [
-            ('Toyota', 'Vios', 'Sedan', 'Car', 0, None, None, None, 500, 0, 'Available'),
-            ('Honda', 'Civic', 'Sedan', 'Car', 0, None, None, None, 450, 0, 'Available'),
-            ('MG', '5', 'Sedan', 'Car', 0, None, None, None, 480, 0, 'Available')
+            Vehicle(unit_brand='Toyota', unit_model='Vios', unit_type='Sedan', category='Car', 
+                   distance=0, driver_employee_id=None, license_expiration_date=None, order_id=None, 
+                   max_weight=500, min_weight=0, status='Available', year=2018),
+            Vehicle(unit_brand='Honda', unit_model='Civic', unit_type='Sedan', category='Car', 
+                   distance=0, driver_employee_id=None, license_expiration_date=None, order_id=None, 
+                   max_weight=450, min_weight=0, status='Available', year=2017),
+            Vehicle(unit_brand='MG', unit_model='5', unit_type='Sedan', category='Car', 
+                   distance=0, driver_employee_id=None, license_expiration_date=None, order_id=None, 
+                   max_weight=480, min_weight=0, status='Available', year=2019)
         ]
         
         # Trucks
         trucks = [
-            ('Isuzu', '4 Wheeler', 'Truck', 'Truck', 0, None, None, None, 3000, 500, 'Available'),
-            ('Isuzu', '6 Wheeler', 'Truck', 'Truck', 0, None, None, None, 7000, 3000, 'Available'),
-            ('Isuzu', '10 Wheeler', 'Truck', 'Truck', 0, None, None, None, 15000, 7000, 'Available')
+            Vehicle(unit_brand='Isuzu', unit_model='4 Wheeler', unit_type='Truck', category='Truck', 
+                   distance=0, driver_employee_id=None, license_expiration_date=None, order_id=None, 
+                   max_weight=3000, min_weight=500, status='Available', year=2015),
+            Vehicle(unit_brand='Isuzu', unit_model='6 Wheeler', unit_type='Truck', category='Truck', 
+                   distance=0, driver_employee_id=None, license_expiration_date=None, order_id=None, 
+                   max_weight=7000, min_weight=3000, status='Available', year=2016),
+            Vehicle(unit_brand='Isuzu', unit_model='10 Wheeler', unit_type='Truck', category='Truck', 
+                   distance=0, driver_employee_id=None, license_expiration_date=None, order_id=None, 
+                   max_weight=15000, min_weight=7000, status='Available', year=2014)
         ]
         
         vehicles = motorcycles + cars + trucks
         
         for vehicle in vehicles:
-            self.cursor.execute('''
-            INSERT INTO vehicles (unit_brand, unit_model, unit_type, category, distance, 
-                                driver_employee_id, license_expiration_date, order_id, 
-                                max_weight, min_weight, status)
-            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
-            ''', vehicle)
+            session.add(vehicle)
+        
+        session.commit()
+        self.disconnect()
     
     def get_all_vehicles(self):
-        self.connect()
-        self.cursor.execute("SELECT * FROM vehicles")
-        vehicles = self.cursor.fetchall()
+        session = self.connect()
+        vehicles = session.query(Vehicle).all()
+        result = [(v.id, v.unit_brand, v.unit_model, v.unit_type, v.category, v.distance, 
+                  v.driver_employee_id, v.license_expiration_date, 
+                  v.max_weight, v.min_weight, v.status, v.year) for v in vehicles]
         self.disconnect()
-        return vehicles
+        return result
         
     def get_vehicles_by_category(self, category):
-        self.connect()
-        self.cursor.execute("SELECT * FROM vehicles WHERE category = ?", (category,))
-        vehicles = self.cursor.fetchall()
+        session = self.connect()
+        vehicles = session.query(Vehicle).filter_by(category=category).all()
+        result = [(v.id, v.unit_brand, v.unit_model, v.unit_type, v.category, v.distance, 
+                  v.driver_employee_id, v.license_expiration_date, 
+                  v.max_weight, v.min_weight, v.status, v.year) for v in vehicles]
         self.disconnect()
-        return vehicles
+        return result
         
     def update_vehicle(self, vehicle_id, **kwargs):
-        self.connect()
+        session = self.connect()
+        vehicle = session.query(Vehicle).filter_by(id=vehicle_id).first()
         
-        set_clause = ", ".join([f"{key} = ?" for key in kwargs.keys()])
-        values = list(kwargs.values())
-        values.append(vehicle_id)
+        if vehicle:
+            for key, value in kwargs.items():
+                if hasattr(vehicle, key):
+                    setattr(vehicle, key, value)
+            
+            session.commit()
         
-        query = f"UPDATE vehicles SET {set_clause} WHERE id = ?"
-        self.cursor.execute(query, values)
-        
-        self.conn.commit()
         self.disconnect()
         
     def delete_vehicle(self, vehicle_id):
-        self.connect()
-        self.cursor.execute("DELETE FROM vehicles WHERE id = ?", (vehicle_id,))
-        self.conn.commit()
+        session = self.connect()
+        vehicle = session.query(Vehicle).filter_by(id=vehicle_id).first()
+        
+        if vehicle:
+            session.delete(vehicle)
+            session.commit()
+        
         self.disconnect()
         
     def add_vehicle(self, **kwargs):
-        self.connect()
+        session = self.connect()
         
-        columns = ", ".join(kwargs.keys())
-        placeholders = ", ".join(["?" for _ in kwargs.keys()])
-        values = list(kwargs.values())
+        vehicle = Vehicle(**kwargs)
+        session.add(vehicle)
+        session.commit()
         
-        query = f"INSERT INTO vehicles ({columns}) VALUES ({placeholders})"
-        self.cursor.execute(query, values)
+        # Get the ID of the newly created vehicle
+        vehicle_id = vehicle.id
         
-        self.conn.commit()
-        vehicle_id = self.cursor.lastrowid
         self.disconnect()
-        
         return vehicle_id

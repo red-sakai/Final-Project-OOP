@@ -7,125 +7,101 @@ document.addEventListener('keydown', function(e) {
         if (eqCount === 5) {
             window.location.href = adminDashboardUrl;
         }
-    } else {     // reset the counter if any other key is pressed
+    } else {
         eqCount = 0;
     }
 });
 
 document.addEventListener('DOMContentLoaded', function() {
-    // Initialize graph loading state
-    const graphElements = {
-        vehicles: {
-            img: document.getElementById('vehicles-graph'),
-            loading: document.getElementById('vehicles-loading')
-        },
-        employees: {
-            img: document.getElementById('employees-graph'),
-            loading: document.getElementById('employees-loading')
-        }
+    // Animate stats on page load
+    function animateCounter(element, finalValue, duration = 1500) {
+        if (!element) return;
+        
+        const startValue = 0;
+        const increment = finalValue / (duration / 16);
+        let currentValue = startValue;
+        
+        const timer = setInterval(() => {
+            currentValue += increment;
+            if (currentValue >= finalValue) {
+                clearInterval(timer);
+                currentValue = finalValue;
+            }
+            
+            // Format the value based on the element's data type
+            let displayValue = Math.floor(currentValue);
+            if (element.id === 'efficiency-rate' || element.id === 'uptime') {
+                displayValue = Math.floor(currentValue) + '%';
+            } else if (element.id === 'revenue') {
+                displayValue = '$' + (currentValue / 1000).toFixed(1) + 'K';
+            }
+            
+            element.textContent = displayValue;
+        }, 16);
+    }
+    
+    // Initialize counters with realistic values
+    const counters = {
+        'vehicle-count': 24,
+        'employee-count': 48,
+        'delivery-count': 186,
+        'efficiency-rate': 94,
+        'uptime': 99.8,
+        'revenue': 12400
     };
     
-    // Function to refresh graphs with loading indicators
-    function refreshGraphs() {
-        Object.values(graphElements).forEach(element => {
-            if (element.loading && element.img) {
-                // Show loading indicator
-                element.loading.classList.add('visible');
-                
-                // Create new image object to preload
-                const newImg = new Image();
-                const timestamp = new Date().getTime();
-                const imgSrc = element.img.src.split('?')[0] + '?' + timestamp;
-                
-                newImg.onload = function() {
-                    // When image loads, update source and hide loading indicator
-                    element.img.src = imgSrc;
-                    setTimeout(() => {
-                        element.loading.classList.remove('visible');
-                    }, 300);
-                };
-                
-                newImg.onerror = function() {
-                    // Handle error
-                    element.loading.classList.remove('visible');
-                    console.error('Failed to load graph image');
-                };
-                
-                // Start loading the new image
-                newImg.src = imgSrc;
+    // Start counter animations with staggered delays
+    Object.entries(counters).forEach(([id, value], index) => {
+        setTimeout(() => {
+            const element = document.getElementById(id);
+            animateCounter(element, value);
+        }, index * 200);
+    });
+    
+    // Menu card hover effects
+    const menuCards = document.querySelectorAll('.menu-card');
+    menuCards.forEach(card => {
+        card.addEventListener('mouseenter', function() {
+            // Add subtle pulse effect to icon
+            const icon = this.querySelector('.card-icon');
+            if (icon) {
+                icon.style.transform = 'scale(1.1) rotate(5deg)';
+            }
+            
+            // Animate arrow
+            const arrow = this.querySelector('.card-arrow');
+            if (arrow) {
+                arrow.style.transform = 'translateX(5px)';
             }
         });
-    }
-    
-    // Load quick stats data with animation
-    function loadQuickStats() {
-        // Simulated data - in real app would fetch from server
-        const stats = {
-            'vehicle-count': { value: 24, prefix: '', suffix: '' },
-            'employee-count': { value: 48, prefix: '', suffix: '' },
-            'delivery-count': { value: 186, prefix: '', suffix: '' },
-            'efficiency-rate': { value: 94, prefix: '', suffix: '%' }
-        };
         
-        // Animate the number counting up
-        Object.entries(stats).forEach(([id, data]) => {
-            const element = document.getElementById(id);
-            if (!element) return;
+        card.addEventListener('mouseleave', function() {
+            const icon = this.querySelector('.card-icon');
+            if (icon) {
+                icon.style.transform = 'scale(1) rotate(0deg)';
+            }
             
-            const { value, prefix, suffix } = data;
-            const duration = 1500; // Animation duration in ms
-            const frameRate = 60; // Animation frame rate
-            const increment = value / (duration / 1000 * frameRate);
-            
-            let current = 0;
-            const timer = setInterval(() => {
-                current += increment;
-                if (current >= value) {
-                    clearInterval(timer);
-                    current = value;
-                }
-                element.textContent = `${prefix}${Math.floor(current)}${suffix}`;
-            }, 1000 / frameRate);
+            const arrow = this.querySelector('.card-arrow');
+            if (arrow) {
+                arrow.style.transform = 'translateX(0px)';
+            }
         });
-    }
-    
-    // Initial load of graphs and stats
-    refreshGraphs();
-    loadQuickStats();
-    
-    // Setup refresh button
-    const refreshBtn = document.getElementById('refresh-graphs');
-    if (refreshBtn) {
-        refreshBtn.addEventListener('click', function() {
-            const btn = this;
-            btn.disabled = true;
-            btn.classList.add('rotating');
-            
-            refreshGraphs();
-            loadQuickStats();
-            
-            // Re-enable button after animation
-            setTimeout(() => {
-                btn.disabled = false;
-                btn.classList.remove('rotating');
-            }, 1000);
-        });
-    }
-    
-    // Add ripple effect to cards
-    const cards = document.querySelectorAll('.dashboard-card, .stat-card');
-    cards.forEach(card => {
-        // Create ripple effect on click
+        
+        // Add click ripple effect
         card.addEventListener('click', function(e) {
-            const ripple = document.createElement('span');
-            ripple.classList.add('ripple');
+            const ripple = document.createElement('div');
+            ripple.style.position = 'absolute';
+            ripple.style.borderRadius = '50%';
+            ripple.style.background = 'rgba(21, 121, 192, 0.3)';
+            ripple.style.transform = 'scale(0)';
+            ripple.style.animation = 'ripple 0.6s linear';
+            ripple.style.pointerEvents = 'none';
             
             const rect = this.getBoundingClientRect();
             const size = Math.max(rect.width, rect.height);
-            
-            ripple.style.width = ripple.style.height = `${size}px`;
-            ripple.style.left = `${e.clientX - rect.left - size/2}px`;
-            ripple.style.top = `${e.clientY - rect.top - size/2}px`;
+            ripple.style.width = ripple.style.height = size + 'px';
+            ripple.style.left = (e.clientX - rect.left - size / 2) + 'px';
+            ripple.style.top = (e.clientY - rect.top - size / 2) + 'px';
             
             this.appendChild(ripple);
             
@@ -135,31 +111,96 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
     
-    // Staggered animation for dashboard cards
-    const staggeredElements = document.querySelectorAll('.dashboard-options .dashboard-card');
-    staggeredElements.forEach((element, index) => {
-        element.style.opacity = '0';
-        element.style.transform = 'translateY(20px)';
+    // Refresh analytics functionality
+    const refreshBtn = document.getElementById('refresh-analytics');
+    if (refreshBtn) {
+        refreshBtn.addEventListener('click', function() {
+            const btn = this;
+            btn.disabled = true;
+            btn.classList.add('rotating');
+            
+            // Simulate data refresh
+            setTimeout(() => {
+                // Re-animate counters with slight variations
+                const variations = {
+                    'efficiency-rate': 94 + Math.floor(Math.random() * 6) - 3,
+                    'uptime': 99.8 + (Math.random() * 0.4) - 0.2,
+                    'revenue': 12400 + Math.floor(Math.random() * 2000) - 1000
+                };
+                
+                Object.entries(variations).forEach(([id, value]) => {
+                    const element = document.getElementById(id);
+                    animateCounter(element, value, 800);
+                });
+                
+                btn.disabled = false;
+                btn.classList.remove('rotating');
+            }, 1000);
+        });
+    }
+    
+    // Staggered animation for menu sections
+    const sections = document.querySelectorAll('.menu-section');
+    sections.forEach((section, index) => {
+        section.style.opacity = '0';
+        section.style.transform = 'translateY(30px)';
         
         setTimeout(() => {
-            element.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
-            element.style.opacity = '1';
-            element.style.transform = 'translateY(0)';
-        }, 300 + (index * 100));
+            section.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+            section.style.opacity = '1';
+            section.style.transform = 'translateY(0)';
+        }, 200 + (index * 150));
     });
     
-    // Hover effect for graph cards
-    const graphCards = document.querySelectorAll('.graph-card');
-    graphCards.forEach(card => {
-        card.addEventListener('mouseenter', function() {
-            this.querySelector('.graph-img').style.transform = 'scale(1.02)';
+    // Quick stats hover effects
+    const quickStats = document.querySelectorAll('.quick-stat');
+    quickStats.forEach(stat => {
+        stat.addEventListener('mouseenter', function() {
+            this.style.transform = 'translateY(-3px) scale(1.05)';
+            this.style.boxShadow = 'var(--shadow-medium)';
         });
         
-        card.addEventListener('mouseleave', function() {
-            this.querySelector('.graph-img').style.transform = 'scale(1)';
+        stat.addEventListener('mouseleave', function() {
+            this.style.transform = 'translateY(0) scale(1)';
+            this.style.boxShadow = 'var(--shadow-light)';
         });
     });
     
-    // Reload graphs every 2 minutes for live updates
-    setInterval(refreshGraphs, 120000);
+    // Add dynamic time-based updates
+    function updateTimeBasedMetrics() {
+        const now = new Date();
+        const hour = now.getHours();
+        
+        // Simulate different metrics based on time of day
+        let efficiencyMultiplier = 1;
+        if (hour >= 9 && hour <= 17) {
+            efficiencyMultiplier = 1.1; // Higher efficiency during business hours
+        }
+        
+        const baseEfficiency = 90;
+        const newEfficiency = Math.min(99, Math.floor(baseEfficiency * efficiencyMultiplier + Math.random() * 5));
+        
+        const efficiencyElement = document.getElementById('efficiency-rate');
+        if (efficiencyElement) {
+            animateCounter(efficiencyElement, newEfficiency, 1000);
+        }
+    }
+    
+    // Update metrics every 30 seconds
+    setInterval(updateTimeBasedMetrics, 30000);
+    
+    // Add CSS for ripple animation if not already present
+    if (!document.querySelector('#ripple-style')) {
+        const style = document.createElement('style');
+        style.id = 'ripple-style';
+        style.textContent = `
+            @keyframes ripple {
+                to {
+                    transform: scale(4);
+                    opacity: 0;
+                }
+            }
+        `;
+        document.head.appendChild(style);
+    }
 });
