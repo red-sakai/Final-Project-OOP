@@ -18,22 +18,22 @@
                         <img src="{{ url_for('static', filename='images/HexaHaul logo.png') }}" alt="Logo" class="logo animate-fade-in"/>
                     </div>
                 </div>
-                <form action="/register" method="post" class="user-signin-form animate-slide-up">
+                <form action="/add-user" method="post" class="user-signin-form animate-slide-up">
                     <div class="input-group">
                         <i class="fas fa-user input-icon"></i>
-                        <input type="text" placeholder="Full Name" class="user-input" required />
+                        <input type="text" name="full_name" placeholder="Full Name" class="user-input" required />
                     </div>
                     <div class="input-group">
                         <i class="fas fa-envelope input-icon"></i>
-                        <input type="email" placeholder="Email Address" class="user-input" required />
+                        <input type="email" name="email" placeholder="Email Address" class="user-input" required />
                     </div>
                     <div class="input-group">
                         <i class="fas fa-user-circle input-icon"></i>
-                        <input type="text" placeholder="Username" class="user-input" required />
+                        <input type="text" name="username" placeholder="Username" class="user-input" required />
                     </div>
                     <div class="input-group">
                         <i class="fas fa-lock input-icon"></i>
-                        <input type="password" placeholder="Password" class="user-input" required />
+                        <input type="password" name="password" placeholder="Password" class="user-input" required />
                     </div>
                     <div class="input-group">
                         <i class="fas fa-lock input-icon"></i>
