@@ -102,39 +102,13 @@
         </div>
         <div id="activity" class="content-section">
             <div class="profile-display" style="max-width:700px; margin:0 auto;">
-                <h2 class="profile-title">History Log</h2>
-                <p class="profile-header">Your time in the program</p>
-                <div class="history-timeline">
-                    <div class="timeline-item">
-                        <div class="timeline-avatar">
-                            <img src="{{ url_for('static', filename='images/profile-icon.png') }}" alt="User">
-                        </div>
-                        <div class="timeline-content">
-                            <div class="timeline-date">Wednesday 17 April, 2019</div>
-                            <div class="timeline-action">Tracking ID: 1234bfa</div>
-                            <button class="timeline-btn">View</button>
-                        </div>
+                <h2 class="profile-title">Activity Log</h2>
+                <p class="profile-header">Your recent activity history</p>
+                <div class="history-timeline" id="activity-timeline">
+                    <div class="loading-message" id="activity-loading">
+                        <p>Loading your activity history...</p>
                     </div>
-                    <div class="timeline-item">
-                        <div class="timeline-avatar">
-                            <img src="{{ url_for('static', filename='images/profile-icon.png') }}" alt="User">
-                        </div>
-                        <div class="timeline-content">
-                            <div class="timeline-date">Monday 6 May, 2019</div>
-                            <div class="timeline-action">Tracking ID: 1234abc</div>
-                            <button class="timeline-btn">View</button>
-                        </div>
-                    </div>
-                    <div class="timeline-item">
-                        <div class="timeline-avatar">
-                            <img src="{{ url_for('static', filename='images/profile-icon.png') }}" alt="User">
-                        </div>
-                        <div class="timeline-content">
-                            <div class="timeline-date">Thursday 9 May, 2019</div>
-                            <div class="timeline-action">Tracking ID: 1234bcs</div>
-                            <button class="timeline-btn">View</button>
-                        </div>
-                    </div>
+                    <!-- Activities will be populated by JavaScript -->
                 </div>
             </div>
         </div>
