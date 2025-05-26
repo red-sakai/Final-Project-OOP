@@ -19,6 +19,7 @@ import csv
 import os
 import json
 import random
+import pandas as pd
 
 # Initialize DistilBERT QA pipeline
 qa_pipeline = pipeline("question-answering", model="distilbert-base-uncased-distilled-squad")
