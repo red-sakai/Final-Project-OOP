@@ -22,7 +22,7 @@
                 </div>
             </div>
             <div class="logout">
-                <a href="{{ url_for('admin_login') }}"><i class="fas fa-sign-out-alt"></i> Logout</a>
+                <a href="javascript:void(0);" id="logout-btn"><i class="fas fa-sign-out-alt"></i> Logout</a>
             </div>
         </div>
         
@@ -215,9 +215,21 @@
         </div>
     </div>
     
+    <!-- Logout Animation Overlay -->
+    <div id="logout-overlay" class="logout-overlay">
+        <div class="logout-content">
+            <i class="fas fa-briefcase logout-icon"></i>
+            <h2 id="logout-message">Packing Up For The Day...</h2>
+            <div class="logout-progress">
+                <div class="logout-progress-bar"></div>
+            </div>
+        </div>
+    </div>
+    
     <script>
-        // Set URL for the Easter egg
+        // Set URLs for the Easter egg and logout
         const adminDashboardUrl = "{{ url_for('admin_dashboard') }}";
+        const logoutUrl = "{{ url_for('admin_login') }}";
     </script>
     <script src="{{ url_for('static', filename='admin-dashboard.js') }}"></script>
 </body>

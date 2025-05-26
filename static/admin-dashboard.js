@@ -203,4 +203,43 @@ document.addEventListener('DOMContentLoaded', function() {
         `;
         document.head.appendChild(style);
     }
+    
+    // Logout animation
+    const logoutBtn = document.getElementById('logout-btn');
+    const logoutOverlay = document.getElementById('logout-overlay');
+    const logoutProgressBar = document.querySelector('.logout-progress-bar');
+    const logoutMessage = document.getElementById('logout-message');
+    const adminContainer = document.querySelector('.admin-container');
+    
+    if (logoutBtn && logoutOverlay) {
+        const logoutMessages = [
+            "Packing Up For The Day...",
+            "Signing Out...",
+            "Securing Your Session...",
+            "Until Next Time...",
+            "Logging Off Securely..."
+        ];
+        
+        logoutBtn.addEventListener('click', function(e) {
+            e.preventDefault();
+            
+            // Select random message
+            const randomMessage = logoutMessages[Math.floor(Math.random() * logoutMessages.length)];
+            logoutMessage.textContent = randomMessage;
+            
+            // Show logout overlay
+            logoutOverlay.classList.add('active');
+            adminContainer.classList.add('logging-out');
+            
+            // Animate progress bar
+            setTimeout(() => {
+                logoutProgressBar.style.width = '100%';
+            }, 100);
+            
+            // Redirect after animation completes
+            setTimeout(() => {
+                window.location.href = logoutUrl;
+            }, 2500);
+        });
+    }
 });
