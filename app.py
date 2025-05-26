@@ -391,16 +391,25 @@ class HexaHaulApp:
         def admin_forgot_password_submit():
             """Handle admin forgot password form submission"""
             email = request.form.get("email")
-            if email:
-                # Generate OTP
+            
+            # Check if email exists in admin database (hh_admins.csv)
+            admin_emails = []
+            try:
+                with open('hexahaul_db/hh_admins.csv', 'r') as f:
+                    reader = csv.DictReader(f)
+                    admin_emails = [row['admin_email'] for row in reader]
+            except Exception as e:
+                print(f"Error reading admin CSV: {e}")
+            
+            if email in admin_emails:
+                # Generate and send OTP
                 otp = admin_password_reset_manager.generate_otp(email)
-                # Send OTP to admin email
                 admin_password_reset_manager.send_otp(email, otp)
-                # Redirect to verification code page
                 return redirect(url_for('admin_verification_code', email=email))
             else:
-                flash("Please enter a valid email address", "error")
-                return redirect(url_for('admin_forgot_password_page'))
+                # Email not found
+                flash("Email not found in admin records", "error")
+                return render_template("admin-forgot-password.html", error="Email not found in admin records")
 
         @app.route("/admin/logout")
         def admin_logout():
