@@ -1,0 +1,8 @@
+Username,Email,Activity_Type,Activity_Description,Timestamp,IP_Address,User_Agent
+pwoodward,patience.woodward@gmail.com,LOGIN,User logged in successfully,2025-05-26 15:18:04,127.0.0.1,"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/133.0.0.0 Safari/537.36 OPR/118.0.0.0"
+pwoodward,patience.woodward@gmail.com,LOGOUT,User logged out,2025-05-26 15:18:09,127.0.0.1,"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/133.0.0.0 Safari/537.36 OPR/118.0.0.0"
+lsmith1,lisa.smith@gmail.com,LOGIN,User logged in successfully,2025-05-26 15:20:39,127.0.0.1,"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/133.0.0.0 Safari/537.36 OPR/118.0.0.0"
+pwoodward,patience.woodward@gmail.com,LOGIN,User logged in successfully,2025-05-26 15:21:17,127.0.0.1,"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/133.0.0.0 Safari/537.36 OPR/118.0.0.0"
+lsmith1,lisa.smith@gmail.com,LOGIN,User logged in successfully,2025-05-26 15:21:38,127.0.0.1,"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/133.0.0.0 Safari/537.36 OPR/118.0.0.0"
+lsmith1,lisa.smith@gmail.com,LOGIN,User logged in successfully,2025-05-26 15:21:56,127.0.0.1,"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/133.0.0.0 Safari/537.36 OPR/118.0.0.0"
+lsmith1,lisa.smith@gmail.com,LOGIN,User logged in successfully,2025-05-26 15:22:19,127.0.0.1,"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/133.0.0.0 Safari/537.36 OPR/118.0.0.0"
