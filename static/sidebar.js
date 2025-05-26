@@ -59,7 +59,15 @@ document.addEventListener('DOMContentLoaded', function() {
     
     if (fullNameInput) {
         fullNameInput.addEventListener('blur', function() {
-            fullNameText.textContent = fullNameInput.value || "Florence Shaw";
+            const newName = fullNameInput.value || "User";
+            const oldName = fullNameText.textContent;
+            
+            if (newName !== oldName) {
+                // Send update to server
+                updateUserProfile('name', newName);
+            }
+            
+            fullNameText.textContent = newName;
             fullNameText.style.display = 'inline';
             fullNameInput.style.display = 'none';
         });
@@ -88,7 +96,15 @@ document.addEventListener('DOMContentLoaded', function() {
     
     if (emailInput) {
         emailInput.addEventListener('blur', function() {
-            emailText.textContent = emailInput.value || "hi@florenceshaw.com";
+            const newEmail = emailInput.value || "user@example.com";
+            const oldEmail = emailText.textContent;
+            
+            if (newEmail !== oldEmail) {
+                // Send update to server
+                updateUserProfile('email', newEmail);
+            }
+            
+            emailText.textContent = newEmail;
             emailText.style.display = 'inline';
             emailInput.style.display = 'none';
         });
@@ -250,5 +266,74 @@ document.addEventListener('DOMContentLoaded', function() {
                 }
             }
         }
+    }
+    
+    // Function to update user profile in the database/CSV
+    function updateUserProfile(field, value) {
+        // Create an AJAX request to update the user profile
+        const xhr = new XMLHttpRequest();
+        xhr.open('POST', '/update-profile', true);
+        xhr.setRequestHeader('Content-Type', 'application/json');
+        
+        xhr.onload = function() {
+            if (xhr.status === 200) {
+                const response = JSON.parse(xhr.responseText);
+                if (response.success) {
+                    showNotification('Profile updated successfully!', 'success');
+                } else {
+                    showNotification('Failed to update profile: ' + response.message, 'error');
+                }
+            } else {
+                showNotification('Error updating profile', 'error');
+            }
+        };
+        
+        xhr.onerror = function() {
+            showNotification('Connection error', 'error');
+        };
+        
+        xhr.send(JSON.stringify({
+            field: field,
+            value: value
+        }));
+    }
+    
+    // Show notification function
+    function showNotification(message, type) {
+        // Check if notification container exists, if not create one
+        let notificationContainer = document.getElementById('notification-container');
+        if (!notificationContainer) {
+            notificationContainer = document.createElement('div');
+            notificationContainer.id = 'notification-container';
+            notificationContainer.style.position = 'fixed';
+            notificationContainer.style.top = '20px';
+            notificationContainer.style.right = '20px';
+            notificationContainer.style.zIndex = '1000';
+            document.body.appendChild(notificationContainer);
+        }
+        
+        // Create notification element
+        const notification = document.createElement('div');
+        notification.className = `notification ${type}`;
+        notification.style.padding = '12px 24px';
+        notification.style.marginBottom = '10px';
+        notification.style.borderRadius = '4px';
+        notification.style.backgroundColor = type === 'success' ? '#dff0d8' : '#f2dede';
+        notification.style.color = type === 'success' ? '#3c763d' : '#a94442';
+        notification.style.boxShadow = '0 2px 10px rgba(0,0,0,0.1)';
+        notification.style.transition = 'all 0.5s ease-in-out';
+        notification.style.animation = 'fadeInRight 0.5s';
+        notification.textContent = message;
+        
+        // Add notification to container
+        notificationContainer.appendChild(notification);
+        
+        // Remove notification after 3 seconds
+        setTimeout(() => {
+            notification.style.opacity = '0';
+            setTimeout(() => {
+                notificationContainer.removeChild(notification);
+            }, 500);
+        }, 3000);
     }
 });

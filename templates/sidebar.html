@@ -40,6 +40,16 @@
             60% { transform: translateY(-5px); }
         }
         
+        @keyframes fadeInRight {
+            from { transform: translateX(30px); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
+        
+        @keyframes fadeOut {
+            from { opacity: 1; }
+            to { opacity: 0; }
+        }
+        
         /* Apply animations to elements */
         .account-sidebar {
             animation: slideInLeft 0.8s ease-out;
@@ -158,6 +168,27 @@
         .avatar-edit-btn:hover {
             transform: translateX(-50%) translateY(-3px);
             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+        }
+        
+        #notification-container {
+            animation: fadeIn 0.5s ease-out;
+        }
+        
+        .notification {
+            animation: fadeInRight 0.5s ease-out;
+            margin-bottom: 10px;
+        }
+        
+        .notification.success {
+            background-color: #dff0d8;
+            border-left: 4px solid #3c763d;
+            color: #3c763d;
+        }
+        
+        .notification.error {
+            background-color: #f2dede;
+            border-left: 4px solid #a94442;
+            color: #a94442;
         }
     </style>
 </head>
