@@ -937,7 +937,7 @@ footer {
     background: #eaf6fb;
     border-radius: 14px;
     box-shadow: 0 0 8px #b2dbf8;
-    padding: 18px 0 8px 0;
+    padding: 24px 0 24px 0;
     margin-bottom: 24px;
     display: flex;
     flex-direction: column;
@@ -947,7 +947,15 @@ footer {
     margin-left: auto;
     margin-right: auto;
     transition: box-shadow 0.2s;
-    height: 60px;
+    position: relative;
+    height: 90px; /* Fixed height */
+}
+
+.sidebar-profile-card {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    padding: 0 20px;
 }
 
 .profile-icon {
@@ -957,18 +965,20 @@ footer {
     background: #e6e9ef;
     border: 2px solid #b2dbf8;
     box-shadow: 0 0 4px #b2dbf8;
-    margin-bottom: 4px;
-    margin-left: -100px;
-    margin-top: -20px;
+    flex-shrink: 0;
 }
 
 .profile-name {
-    font-size: 23px;
+    font-size: 20px;
     font-weight: 700;
     color: #03335e;
-    margin-top: -50px;
-    text-align: left;
+    margin-left: 15px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: calc(100% - 65px);
 }
+
 /* Dropdown sections */
 .sidebar-section.dropdown {
     background: #f7faff;

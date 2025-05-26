@@ -73,15 +73,15 @@
      <div id="user-sidebar" class="user-sidebar">
     <div class="sidebar-content">
         <button class="sidebar-close" id="sidebar-close" aria-label="Close sidebar">&times;</button>
-        <div class="sidebar-profile" style="flex-direction: column; align-items: center; background: #eaf6fb; border-radius: 14px; box-shadow: 0 2px 8px #b2dbf8; padding: 24px 0 18px 0; margin-bottom: 32px;">
-    <div class="sidebar-profile-card">
-    <img src="{{ url_for('static', filename=session.get('user_image', 'images/pfp.png')) }}"
-         alt="Profile Icon"
-         class="profile-icon">
-    <div class="profile-name">
-        {{ session.get('user_name', 'User Name') }}
-    </div>
-</div>
+        <div class="sidebar-profile">
+            <div class="sidebar-profile-card">
+                <img src="{{ url_for('static', filename=session.get('user_image', 'images/pfp.png')) }}"
+                     alt="Profile Icon"
+                     class="profile-icon">
+                <div class="profile-name">
+                    {{ session.get('user_name', 'User Name') }}
+                </div>
+            </div>
         </div>
         <div class="sidebar-section dropdown">
             <a href="{{ url_for('sidebar_html') }}#profile" class="dropdown-toggle">Profile</a>
