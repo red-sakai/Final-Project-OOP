@@ -19,6 +19,7 @@ import re
 import json
 from services.hexabot import hexabot_bp
 import csv
+import pandas as pd
 
 
 # Initialize DistilBERT QA pipeline
@@ -1539,7 +1540,57 @@ class HexaHaulApp:
                 
             return redirect(url_for('user_login_html'))
                 
-        # ...existing code...
+        # New route to handle profile updates
+        @app.route('/update-profile', methods=['POST'])
+        def update_profile():
+            # Make sure user is logged in
+            if 'user_email' not in session:
+                return jsonify({'success': False, 'message': 'User not logged in'})
+            
+            # Get the data from request
+            data = request.get_json()
+            field = data.get('field')
+            value = data.get('value')
+            
+            # Get current email from session
+            current_email = session.get('user_email')
+            
+            try:
+                # Path to CSV file
+                csv_path = os.path.join('hexahaul_db', 'hh_user-login.csv')
+                
+                # Read the CSV file into a pandas DataFrame
+                df = pd.read_csv(csv_path)
+                
+                # Find the row with the current email
+                user_row = df[df['Email Address'] == current_email]
+                
+                if len(user_row) == 0:
+                    return jsonify({'success': False, 'message': 'User not found'})
+                
+                # Update the appropriate field
+                if field == 'name':
+                    df.loc[df['Email Address'] == current_email, 'Full Name'] = value
+                    # Update the session name
+                    session['user_name'] = value
+                elif field == 'email':
+                    # First save the current email to find the user row
+                    old_email = current_email
+                    # Update the email in the DataFrame
+                    df.loc[df['Email Address'] == old_email, 'Email Address'] = value
+                    # Update the session email
+                    session['user_email'] = value
+                else:
+                    return jsonify({'success': False, 'message': 'Invalid field'})
+                
+                # Save the updated DataFrame back to CSV
+                df.to_csv(csv_path, index=False)
+                
+                return jsonify({'success': True})
+            
+            except Exception as e:
+                return jsonify({'success': False, 'message': str(e)})
+
     def register_blueprints(self):
         self.app.register_blueprint(analytics_bp)
         self.app.register_blueprint(hexabot_bp)
