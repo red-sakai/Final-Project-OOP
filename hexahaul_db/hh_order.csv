@@ -1,501 +1,501 @@
-"Order Item Id","Days for shipping (real)","Days for shipment (scheduled)","Delivery Status",Late_delivery_risk,Market,"Order City","Order Country","Order Region","Order State","Order Status","Origin Branch","Branch Latitude","Branch Longitude","Customer Latitude","Customer Longitude","order date (DateOrders)",driver_id,unit_name
-MC179213,4,4,"Shipping on time",0,"Pacific Asia",Medan,Indonesia,"Southeast Asia","Sumatra Septentrional",CLOSED,"Quezon City",14.676,121.0437,14.585361751481297,121.06690543765845,2024-01-12,217,"Honda Click 125i"
-TK101052,6,4,"Shipping canceled",0,USCA,"San Jose","Estados Unidos","West of USA ",California,SUSPECTED_FRAUD,Parañaque,14.4793,121.0198,14.541376774154022,121.06659734619464,2022-08-14,235,"Mitsubishi Fuso Fighter"
-TK121217,4,4,"Shipping on time",0,Africa,Lagos,Nigeria,"West Africa",Lagos,PENDING,"Quezon City",14.676,121.0437,14.608856409125828,121.0417350114898,2022-12-08,237,"Isuzu ELF NHR 55"
-TK121561,4,4,"Shipping on time",0,Africa,Lokossa,Benín,"West Africa",Mono,COMPLETE,Caloocan,14.6507,120.9667,14.679404057682868,120.96483508829478,2022-12-10,236,"Hino 700 Series Dump Truck"
-MC133575,6,4,"Late delivery",1,LATAM,"Belo Horizonte",Brasil,"South America","Minas Gerais",PROCESSING,Parañaque,14.4793,121.0198,14.542027742594506,121.05233660763346,2023-02-19,232,"Yamaha Mio Sporty"
-CR179190,6,2,"Late delivery",1,"Pacific Asia",Balikpapan,Indonesia,"Southeast Asia","Kalimantan Oriental",PENDING_PAYMENT,Caloocan,14.6507,120.9667,14.727999054992571,120.97747308176707,2024-01-12,222,"Toyota Vios"
-MC179143,4,4,"Shipping on time",0,"Pacific Asia",Surabaya,Indonesia,"Southeast Asia","Java Oriental",ON_HOLD,Caloocan,14.6507,120.9667,14.670366827883168,120.96941489565133,2024-01-11,218,"Honda Click 125i"
-CR179139,5,4,"Late delivery",1,"Pacific Asia",Daca,Bangladés,"South Asia",Daca,CLOSED,Parañaque,14.4793,121.0198,14.544389598457505,121.05865011812061,2024-01-11,201,"Honda Civic"
-CR179131,2,4,"Advance shipping",0,"Pacific Asia","Kota Kinabalu",Malasia,"Southeast Asia",Sabah,PROCESSING,Manila,14.5995,120.9842,14.530163591690513,121.00891725095819,2024-01-11,229,"Toyota Vios"
-MC179128,4,2,"Late delivery",1,"Pacific Asia",Singapur,Singapur,"Southeast Asia",Singapur,PAYMENT_REVIEW,Caloocan,14.6507,120.9667,14.710238702371939,120.99215706637331,2024-01-11,221,"Honda Click 125i"
-CR145886,4,4,"Shipping canceled",0,LATAM,Arequipa,Perú,"South America",Arequipa,SUSPECTED_FRAUD,"Quezon City",14.676,121.0437,14.650427279845278,121.10566520164316,2023-05-01,233,"Honda Civic"
-TK124607,5,4,"Late delivery",1,Europe,Viena,Austria,"Western Europe",Viena,PENDING,Manila,14.5995,120.9842,14.543635336173358,120.98658019815254,2022-12-28,236,"Hino 700 Series Dump Truck"
-TK73253,4,4,"Shipping on time",0,"Pacific Asia","Port Macquarie",Australia,Oceania,"Nueva Gales del Sur",COMPLETE,"Quezon City",14.676,121.0437,14.589993729339907,121.07529290516422,2022-03-03,239,"Hino 700 Series Dump Truck"
-TK54942,2,4,"Advance shipping",0,"Pacific Asia","Murray Bridge",Australia,Oceania,"Australia del Sur",COMPLETE,"Quezon City",14.676,121.0437,14.602593335735232,121.02392278964065,2021-11-17,239,"Hino 700 Series Dump Truck"
-TK104041,2,4,"Advance shipping",0,"Pacific Asia",Bagdad,Irak,"West Asia",Bagdad,COMPLETE,Parañaque,14.4793,121.0198,14.535295958877816,121.06863421572245,2022-08-31,237,"Isuzu ELF NHR 55"
-CR43614,5,4,"Late delivery",1,Europe,Amsterdam,"Países Bajos","Western Europe","Holanda Septentrional",COMPLETE,Parañaque,14.4793,121.0198,14.543208006483697,121.03679678245149,2021-09-12,233,"Honda Civic"
-MC170721,5,4,"Late delivery",1,Europe,Hamburgo,Alemania,"Western Europe",Hamburgo,COMPLETE,Parañaque,14.4793,121.0198,14.391434449815597,121.03613807772858,2023-09-23,218,"Honda Click 125i"
-TK48340,4,4,"Shipping on time",0,Europe,Nanterre,Francia,"Western Europe","Isla de Francia",COMPLETE,"Quezon City",14.676,121.0437,14.61807845543891,121.04138130012096,2021-10-10,236,"Hino 700 Series Dump Truck"
-TK60332,4,4,"Shipping on time",0,"Pacific Asia",Heyuan,China,"Eastern Asia",Guangdong,PENDING,"Quezon City",14.676,121.0437,14.617035634701173,121.0236233608179,2021-12-19,236,"Hino 700 Series Dump Truck"
-TK60333,4,4,"Shipping on time",0,"Pacific Asia",Heyuan,China,"Eastern Asia",Guangdong,PENDING,"Quezon City",14.676,121.0437,14.617035634701173,121.0236233608179,2021-12-19,239,"Hino 700 Series Dump Truck"
-TK77528,4,4,"Shipping on time",0,"Pacific Asia",Nelson,"Nueva Zelanda",Oceania,Nelson,PROCESSING,Caloocan,14.6507,120.9667,14.661941931808313,120.97641216274948,2022-03-28,236,"Hino 700 Series Dump Truck"
-MC179079,5,2,"Late delivery",1,"Pacific Asia",Taixing,China,"Eastern Asia",Jiangsu,ON_HOLD,Parañaque,14.4793,121.0198,14.535127645400472,121.06281390211807,2024-01-10,227,"Yamaha NMAX"
-MC179072,3,4,"Advance shipping",0,"Pacific Asia",Mackay,Australia,Oceania,Queensland,PENDING_PAYMENT,"Quezon City",14.676,121.0437,14.65171643750902,121.09247792319626,2024-01-10,227,"Yamaha NMAX"
-MC176534,5,4,"Late delivery",1,"Pacific Asia",Patna,India,"South Asia",Bihar,COMPLETE,Caloocan,14.6507,120.9667,14.74448060998179,120.9987677569024,2023-12-04,214,"Yamaha Mio Sporty"
-CR176485,2,1,"Late delivery",1,"Pacific Asia",Surabaya,Indonesia,"Southeast Asia","Java Oriental",PENDING_PAYMENT,Parañaque,14.4793,121.0198,14.530847148430391,121.05571443448375,2023-12-04,212,"MG 5"
-CR176478,2,1,"Late delivery",1,"Pacific Asia",Adelaide,Australia,Oceania,"Australia del Sur",CLOSED,"Quezon City",14.676,121.0437,14.645076819355673,121.11252583968688,2023-12-03,219,"Toyota Vios"
-TK48587,3,4,"Advance shipping",0,Europe,London,"Reino Unido","Northern Europe",Inglaterra,PENDING,"Quezon City",14.676,121.0437,14.628277232188989,121.07883238399293,2021-10-11,237,"Isuzu ELF NHR 55"
-MC33072,3,4,"Advance shipping",0,Europe,Essen,Alemania,"Western Europe","Renania del Norte-Westfalia",PENDING,Parañaque,14.4793,121.0198,14.547953894322694,121.0524700418324,2021-07-12,226,"Yamaha Mio Sporty"
-TK124606,5,4,"Late delivery",1,Europe,Viena,Austria,"Western Europe",Viena,PENDING,Manila,14.5995,120.9842,14.543635336173358,120.98658019815254,2022-12-28,239,"Hino 700 Series Dump Truck"
-MC37625,5,4,"Late delivery",1,Europe,Ginebra,Suiza,"Western Europe",Ginebra,PROCESSING,"Quezon City",14.676,121.0437,14.691686897447042,121.0251625458013,2021-08-08,226,"Yamaha Mio Sporty"
-CR160004,5,4,"Late delivery",1,Europe,London,"Reino Unido","Northern Europe",Inglaterra,PROCESSING,Manila,14.5995,120.9842,14.524242414975765,121.08346825771356,2023-07-23,219,"Toyota Vios"
-TK108765,2,4,"Shipping canceled",0,Europe,Járkov,Ucrania,"Eastern Europe",Járkov,SUSPECTED_FRAUD,Parañaque,14.4793,121.0198,14.465691236141781,120.98266545428211,2022-09-27,240,"Isuzu ELF NHR 55"
-TK108766,2,4,"Shipping canceled",0,Europe,Járkov,Ucrania,"Eastern Europe",Járkov,SUSPECTED_FRAUD,Parañaque,14.4793,121.0198,14.465691236141781,120.98266545428211,2022-09-27,236,"Hino 700 Series Dump Truck"
-TK48326,3,4,"Shipping canceled",0,Europe,Fontenay-aux-Roses,Francia,"Western Europe","Isla de Francia",SUSPECTED_FRAUD,"Quezon City",14.676,121.0437,14.611794054966229,121.03765759546091,2021-10-10,238,"Mitsubishi Fuso Fighter"
-MC43489,6,4,"Late delivery",1,Europe,Douarnenez,Francia,"Western Europe",Bretaña,COMPLETE,Parañaque,14.4793,121.0198,14.508691218130934,121.00723536084149,2021-09-11,208,"Yamaha Mio Sporty"
-TK47568,6,4,"Late delivery",1,Europe,Hamar,Noruega,"Northern Europe",Hedmark,COMPLETE,"Quezon City",14.676,121.0437,14.619813537262207,121.05999815885909,2021-10-05,235,"Mitsubishi Fuso Fighter"
-MC162921,6,4,"Late delivery",1,Europe,Gera,Alemania,"Western Europe",Turingia,COMPLETE,Parañaque,14.4793,121.0198,14.536940224251653,121.06470480415477,2023-08-09,232,"Yamaha Mio Sporty"
-MC155727,3,4,"Advance shipping",0,Europe,Saint-Quentin,Francia,"Western Europe","Norte-Paso de Calais-Picardía",COMPLETE,Parañaque,14.4793,121.0198,14.531758371583892,121.06790815961352,2023-06-28,221,"Honda Click 125i"
-TK47566,6,4,"Late delivery",1,Europe,Hamar,Noruega,"Northern Europe",Hedmark,COMPLETE,"Quezon City",14.676,121.0437,14.619813537262207,121.05999815885909,2021-10-05,235,"Mitsubishi Fuso Fighter"
-TK117704,5,4,"Late delivery",1,Europe,Ostrava,"República Checa","Eastern Europe",Moravia-Silesia,COMPLETE,"Quezon City",14.676,121.0437,14.61890161130475,121.04445159477596,2022-11-18,239,"Hino 700 Series Dump Truck"
-TK62544,2,4,"Advance shipping",0,"Pacific Asia",Taiping,Malasia,"Southeast Asia",Perak,COMPLETE,"Quezon City",14.676,121.0437,14.602593335735232,121.02392278964065,2021-12-31,235,"Mitsubishi Fuso Fighter"
-TK58068,2,4,"Advance shipping",0,"Pacific Asia",Chengdu,China,"Eastern Asia",Sichuan,COMPLETE,"Quezon City",14.676,121.0437,14.616402654411646,121.07549612082121,2021-12-05,240,"Isuzu ELF NHR 55"
-CR178084,5,4,"Late delivery",1,"Pacific Asia",Wollongong,Australia,Oceania,"Nueva Gales del Sur",COMPLETE,Parañaque,14.4793,121.0198,14.392189347149982,121.00052708799069,2023-12-27,213,"Toyota Vios"
-MC178281,2,4,"Advance shipping",0,"Pacific Asia",Daca,Bangladés,"South Asia",Daca,COMPLETE,Manila,14.5995,120.9842,14.543986149685445,121.06861302998719,2023-12-30,203,"Yamaha NMAX"
-TK104038,2,4,"Advance shipping",0,"Pacific Asia",Bagdad,Irak,"West Asia",Bagdad,COMPLETE,Parañaque,14.4793,121.0198,14.535295958877816,121.06863421572245,2022-08-31,239,"Hino 700 Series Dump Truck"
-TK69828,3,4,"Advance shipping",0,"Pacific Asia",Atsugacho,Japón,"Eastern Asia",Hokkaido,COMPLETE,Parañaque,14.4793,121.0198,14.398885361933043,121.05963330838794,2022-02-12,238,"Mitsubishi Fuso Fighter"
-MC175136,2,4,"Advance shipping",0,"Pacific Asia",Rangún,"Myanmar (Birmania)","Southeast Asia",Rangún,COMPLETE,Caloocan,14.6507,120.9667,14.665152012570903,120.97667679342132,2023-11-14,226,"Yamaha Mio Sporty"
-TK73060,4,4,"Shipping on time",0,"Pacific Asia",Jaipur,India,"South Asia",Rajastán,PROCESSING,"Quezon City",14.676,121.0437,14.673441448047237,121.01921855185108,2022-03-02,235,"Mitsubishi Fuso Fighter"
-TK109829,2,4,"Shipping canceled",0,"Pacific Asia","Bandar Abbas",Irán,"South Asia",Hormozgán,SUSPECTED_FRAUD,"Quezon City",14.676,121.0437,14.61370503534908,121.04549106937412,2022-10-03,238,"Mitsubishi Fuso Fighter"
-TK72527,4,4,"Shipping canceled",0,"Pacific Asia",Hangzhou,China,"Eastern Asia",Zhejiang,SUSPECTED_FRAUD,Parañaque,14.4793,121.0198,14.53385512581454,121.0582934909391,2022-02-28,238,"Mitsubishi Fuso Fighter"
-TK93518,2,4,"Advance shipping",0,USCA,Springfield,"Estados Unidos","US Center ",Misuri,PENDING,"Quezon City",14.676,121.0437,14.599804155733255,121.0469448756957,2022-06-30,238,"Mitsubishi Fuso Fighter"
-TK114948,4,4,"Shipping on time",0,USCA,Calgary,Canada,Canada,Alberta,PENDING,Caloocan,14.6507,120.9667,14.717216763335482,120.98331753139693,2022-11-02,240,"Isuzu ELF NHR 55"
-TK114695,3,4,"Advance shipping",0,USCA,Saanich,Canada,Canada,"Columbia británica",PROCESSING,Manila,14.5995,120.9842,14.515762513518112,121.07885997493645,2022-10-31,238,"Mitsubishi Fuso Fighter"
-TK126499,6,4,"Late delivery",1,Africa,Kinshasa,"República Democrática del Congo","Central Africa",Kinshasa,PROCESSING,"Quezon City",14.676,121.0437,14.617035634701173,121.0236233608179,2023-01-08,236,"Hino 700 Series Dump Truck"
-TK126497,6,4,"Late delivery",1,Africa,Kinshasa,"República Democrática del Congo","Central Africa",Kinshasa,PROCESSING,"Quezon City",14.676,121.0437,14.617035634701173,121.0236233608179,2023-01-08,236,"Hino 700 Series Dump Truck"
-TK45545,5,4,"Shipping canceled",0,Europe,Solingen,Alemania,"Western Europe","Renania del Norte-Westfalia",CANCELED,"Quezon City",14.676,121.0437,14.61880493426584,121.0490890530302,2021-09-23,235,"Mitsubishi Fuso Fighter"
-CR28992,3,4,"Advance shipping",0,Europe,Viena,Austria,"Western Europe",Viena,PENDING,Parañaque,14.4793,121.0198,14.530548707917843,121.05456543414347,2021-06-19,220,"Toyota Vios"
-CR155782,5,4,"Late delivery",1,Europe,Odense,Dinamarca,"Northern Europe","Dinamarca Meridional",PENDING,"Quezon City",14.676,121.0437,14.60118104757851,121.0383134041152,2023-06-28,211,"Honda Civic"
-MC176406,2,4,"Advance shipping",0,"Pacific Asia",Manila,Filipinas,"Southeast Asia","Capital Nacional",PENDING_PAYMENT,"Quezon City",14.676,121.0437,14.593753845657925,121.07720220925026,2023-12-02,210,"Honda Click 125i"
-TK113005,3,2,"Late delivery",1,"Pacific Asia",Haifa,Israel,"West Asia",Haifa,ON_HOLD,Caloocan,14.6507,120.9667,14.627599217302723,121.00214092785691,2022-10-22,237,"Isuzu ELF NHR 55"
-TK90607,5,2,"Late delivery",1,USCA,Memphis,"Estados Unidos","South of  USA ",Tennessee,PENDING,"Quezon City",14.676,121.0437,14.602593335735232,121.02392278964065,2022-06-13,235,"Mitsubishi Fuso Fighter"
-TK74532,2,1,"Late delivery",1,"Pacific Asia",Qingdao,China,"Eastern Asia",Shandong,ON_HOLD,Caloocan,14.6507,120.9667,14.696456108378671,120.95585775985928,2022-03-10,239,"Hino 700 Series Dump Truck"
-TK71782,4,4,"Shipping on time",0,"Pacific Asia",Bangkok,Tailandia,"Southeast Asia",Bangkok,PENDING_PAYMENT,"Quezon City",14.676,121.0437,14.589920475697072,121.08202910044419,2022-02-23,237,"Isuzu ELF NHR 55"
-CR15760,5,2,"Shipping canceled",0,LATAM,"San Salvador","El Salvador","Central America","San Salvador",CANCELED,"Quezon City",14.676,121.0437,14.616153630666577,121.0234998501218,2021-04-02,205,"Toyota Vios"
-CR9682,5,4,"Late delivery",1,LATAM,"Santiago de los Caballeros","República Dominicana",Caribbean,"Santiago de Chile",COMPLETE,Manila,14.5995,120.9842,14.53641055137516,121.03159337583146,2021-02-26,219,"Toyota Vios"
-MC6780,2,1,"Late delivery",1,LATAM,"Puerto Montt",Chile,"South America","Los Lagos",COMPLETE,"Quezon City",14.676,121.0437,14.588793918992202,121.07626950543026,2021-02-09,228,"Honda Click 125i"
-CR142021,1,0,"Late delivery",1,LATAM,"João Pessoa",Brasil,"South America",Paraíba,PENDING,"Quezon City",14.676,121.0437,14.6449657717114,121.12602034380289,2023-04-08,201,"Honda Civic"
-TK125913,3,4,"Advance shipping",0,Africa,"Port Elizabeth",SudAfrica,"Southern Africa","Cabo Oriental",PENDING_PAYMENT,Manila,14.5995,120.9842,14.558163524333539,121.01036879777011,2023-01-05,238,"Mitsubishi Fuso Fighter"
-TK120828,2,1,"Late delivery",1,Europe,Derbent,Rusia,"Eastern Europe",Daguestán,PROCESSING,Caloocan,14.6507,120.9667,14.674706834158586,120.96707586664434,2022-12-06,239,"Hino 700 Series Dump Truck"
-TK69827,3,4,"Advance shipping",0,"Pacific Asia",Atsugacho,Japón,"Eastern Asia",Hokkaido,COMPLETE,Parañaque,14.4793,121.0198,14.398885361933043,121.05963330838794,2022-02-12,240,"Isuzu ELF NHR 55"
-TK58734,4,4,"Shipping on time",0,"Pacific Asia",Changzhi,China,"Eastern Asia",Shanxi,COMPLETE,Caloocan,14.6507,120.9667,14.715608041422078,120.99279250515885,2021-12-09,240,"Isuzu ELF NHR 55"
-TK58733,4,4,"Shipping on time",0,"Pacific Asia",Changzhi,China,"Eastern Asia",Shanxi,COMPLETE,Caloocan,14.6507,120.9667,14.715608041422078,120.99279250515885,2021-12-09,238,"Mitsubishi Fuso Fighter"
-TK125075,4,4,"Shipping on time",0,"Pacific Asia",Baku,Azerbaiyán,"West Asia",Baki,COMPLETE,Caloocan,14.6507,120.9667,14.717216763335482,120.98331753139693,2022-12-31,235,"Mitsubishi Fuso Fighter"
-TK125073,4,4,"Shipping on time",0,"Pacific Asia",Baku,Azerbaiyán,"West Asia",Baki,COMPLETE,Caloocan,14.6507,120.9667,14.717216763335482,120.98331753139693,2022-12-31,240,"Isuzu ELF NHR 55"
-TK54941,2,4,"Advance shipping",0,"Pacific Asia","Murray Bridge",Australia,Oceania,"Australia del Sur",COMPLETE,"Quezon City",14.676,121.0437,14.602593335735232,121.02392278964065,2021-11-17,235,"Mitsubishi Fuso Fighter"
-TK73255,4,4,"Shipping on time",0,"Pacific Asia","Port Macquarie",Australia,Oceania,"Nueva Gales del Sur",COMPLETE,"Quezon City",14.676,121.0437,14.589993729339907,121.07529290516422,2022-03-03,237,"Isuzu ELF NHR 55"
-TK62542,2,4,"Advance shipping",0,"Pacific Asia",Taiping,Malasia,"Southeast Asia",Perak,COMPLETE,"Quezon City",14.676,121.0437,14.602593335735232,121.02392278964065,2021-12-31,240,"Isuzu ELF NHR 55"
-TK53411,6,4,"Late delivery",1,"Pacific Asia",Singapur,Singapur,"Southeast Asia",Singapur,COMPLETE,"Quezon City",14.676,121.0437,14.565550465197816,121.0993748120492,2021-11-08,238,"Mitsubishi Fuso Fighter"
-MC174982,3,4,"Advance shipping",0,"Pacific Asia",Baotou,China,"Eastern Asia","Mongolia Interior",COMPLETE,Parañaque,14.4793,121.0198,14.530089066475712,121.05119555853419,2023-11-12,215,"Yamaha Mio Sporty"
-TK53107,6,4,"Late delivery",1,"Pacific Asia",Durg,India,"South Asia",Chhattisgarh,ON_HOLD,"Quezon City",14.676,121.0437,14.605710593858463,121.02744944145665,2021-11-06,235,"Mitsubishi Fuso Fighter"
-TK72158,5,4,"Late delivery",1,"Pacific Asia",Manila,Filipinas,"Southeast Asia","Capital Nacional",ON_HOLD,"Quezon City",14.676,121.0437,14.595399381122924,121.04539935576301,2022-02-25,235,"Mitsubishi Fuso Fighter"
-TK53106,6,4,"Late delivery",1,"Pacific Asia",Durg,India,"South Asia",Chhattisgarh,ON_HOLD,"Quezon City",14.676,121.0437,14.605710593858463,121.02744944145665,2021-11-06,239,"Hino 700 Series Dump Truck"
-CR176898,4,4,"Shipping on time",0,"Pacific Asia",Durgapur,India,"South Asia",Maharashtra,ON_HOLD,"Quezon City",14.676,121.0437,14.614898781473654,121.02554279468538,2023-12-10,229,"Toyota Vios"
-CR174954,5,4,"Late delivery",1,"Pacific Asia",Adelaide,Australia,Oceania,"Australia del Sur",ON_HOLD,Parañaque,14.4793,121.0198,14.543779638478327,121.06781260363553,2023-11-11,219,"Toyota Vios"
-CR157833,4,4,"Shipping on time",0,Europe,Huddersfield,"Reino Unido","Northern Europe",Inglaterra,ON_HOLD,Parañaque,14.4793,121.0198,14.537724103357386,121.05518270649499,2023-07-10,231,"Honda Civic"
-MC1160,4,4,"Shipping on time",0,LATAM,Chinautla,Guatemala,"Central America",Guatemala,COMPLETE,Manila,14.5995,120.9842,14.535482446034887,121.06355298675928,2021-01-07,208,"Yamaha Mio Sporty"
-MC133494,2,4,"Advance shipping",0,LATAM,Amatitlán,Guatemala,"Central America",Guatemala,COMPLETE,"Quezon City",14.676,121.0437,14.628277232188989,121.07883238399293,2023-02-18,206,"Honda Click 125i"
-MC1158,4,4,"Shipping on time",0,LATAM,Chinautla,Guatemala,"Central America",Guatemala,COMPLETE,Manila,14.5995,120.9842,14.535482446034887,121.06355298675928,2021-01-07,209,"Honda Click 125i"
-MC4332,2,4,"Advance shipping",0,LATAM,"Mexico City",México,"Central America","Distrito Federal",COMPLETE,"Quezon City",14.676,121.0437,14.585132625294042,121.06753636279846,2021-01-26,207,"Honda Click 125i"
-CR152108,2,4,"Advance shipping",0,LATAM,Coyoacán,México,"Central America","Distrito Federal",COMPLETE,"Quezon City",14.676,121.0437,14.560222346671134,121.06342992090008,2023-06-06,211,"Honda Civic"
-CR25195,4,4,"Shipping on time",0,LATAM,"Pontes e Lacerda",Brasil,"South America","Mato Grosso",COMPLETE,Parañaque,14.4793,121.0198,14.544593026409478,121.06684922758195,2021-05-28,220,"Toyota Vios"
-CR135802,6,4,"Late delivery",1,LATAM,"Consolación del Sur",Cuba,Caribbean,"Pinar del Río",COMPLETE,Caloocan,14.6507,120.9667,14.660934118592118,120.96768142152362,2023-03-03,212,"MG 5"
-MC11526,3,4,"Advance shipping",0,LATAM,Monterrey,México,"Central America","Nuevo León",COMPLETE,Parañaque,14.4793,121.0198,14.547536894471884,121.06232162992686,2021-03-09,206,"Honda Click 125i"
-MC147289,6,4,"Late delivery",1,LATAM,"São Paulo",Brasil,"South America","São Paulo",COMPLETE,"Quezon City",14.676,121.0437,14.597994933666657,121.0520336675011,2023-05-08,232,"Yamaha Mio Sporty"
-MC3341,6,4,"Late delivery",1,LATAM,"Buenos Aires",Argentina,"South America","Buenos Aires",COMPLETE,Parañaque,14.4793,121.0198,14.391434449815597,121.03613807772858,2021-01-20,202,"Yamaha Mio Sporty"
-CR3338,6,4,"Late delivery",1,LATAM,"Buenos Aires",Argentina,"South America","Buenos Aires",COMPLETE,Parañaque,14.4793,121.0198,14.391434449815597,121.03613807772858,2021-01-20,204,"Toyota Vios"
-CR15812,4,4,"Shipping on time",0,LATAM,Resende,Brasil,"South America","Río de Janeiro",COMPLETE,Parañaque,14.4793,121.0198,14.543119825118332,121.05153179120414,2021-04-03,201,"Honda Civic"
-CR132754,3,4,"Advance shipping",0,LATAM,Apopa,"El Salvador","Central America","San Salvador",COMPLETE,Manila,14.5995,120.9842,14.558163524333539,121.01036879777011,2023-02-14,233,"Honda Civic"
-MC150263,4,4,"Shipping on time",0,LATAM,Choloma,Honduras,"Central America",Cortés,COMPLETE,Parañaque,14.4793,121.0198,14.446598962560854,121.00225508351089,2023-05-26,228,"Honda Click 125i"
-MC8498,3,4,"Advance shipping",0,LATAM,"Mexico City",México,"Central America","Distrito Federal",COMPLETE,"Quezon City",14.676,121.0437,14.560222346671134,121.06342992090008,2021-02-19,228,"Honda Click 125i"
-MC25194,4,4,"Shipping on time",0,LATAM,"Pontes e Lacerda",Brasil,"South America","Mato Grosso",COMPLETE,Parañaque,14.4793,121.0198,14.544593026409478,121.06684922758195,2021-05-28,227,"Yamaha NMAX"
-CR22035,4,4,"Shipping on time",0,LATAM,"Santa Cruz de Barahona","República Dominicana",Caribbean,Barahona,COMPLETE,"Quezon City",14.676,121.0437,14.61961172379517,121.03102877906619,2021-05-09,211,"Honda Civic"
-CR18112,6,4,"Late delivery",1,LATAM,"Novo Gama",Brasil,"South America",Goiás,COMPLETE,Caloocan,14.6507,120.9667,14.691709704465893,120.97894893266162,2021-04-16,220,"Toyota Vios"
-CR152104,2,4,"Advance shipping",0,LATAM,Coyoacán,México,"Central America","Distrito Federal",COMPLETE,"Quezon City",14.676,121.0437,14.560222346671134,121.06342992090008,2023-06-06,219,"Toyota Vios"
-MC2751,2,4,"Advance shipping",0,LATAM,Portmore,Jamaica,Caribbean,"Santa Caterina",COMPLETE,"Quezon City",14.676,121.0437,14.608856409125828,121.0417350114898,2021-01-17,218,"Honda Click 125i"
-TK130130,5,4,"Late delivery",1,LATAM,Apodaca,México,"Central America","Nuevo León",ON_HOLD,"Quezon City",14.676,121.0437,14.604115587588508,121.04675882904488,2023-01-30,238,"Mitsubishi Fuso Fighter"
-CR145416,2,4,"Advance shipping",0,LATAM,Managua,Nicaragua,"Central America",Managua,PENDING,"Quezon City",14.676,121.0437,14.616849334665433,121.0360935237781,2023-04-28,205,"Toyota Vios"
-MC24341,3,4,"Advance shipping",0,LATAM,"San Pedro Sula",Honduras,"Central America",Cortés,PENDING,Caloocan,14.6507,120.9667,14.660934118592118,120.96768142152362,2021-05-23,217,"Honda Click 125i"
-CR22514,2,4,"Advance shipping",0,LATAM,"Barra Mansa",Brasil,"South America","Río de Janeiro",PENDING,Manila,14.5995,120.9842,14.586194151757466,120.9782458311303,2021-05-12,222,"Toyota Vios"
-CR22516,2,4,"Advance shipping",0,LATAM,"Barra Mansa",Brasil,"South America","Río de Janeiro",PENDING,Manila,14.5995,120.9842,14.586194151757466,120.9782458311303,2021-05-12,213,"Toyota Vios"
-CR7152,3,4,"Advance shipping",0,LATAM,"Puerto Vallarta",México,"Central America",Jalisco,PROCESSING,Caloocan,14.6507,120.9667,14.674706834158586,120.96707586664434,2021-02-11,220,"Toyota Vios"
-MC15114,4,4,"Shipping on time",0,LATAM,Ji-Paraná,Brasil,"South America",Rondônia,PROCESSING,"Quezon City",14.676,121.0437,14.568001088097693,121.06526794863424,2021-03-30,228,"Honda Click 125i"
-TK62841,2,4,"Advance shipping",0,"Pacific Asia",Binzhou,China,"Eastern Asia",Shandong,PENDING,Caloocan,14.6507,120.9667,14.672336480414808,120.96587855770801,2022-01-02,240,"Isuzu ELF NHR 55"
-TK51597,3,4,"Advance shipping",0,"Pacific Asia",Manila,Filipinas,"Southeast Asia","Capital Nacional",PENDING,Manila,14.5995,120.9842,14.53990667906581,121.0199935016036,2021-10-29,239,"Hino 700 Series Dump Truck"
-TK120416,3,4,"Advance shipping",0,"Pacific Asia",Bagdad,Irak,"West Asia",Bagdad,PENDING,"Quezon City",14.676,121.0437,14.584255317909882,121.07843337336409,2022-12-03,240,"Isuzu ELF NHR 55"
-TK117394,4,4,"Shipping on time",0,"Pacific Asia",Estambul,Turquía,"West Asia",Estambul,PENDING,Manila,14.5995,120.9842,14.535482446034887,121.06355298675928,2022-11-16,239,"Hino 700 Series Dump Truck"
-TK62842,2,4,"Advance shipping",0,"Pacific Asia",Binzhou,China,"Eastern Asia",Shandong,PENDING,Caloocan,14.6507,120.9667,14.672336480414808,120.96587855770801,2022-01-02,239,"Hino 700 Series Dump Truck"
-TK67776,6,4,"Late delivery",1,"Pacific Asia",Ludhiana,India,"South Asia",Punyab,PROCESSING,"Quezon City",14.676,121.0437,14.676682012180502,121.02340890916382,2022-01-30,237,"Isuzu ELF NHR 55"
-TK58902,2,4,"Advance shipping",0,"Pacific Asia",Manila,Filipinas,"Southeast Asia","Capital Nacional",PROCESSING,Parañaque,14.4793,121.0198,14.537724103357386,121.05518270649499,2021-12-10,238,"Mitsubishi Fuso Fighter"
-TK58900,2,4,"Advance shipping",0,"Pacific Asia",Manila,Filipinas,"Southeast Asia","Capital Nacional",PROCESSING,Parañaque,14.4793,121.0198,14.537724103357386,121.05518270649499,2021-12-10,237,"Isuzu ELF NHR 55"
-MC168714,2,4,"Advance shipping",0,Europe,"West Bromwich","Reino Unido","Northern Europe",Inglaterra,PROCESSING,"Quezon City",14.676,121.0437,14.612255624450981,121.04989057436576,2023-09-12,214,"Yamaha Mio Sporty"
-CR34193,3,4,"Shipping canceled",0,Europe,Chelles,Francia,"Western Europe","Isla de Francia",SUSPECTED_FRAUD,"Quezon City",14.676,121.0437,14.604585145157374,121.02471686650506,2021-07-19,219,"Toyota Vios"
-MC3258,3,4,"Advance shipping",0,LATAM,Petapa,Guatemala,"Central America",Guatemala,PENDING,Manila,14.5995,120.9842,14.58393490698555,120.97100883767102,2021-01-20,223,"Yamaha NMAX"
-CR16561,3,4,"Advance shipping",0,LATAM,Managua,Nicaragua,"Central America",Managua,PROCESSING,"Quezon City",14.676,121.0437,14.616115315478401,121.04904895920218,2021-04-07,216,"Honda Civic"
-MC3842,4,4,"Shipping canceled",0,LATAM,Progreso,México,"Central America",Yucatán,SUSPECTED_FRAUD,"Quezon City",14.676,121.0437,14.608483918186728,121.02648250971593,2021-01-23,215,"Yamaha Mio Sporty"
-TK72529,4,4,"Shipping canceled",0,"Pacific Asia",Hangzhou,China,"Eastern Asia",Zhejiang,SUSPECTED_FRAUD,Parañaque,14.4793,121.0198,14.53385512581454,121.0582934909391,2022-02-28,240,"Isuzu ELF NHR 55"
-CR29579,3,4,"Advance shipping",0,Europe,Siegen,Alemania,"Western Europe","Renania del Norte-Westfalia",PENDING_PAYMENT,"Quezon City",14.676,121.0437,14.616153630666577,121.0234998501218,2021-06-22,201,"Honda Civic"
-CR24868,2,1,"Late delivery",1,LATAM,Juárez,México,"Central America",Chihuahua,PENDING_PAYMENT,Parañaque,14.4793,121.0198,14.546156611774261,121.05781804005412,2021-05-26,233,"Honda Civic"
-CR5651,2,1,"Late delivery",1,LATAM,"Gómez Palacio",México,"Central America",Durango,PENDING,Manila,14.5995,120.9842,14.53990667906581,121.0199935016036,2021-02-02,201,"Honda Civic"
-CR2011,6,4,"Late delivery",1,LATAM,Soyapango,"El Salvador","Central America","San Salvador",PENDING,"Quezon City",14.676,121.0437,14.595399381122924,121.04539935576301,2021-01-12,231,"Honda Civic"
-TK122633,2,1,"Late delivery",1,Africa,Kuito,Angola,"Central Africa",Bié,CLOSED,Parañaque,14.4793,121.0198,14.45124073112499,120.98411927066195,2022-12-16,239,"Hino 700 Series Dump Truck"
-TK122635,2,1,"Late delivery",1,Africa,Kuito,Angola,"Central Africa",Bié,CLOSED,Parañaque,14.4793,121.0198,14.45124073112499,120.98411927066195,2022-12-16,239,"Hino 700 Series Dump Truck"
-TK122634,2,1,"Late delivery",1,Africa,Kuito,Angola,"Central Africa",Bié,CLOSED,Parañaque,14.4793,121.0198,14.45124073112499,120.98411927066195,2022-12-16,240,"Isuzu ELF NHR 55"
-TK124245,2,1,"Late delivery",1,Africa,"Cape Town",SudAfrica,"Southern Africa","Cabo Occidental",CLOSED,Parañaque,14.4793,121.0198,14.5463774452511,121.06294410207583,2022-12-26,237,"Isuzu ELF NHR 55"
-TK122636,2,1,"Late delivery",1,Africa,Kuito,Angola,"Central Africa",Bié,CLOSED,Parañaque,14.4793,121.0198,14.45124073112499,120.98411927066195,2022-12-16,240,"Isuzu ELF NHR 55"
-MC174266,2,1,"Late delivery",1,Europe,London,"Reino Unido","Northern Europe",Inglaterra,CLOSED,"Quezon City",14.676,121.0437,14.588970438101303,121.09777142647447,2023-11-01,232,"Yamaha Mio Sporty"
-MC168802,2,1,"Late delivery",1,Europe,Tallaght,Irlanda,"Northern Europe","Dublín del Sur",CLOSED,Parañaque,14.4793,121.0198,14.538778327842035,121.05656592805549,2023-09-12,210,"Honda Click 125i"
-CR168799,2,1,"Late delivery",1,Europe,Tallaght,Irlanda,"Northern Europe","Dublín del Sur",CLOSED,Parañaque,14.4793,121.0198,14.538778327842035,121.05656592805549,2023-09-12,212,"MG 5"
-MC18347,2,1,"Late delivery",1,LATAM,"San Pedro Sula",Honduras,"Central America",Cortés,CLOSED,Manila,14.5995,120.9842,14.535482446034887,121.06355298675928,2021-04-17,207,"Honda Click 125i"
-MC18348,2,1,"Late delivery",1,LATAM,"San Pedro Sula",Honduras,"Central America",Cortés,CLOSED,Manila,14.5995,120.9842,14.535482446034887,121.06355298675928,2021-04-17,209,"Honda Click 125i"
-TK128429,2,1,"Late delivery",1,LATAM,Ocotlán,México,"Central America",Jalisco,CLOSED,"Quezon City",14.676,121.0437,14.566236643415165,121.08193875819624,2023-01-20,237,"Isuzu ELF NHR 55"
-TK128427,2,1,"Late delivery",1,LATAM,Ocotlán,México,"Central America",Jalisco,CLOSED,"Quezon City",14.676,121.0437,14.566236643415165,121.08193875819624,2023-01-20,240,"Isuzu ELF NHR 55"
-MC178846,2,1,"Late delivery",1,"Pacific Asia",Depok,Indonesia,"Southeast Asia",Yogyakarta,CLOSED,Manila,14.5995,120.9842,14.510983862272449,121.05910303831017,2024-01-07,228,"Honda Click 125i"
-CR178927,2,1,"Late delivery",1,"Pacific Asia",Perth,Australia,Oceania,"Australia Occidental",CLOSED,"Quezon City",14.676,121.0437,14.6176399337944,121.07101783591418,2024-01-08,216,"Honda Civic"
-TK56358,2,1,"Late delivery",1,"Pacific Asia",Melbourne,Australia,Oceania,Victoria,CLOSED,"Quezon City",14.676,121.0437,14.568001088097693,121.06526794863424,2021-11-25,240,"Isuzu ELF NHR 55"
-TK56360,2,1,"Late delivery",1,"Pacific Asia",Melbourne,Australia,Oceania,Victoria,CLOSED,"Quezon City",14.676,121.0437,14.568001088097693,121.06526794863424,2021-11-25,236,"Hino 700 Series Dump Truck"
-TK128425,2,1,"Late delivery",1,LATAM,Ocotlán,México,"Central America",Jalisco,CLOSED,"Quezon City",14.676,121.0437,14.566236643415165,121.08193875819624,2023-01-20,238,"Mitsubishi Fuso Fighter"
-TK56356,2,1,"Late delivery",1,"Pacific Asia",Melbourne,Australia,Oceania,Victoria,CLOSED,"Quezon City",14.676,121.0437,14.568001088097693,121.06526794863424,2021-11-25,239,"Hino 700 Series Dump Truck"
-TK128428,2,1,"Late delivery",1,LATAM,Ocotlán,México,"Central America",Jalisco,CLOSED,"Quezon City",14.676,121.0437,14.566236643415165,121.08193875819624,2023-01-20,235,"Mitsubishi Fuso Fighter"
-TK78290,5,2,"Late delivery",1,USCA,Fremont,"Estados Unidos","US Center ",Nebraska,COMPLETE,"Quezon City",14.676,121.0437,14.650427279845278,121.10566520164316,2022-04-02,238,"Mitsubishi Fuso Fighter"
-CR165761,6,2,"Late delivery",1,Europe,London,"Reino Unido","Northern Europe",Inglaterra,COMPLETE,"Quezon City",14.676,121.0437,14.669853772511571,121.12274211022327,2023-08-26,229,"Toyota Vios"
-CR165762,6,2,"Late delivery",1,Europe,London,"Reino Unido","Northern Europe",Inglaterra,COMPLETE,"Quezon City",14.676,121.0437,14.669853772511571,121.12274211022327,2023-08-26,213,"Toyota Vios"
-CR165760,6,2,"Late delivery",1,Europe,London,"Reino Unido","Northern Europe",Inglaterra,COMPLETE,"Quezon City",14.676,121.0437,14.669853772511571,121.12274211022327,2023-08-26,224,"Honda Civic"
-TK78291,5,2,"Late delivery",1,USCA,Fremont,"Estados Unidos","US Center ",Nebraska,COMPLETE,"Quezon City",14.676,121.0437,14.650427279845278,121.10566520164316,2022-04-02,236,"Hino 700 Series Dump Truck"
-TK55341,5,4,"Late delivery",1,"Pacific Asia",Singapur,Singapur,"Southeast Asia",Singapur,CLOSED,"Quezon City",14.676,121.0437,14.674149235118321,121.12251984645847,2021-11-19,239,"Hino 700 Series Dump Truck"
-TK55345,5,4,"Late delivery",1,"Pacific Asia",Singapur,Singapur,"Southeast Asia",Singapur,CLOSED,"Quezon City",14.676,121.0437,14.674149235118321,121.12251984645847,2021-11-19,238,"Mitsubishi Fuso Fighter"
-TK55344,5,4,"Late delivery",1,"Pacific Asia",Singapur,Singapur,"Southeast Asia",Singapur,CLOSED,"Quezon City",14.676,121.0437,14.674149235118321,121.12251984645847,2021-11-19,240,"Isuzu ELF NHR 55"
-TK55343,5,4,"Late delivery",1,"Pacific Asia",Singapur,Singapur,"Southeast Asia",Singapur,CLOSED,"Quezon City",14.676,121.0437,14.674149235118321,121.12251984645847,2021-11-19,240,"Isuzu ELF NHR 55"
-TK82504,5,4,"Late delivery",1,USCA,Columbus,"Estados Unidos","East of USA",Ohio,COMPLETE,"Quezon City",14.676,121.0437,14.605710593858463,121.02744944145665,2022-04-26,236,"Hino 700 Series Dump Truck"
-TK99195,5,4,"Late delivery",1,USCA,Chicago,"Estados Unidos","US Center ",Illinois,COMPLETE,"Quezon City",14.676,121.0437,14.604121222779268,121.05391886271902,2022-08-03,237,"Isuzu ELF NHR 55"
-TK82503,5,4,"Late delivery",1,USCA,Columbus,"Estados Unidos","East of USA",Ohio,COMPLETE,"Quezon City",14.676,121.0437,14.605710593858463,121.02744944145665,2022-04-26,235,"Mitsubishi Fuso Fighter"
-TK81079,5,4,"Late delivery",1,USCA,Richmond,"Estados Unidos","US Center ",Indiana,COMPLETE,"Quezon City",14.676,121.0437,14.610214375509148,121.02485122908358,2022-04-18,238,"Mitsubishi Fuso Fighter"
-TK82502,5,4,"Late delivery",1,USCA,Columbus,"Estados Unidos","East of USA",Ohio,COMPLETE,"Quezon City",14.676,121.0437,14.605710593858463,121.02744944145665,2022-04-26,240,"Isuzu ELF NHR 55"
-TK87221,2,4,"Advance shipping",0,USCA,"San Antonio","Estados Unidos","US Center ",Texas,COMPLETE,Manila,14.5995,120.9842,14.513819094247948,121.09483932735849,2022-05-24,236,"Hino 700 Series Dump Truck"
-TK99691,6,4,"Late delivery",1,USCA,Chicago,"Estados Unidos","US Center ",Illinois,COMPLETE,Manila,14.5995,120.9842,14.532739355585296,121.07917879738768,2022-08-06,235,"Mitsubishi Fuso Fighter"
-TK81629,3,4,"Advance shipping",0,USCA,Middletown,"Estados Unidos","East of USA",Connecticut,COMPLETE,Caloocan,14.6507,120.9667,14.715608041422078,120.99279250515885,2022-04-21,236,"Hino 700 Series Dump Truck"
-TK87545,4,4,"Shipping on time",0,USCA,Odessa,"Estados Unidos","US Center ",Texas,ON_HOLD,"Quezon City",14.676,121.0437,14.619070368687687,121.02050593078184,2022-05-26,240,"Isuzu ELF NHR 55"
-MC155664,6,4,"Late delivery",1,Europe,Tilburg,"Países Bajos","Western Europe","Brabante Septentrional",COMPLETE,Parañaque,14.4793,121.0198,14.438950660982123,120.96341197876576,2023-06-27,225,"Yamaha Mio Sporty"
-MC36529,3,4,"Advance shipping",0,Europe,Utrecht,"Países Bajos","Western Europe",Utrecht,COMPLETE,Caloocan,14.6507,120.9667,14.717216763335482,120.98331753139693,2021-08-02,217,"Honda Click 125i"
-TK114663,6,4,"Late delivery",1,Europe,Bialystok,Polonia,"Eastern Europe",Podlaquia,COMPLETE,Caloocan,14.6507,120.9667,14.686795933346074,120.95434318919139,2022-10-31,239,"Hino 700 Series Dump Truck"
-CR36526,3,4,"Advance shipping",0,Europe,Utrecht,"Países Bajos","Western Europe",Utrecht,COMPLETE,Caloocan,14.6507,120.9667,14.717216763335482,120.98331753139693,2021-08-02,224,"Honda Civic"
-MC154470,3,4,"Advance shipping",0,Europe,Bedford,"Reino Unido","Northern Europe",Inglaterra,COMPLETE,Manila,14.5995,120.9842,14.532739355585296,121.07917879738768,2023-06-21,209,"Honda Click 125i"
-TK114660,6,4,"Late delivery",1,Europe,Bialystok,Polonia,"Eastern Europe",Podlaquia,COMPLETE,Caloocan,14.6507,120.9667,14.686795933346074,120.95434318919139,2022-10-31,236,"Hino 700 Series Dump Truck"
-MC162635,4,4,"Shipping on time",0,Europe,Elda,España,"Southern Europe",Valenciana,COMPLETE,"Quezon City",14.676,121.0437,14.585708494750513,121.05682652933227,2023-08-07,227,"Yamaha NMAX"
-CR160746,6,4,"Late delivery",1,Europe,Leeds,"Reino Unido","Northern Europe",Inglaterra,COMPLETE,Manila,14.5995,120.9842,14.527007163946523,121.06455623327247,2023-07-27,212,"MG 5"
-MC166788,4,4,"Shipping on time",0,Europe,Mulhouse,Francia,"Western Europe",Alsacia-Champaña-Ardenas-Lorena,COMPLETE,"Quezon City",14.676,121.0437,14.617035634701173,121.0236233608179,2023-09-01,203,"Yamaha NMAX"
-TK114661,6,4,"Late delivery",1,Europe,Bialystok,Polonia,"Eastern Europe",Podlaquia,COMPLETE,Caloocan,14.6507,120.9667,14.686795933346074,120.95434318919139,2022-10-31,236,"Hino 700 Series Dump Truck"
-MC19770,2,4,"Advance shipping",0,LATAM,Tegucigalpa,Honduras,"Central America","Francisco Morazán",COMPLETE,Manila,14.5995,120.9842,14.541759676059485,121.06512968201667,2021-04-26,232,"Yamaha Mio Sporty"
-MC2737,5,4,"Late delivery",1,LATAM,Soyapango,"El Salvador","Central America","San Salvador",COMPLETE,"Quezon City",14.676,121.0437,14.565550465197816,121.0993748120492,2021-01-17,223,"Yamaha NMAX"
-MC149601,2,4,"Advance shipping",0,LATAM,Posadas,Argentina,"South America",Misiones,COMPLETE,"Quezon City",14.676,121.0437,14.600147753376651,121.02387472361687,2023-05-22,202,"Yamaha Mio Sporty"
-CR146985,3,4,"Advance shipping",0,LATAM,Carrefour,Haití,Caribbean,Ouest,COMPLETE,Parañaque,14.4793,121.0198,14.542472485874288,121.06461298275237,2023-05-07,204,"Toyota Vios"
-MC23286,4,4,"Shipping on time",0,LATAM,Managua,Nicaragua,"Central America",Managua,COMPLETE,Parañaque,14.4793,121.0198,14.542472485874288,121.06461298275237,2021-05-17,202,"Yamaha Mio Sporty"
-TK126395,5,4,"Late delivery",1,"Pacific Asia",Mashhad,Irán,"South Asia","Jorasán Razaví",COMPLETE,"Quezon City",14.676,121.0437,14.61564745675367,121.04159750418886,2023-01-08,239,"Hino 700 Series Dump Truck"
-TK115042,5,4,"Late delivery",1,"Pacific Asia",Mashhad,Irán,"South Asia","Jorasán Razaví",COMPLETE,"Quezon City",14.676,121.0437,14.61961172379517,121.03102877906619,2022-11-02,239,"Hino 700 Series Dump Truck"
-TK104781,6,4,"Late delivery",1,"Pacific Asia",Amol,Irán,"South Asia",Mazandarán,COMPLETE,Parañaque,14.4793,121.0198,14.535049310983204,121.05205154715297,2022-09-04,240,"Isuzu ELF NHR 55"
-TK54948,5,4,"Late delivery",1,"Pacific Asia",Changwon,"Corea del Sur","Eastern Asia",Gyeongsangnam,COMPLETE,"Quezon City",14.676,121.0437,14.610219606859815,121.05409156445795,2021-11-17,237,"Isuzu ELF NHR 55"
-TK53676,5,4,"Late delivery",1,"Pacific Asia",Caloundra,Australia,Oceania,Queensland,COMPLETE,"Quezon City",14.676,121.0437,14.61807845543891,121.04138130012096,2021-11-10,240,"Isuzu ELF NHR 55"
-TK53979,5,4,"Late delivery",1,"Pacific Asia",Yancheng,China,"Eastern Asia",Jiangsu,ON_HOLD,Caloocan,14.6507,120.9667,14.65410617962862,120.95007307739004,2021-11-12,236,"Hino 700 Series Dump Truck"
-TK70122,2,4,"Advance shipping",0,"Pacific Asia",Shijiazhuang,China,"Eastern Asia",Hebei,ON_HOLD,Parañaque,14.4793,121.0198,14.545218739840404,121.06600600694865,2022-02-14,240,"Isuzu ELF NHR 55"
-TK93572,5,4,"Late delivery",1,USCA,Columbus,"Estados Unidos","US Center ",Indiana,COMPLETE,Caloocan,14.6507,120.9667,14.721869079183666,120.95962764738093,2022-07-01,235,"Mitsubishi Fuso Fighter"
-TK94587,4,4,"Shipping on time",0,USCA,Columbus,"Estados Unidos","East of USA",Ohio,COMPLETE,Parañaque,14.4793,121.0198,14.391434449815597,121.03613807772858,2022-07-07,237,"Isuzu ELF NHR 55"
-TK96612,3,4,"Advance shipping",0,USCA,Seattle,"Estados Unidos","West of USA ",Washington,COMPLETE,"Quezon City",14.676,121.0437,14.678736163264826,121.04558031544609,2022-07-18,240,"Isuzu ELF NHR 55"
-TK102945,4,4,"Shipping on time",0,USCA,Philadelphia,"Estados Unidos","East of USA",Pensilvania,COMPLETE,Parañaque,14.4793,121.0198,14.446598962560854,121.00225508351089,2022-08-25,239,"Hino 700 Series Dump Truck"
-TK84074,6,4,"Late delivery",1,USCA,Malden,"Estados Unidos","East of USA",Massachusetts,ON_HOLD,"Quezon City",14.676,121.0437,14.684483248539719,121.09272836827927,2022-05-06,236,"Hino 700 Series Dump Truck"
-TK122319,2,1,"Late delivery",1,Africa,"Dar es Salaam",Tanzania,"East Africa","Dar es Salaam",PENDING_PAYMENT,Manila,14.5995,120.9842,14.532384103017286,121.00064647438066,2022-12-15,237,"Isuzu ELF NHR 55"
-TK122318,2,1,"Late delivery",1,Africa,"Dar es Salaam",Tanzania,"East Africa","Dar es Salaam",PENDING_PAYMENT,Manila,14.5995,120.9842,14.532384103017286,121.00064647438066,2022-12-15,236,"Hino 700 Series Dump Truck"
-TK112832,2,1,"Late delivery",1,Africa,Bulawayo,Zimbabue,"East Africa",Bulawayo,PENDING_PAYMENT,Caloocan,14.6507,120.9667,14.652160128161459,120.9830761231138,2022-10-21,239,"Hino 700 Series Dump Truck"
-TK112830,2,1,"Late delivery",1,Africa,Bulawayo,Zimbabue,"East Africa",Bulawayo,PENDING_PAYMENT,Caloocan,14.6507,120.9667,14.652160128161459,120.9830761231138,2022-10-21,235,"Mitsubishi Fuso Fighter"
-TK112828,2,1,"Late delivery",1,Africa,Bulawayo,Zimbabue,"East Africa",Bulawayo,PENDING_PAYMENT,Caloocan,14.6507,120.9667,14.652160128161459,120.9830761231138,2022-10-21,236,"Hino 700 Series Dump Truck"
-TK112829,2,1,"Late delivery",1,Africa,Bulawayo,Zimbabue,"East Africa",Bulawayo,PENDING_PAYMENT,Caloocan,14.6507,120.9667,14.652160128161459,120.9830761231138,2022-10-21,237,"Isuzu ELF NHR 55"
-MC173226,2,1,"Late delivery",1,Europe,Rome,Italia,"Southern Europe",Lacio,PENDING_PAYMENT,Manila,14.5995,120.9842,14.505080376803019,121.05617351621032,2023-10-17,210,"Honda Click 125i"
-MC34166,2,1,"Late delivery",1,Europe,Watford,"Reino Unido","Northern Europe",Inglaterra,PENDING_PAYMENT,Parañaque,14.4793,121.0198,14.402501161743423,121.0115340565625,2021-07-19,208,"Yamaha Mio Sporty"
-MC32808,2,1,"Late delivery",1,Europe,Paris,Francia,"Western Europe","Isla de Francia",PENDING_PAYMENT,"Quezon City",14.676,121.0437,14.6004716856037,121.03623655810601,2021-07-11,221,"Honda Click 125i"
-TK123904,2,1,"Late delivery",1,Europe,Miass,Rusia,"Eastern Europe",Cheliábinsk,PENDING_PAYMENT,Caloocan,14.6507,120.9667,14.696456108378671,120.95585775985928,2022-12-24,238,"Mitsubishi Fuso Fighter"
-TK123903,2,1,"Late delivery",1,Europe,Miass,Rusia,"Eastern Europe",Cheliábinsk,PENDING_PAYMENT,Caloocan,14.6507,120.9667,14.696456108378671,120.95585775985928,2022-12-24,238,"Mitsubishi Fuso Fighter"
-MC34165,2,1,"Late delivery",1,Europe,Watford,"Reino Unido","Northern Europe",Inglaterra,PENDING_PAYMENT,Parañaque,14.4793,121.0198,14.402501161743423,121.0115340565625,2021-07-19,202,"Yamaha Mio Sporty"
-TK87426,6,4,"Late delivery",1,USCA,Decatur,"Estados Unidos","South of  USA ",Alabama,PROCESSING,Parañaque,14.4793,121.0198,14.398885361933043,121.05963330838794,2022-05-25,240,"Isuzu ELF NHR 55"
-TK87429,6,4,"Late delivery",1,USCA,Decatur,"Estados Unidos","South of  USA ",Alabama,PROCESSING,Parañaque,14.4793,121.0198,14.398885361933043,121.05963330838794,2022-05-25,239,"Hino 700 Series Dump Truck"
-TK88696,2,4,"Advance shipping",0,USCA,Mishawaka,"Estados Unidos","US Center ",Indiana,PROCESSING,Manila,14.5995,120.9842,14.555413608313923,121.0021218103749,2022-06-02,236,"Hino 700 Series Dump Truck"
-MC155783,5,4,"Late delivery",1,Europe,Odense,Dinamarca,"Northern Europe","Dinamarca Meridional",PENDING,"Quezon City",14.676,121.0437,14.60118104757851,121.0383134041152,2023-06-28,203,"Yamaha NMAX"
-CR28991,3,4,"Advance shipping",0,Europe,Viena,Austria,"Western Europe",Viena,PENDING,Parañaque,14.4793,121.0198,14.530548707917843,121.05456543414347,2021-06-19,201,"Honda Civic"
-MC158121,3,4,"Advance shipping",0,Europe,Gothenburg,Suecia,"Northern Europe","Västra Götaland",PENDING,Caloocan,14.6507,120.9667,14.692960285202563,120.98184463864365,2023-07-12,232,"Yamaha Mio Sporty"
-TK45411,4,4,"Shipping on time",0,Europe,"Le Cannet",Francia,"Western Europe","Provenza-Alpes-Costa Azul",PROCESSING,"Quezon City",14.676,121.0437,14.600147753376651,121.02387472361687,2021-09-23,238,"Mitsubishi Fuso Fighter"
-MC21759,3,4,"Advance shipping",0,LATAM,"Sahuayo de José María Morelos",México,"Central America",Michoacán,PENDING,"Quezon City",14.676,121.0437,14.580342339147203,121.05617778134176,2021-05-08,209,"Honda Click 125i"
-TK68686,3,4,"Advance shipping",0,"Pacific Asia",Daca,Bangladés,"South Asia",Daca,PENDING,"Quezon City",14.676,121.0437,14.595399381122924,121.04539935576301,2022-02-05,240,"Isuzu ELF NHR 55"
-TK51877,4,4,"Shipping on time",0,"Pacific Asia",Ranchi,India,"South Asia",Jharkhand,PROCESSING,Manila,14.5995,120.9842,14.527007163946523,121.06455623327247,2021-10-31,235,"Mitsubishi Fuso Fighter"
-TK51880,4,4,"Shipping on time",0,"Pacific Asia",Ranchi,India,"South Asia",Jharkhand,PROCESSING,Manila,14.5995,120.9842,14.527007163946523,121.06455623327247,2021-10-31,236,"Hino 700 Series Dump Truck"
-TK69688,5,4,"Late delivery",1,"Pacific Asia",Jinan,China,"Eastern Asia",Shandong,PROCESSING,Parañaque,14.4793,121.0198,14.542472485874288,121.06461298275237,2022-02-11,240,"Isuzu ELF NHR 55"
-TK124214,2,4,"Advance shipping",0,"Pacific Asia",Zahedan,Irán,"South Asia","Sistán y Baluchistán",PROCESSING,"Quezon City",14.676,121.0437,14.611889512643115,121.05846566691852,2022-12-26,239,"Hino 700 Series Dump Truck"
-TK109826,2,4,"Shipping canceled",0,"Pacific Asia","Bandar Abbas",Irán,"South Asia",Hormozgán,SUSPECTED_FRAUD,"Quezon City",14.676,121.0437,14.61370503534908,121.04549106937412,2022-10-03,239,"Hino 700 Series Dump Truck"
-TK114861,3,4,"Shipping canceled",0,"Pacific Asia",Mosul,Irak,"West Asia",Nínive,SUSPECTED_FRAUD,"Quezon City",14.676,121.0437,14.607435909423453,121.0574876605044,2022-11-01,235,"Mitsubishi Fuso Fighter"
-TK93520,2,4,"Advance shipping",0,USCA,Springfield,"Estados Unidos","US Center ",Misuri,PENDING,"Quezon City",14.676,121.0437,14.599804155733255,121.0469448756957,2022-06-30,237,"Isuzu ELF NHR 55"
-TK85966,5,4,"Late delivery",1,USCA,Seattle,"Estados Unidos","West of USA ",Washington,PENDING,"Quezon City",14.676,121.0437,14.602593335735232,121.02392278964065,2022-05-17,235,"Mitsubishi Fuso Fighter"
-TK94402,3,4,"Advance shipping",0,USCA,"El Paso","Estados Unidos","US Center ",Texas,PROCESSING,Caloocan,14.6507,120.9667,14.715608041422078,120.99279250515885,2022-07-06,238,"Mitsubishi Fuso Fighter"
-TK88693,2,4,"Advance shipping",0,USCA,Mishawaka,"Estados Unidos","US Center ",Indiana,PROCESSING,Manila,14.5995,120.9842,14.555413608313923,121.0021218103749,2022-06-02,239,"Hino 700 Series Dump Truck"
-TK90175,4,4,"Shipping on time",0,USCA,Philadelphia,"Estados Unidos","East of USA",Pensilvania,PROCESSING,Parañaque,14.4793,121.0198,14.542472485874288,121.06461298275237,2022-06-11,235,"Mitsubishi Fuso Fighter"
-CR162219,4,4,"Shipping on time",0,Europe,Ulm,Alemania,"Western Europe",Baden-Wurtemberg,PENDING,Manila,14.5995,120.9842,14.542845845402075,121.07679092602505,2023-08-05,220,"Toyota Vios"
-CR155784,5,4,"Late delivery",1,Europe,Odense,Dinamarca,"Northern Europe","Dinamarca Meridional",PENDING,"Quezon City",14.676,121.0437,14.60118104757851,121.0383134041152,2023-06-28,205,"Toyota Vios"
-MC28990,3,4,"Advance shipping",0,Europe,Viena,Austria,"Western Europe",Viena,PENDING,Parañaque,14.4793,121.0198,14.530548707917843,121.05456543414347,2021-06-19,203,"Yamaha NMAX"
-MC2008,6,4,"Late delivery",1,LATAM,Soyapango,"El Salvador","Central America","San Salvador",PENDING,"Quezon City",14.676,121.0437,14.595399381122924,121.04539935576301,2021-01-12,209,"Honda Click 125i"
-MC150722,3,4,"Advance shipping",0,LATAM,"Buenos Aires",Argentina,"South America","Buenos Aires",PENDING,"Quezon City",14.676,121.0437,14.602166838182292,121.0480276204441,2023-05-29,234,"Yamaha NMAX"
-MC150721,3,4,"Advance shipping",0,LATAM,"Buenos Aires",Argentina,"South America","Buenos Aires",PENDING,"Quezon City",14.676,121.0437,14.602166838182292,121.0480276204441,2023-05-29,207,"Honda Click 125i"
-CR170031,3,4,"Advance shipping",0,Europe,Marseille,Francia,"Western Europe","Provenza-Alpes-Costa Azul",COMPLETE,"Quezon City",14.676,121.0437,14.647312218870328,121.12642299366782,2023-09-19,231,"Honda Civic"
-CR37428,5,4,"Late delivery",1,Europe,Herne,Alemania,"Western Europe","Renania del Norte-Westfalia",COMPLETE,"Quezon City",14.676,121.0437,14.66017831326479,121.09162258685717,2021-08-07,213,"Toyota Vios"
-TK58065,2,4,"Advance shipping",0,"Pacific Asia",Chengdu,China,"Eastern Asia",Sichuan,COMPLETE,"Quezon City",14.676,121.0437,14.616402654411646,121.07549612082121,2021-12-05,239,"Hino 700 Series Dump Truck"
-TK73254,4,4,"Shipping on time",0,"Pacific Asia","Port Macquarie",Australia,Oceania,"Nueva Gales del Sur",COMPLETE,"Quezon City",14.676,121.0437,14.589993729339907,121.07529290516422,2022-03-03,237,"Isuzu ELF NHR 55"
-TK105326,4,4,"Shipping on time",0,"Pacific Asia",Estambul,Turquía,"West Asia",Estambul,COMPLETE,Manila,14.5995,120.9842,14.542845845402075,121.07679092602505,2022-09-07,237,"Isuzu ELF NHR 55"
-TK105328,4,4,"Shipping on time",0,"Pacific Asia",Estambul,Turquía,"West Asia",Estambul,COMPLETE,Manila,14.5995,120.9842,14.542845845402075,121.07679092602505,2022-09-07,238,"Mitsubishi Fuso Fighter"
-TK54940,2,4,"Advance shipping",0,"Pacific Asia","Murray Bridge",Australia,Oceania,"Australia del Sur",COMPLETE,"Quezon City",14.676,121.0437,14.602593335735232,121.02392278964065,2021-11-17,235,"Mitsubishi Fuso Fighter"
-TK125638,2,4,"Advance shipping",0,"Pacific Asia","Al Hufuf","Arabia Saudí","West Asia","Ash Sharqiyah",COMPLETE,"Quezon City",14.676,121.0437,14.567577996028195,121.05302222110612,2023-01-03,239,"Hino 700 Series Dump Truck"
-TK62543,2,4,"Advance shipping",0,"Pacific Asia",Taiping,Malasia,"Southeast Asia",Perak,COMPLETE,"Quezon City",14.676,121.0437,14.602593335735232,121.02392278964065,2021-12-31,240,"Isuzu ELF NHR 55"
-TK53412,6,4,"Late delivery",1,"Pacific Asia",Singapur,Singapur,"Southeast Asia",Singapur,COMPLETE,"Quezon City",14.676,121.0437,14.565550465197816,121.0993748120492,2021-11-08,237,"Isuzu ELF NHR 55"
-TK86079,6,4,"Late delivery",1,USCA,"San Francisco","Estados Unidos","West of USA ",California,COMPLETE,"Quezon City",14.676,121.0437,14.565550465197816,121.0993748120492,2022-05-18,236,"Hino 700 Series Dump Truck"
-TK81627,3,4,"Advance shipping",0,USCA,Middletown,"Estados Unidos","East of USA",Connecticut,COMPLETE,Caloocan,14.6507,120.9667,14.715608041422078,120.99279250515885,2022-04-21,236,"Hino 700 Series Dump Truck"
-TK81630,3,4,"Advance shipping",0,USCA,Middletown,"Estados Unidos","East of USA",Connecticut,COMPLETE,Caloocan,14.6507,120.9667,14.715608041422078,120.99279250515885,2022-04-21,238,"Mitsubishi Fuso Fighter"
-TK82505,5,4,"Late delivery",1,USCA,Columbus,"Estados Unidos","East of USA",Ohio,COMPLETE,"Quezon City",14.676,121.0437,14.605710593858463,121.02744944145665,2022-04-26,236,"Hino 700 Series Dump Truck"
-TK99194,5,4,"Late delivery",1,USCA,Chicago,"Estados Unidos","US Center ",Illinois,COMPLETE,"Quezon City",14.676,121.0437,14.604121222779268,121.05391886271902,2022-08-03,237,"Isuzu ELF NHR 55"
-TK97785,5,4,"Late delivery",1,USCA,Charlotte,"Estados Unidos","South of  USA ","Carolina del Norte",COMPLETE,Parañaque,14.4793,121.0198,14.53495084759309,121.05112757325277,2022-07-25,239,"Hino 700 Series Dump Truck"
-TK87547,4,4,"Shipping on time",0,USCA,Odessa,"Estados Unidos","US Center ",Texas,ON_HOLD,"Quezon City",14.676,121.0437,14.619070368687687,121.02050593078184,2022-05-26,240,"Isuzu ELF NHR 55"
-TK121743,3,4,"Advance shipping",0,Africa,Man,"Costa de Marfil","West Africa","Dix-Huit Montagnes",COMPLETE,Parañaque,14.4793,121.0198,14.540785324099273,121.06054390135272,2022-12-11,236,"Hino 700 Series Dump Truck"
-TK107373,3,4,"Advance shipping",0,Africa,Casablanca,Marruecos,"North Africa","Gran Casablanca",COMPLETE,"Quezon City",14.676,121.0437,14.580342339147203,121.05617778134176,2022-09-19,239,"Hino 700 Series Dump Truck"
-TK119770,4,4,"Shipping on time",0,Africa,Luanda,Angola,"Central Africa",Luanda,ON_HOLD,Caloocan,14.6507,120.9667,14.686795933346074,120.95434318919139,2022-11-30,239,"Hino 700 Series Dump Truck"
-TK119772,4,4,"Shipping on time",0,Africa,Luanda,Angola,"Central Africa",Luanda,ON_HOLD,Caloocan,14.6507,120.9667,14.686795933346074,120.95434318919139,2022-11-30,240,"Isuzu ELF NHR 55"
-MC161934,3,4,"Advance shipping",0,Europe,Cottbus,Alemania,"Western Europe",Brandenburgo,COMPLETE,Parañaque,14.4793,121.0198,14.398885361933043,121.05963330838794,2023-08-03,221,"Honda Click 125i"
-CR36079,3,4,"Advance shipping",0,Europe,Birkenhead,"Reino Unido","Northern Europe",Inglaterra,COMPLETE,Parañaque,14.4793,121.0198,14.542027742594506,121.05233660763346,2021-07-30,216,"Honda Civic"
-CR157949,2,4,"Advance shipping",0,Europe,Brescia,Italia,"Southern Europe",Lombardía,COMPLETE,Parañaque,14.4793,121.0198,14.530363535080443,121.06018597195873,2023-07-11,229,"Toyota Vios"
-TK113534,3,4,"Advance shipping",0,Europe,Praga,"República Checa","Eastern Europe",Praga,COMPLETE,"Quezon City",14.676,121.0437,14.619070368687687,121.02050593078184,2022-10-25,240,"Isuzu ELF NHR 55"
-MC13573,3,4,"Advance shipping",0,LATAM,Mixco,Guatemala,"Central America",Guatemala,COMPLETE,"Quezon City",14.676,121.0437,14.607435909423453,121.0574876605044,2021-03-21,221,"Honda Click 125i"
-CR134641,3,4,"Advance shipping",0,LATAM,"San Pedro de Macorís","República Dominicana",Caribbean,"San Pedro de Macorís",COMPLETE,"Quezon City",14.676,121.0437,14.607435909423453,121.0574876605044,2023-02-25,213,"Toyota Vios"
-MC152617,3,4,"Advance shipping",0,LATAM,Managua,Nicaragua,"Central America",Managua,COMPLETE,"Quezon City",14.676,121.0437,14.60983925516702,121.04795754086035,2023-06-09,210,"Honda Click 125i"
-MC132454,4,4,"Shipping on time",0,LATAM,Tijuana,México,"Central America","Baja California",COMPLETE,"Quezon City",14.676,121.0437,14.619070368687687,121.02050593078184,2023-02-12,226,"Yamaha Mio Sporty"
-CR11215,2,4,"Advance shipping",0,LATAM,Mosquera,Colombia,"South America",Cundinamarca,COMPLETE,Caloocan,14.6507,120.9667,14.634696151925898,120.96613777200331,2021-03-07,211,"Honda Civic"
-CR138272,3,4,"Advance shipping",0,LATAM,"Las Tunas",Cuba,Caribbean,"Las Tunas",COMPLETE,Parañaque,14.4793,121.0198,14.531253430676882,121.0689018275951,2023-03-18,205,"Toyota Vios"
-MC13574,3,4,"Advance shipping",0,LATAM,Mixco,Guatemala,"Central America",Guatemala,COMPLETE,"Quezon City",14.676,121.0437,14.607435909423453,121.0574876605044,2021-03-21,214,"Yamaha Mio Sporty"
-TK62107,5,4,"Late delivery",1,"Pacific Asia",Shanghái,China,"Eastern Asia",Shanghái,COMPLETE,Manila,14.5995,120.9842,14.527007163946523,121.06455623327247,2021-12-28,235,"Mitsubishi Fuso Fighter"
-TK75396,6,4,"Late delivery",1,"Pacific Asia","Ho Chi Minh City",Vietnam,"Southeast Asia","Ciudad Ho Chi Minh",COMPLETE,Parañaque,14.4793,121.0198,14.438950660982123,120.96341197876576,2022-03-16,236,"Hino 700 Series Dump Truck"
-TK58801,3,4,"Advance shipping",0,"Pacific Asia",Chengdu,China,"Eastern Asia",Sichuan,ON_HOLD,Parañaque,14.4793,121.0198,14.54074884655955,121.0670387506271,2021-12-10,236,"Hino 700 Series Dump Truck"
-TK81628,3,4,"Advance shipping",0,USCA,Middletown,"Estados Unidos","East of USA",Connecticut,COMPLETE,Caloocan,14.6507,120.9667,14.715608041422078,120.99279250515885,2022-04-21,237,"Isuzu ELF NHR 55"
-TK99193,5,4,"Late delivery",1,USCA,Chicago,"Estados Unidos","US Center ",Illinois,COMPLETE,"Quezon City",14.676,121.0437,14.604121222779268,121.05391886271902,2022-08-03,237,"Isuzu ELF NHR 55"
-TK86080,6,4,"Late delivery",1,USCA,"San Francisco","Estados Unidos","West of USA ",California,COMPLETE,"Quezon City",14.676,121.0437,14.565550465197816,121.0993748120492,2022-05-18,237,"Isuzu ELF NHR 55"
-TK82645,5,4,"Late delivery",1,USCA,"San Diego","Estados Unidos","West of USA ",California,COMPLETE,"Quezon City",14.676,121.0437,14.582368035178975,121.0840495477282,2022-04-27,236,"Hino 700 Series Dump Truck"
-TK107372,3,4,"Advance shipping",0,Africa,Casablanca,Marruecos,"North Africa","Gran Casablanca",COMPLETE,"Quezon City",14.676,121.0437,14.580342339147203,121.05617778134176,2022-09-19,238,"Mitsubishi Fuso Fighter"
-TK112132,3,4,"Advance shipping",0,Africa,Funtua,Nigeria,"West Africa",Katsina,COMPLETE,"Quezon City",14.676,121.0437,14.609257453856298,121.02814171893348,2022-10-17,240,"Isuzu ELF NHR 55"
-TK119771,4,4,"Shipping on time",0,Africa,Luanda,Angola,"Central Africa",Luanda,ON_HOLD,Caloocan,14.6507,120.9667,14.686795933346074,120.95434318919139,2022-11-30,235,"Mitsubishi Fuso Fighter"
-MC36527,3,4,"Advance shipping",0,Europe,Utrecht,"Países Bajos","Western Europe",Utrecht,COMPLETE,Caloocan,14.6507,120.9667,14.717216763335482,120.98331753139693,2021-08-02,208,"Yamaha Mio Sporty"
-MC157952,2,4,"Advance shipping",0,Europe,Brescia,Italia,"Southern Europe",Lombardía,COMPLETE,Parañaque,14.4793,121.0198,14.530363535080443,121.06018597195873,2023-07-11,234,"Yamaha NMAX"
-MC164014,3,4,"Advance shipping",0,Europe,Roubaix,Francia,"Western Europe","Norte-Paso de Calais-Picardía",ON_HOLD,"Quezon City",14.676,121.0437,14.604585145157374,121.02471686650506,2023-08-15,203,"Yamaha NMAX"
-MC164011,3,4,"Advance shipping",0,Europe,Roubaix,Francia,"Western Europe","Norte-Paso de Calais-Picardía",ON_HOLD,"Quezon City",14.676,121.0437,14.604585145157374,121.02471686650506,2023-08-15,225,"Yamaha Mio Sporty"
-MC137137,6,4,"Late delivery",1,LATAM,Chilpancingo,México,"Central America",Guerrero,COMPLETE,Parañaque,14.4793,121.0198,14.54074884655955,121.0670387506271,2023-03-11,217,"Honda Click 125i"
-MC11216,2,4,"Advance shipping",0,LATAM,Mosquera,Colombia,"South America",Cundinamarca,COMPLETE,Caloocan,14.6507,120.9667,14.634696151925898,120.96613777200331,2021-03-07,227,"Yamaha NMAX"
-MC138271,3,4,"Advance shipping",0,LATAM,"Las Tunas",Cuba,Caribbean,"Las Tunas",COMPLETE,Parañaque,14.4793,121.0198,14.531253430676882,121.0689018275951,2023-03-18,203,"Yamaha NMAX"
-MC137138,6,4,"Late delivery",1,LATAM,Chilpancingo,México,"Central America",Guerrero,COMPLETE,Parañaque,14.4793,121.0198,14.54074884655955,121.0670387506271,2023-03-11,214,"Yamaha Mio Sporty"
-CR152616,3,4,"Advance shipping",0,LATAM,Managua,Nicaragua,"Central America",Managua,COMPLETE,"Quezon City",14.676,121.0437,14.60983925516702,121.04795754086035,2023-06-09,224,"Honda Civic"
-MC13577,3,4,"Advance shipping",0,LATAM,Mixco,Guatemala,"Central America",Guatemala,COMPLETE,"Quezon City",14.676,121.0437,14.607435909423453,121.0574876605044,2021-03-21,215,"Yamaha Mio Sporty"
-CR1796,6,4,"Late delivery",1,LATAM,Monterrey,México,"Central America","Nuevo León",COMPLETE,"Quezon City",14.676,121.0437,14.567577996028195,121.05302222110612,2021-01-11,233,"Honda Civic"
-CR134203,6,4,"Late delivery",1,LATAM,Tlalnepantla,México,"Central America",México,COMPLETE,Parañaque,14.4793,121.0198,14.53385512581454,121.0582934909391,2023-02-22,211,"Honda Civic"
-CR2740,5,4,"Late delivery",1,LATAM,Soyapango,"El Salvador","Central America","San Salvador",COMPLETE,"Quezon City",14.676,121.0437,14.565550465197816,121.0993748120492,2021-01-17,233,"Honda Civic"
-TK125077,4,4,"Shipping on time",0,"Pacific Asia",Baku,Azerbaiyán,"West Asia",Baki,COMPLETE,Caloocan,14.6507,120.9667,14.717216763335482,120.98331753139693,2022-12-31,239,"Hino 700 Series Dump Truck"
-TK103140,3,4,"Advance shipping",0,"Pacific Asia",Kashan,Irán,"South Asia",Isfahán,COMPLETE,"Quezon City",14.676,121.0437,14.604585145157374,121.02471686650506,2022-08-26,236,"Hino 700 Series Dump Truck"
-TK58067,2,4,"Advance shipping",0,"Pacific Asia",Chengdu,China,"Eastern Asia",Sichuan,COMPLETE,"Quezon City",14.676,121.0437,14.616402654411646,121.07549612082121,2021-12-05,240,"Isuzu ELF NHR 55"
-TK65307,3,4,"Advance shipping",0,"Pacific Asia",Luoyang,China,"Eastern Asia",Guangdong,COMPLETE,Caloocan,14.6507,120.9667,14.698416755393536,120.95137518383692,2022-01-16,238,"Mitsubishi Fuso Fighter"
-TK75183,2,4,"Advance shipping",0,"Pacific Asia",Depok,Indonesia,"Southeast Asia","Java Occidental",PROCESSING,Manila,14.5995,120.9842,14.511625654540607,121.054002722729,2022-03-15,235,"Mitsubishi Fuso Fighter"
-TK94030,2,4,"Advance shipping",0,USCA,Memphis,"Estados Unidos","South of  USA ",Tennessee,PENDING,Caloocan,14.6507,120.9667,14.652160128161459,120.9830761231138,2022-07-03,237,"Isuzu ELF NHR 55"
-TK90349,5,4,"Late delivery",1,USCA,Henderson,"Estados Unidos","South of  USA ",Kentucky,PENDING,"Quezon City",14.676,121.0437,14.61961172379517,121.03102877906619,2022-06-12,237,"Isuzu ELF NHR 55"
-TK98108,6,4,"Late delivery",1,USCA,Seattle,"Estados Unidos","West of USA ",Washington,PENDING,"Quezon City",14.676,121.0437,14.614054660623944,121.02820505468938,2022-07-27,238,"Mitsubishi Fuso Fighter"
-TK99118,2,4,"Advance shipping",0,USCA,"Corpus Christi","Estados Unidos","US Center ",Texas,PENDING,"Quezon City",14.676,121.0437,14.562965502602017,121.07380224109981,2022-08-02,240,"Isuzu ELF NHR 55"
-TK102983,3,4,"Advance shipping",0,USCA,Florence,"Estados Unidos","South of  USA ",Kentucky,PENDING,"Quezon City",14.676,121.0437,14.612045879691882,121.03750006463146,2022-08-25,237,"Isuzu ELF NHR 55"
-TK91405,6,4,"Late delivery",1,USCA,Knoxville,"Estados Unidos","South of  USA ",Tennessee,PENDING,Manila,14.5995,120.9842,14.535482446034887,121.06355298675928,2022-06-18,240,"Isuzu ELF NHR 55"
-TK79054,2,4,"Advance shipping",0,USCA,Layton,"Estados Unidos","West of USA ",Utah,PROCESSING,Manila,14.5995,120.9842,14.505489775776388,121.08994855726132,2022-04-06,239,"Hino 700 Series Dump Truck"
-TK94483,3,4,"Advance shipping",0,USCA,Roseville,"Estados Unidos","West of USA ",California,PROCESSING,Caloocan,14.6507,120.9667,14.683273460514167,120.99652163232354,2022-07-06,239,"Hino 700 Series Dump Truck"
-TK91719,5,4,"Late delivery",1,USCA,Edmonds,"Estados Unidos","West of USA ",Washington,PROCESSING,Manila,14.5995,120.9842,14.606230225289455,120.99437401262519,2022-06-20,237,"Isuzu ELF NHR 55"
-TK118936,6,4,"Late delivery",1,Africa,Enugu,Nigeria,"West Africa",Enugu,PENDING,"Quezon City",14.676,121.0437,14.628277232188989,121.07883238399293,2022-11-25,236,"Hino 700 Series Dump Truck"
-TK114168,4,4,"Shipping on time",0,Africa,Yaounde,Camerún,"Central Africa",Centro,PENDING,"Quezon City",14.676,121.0437,14.676682012180502,121.02340890916382,2022-10-28,237,"Isuzu ELF NHR 55"
-CR36869,2,4,"Shipping canceled",0,Europe,Auxerre,Francia,"Western Europe","Borgoña-Franco Condado",CANCELED,"Quezon City",14.676,121.0437,14.585132625294042,121.06753636279846,2021-08-04,219,"Toyota Vios"
-CR36870,2,4,"Shipping canceled",0,Europe,Auxerre,Francia,"Western Europe","Borgoña-Franco Condado",CANCELED,"Quezon City",14.676,121.0437,14.585132625294042,121.06753636279846,2021-08-04,201,"Honda Civic"
-MC33071,3,4,"Advance shipping",0,Europe,Essen,Alemania,"Western Europe","Renania del Norte-Westfalia",PENDING,Parañaque,14.4793,121.0198,14.547953894322694,121.0524700418324,2021-07-12,210,"Honda Click 125i"
-MC166823,6,4,"Late delivery",1,Europe,Latina,Italia,"Southern Europe",Lacio,PENDING,Caloocan,14.6507,120.9667,14.673506719827193,120.99441156279707,2023-09-01,232,"Yamaha Mio Sporty"
-MC166821,6,4,"Late delivery",1,Europe,Latina,Italia,"Southern Europe",Lacio,PENDING,Caloocan,14.6507,120.9667,14.673506719827193,120.99441156279707,2023-09-01,228,"Honda Click 125i"
-MC33012,4,4,"Shipping on time",0,Europe,Heerlen,"Países Bajos","Western Europe",Limburgo,PROCESSING,"Quezon City",14.676,121.0437,14.616849334665433,121.0360935237781,2021-07-12,225,"Yamaha Mio Sporty"
-CR35536,3,4,"Advance shipping",0,Europe,Wattrelos,Francia,"Western Europe","Norte-Paso de Calais-Picardía",PROCESSING,"Quezon City",14.676,121.0437,14.597994933666657,121.0520336675011,2021-07-27,219,"Toyota Vios"
-CR37624,5,4,"Late delivery",1,Europe,Ginebra,Suiza,"Western Europe",Ginebra,PROCESSING,"Quezon City",14.676,121.0437,14.691686897447042,121.0251625458013,2021-08-08,211,"Honda Civic"
-CR162086,2,4,"Shipping canceled",0,Europe,Naples,Italia,"Southern Europe",Campania,SUSPECTED_FRAUD,"Quezon City",14.676,121.0437,14.562965502602017,121.07380224109981,2023-08-04,216,"Honda Civic"
-TK46447,4,4,"Shipping canceled",0,Europe,Basel,Suiza,"Western Europe",Basilea-Ciudad,SUSPECTED_FRAUD,Parañaque,14.4793,121.0198,14.541376774154022,121.06659734619464,2021-09-29,235,"Mitsubishi Fuso Fighter"
-TK46446,4,4,"Shipping canceled",0,Europe,Basel,Suiza,"Western Europe",Basilea-Ciudad,SUSPECTED_FRAUD,Parañaque,14.4793,121.0198,14.541376774154022,121.06659734619464,2021-09-29,236,"Hino 700 Series Dump Truck"
-MC142724,5,4,"Late delivery",1,LATAM,Lima,Perú,"South America","Lima (ciudad)",PENDING,Manila,14.5995,120.9842,14.511625654540607,121.054002722729,2023-04-12,227,"Yamaha NMAX"
-MC142722,5,4,"Late delivery",1,LATAM,Lima,Perú,"South America","Lima (ciudad)",PENDING,Manila,14.5995,120.9842,14.511625654540607,121.054002722729,2023-04-12,228,"Honda Click 125i"
-MC142723,5,4,"Late delivery",1,LATAM,Lima,Perú,"South America","Lima (ciudad)",PENDING,Manila,14.5995,120.9842,14.511625654540607,121.054002722729,2023-04-12,234,"Yamaha NMAX"
-MC21448,5,4,"Late delivery",1,LATAM,Tegucigalpa,Honduras,"Central America","Francisco Morazán",PENDING,Parañaque,14.4793,121.0198,14.391230124832346,121.02934431201717,2021-05-06,214,"Yamaha Mio Sporty"
-MC15112,4,4,"Shipping on time",0,LATAM,Ji-Paraná,Brasil,"South America",Rondônia,PROCESSING,"Quezon City",14.676,121.0437,14.568001088097693,121.06526794863424,2021-03-30,209,"Honda Click 125i"
-MC7153,3,4,"Advance shipping",0,LATAM,"Puerto Vallarta",México,"Central America",Jalisco,PROCESSING,Caloocan,14.6507,120.9667,14.674706834158586,120.96707586664434,2021-02-11,223,"Yamaha NMAX"
-MC7154,3,4,"Advance shipping",0,LATAM,"Puerto Vallarta",México,"Central America",Jalisco,PROCESSING,Caloocan,14.6507,120.9667,14.674706834158586,120.96707586664434,2021-02-11,206,"Honda Click 125i"
-TK131025,2,1,"Late delivery",1,LATAM,Tlalnepantla,México,"Central America",México,CLOSED,"Quezon City",14.676,121.0437,14.61961172379517,121.03102877906619,2023-02-04,240,"Isuzu ELF NHR 55"
-TK131024,2,1,"Late delivery",1,LATAM,Tlalnepantla,México,"Central America",México,CLOSED,"Quezon City",14.676,121.0437,14.61961172379517,121.03102877906619,2023-02-04,238,"Mitsubishi Fuso Fighter"
-TK131023,2,1,"Late delivery",1,LATAM,Tlalnepantla,México,"Central America",México,CLOSED,"Quezon City",14.676,121.0437,14.61961172379517,121.03102877906619,2023-02-04,238,"Mitsubishi Fuso Fighter"
-TK59461,2,1,"Late delivery",1,"Pacific Asia",Manila,Filipinas,"Southeast Asia","Capital Nacional",CLOSED,"Quezon City",14.676,121.0437,14.585132625294042,121.06753636279846,2021-12-13,236,"Hino 700 Series Dump Truck"
-CR168801,2,1,"Late delivery",1,Europe,Tallaght,Irlanda,"Northern Europe","Dublín del Sur",CLOSED,Parañaque,14.4793,121.0198,14.538778327842035,121.05656592805549,2023-09-12,233,"Honda Civic"
-TK56359,2,1,"Late delivery",1,"Pacific Asia",Melbourne,Australia,Oceania,Victoria,CLOSED,"Quezon City",14.676,121.0437,14.568001088097693,121.06526794863424,2021-11-25,235,"Mitsubishi Fuso Fighter"
-MC168800,2,1,"Late delivery",1,Europe,Tallaght,Irlanda,"Northern Europe","Dublín del Sur",CLOSED,Parañaque,14.4793,121.0198,14.538778327842035,121.05656592805549,2023-09-12,225,"Yamaha Mio Sporty"
-TK131021,2,1,"Late delivery",1,LATAM,Tlalnepantla,México,"Central America",México,CLOSED,"Quezon City",14.676,121.0437,14.61961172379517,121.03102877906619,2023-02-04,240,"Isuzu ELF NHR 55"
-CR31785,0,0,"Shipping on time",0,Europe,"Bognor Regis","Reino Unido","Northern Europe",Inglaterra,CLOSED,"Quezon City",14.676,121.0437,14.607062000061443,121.02894853335707,2021-07-05,205,"Toyota Vios"
-MC31784,0,0,"Shipping on time",0,Europe,"Bognor Regis","Reino Unido","Northern Europe",Inglaterra,CLOSED,"Quezon City",14.676,121.0437,14.607062000061443,121.02894853335707,2021-07-05,221,"Honda Click 125i"
-TK50330,1,0,"Late delivery",1,Europe,Vigevano,Italia,"Southern Europe",Lombardía,CLOSED,Manila,14.5995,120.9842,14.547284889907841,121.01860305534545,2021-10-21,238,"Mitsubishi Fuso Fighter"
-TK50328,1,0,"Late delivery",1,Europe,Vigevano,Italia,"Southern Europe",Lombardía,CLOSED,Manila,14.5995,120.9842,14.547284889907841,121.01860305534545,2021-10-21,240,"Isuzu ELF NHR 55"
-MC31786,0,0,"Shipping on time",0,Europe,"Bognor Regis","Reino Unido","Northern Europe",Inglaterra,CLOSED,"Quezon City",14.676,121.0437,14.607062000061443,121.02894853335707,2021-07-05,206,"Honda Click 125i"
-TK57218,1,0,"Late delivery",1,"Pacific Asia",Nowra,Australia,Oceania,"Nueva Gales del Sur",CLOSED,Caloocan,14.6507,120.9667,14.674706834158586,120.96707586664434,2021-11-30,236,"Hino 700 Series Dump Truck"
-TK57222,1,0,"Late delivery",1,"Pacific Asia",Nowra,Australia,Oceania,"Nueva Gales del Sur",CLOSED,Caloocan,14.6507,120.9667,14.674706834158586,120.96707586664434,2021-11-30,239,"Hino 700 Series Dump Truck"
-TK50329,1,0,"Late delivery",1,Europe,Vigevano,Italia,"Southern Europe",Lombardía,CLOSED,Manila,14.5995,120.9842,14.547284889907841,121.01860305534545,2021-10-21,237,"Isuzu ELF NHR 55"
-TK50331,1,0,"Late delivery",1,Europe,Vigevano,Italia,"Southern Europe",Lombardía,CLOSED,Manila,14.5995,120.9842,14.547284889907841,121.01860305534545,2021-10-21,237,"Isuzu ELF NHR 55"
-TK57219,1,0,"Late delivery",1,"Pacific Asia",Nowra,Australia,Oceania,"Nueva Gales del Sur",CLOSED,Caloocan,14.6507,120.9667,14.674706834158586,120.96707586664434,2021-11-30,237,"Isuzu ELF NHR 55"
-MC31783,0,0,"Shipping on time",0,Europe,"Bognor Regis","Reino Unido","Northern Europe",Inglaterra,CLOSED,"Quezon City",14.676,121.0437,14.607062000061443,121.02894853335707,2021-07-05,228,"Honda Click 125i"
-TK57220,1,0,"Late delivery",1,"Pacific Asia",Nowra,Australia,Oceania,"Nueva Gales del Sur",CLOSED,Caloocan,14.6507,120.9667,14.674706834158586,120.96707586664434,2021-11-30,240,"Isuzu ELF NHR 55"
-TK57221,1,0,"Late delivery",1,"Pacific Asia",Nowra,Australia,Oceania,"Nueva Gales del Sur",CLOSED,Caloocan,14.6507,120.9667,14.674706834158586,120.96707586664434,2021-11-30,240,"Isuzu ELF NHR 55"
-TK110081,4,2,"Late delivery",1,Africa,Alexandria,Egipto,"North Africa",Alejandría,CLOSED,Parañaque,14.4793,121.0198,14.530648459103562,121.05729682012209,2022-10-05,240,"Isuzu ELF NHR 55"
-TK110079,4,2,"Late delivery",1,Africa,Alexandria,Egipto,"North Africa",Alejandría,CLOSED,Parañaque,14.4793,121.0198,14.530648459103562,121.05729682012209,2022-10-05,238,"Mitsubishi Fuso Fighter"
-TK110082,4,2,"Late delivery",1,Africa,Alexandria,Egipto,"North Africa",Alejandría,CLOSED,Parañaque,14.4793,121.0198,14.530648459103562,121.05729682012209,2022-10-05,238,"Mitsubishi Fuso Fighter"
-MC158389,6,2,"Late delivery",1,Europe,"Le Mans",Francia,"Western Europe","Países del Loira",CLOSED,"Quezon City",14.676,121.0437,14.566236643415165,121.08193875819624,2023-07-13,208,"Yamaha Mio Sporty"
-MC173757,3,2,"Late delivery",1,Europe,Birmingham,"Reino Unido","Northern Europe",Inglaterra,CLOSED,"Quezon City",14.676,121.0437,14.614538723914453,121.03620473973099,2023-10-25,207,"Honda Click 125i"
-MC158359,6,2,"Late delivery",1,Europe,Weston-super-Mare,"Reino Unido","Northern Europe",Inglaterra,CLOSED,"Quezon City",14.676,121.0437,14.619813537262207,121.05999815885909,2023-07-13,217,"Honda Click 125i"
-MC174706,2,2,"Shipping on time",0,Europe,Innsbruck,Austria,"Western Europe",Tirol,CLOSED,Caloocan,14.6507,120.9667,14.661598511898516,121.00897165256455,2023-11-08,218,"Honda Click 125i"
-CR153271,4,2,"Late delivery",1,LATAM,Tegucigalpa,Honduras,"Central America","Francisco Morazán",CLOSED,"Quezon City",14.676,121.0437,14.566861054549797,121.08739031659196,2023-06-13,224,"Honda Civic"
-MC153267,4,2,"Late delivery",1,LATAM,Tegucigalpa,Honduras,"Central America","Francisco Morazán",CLOSED,"Quezon City",14.676,121.0437,14.566861054549797,121.08739031659196,2023-06-13,225,"Yamaha Mio Sporty"
-CR140784,2,2,"Shipping on time",0,LATAM,"Puerto Padre",Cuba,Caribbean,"Las Tunas",CLOSED,"Quezon City",14.676,121.0437,14.586368420847105,121.06967115599632,2023-04-01,211,"Honda Civic"
-MC140783,2,2,"Shipping on time",0,LATAM,"Puerto Padre",Cuba,Caribbean,"Las Tunas",CLOSED,"Quezon City",14.676,121.0437,14.586368420847105,121.06967115599632,2023-04-01,207,"Honda Click 125i"
-MC134567,2,2,"Shipping on time",0,LATAM,Atlixco,México,"Central America",Puebla,CLOSED,"Quezon City",14.676,121.0437,14.61961172379517,121.03102877906619,2023-02-24,214,"Yamaha Mio Sporty"
-MC177445,6,2,"Late delivery",1,"Pacific Asia",Liaocheng,China,"Eastern Asia",Shandong,CLOSED,"Quezon City",14.676,121.0437,14.589250518976945,121.08723912843246,2023-12-18,227,"Yamaha NMAX"
-MC175224,5,2,"Late delivery",1,"Pacific Asia",Yakarta,Indonesia,"Southeast Asia",Yakarta,CLOSED,"Quezon City",14.676,121.0437,14.630576990889923,121.06100610016007,2023-11-15,215,"Yamaha Mio Sporty"
-MC175878,4,2,"Late delivery",1,"Pacific Asia",Melbourne,Australia,Oceania,Victoria,CLOSED,"Quezon City",14.676,121.0437,14.618873196652972,121.04664348567523,2023-11-25,228,"Honda Click 125i"
-TK84987,3,2,"Late delivery",1,USCA,"San Francisco","Estados Unidos","West of USA ",California,CLOSED,"Quezon City",14.676,121.0437,14.612045879691882,121.03750006463146,2022-05-12,239,"Hino 700 Series Dump Truck"
-TK91229,6,2,"Late delivery",1,USCA,Arlington,"Estados Unidos","South of  USA ",Virginia,CLOSED,"Quezon City",14.676,121.0437,14.612192029573201,121.03150976569532,2022-06-17,235,"Mitsubishi Fuso Fighter"
-TK81513,5,2,"Late delivery",1,USCA,"San Diego","Estados Unidos","West of USA ",California,CLOSED,"Quezon City",14.676,121.0437,14.566236643415165,121.08193875819624,2022-04-20,239,"Hino 700 Series Dump Truck"
-CR40687,6,2,"Late delivery",1,Europe,Offenburg,Alemania,"Western Europe",Baden-Wurtemberg,CLOSED,"Quezon City",14.676,121.0437,14.601789797546147,121.02889418543214,2021-08-26,220,"Toyota Vios"
-CR17716,3,2,"Late delivery",1,LATAM,"Santo Domingo","República Dominicana",Caribbean,"Santo Domingo",CLOSED,"Quezon City",14.676,121.0437,14.61890161130475,121.04445159477596,2021-04-14,201,"Honda Civic"
-CR134569,2,2,"Shipping on time",0,LATAM,Atlixco,México,"Central America",Puebla,CLOSED,"Quezon City",14.676,121.0437,14.61961172379517,121.03102877906619,2023-02-24,219,"Toyota Vios"
-TK63963,3,2,"Late delivery",1,"Pacific Asia",Sydney,Australia,Oceania,"Nueva Gales del Sur",CLOSED,Caloocan,14.6507,120.9667,14.652160128161459,120.9830761231138,2022-01-08,237,"Isuzu ELF NHR 55"
-TK84991,3,2,"Late delivery",1,USCA,"San Francisco","Estados Unidos","West of USA ",California,CLOSED,"Quezon City",14.676,121.0437,14.612045879691882,121.03750006463146,2022-05-12,239,"Hino 700 Series Dump Truck"
-TK112418,2,2,"Shipping on time",0,USCA,Mississauga,Canada,Canada,Ontario,CLOSED,Parañaque,14.4793,121.0198,14.391434449815597,121.03613807772858,2022-10-19,238,"Mitsubishi Fuso Fighter"
-TK91231,6,2,"Late delivery",1,USCA,Arlington,"Estados Unidos","South of  USA ",Virginia,CLOSED,"Quezon City",14.676,121.0437,14.612192029573201,121.03150976569532,2022-06-17,238,"Mitsubishi Fuso Fighter"
-TK91230,6,2,"Late delivery",1,USCA,Arlington,"Estados Unidos","South of  USA ",Virginia,CLOSED,"Quezon City",14.676,121.0437,14.612192029573201,121.03150976569532,2022-06-17,240,"Isuzu ELF NHR 55"
-TK84989,3,2,"Late delivery",1,USCA,"San Francisco","Estados Unidos","West of USA ",California,CLOSED,"Quezon City",14.676,121.0437,14.612045879691882,121.03750006463146,2022-05-12,237,"Isuzu ELF NHR 55"
-TK84990,3,2,"Late delivery",1,USCA,"San Francisco","Estados Unidos","West of USA ",California,CLOSED,"Quezon City",14.676,121.0437,14.612045879691882,121.03750006463146,2022-05-12,236,"Hino 700 Series Dump Truck"
-CR158388,6,2,"Late delivery",1,Europe,"Le Mans",Francia,"Western Europe","Países del Loira",CLOSED,"Quezon City",14.676,121.0437,14.566236643415165,121.08193875819624,2023-07-13,205,"Toyota Vios"
-MC158360,6,2,"Late delivery",1,Europe,Weston-super-Mare,"Reino Unido","Northern Europe",Inglaterra,CLOSED,"Quezon City",14.676,121.0437,14.619813537262207,121.05999815885909,2023-07-13,227,"Yamaha NMAX"
-MC40686,6,2,"Late delivery",1,Europe,Offenburg,Alemania,"Western Europe",Baden-Wurtemberg,CLOSED,"Quezon City",14.676,121.0437,14.601789797546147,121.02889418543214,2021-08-26,214,"Yamaha Mio Sporty"
-CR17715,3,2,"Late delivery",1,LATAM,"Santo Domingo","República Dominicana",Caribbean,"Santo Domingo",CLOSED,"Quezon City",14.676,121.0437,14.61890161130475,121.04445159477596,2021-04-14,230,"Honda Civic"
-CR153268,4,2,"Late delivery",1,LATAM,Tegucigalpa,Honduras,"Central America","Francisco Morazán",CLOSED,"Quezon City",14.676,121.0437,14.566861054549797,121.08739031659196,2023-06-13,212,"MG 5"
-TK110080,4,2,"Late delivery",1,Africa,Alexandria,Egipto,"North Africa",Alejandría,CLOSED,Parañaque,14.4793,121.0198,14.530648459103562,121.05729682012209,2022-10-05,240,"Isuzu ELF NHR 55"
-MC158361,6,2,"Late delivery",1,Europe,Weston-super-Mare,"Reino Unido","Northern Europe",Inglaterra,CLOSED,"Quezon City",14.676,121.0437,14.619813537262207,121.05999815885909,2023-07-13,217,"Honda Click 125i"
-CR40685,6,2,"Late delivery",1,Europe,Offenburg,Alemania,"Western Europe",Baden-Wurtemberg,CLOSED,"Quezon City",14.676,121.0437,14.601789797546147,121.02889418543214,2021-08-26,229,"Toyota Vios"
-TK63962,3,2,"Late delivery",1,"Pacific Asia",Sydney,Australia,Oceania,"Nueva Gales del Sur",CLOSED,Caloocan,14.6507,120.9667,14.652160128161459,120.9830761231138,2022-01-08,235,"Mitsubishi Fuso Fighter"
-MC158363,6,2,"Late delivery",1,Europe,Weston-super-Mare,"Reino Unido","Northern Europe",Inglaterra,CLOSED,"Quezon City",14.676,121.0437,14.619813537262207,121.05999815885909,2023-07-13,217,"Honda Click 125i"
-MC158362,6,2,"Late delivery",1,Europe,Weston-super-Mare,"Reino Unido","Northern Europe",Inglaterra,CLOSED,"Quezon City",14.676,121.0437,14.619813537262207,121.05999815885909,2023-07-13,210,"Honda Click 125i"
-MC153269,4,2,"Late delivery",1,LATAM,Tegucigalpa,Honduras,"Central America","Francisco Morazán",CLOSED,"Quezon City",14.676,121.0437,14.566861054549797,121.08739031659196,2023-06-13,203,"Yamaha NMAX"
-TK81514,5,2,"Late delivery",1,USCA,"San Diego","Estados Unidos","West of USA ",California,CLOSED,"Quezon City",14.676,121.0437,14.566236643415165,121.08193875819624,2022-04-20,238,"Mitsubishi Fuso Fighter"
-TK111308,5,4,"Late delivery",1,Africa,Maradi,Níger,"West Africa",Maradi,CLOSED,Parañaque,14.4793,121.0198,14.398555785500031,121.01080328050145,2022-10-12,236,"Hino 700 Series Dump Truck"
-CR172903,4,4,"Shipping on time",0,Europe,Villeurbanne,Francia,"Western Europe",Auvernia-Ródano-Alpes,CLOSED,"Quezon City",14.676,121.0437,14.56292947466758,121.08763917362097,2023-10-12,220,"Toyota Vios"
-MC161745,3,4,"Advance shipping",0,Europe,Berlín,Alemania,"Western Europe",Berlín,CLOSED,"Quezon City",14.676,121.0437,14.601789797546147,121.02889418543214,2023-08-02,208,"Yamaha Mio Sporty"
-TK49054,2,4,"Advance shipping",0,Europe,Augsburg,Alemania,"Western Europe",Bavaria,CLOSED,Parañaque,14.4793,121.0198,14.531758371583892,121.06790815961352,2021-10-14,238,"Mitsubishi Fuso Fighter"
-CR169326,3,4,"Advance shipping",0,Europe,Bristol,"Reino Unido","Northern Europe",Inglaterra,CLOSED,"Quezon City",14.676,121.0437,14.698696380405403,121.06823941773571,2023-09-15,211,"Honda Civic"
-TK116361,5,4,"Shipping canceled",0,"Pacific Asia",Shiraz,Irán,"South Asia",Fars,CANCELED,"Quezon City",14.676,121.0437,14.676682012180502,121.02340890916382,2022-11-10,238,"Mitsubishi Fuso Fighter"
-TK70016,4,4,"Shipping canceled",0,"Pacific Asia",Surabaya,Indonesia,"Southeast Asia","Java Oriental",CANCELED,Caloocan,14.6507,120.9667,14.672376208959498,120.9595219197306,2022-02-13,238,"Mitsubishi Fuso Fighter"
-TK127670,4,4,"Shipping on time",0,"Pacific Asia",Izmir,Turquía,"West Asia",Izmir,PENDING,Caloocan,14.6507,120.9667,14.680480973311218,120.97383910890095,2023-01-15,238,"Mitsubishi Fuso Fighter"
-TK73059,3,4,"Advance shipping",0,"Pacific Asia",Pekín,China,"Eastern Asia",Pekín,PENDING,Manila,14.5995,120.9842,14.524242414975765,121.08346825771356,2022-03-02,239,"Hino 700 Series Dump Truck"
-TK75972,4,4,"Shipping on time",0,"Pacific Asia",Dunedin,"Nueva Zelanda",Oceania,Otago,PROCESSING,Parañaque,14.4793,121.0198,14.546156611774261,121.05781804005412,2022-03-19,239,"Hino 700 Series Dump Truck"
-TK98107,6,4,"Late delivery",1,USCA,Seattle,"Estados Unidos","West of USA ",Washington,PENDING,"Quezon City",14.676,121.0437,14.614054660623944,121.02820505468938,2022-07-27,237,"Isuzu ELF NHR 55"
-TK101556,3,4,"Advance shipping",0,USCA,Philadelphia,"Estados Unidos","East of USA",Pensilvania,PENDING,"Quezon City",14.676,121.0437,14.684483248539719,121.09272836827927,2022-08-17,240,"Isuzu ELF NHR 55"
-TK98106,6,4,"Late delivery",1,USCA,Seattle,"Estados Unidos","West of USA ",Washington,PENDING,"Quezon City",14.676,121.0437,14.614054660623944,121.02820505468938,2022-07-27,235,"Mitsubishi Fuso Fighter"
-TK78363,6,4,"Shipping canceled",0,USCA,"New York City","Estados Unidos","East of USA","Nueva York",SUSPECTED_FRAUD,Manila,14.5995,120.9842,14.60220210088622,120.98724580537271,2022-04-02,240,"Isuzu ELF NHR 55"
-MC174603,2,1,"Late delivery",1,Europe,Eindhoven,"Países Bajos","Western Europe","Brabante Septentrional",CLOSED,"Quezon City",14.676,121.0437,14.601188460030768,121.02787100148188,2023-11-06,202,"Yamaha Mio Sporty"
-MC37919,2,1,"Late delivery",1,Europe,Bremen,Alemania,"Western Europe",Bremen,CLOSED,Parañaque,14.4793,121.0198,14.542472485874288,121.06461298275237,2021-08-10,218,"Honda Click 125i"
-MC147712,2,1,"Late delivery",1,LATAM,"Buenos Aires",Argentina,"South America","Buenos Aires",CLOSED,"Quezon City",14.676,121.0437,14.602671292128667,121.04642168744134,2023-05-11,227,"Yamaha NMAX"
-MC3398,2,1,"Late delivery",1,LATAM,Chihuahua,México,"Central America",Chihuahua,CLOSED,"Quezon City",14.676,121.0437,14.595399381122924,121.04539935576301,2021-01-21,217,"Honda Click 125i"
-CR3399,2,1,"Late delivery",1,LATAM,Chihuahua,México,"Central America",Chihuahua,CLOSED,"Quezon City",14.676,121.0437,14.595399381122924,121.04539935576301,2021-01-21,216,"Honda Civic"
-MC178629,2,1,"Late delivery",1,"Pacific Asia",Hanoi,Vietnam,"Southeast Asia","Th? Dô Hà N?i",CLOSED,"Quezon City",14.676,121.0437,14.600058415699804,121.03117305634652,2024-01-04,221,"Honda Click 125i"
-TK87796,2,1,"Late delivery",1,USCA,"San Francisco","Estados Unidos","West of USA ",California,CLOSED,"Quezon City",14.676,121.0437,14.611889512643115,121.05846566691852,2022-05-28,235,"Mitsubishi Fuso Fighter"
-TK88927,2,1,"Late delivery",1,USCA,"Los Angeles","Estados Unidos","West of USA ",California,CLOSED,"Quezon City",14.676,121.0437,14.619070368687687,121.02050593078184,2022-06-03,238,"Mitsubishi Fuso Fighter"
-CR160544,2,1,"Late delivery",1,Europe,Zamora,España,"Southern Europe","Castilla y León",CLOSED,Caloocan,14.6507,120.9667,14.715608041422078,120.99279250515885,2023-07-26,230,"Honda Civic"
-CR160545,2,1,"Late delivery",1,Europe,Zamora,España,"Southern Europe","Castilla y León",CLOSED,Caloocan,14.6507,120.9667,14.715608041422078,120.99279250515885,2023-07-26,201,"Honda Civic"
-TK81690,2,1,"Late delivery",1,USCA,"San Francisco","Estados Unidos","West of USA ",California,CLOSED,Parañaque,14.4793,121.0198,14.535295958877816,121.06863421572245,2022-04-21,238,"Mitsubishi Fuso Fighter"
-MC160547,2,1,"Late delivery",1,Europe,Zamora,España,"Southern Europe","Castilla y León",CLOSED,Caloocan,14.6507,120.9667,14.715608041422078,120.99279250515885,2023-07-26,221,"Honda Click 125i"
-TK81689,2,1,"Late delivery",1,USCA,"San Francisco","Estados Unidos","West of USA ",California,CLOSED,Parañaque,14.4793,121.0198,14.535295958877816,121.06863421572245,2022-04-21,238,"Mitsubishi Fuso Fighter"
-TK88928,2,1,"Late delivery",1,USCA,"Los Angeles","Estados Unidos","West of USA ",California,CLOSED,"Quezon City",14.676,121.0437,14.619070368687687,121.02050593078184,2022-06-03,235,"Mitsubishi Fuso Fighter"
-CR160546,2,1,"Late delivery",1,Europe,Zamora,España,"Southern Europe","Castilla y León",CLOSED,Caloocan,14.6507,120.9667,14.715608041422078,120.99279250515885,2023-07-26,204,"Toyota Vios"
-CR37918,2,1,"Late delivery",1,Europe,Bremen,Alemania,"Western Europe",Bremen,CLOSED,Parañaque,14.4793,121.0198,14.542472485874288,121.06461298275237,2021-08-10,219,"Toyota Vios"
-TK87795,2,1,"Late delivery",1,USCA,"San Francisco","Estados Unidos","West of USA ",California,CLOSED,"Quezon City",14.676,121.0437,14.611889512643115,121.05846566691852,2022-05-28,236,"Hino 700 Series Dump Truck"
-CR174328,1,0,"Late delivery",1,Europe,Florence,Italia,"Southern Europe",Toscana,CLOSED,Manila,14.5995,120.9842,14.54267068667586,121.05748815318336,2023-11-02,220,"Toyota Vios"
-CR159390,1,0,"Late delivery",1,Europe,Villefontaine,Francia,"Western Europe",Auvernia-Ródano-Alpes,CLOSED,Manila,14.5995,120.9842,14.537542965940705,121.03455071076243,2023-07-19,220,"Toyota Vios"
-TK57445,1,0,"Late delivery",1,"Pacific Asia",Caloundra,Australia,Oceania,Queensland,CLOSED,"Quezon City",14.676,121.0437,14.599804155733255,121.0469448756957,2021-12-01,239,"Hino 700 Series Dump Truck"
-TK57448,1,0,"Late delivery",1,"Pacific Asia",Caloundra,Australia,Oceania,Queensland,CLOSED,"Quezon City",14.676,121.0437,14.599804155733255,121.0469448756957,2021-12-01,237,"Isuzu ELF NHR 55"
-TK57446,1,0,"Late delivery",1,"Pacific Asia",Caloundra,Australia,Oceania,Queensland,CLOSED,"Quezon City",14.676,121.0437,14.599804155733255,121.0469448756957,2021-12-01,240,"Isuzu ELF NHR 55"
-CR159389,1,0,"Late delivery",1,Europe,Villefontaine,Francia,"Western Europe",Auvernia-Ródano-Alpes,CLOSED,Manila,14.5995,120.9842,14.537542965940705,121.03455071076243,2023-07-19,211,"Honda Civic"
-TK57447,1,0,"Late delivery",1,"Pacific Asia",Caloundra,Australia,Oceania,Queensland,CLOSED,"Quezon City",14.676,121.0437,14.599804155733255,121.0469448756957,2021-12-01,240,"Isuzu ELF NHR 55"
-MC159387,1,0,"Late delivery",1,Europe,Villefontaine,Francia,"Western Europe",Auvernia-Ródano-Alpes,CLOSED,Manila,14.5995,120.9842,14.537542965940705,121.03455071076243,2023-07-19,207,"Honda Click 125i"
-CR159388,1,0,"Late delivery",1,Europe,Villefontaine,Francia,"Western Europe",Auvernia-Ródano-Alpes,CLOSED,Manila,14.5995,120.9842,14.537542965940705,121.03455071076243,2023-07-19,222,"Toyota Vios"
-MC159386,1,0,"Late delivery",1,Europe,Villefontaine,Francia,"Western Europe",Auvernia-Ródano-Alpes,CLOSED,Manila,14.5995,120.9842,14.537542965940705,121.03455071076243,2023-07-19,225,"Yamaha Mio Sporty"
-TK121346,3,2,"Late delivery",1,Europe,"Ruda Slaska",Polonia,"Eastern Europe",Silesia,CLOSED,Manila,14.5995,120.9842,14.555413608313923,121.0021218103749,2022-12-09,235,"Mitsubishi Fuso Fighter"
-MC165909,4,2,"Late delivery",1,Europe,Bayonne,Francia,"Western Europe",Aquitania-Lemosín-Poitou-Charentes,CLOSED,Parañaque,14.4793,121.0198,14.545109274839152,121.00211279373812,2023-08-26,209,"Honda Click 125i"
-TK50712,5,2,"Late delivery",1,"Pacific Asia",Hobart,Australia,Oceania,Tasmania,CLOSED,Parañaque,14.4793,121.0198,14.522217868941107,121.00918670352472,2021-10-24,237,"Isuzu ELF NHR 55"
-TK121345,3,2,"Late delivery",1,Europe,"Ruda Slaska",Polonia,"Eastern Europe",Silesia,CLOSED,Manila,14.5995,120.9842,14.555413608313923,121.0021218103749,2022-12-09,237,"Isuzu ELF NHR 55"
-TK82689,2,2,"Shipping on time",0,USCA,"New York City","Estados Unidos","East of USA","Nueva York",CLOSED,"Quezon City",14.676,121.0437,14.602671292128667,121.04642168744134,2022-04-27,237,"Isuzu ELF NHR 55"
-CR165910,4,2,"Late delivery",1,Europe,Bayonne,Francia,"Western Europe",Aquitania-Lemosín-Poitou-Charentes,CLOSED,Parañaque,14.4793,121.0198,14.545109274839152,121.00211279373812,2023-08-26,233,"Honda Civic"
-MC5407,5,2,"Late delivery",1,LATAM,Armenia,Colombia,"South America",Quindío,CLOSED,Caloocan,14.6507,120.9667,14.68231210031762,120.96109445906346,2021-02-01,218,"Honda Click 125i"
-TK82687,2,2,"Shipping on time",0,USCA,"New York City","Estados Unidos","East of USA","Nueva York",CLOSED,"Quezon City",14.676,121.0437,14.602671292128667,121.04642168744134,2022-04-27,239,"Hino 700 Series Dump Truck"
-TK45728,6,2,"Late delivery",1,Europe,Villeurbanne,Francia,"Western Europe",Auvernia-Ródano-Alpes,CLOSED,"Quezon City",14.676,121.0437,14.600147753376651,121.02387472361687,2021-09-25,239,"Hino 700 Series Dump Truck"
-CR5408,5,2,"Late delivery",1,LATAM,Armenia,Colombia,"South America",Quindío,CLOSED,Caloocan,14.6507,120.9667,14.68231210031762,120.96109445906346,2021-02-01,216,"Honda Civic"
-TK115729,6,2,"Late delivery",1,USCA,Kitchener,Canada,Canada,Ontario,CLOSED,Caloocan,14.6507,120.9667,14.686795933346074,120.95434318919139,2022-11-06,238,"Mitsubishi Fuso Fighter"
-MC166992,2,1,"Late delivery",1,Europe,Solingen,Alemania,"Western Europe","Renania del Norte-Westfalia",PENDING_PAYMENT,Caloocan,14.6507,120.9667,14.627599217302723,121.00214092785691,2023-09-02,218,"Honda Click 125i"
-MC32807,2,1,"Late delivery",1,Europe,Paris,Francia,"Western Europe","Isla de Francia",PENDING_PAYMENT,"Quezon City",14.676,121.0437,14.6004716856037,121.03623655810601,2021-07-11,215,"Yamaha Mio Sporty"
-MC32806,2,1,"Late delivery",1,Europe,Paris,Francia,"Western Europe","Isla de Francia",PENDING_PAYMENT,"Quezon City",14.676,121.0437,14.6004716856037,121.03623655810601,2021-07-11,217,"Honda Click 125i"
-CR19758,2,1,"Late delivery",1,LATAM,"Santo Domingo","República Dominicana",Caribbean,"Santo Domingo",PAYMENT_REVIEW,Parañaque,14.4793,121.0198,14.532801658551023,121.05069494249364,2021-04-26,229,"Toyota Vios"
-MC19759,2,1,"Late delivery",1,LATAM,"Santo Domingo","República Dominicana",Caribbean,"Santo Domingo",PAYMENT_REVIEW,Parañaque,14.4793,121.0198,14.532801658551023,121.05069494249364,2021-04-26,217,"Honda Click 125i"
-CR7094,2,1,"Late delivery",1,LATAM,Cárdenas,Cuba,Caribbean,Matanzas,PENDING_PAYMENT,"Quezon City",14.676,121.0437,14.615069737429796,121.0398957904241,2021-02-11,216,"Honda Civic"
-TK128660,2,1,"Late delivery",1,LATAM,Soacha,Colombia,"South America",Cundinamarca,PENDING_PAYMENT,"Quezon City",14.676,121.0437,14.612045879691882,121.03750006463146,2023-01-21,239,"Hino 700 Series Dump Truck"
-MC7092,2,1,"Late delivery",1,LATAM,Cárdenas,Cuba,Caribbean,Matanzas,PENDING_PAYMENT,"Quezon City",14.676,121.0437,14.615069737429796,121.0398957904241,2021-02-11,228,"Honda Click 125i"
-CR133467,2,1,"Late delivery",1,LATAM,"San Salvador","El Salvador","Central America","San Salvador",PENDING_PAYMENT,Caloocan,14.6507,120.9667,14.672376208959498,120.9595219197306,2023-02-18,201,"Honda Civic"
-MC133466,2,1,"Late delivery",1,LATAM,"San Salvador","El Salvador","Central America","San Salvador",PENDING_PAYMENT,Caloocan,14.6507,120.9667,14.672376208959498,120.9595219197306,2023-02-18,207,"Honda Click 125i"
-CR24865,2,1,"Late delivery",1,LATAM,Juárez,México,"Central America",Chihuahua,PENDING_PAYMENT,Parañaque,14.4793,121.0198,14.546156611774261,121.05781804005412,2021-05-26,213,"Toyota Vios"
-MC21247,2,1,"Late delivery",1,LATAM,Morelia,México,"Central America",Michoacán,PENDING_PAYMENT,Parañaque,14.4793,121.0198,14.531110089738956,121.05575886846125,2021-05-05,215,"Yamaha Mio Sporty"
-TK62445,2,1,"Late delivery",1,"Pacific Asia",Sydney,Australia,Oceania,"Nueva Gales del Sur",PAYMENT_REVIEW,Manila,14.5995,120.9842,14.513660184260141,121.07510940937802,2021-12-30,240,"Isuzu ELF NHR 55"
-TK62444,2,1,"Late delivery",1,"Pacific Asia",Sydney,Australia,Oceania,"Nueva Gales del Sur",PAYMENT_REVIEW,Manila,14.5995,120.9842,14.513660184260141,121.07510940937802,2021-12-30,235,"Mitsubishi Fuso Fighter"
-TK62446,2,1,"Late delivery",1,"Pacific Asia",Sydney,Australia,Oceania,"Nueva Gales del Sur",PAYMENT_REVIEW,Manila,14.5995,120.9842,14.513660184260141,121.07510940937802,2021-12-30,239,"Hino 700 Series Dump Truck"
-TK72021,2,1,"Late delivery",1,"Pacific Asia",Bangalore,India,"South Asia",Karnataka,PENDING_PAYMENT,"Quezon City",14.676,121.0437,14.607653196517056,121.06850255098055,2022-02-25,237,"Isuzu ELF NHR 55"
-TK61128,2,1,"Late delivery",1,"Pacific Asia","Gold Coast",Australia,Oceania,Queensland,PENDING_PAYMENT,Caloocan,14.6507,120.9667,14.673506719827193,120.99441156279707,2021-12-23,236,"Hino 700 Series Dump Truck"
-TK61127,2,1,"Late delivery",1,"Pacific Asia","Gold Coast",Australia,Oceania,Queensland,PENDING_PAYMENT,Caloocan,14.6507,120.9667,14.673506719827193,120.99441156279707,2021-12-23,239,"Hino 700 Series Dump Truck"
-TK75762,2,1,"Late delivery",1,"Pacific Asia",Christchurch,"Nueva Zelanda",Oceania,Canterbury,PENDING_PAYMENT,Parañaque,14.4793,121.0198,14.391434449815597,121.03613807772858,2022-03-18,236,"Hino 700 Series Dump Truck"
-TK66687,2,1,"Late delivery",1,"Pacific Asia","Banda Aceh",Indonesia,"Southeast Asia",Aceh,PENDING_PAYMENT,Parañaque,14.4793,121.0198,14.538778327842035,121.05656592805549,2022-01-24,237,"Isuzu ELF NHR 55"
-TK51561,2,1,"Late delivery",1,"Pacific Asia",Daca,Bangladés,"South Asia",Daca,PENDING_PAYMENT,"Quezon City",14.676,121.0437,14.566236643415165,121.08193875819624,2021-10-29,238,"Mitsubishi Fuso Fighter"
-TK61126,2,1,"Late delivery",1,"Pacific Asia","Gold Coast",Australia,Oceania,Queensland,PENDING_PAYMENT,Caloocan,14.6507,120.9667,14.673506719827193,120.99441156279707,2021-12-23,240,"Isuzu ELF NHR 55"
-TK51562,2,1,"Late delivery",1,"Pacific Asia",Daca,Bangladés,"South Asia",Daca,PENDING_PAYMENT,"Quezon City",14.676,121.0437,14.566236643415165,121.08193875819624,2021-10-29,236,"Hino 700 Series Dump Truck"
-TK51560,2,1,"Late delivery",1,"Pacific Asia",Daca,Bangladés,"South Asia",Daca,PENDING_PAYMENT,"Quezon City",14.676,121.0437,14.566236643415165,121.08193875819624,2021-10-29,239,"Hino 700 Series Dump Truck"
-TK61129,2,1,"Late delivery",1,"Pacific Asia","Gold Coast",Australia,Oceania,Queensland,PENDING_PAYMENT,Caloocan,14.6507,120.9667,14.673506719827193,120.99441156279707,2021-12-23,235,"Mitsubishi Fuso Fighter"
-TK89644,2,1,"Late delivery",1,USCA,Washington,"Estados Unidos","East of USA","Distrito de Columbia",PENDING_PAYMENT,Manila,14.5995,120.9842,14.533821772768928,121.07659611047859,2022-06-07,239,"Hino 700 Series Dump Truck"
-TK89643,2,1,"Late delivery",1,USCA,Washington,"Estados Unidos","East of USA","Distrito de Columbia",PENDING_PAYMENT,Manila,14.5995,120.9842,14.533821772768928,121.07659611047859,2022-06-07,240,"Isuzu ELF NHR 55"
-MC157266,2,1,"Late delivery",1,Europe,Aachen,Alemania,"Western Europe","Renania del Norte-Westfalia",PENDING_PAYMENT,"Quezon City",14.676,121.0437,14.61807845543891,121.04138130012096,2023-07-07,202,"Yamaha Mio Sporty"
-CR7093,2,1,"Late delivery",1,LATAM,Cárdenas,Cuba,Caribbean,Matanzas,PENDING_PAYMENT,"Quezon City",14.676,121.0437,14.615069737429796,121.0398957904241,2021-02-11,211,"Honda Civic"
-CR24949,2,1,"Late delivery",1,LATAM,Torreón,México,"Central America",Coahuila,PENDING_PAYMENT,"Quezon City",14.676,121.0437,14.612606094249157,121.0366727089292,2021-05-26,212,"MG 5"
-TK122321,2,1,"Late delivery",1,Africa,"Dar es Salaam",Tanzania,"East Africa","Dar es Salaam",PENDING_PAYMENT,Manila,14.5995,120.9842,14.532384103017286,121.00064647438066,2022-12-15,235,"Mitsubishi Fuso Fighter"
-MC32805,2,1,"Late delivery",1,Europe,Paris,Francia,"Western Europe","Isla de Francia",PENDING_PAYMENT,"Quezon City",14.676,121.0437,14.6004716856037,121.03623655810601,2021-07-11,203,"Yamaha NMAX"
-MC32804,2,1,"Late delivery",1,Europe,Paris,Francia,"Western Europe","Isla de Francia",PENDING_PAYMENT,"Quezon City",14.676,121.0437,14.6004716856037,121.03623655810601,2021-07-11,226,"Yamaha Mio Sporty"
-CR166994,2,1,"Late delivery",1,Europe,Solingen,Alemania,"Western Europe","Renania del Norte-Westfalia",PENDING_PAYMENT,Caloocan,14.6507,120.9667,14.627599217302723,121.00214092785691,2023-09-02,230,"Honda Civic"
-CR6997,2,1,"Late delivery",1,LATAM,Tegucigalpa,Honduras,"Central America","Francisco Morazán",PENDING_PAYMENT,Parañaque,14.4793,121.0198,14.544593026409478,121.06684922758195,2021-02-10,229,"Toyota Vios"
-MC6998,2,1,"Late delivery",1,LATAM,Tegucigalpa,Honduras,"Central America","Francisco Morazán",PENDING_PAYMENT,Parañaque,14.4793,121.0198,14.544593026409478,121.06684922758195,2021-02-10,214,"Yamaha Mio Sporty"
-MC21248,2,1,"Late delivery",1,LATAM,Morelia,México,"Central America",Michoacán,PENDING_PAYMENT,Parañaque,14.4793,121.0198,14.531110089738956,121.05575886846125,2021-05-05,227,"Yamaha NMAX"
-MC137579,2,1,"Late delivery",1,LATAM,Pelotas,Brasil,"South America","Rio Grande do Sul",PENDING_PAYMENT,Caloocan,14.6507,120.9667,14.680480973311218,120.97383910890095,2023-03-13,218,"Honda Click 125i"
-TK75761,2,1,"Late delivery",1,"Pacific Asia",Christchurch,"Nueva Zelanda",Oceania,Canterbury,PENDING_PAYMENT,Parañaque,14.4793,121.0198,14.391434449815597,121.03613807772858,2022-03-18,240,"Isuzu ELF NHR 55"
-TK122320,2,1,"Late delivery",1,Africa,"Dar es Salaam",Tanzania,"East Africa","Dar es Salaam",PENDING_PAYMENT,Manila,14.5995,120.9842,14.532384103017286,121.00064647438066,2022-12-15,236,"Hino 700 Series Dump Truck"
-TK116189,2,1,"Late delivery",1,Europe,Lodz,Polonia,"Eastern Europe",Lodz,PENDING_PAYMENT,Caloocan,14.6507,120.9667,14.738787071489531,120.98860413561445,2022-11-09,236,"Hino 700 Series Dump Truck"
-MC157265,2,1,"Late delivery",1,Europe,Aachen,Alemania,"Western Europe","Renania del Norte-Westfalia",PENDING_PAYMENT,"Quezon City",14.676,121.0437,14.61807845543891,121.04138130012096,2023-07-07,226,"Yamaha Mio Sporty"
-MC11672,2,1,"Late delivery",1,LATAM,Orizaba,México,"Central America",Veracruz,PAYMENT_REVIEW,Caloocan,14.6507,120.9667,14.673506719827193,120.99441156279707,2021-03-09,217,"Honda Click 125i"
-MC137576,2,1,"Late delivery",1,LATAM,Pelotas,Brasil,"South America","Rio Grande do Sul",PENDING_PAYMENT,Caloocan,14.6507,120.9667,14.680480973311218,120.97383910890095,2023-03-13,232,"Yamaha Mio Sporty"
-TK51563,2,1,"Late delivery",1,"Pacific Asia",Daca,Bangladés,"South Asia",Daca,PENDING_PAYMENT,"Quezon City",14.676,121.0437,14.566236643415165,121.08193875819624,2021-10-29,240,"Isuzu ELF NHR 55"
-TK89642,2,1,"Late delivery",1,USCA,Washington,"Estados Unidos","East of USA","Distrito de Columbia",PENDING_PAYMENT,Manila,14.5995,120.9842,14.533821772768928,121.07659611047859,2022-06-07,239,"Hino 700 Series Dump Truck"
-MC29946,2,1,"Late delivery",1,Europe,Amadora,Portugal,"Southern Europe",Lisboa,PENDING_PAYMENT,"Quezon City",14.676,121.0437,14.614054660623944,121.02820505468938,2021-06-24,215,"Yamaha Mio Sporty"
-MC133465,2,1,"Late delivery",1,LATAM,"San Salvador","El Salvador","Central America","San Salvador",PENDING_PAYMENT,Caloocan,14.6507,120.9667,14.672376208959498,120.9595219197306,2023-02-18,208,"Yamaha Mio Sporty"
-TK61125,2,1,"Late delivery",1,"Pacific Asia","Gold Coast",Australia,Oceania,Queensland,PENDING_PAYMENT,Caloocan,14.6507,120.9667,14.673506719827193,120.99441156279707,2021-12-23,239,"Hino 700 Series Dump Truck"
-MC174298,0,0,"Shipping on time",0,Europe,Duisburg,Alemania,"Western Europe","Renania del Norte-Westfalia",PENDING_PAYMENT,Manila,14.5995,120.9842,14.509840072374642,121.08338795656654,2023-11-02,232,"Yamaha Mio Sporty"
-MC40946,0,0,"Shipping on time",0,Europe,Perugia,Italia,"Southern Europe",Umbría,PENDING_PAYMENT,Parañaque,14.4793,121.0198,14.54496782689818,121.06477358722572,2021-08-28,203,"Yamaha NMAX"
-MC149906,0,0,"Shipping on time",0,LATAM,"Santiago de Cuba",Cuba,Caribbean,"Santiago de Cuba",PENDING_PAYMENT,"Quezon City",14.676,121.0437,14.604115587588508,121.04675882904488,2023-05-24,225,"Yamaha Mio Sporty"
-MC179000,1,0,"Late delivery",1,"Pacific Asia","Gold Coast",Australia,Oceania,Queensland,PENDING_PAYMENT,"Quezon City",14.676,121.0437,14.572411140121902,121.05125379795325,2024-01-09,234,"Yamaha NMAX"
-TK58702,0,0,"Shipping on time",0,"Pacific Asia",Mudanjiang,China,"Eastern Asia",Heilongjiang,PENDING_PAYMENT,Parañaque,14.4793,121.0198,14.539035570937243,121.05798304730838,2021-12-09,237,"Isuzu ELF NHR 55"
-TK51503,1,0,"Late delivery",1,"Pacific Asia",Daejeon,"Corea del Sur","Eastern Asia",Daejeon,PENDING_PAYMENT,Parañaque,14.4793,121.0198,14.545990240216245,121.06025144686014,2021-10-28,238,"Mitsubishi Fuso Fighter"
-TK86748,0,0,"Shipping on time",0,USCA,Chicago,"Estados Unidos","US Center ",Illinois,PENDING_PAYMENT,Parañaque,14.4793,121.0198,14.53328651426666,121.05567823136754,2022-05-22,235,"Mitsubishi Fuso Fighter"
-CR131628,4,4,"Shipping on time",0,LATAM,"San Pedro Sula",Honduras,"Central America",Cortés,COMPLETE,"Quezon City",14.676,121.0437,14.650427279845278,121.10566520164316,2023-02-07,205,"Toyota Vios"
-TK128918,5,4,"Late delivery",1,LATAM,"La Plata",Argentina,"South America","Buenos Aires (provincia)",COMPLETE,"Quezon City",14.676,121.0437,14.6449657717114,121.12602034380289,2023-01-23,240,"Isuzu ELF NHR 55"
-CR30821,3,4,"Advance shipping",0,Europe,Dieppe,Francia,"Western Europe",Normandía,COMPLETE,"Quezon City",14.676,121.0437,14.647312218870328,121.12642299366782,2021-06-30,220,"Toyota Vios"
-TK68118,4,4,"Shipping on time",0,"Pacific Asia",Denpasar,Indonesia,"Southeast Asia",Bali,COMPLETE,"Quezon City",14.676,121.0437,14.647312218870328,121.12642299366782,2022-02-01,236,"Hino 700 Series Dump Truck"
-MC168013,5,4,"Late delivery",1,Europe,Viena,Austria,"Western Europe",Viena,CLOSED,Parañaque,14.4793,121.0198,14.53495084759309,121.05112757325277,2023-09-08,206,"Honda Click 125i"
-CR35091,3,4,"Advance shipping",0,Europe,Harrow,"Reino Unido","Northern Europe",Inglaterra,CLOSED,"Quezon City",14.676,121.0437,14.6185316146524,121.04343506966106,2021-07-24,211,"Honda Civic"
-MC32840,2,4,"Advance shipping",0,Europe,Farnborough,"Reino Unido","Northern Europe",Inglaterra,CLOSED,"Quezon City",14.676,121.0437,14.619070368687687,121.02050593078184,2021-07-11,227,"Yamaha NMAX"
-MC35089,3,4,"Advance shipping",0,Europe,Harrow,"Reino Unido","Northern Europe",Inglaterra,CLOSED,"Quezon City",14.676,121.0437,14.6185316146524,121.04343506966106,2021-07-24,209,"Honda Click 125i"
-MC39032,2,4,"Advance shipping",0,Europe,Fiumicino,Italia,"Southern Europe",Lacio,CLOSED,Manila,14.5995,120.9842,14.535044111055363,121.02009048625835,2021-08-16,202,"Yamaha Mio Sporty"
+Order Item Id,Delivery Status,Late_delivery_risk,Origin Branch,Branch Latitude,Branch Longitude,Customer Latitude,Customer Longitude,order date (DateOrders),driver_id
+MC179213,Shipping on time,0,Quezon City,14.676,121.0437,14.58536175,121.0669054,1/12/2024,217
+TK101052,Shipping canceled,0,Parañaque,14.4793,121.0198,14.54137677,121.0665973,8/14/2022,235
+TK121217,Shipping on time,0,Quezon City,14.676,121.0437,14.60885641,121.041735,12/8/2022,237
+TK121561,Shipping on time,0,Caloocan,14.6507,120.9667,14.67940406,120.9648351,12/10/2022,236
+MC133575,Late delivery,1,Parañaque,14.4793,121.0198,14.54202774,121.0523366,2/19/2023,232
+CR179190,Late delivery,1,Caloocan,14.6507,120.9667,14.72799905,120.9774731,1/12/2024,222
+MC179143,Shipping on time,0,Caloocan,14.6507,120.9667,14.67036683,120.9694149,1/11/2024,218
+CR179139,Late delivery,1,Parañaque,14.4793,121.0198,14.5443896,121.0586501,1/11/2024,201
+CR179131,Advance shipping,0,Manila,14.5995,120.9842,14.53016359,121.0089173,1/11/2024,229
+MC179128,Late delivery,1,Caloocan,14.6507,120.9667,14.7102387,120.9921571,1/11/2024,221
+CR145886,Shipping canceled,0,Quezon City,14.676,121.0437,14.65042728,121.1056652,5/1/2023,233
+TK124607,Late delivery,1,Manila,14.5995,120.9842,14.54363534,120.9865802,12/28/2022,236
+TK73253,Shipping on time,0,Quezon City,14.676,121.0437,14.58999373,121.0752929,3/3/2022,239
+TK54942,Advance shipping,0,Quezon City,14.676,121.0437,14.60259334,121.0239228,11/17/2021,239
+TK104041,Advance shipping,0,Parañaque,14.4793,121.0198,14.53529596,121.0686342,8/31/2022,237
+CR43614,Late delivery,1,Parañaque,14.4793,121.0198,14.54320801,121.0367968,9/12/2021,233
+MC170721,Late delivery,1,Parañaque,14.4793,121.0198,14.39143445,121.0361381,9/23/2023,218
+TK48340,Shipping on time,0,Quezon City,14.676,121.0437,14.61807846,121.0413813,10/10/2021,236
+TK60332,Shipping on time,0,Quezon City,14.676,121.0437,14.61703563,121.0236234,12/19/2021,236
+TK60333,Shipping on time,0,Quezon City,14.676,121.0437,14.61703563,121.0236234,12/19/2021,239
+TK77528,Shipping on time,0,Caloocan,14.6507,120.9667,14.66194193,120.9764122,3/28/2022,236
+MC179079,Late delivery,1,Parañaque,14.4793,121.0198,14.53512765,121.0628139,1/10/2024,227
+MC179072,Advance shipping,0,Quezon City,14.676,121.0437,14.65171644,121.0924779,1/10/2024,227
+MC176534,Late delivery,1,Caloocan,14.6507,120.9667,14.74448061,120.9987678,12/4/2023,214
+CR176485,Late delivery,1,Parañaque,14.4793,121.0198,14.53084715,121.0557144,12/4/2023,212
+CR176478,Late delivery,1,Quezon City,14.676,121.0437,14.64507682,121.1125258,12/3/2023,219
+TK48587,Advance shipping,0,Quezon City,14.676,121.0437,14.62827723,121.0788324,10/11/2021,237
+MC33072,Advance shipping,0,Parañaque,14.4793,121.0198,14.54795389,121.05247,7/12/2021,226
+TK124606,Late delivery,1,Manila,14.5995,120.9842,14.54363534,120.9865802,12/28/2022,239
+MC37625,Late delivery,1,Quezon City,14.676,121.0437,14.6916869,121.0251625,8/8/2021,226
+CR160004,Late delivery,1,Manila,14.5995,120.9842,14.52424241,121.0834683,7/23/2023,219
+TK108765,Shipping canceled,0,Parañaque,14.4793,121.0198,14.46569124,120.9826655,9/27/2022,240
+TK108766,Shipping canceled,0,Parañaque,14.4793,121.0198,14.46569124,120.9826655,9/27/2022,236
+TK48326,Shipping canceled,0,Quezon City,14.676,121.0437,14.61179405,121.0376576,10/10/2021,238
+MC43489,Late delivery,1,Parañaque,14.4793,121.0198,14.50869122,121.0072354,9/11/2021,208
+TK47568,Late delivery,1,Quezon City,14.676,121.0437,14.61981354,121.0599982,10/5/2021,235
+MC162921,Late delivery,1,Parañaque,14.4793,121.0198,14.53694022,121.0647048,8/9/2023,232
+MC155727,Advance shipping,0,Parañaque,14.4793,121.0198,14.53175837,121.0679082,6/28/2023,221
+TK47566,Late delivery,1,Quezon City,14.676,121.0437,14.61981354,121.0599982,10/5/2021,235
+TK117704,Late delivery,1,Quezon City,14.676,121.0437,14.61890161,121.0444516,11/18/2022,239
+TK62544,Advance shipping,0,Quezon City,14.676,121.0437,14.60259334,121.0239228,12/31/2021,235
+TK58068,Advance shipping,0,Quezon City,14.676,121.0437,14.61640265,121.0754961,12/5/2021,240
+CR178084,Late delivery,1,Parañaque,14.4793,121.0198,14.39218935,121.0005271,12/27/2023,213
+MC178281,Advance shipping,0,Manila,14.5995,120.9842,14.54398615,121.068613,12/30/2023,203
+TK104038,Advance shipping,0,Parañaque,14.4793,121.0198,14.53529596,121.0686342,8/31/2022,239
+TK69828,Advance shipping,0,Parañaque,14.4793,121.0198,14.39888536,121.0596333,2/12/2022,238
+MC175136,Advance shipping,0,Caloocan,14.6507,120.9667,14.66515201,120.9766768,11/14/2023,226
+TK73060,Shipping on time,0,Quezon City,14.676,121.0437,14.67344145,121.0192186,3/2/2022,235
+TK109829,Shipping canceled,0,Quezon City,14.676,121.0437,14.61370504,121.0454911,10/3/2022,238
+TK72527,Shipping canceled,0,Parañaque,14.4793,121.0198,14.53385513,121.0582935,2/28/2022,238
+TK93518,Advance shipping,0,Quezon City,14.676,121.0437,14.59980416,121.0469449,6/30/2022,238
+TK114948,Shipping on time,0,Caloocan,14.6507,120.9667,14.71721676,120.9833175,11/2/2022,240
+TK114695,Advance shipping,0,Manila,14.5995,120.9842,14.51576251,121.07886,10/31/2022,238
+TK126499,Late delivery,1,Quezon City,14.676,121.0437,14.61703563,121.0236234,1/8/2023,236
+TK126497,Late delivery,1,Quezon City,14.676,121.0437,14.61703563,121.0236234,1/8/2023,236
+TK45545,Shipping canceled,0,Quezon City,14.676,121.0437,14.61880493,121.0490891,9/23/2021,235
+CR28992,Advance shipping,0,Parañaque,14.4793,121.0198,14.53054871,121.0545654,6/19/2021,220
+CR155782,Late delivery,1,Quezon City,14.676,121.0437,14.60118105,121.0383134,6/28/2023,211
+MC176406,Advance shipping,0,Quezon City,14.676,121.0437,14.59375385,121.0772022,12/2/2023,210
+TK113005,Late delivery,1,Caloocan,14.6507,120.9667,14.62759922,121.0021409,10/22/2022,237
+TK90607,Late delivery,1,Quezon City,14.676,121.0437,14.60259334,121.0239228,6/13/2022,235
+TK74532,Late delivery,1,Caloocan,14.6507,120.9667,14.69645611,120.9558578,3/10/2022,239
+TK71782,Shipping on time,0,Quezon City,14.676,121.0437,14.58992048,121.0820291,2/23/2022,237
+CR15760,Shipping canceled,0,Quezon City,14.676,121.0437,14.61615363,121.0234999,4/2/2021,205
+CR9682,Late delivery,1,Manila,14.5995,120.9842,14.53641055,121.0315934,2/26/2021,219
+MC6780,Late delivery,1,Quezon City,14.676,121.0437,14.58879392,121.0762695,2/9/2021,228
+CR142021,Late delivery,1,Quezon City,14.676,121.0437,14.64496577,121.1260203,4/8/2023,201
+TK125913,Advance shipping,0,Manila,14.5995,120.9842,14.55816352,121.0103688,1/5/2023,238
+TK120828,Late delivery,1,Caloocan,14.6507,120.9667,14.67470683,120.9670759,12/6/2022,239
+TK69827,Advance shipping,0,Parañaque,14.4793,121.0198,14.39888536,121.0596333,2/12/2022,240
+TK58734,Shipping on time,0,Caloocan,14.6507,120.9667,14.71560804,120.9927925,12/9/2021,240
+TK58733,Shipping on time,0,Caloocan,14.6507,120.9667,14.71560804,120.9927925,12/9/2021,238
+TK125075,Shipping on time,0,Caloocan,14.6507,120.9667,14.71721676,120.9833175,12/31/2022,235
+TK125073,Shipping on time,0,Caloocan,14.6507,120.9667,14.71721676,120.9833175,12/31/2022,240
+TK54941,Advance shipping,0,Quezon City,14.676,121.0437,14.60259334,121.0239228,11/17/2021,235
+TK73255,Shipping on time,0,Quezon City,14.676,121.0437,14.58999373,121.0752929,3/3/2022,237
+TK62542,Advance shipping,0,Quezon City,14.676,121.0437,14.60259334,121.0239228,12/31/2021,240
+TK53411,Late delivery,1,Quezon City,14.676,121.0437,14.56555047,121.0993748,11/8/2021,238
+MC174982,Advance shipping,0,Parañaque,14.4793,121.0198,14.53008907,121.0511956,11/12/2023,215
+TK53107,Late delivery,1,Quezon City,14.676,121.0437,14.60571059,121.0274494,11/6/2021,235
+TK72158,Late delivery,1,Quezon City,14.676,121.0437,14.59539938,121.0453994,2/25/2022,235
+TK53106,Late delivery,1,Quezon City,14.676,121.0437,14.60571059,121.0274494,11/6/2021,239
+CR176898,Shipping on time,0,Quezon City,14.676,121.0437,14.61489878,121.0255428,12/10/2023,229
+CR174954,Late delivery,1,Parañaque,14.4793,121.0198,14.54377964,121.0678126,11/11/2023,219
+CR157833,Shipping on time,0,Parañaque,14.4793,121.0198,14.5377241,121.0551827,7/10/2023,231
+MC1160,Shipping on time,0,Manila,14.5995,120.9842,14.53548245,121.063553,1/7/2021,208
+MC133494,Advance shipping,0,Quezon City,14.676,121.0437,14.62827723,121.0788324,2/18/2023,206
+MC1158,Shipping on time,0,Manila,14.5995,120.9842,14.53548245,121.063553,1/7/2021,209
+MC4332,Advance shipping,0,Quezon City,14.676,121.0437,14.58513263,121.0675364,1/26/2021,207
+CR152108,Advance shipping,0,Quezon City,14.676,121.0437,14.56022235,121.0634299,6/6/2023,211
+CR25195,Shipping on time,0,Parañaque,14.4793,121.0198,14.54459303,121.0668492,5/28/2021,220
+CR135802,Late delivery,1,Caloocan,14.6507,120.9667,14.66093412,120.9676814,3/3/2023,212
+MC11526,Advance shipping,0,Parañaque,14.4793,121.0198,14.54753689,121.0623216,3/9/2021,206
+MC147289,Late delivery,1,Quezon City,14.676,121.0437,14.59799493,121.0520337,5/8/2023,232
+MC3341,Late delivery,1,Parañaque,14.4793,121.0198,14.39143445,121.0361381,1/20/2021,202
+CR3338,Late delivery,1,Parañaque,14.4793,121.0198,14.39143445,121.0361381,1/20/2021,204
+CR15812,Shipping on time,0,Parañaque,14.4793,121.0198,14.54311983,121.0515318,4/3/2021,201
+CR132754,Advance shipping,0,Manila,14.5995,120.9842,14.55816352,121.0103688,2/14/2023,233
+MC150263,Shipping on time,0,Parañaque,14.4793,121.0198,14.44659896,121.0022551,5/26/2023,228
+MC8498,Advance shipping,0,Quezon City,14.676,121.0437,14.56022235,121.0634299,2/19/2021,228
+MC25194,Shipping on time,0,Parañaque,14.4793,121.0198,14.54459303,121.0668492,5/28/2021,227
+CR22035,Shipping on time,0,Quezon City,14.676,121.0437,14.61961172,121.0310288,5/9/2021,211
+CR18112,Late delivery,1,Caloocan,14.6507,120.9667,14.6917097,120.9789489,4/16/2021,220
+CR152104,Advance shipping,0,Quezon City,14.676,121.0437,14.56022235,121.0634299,6/6/2023,219
+MC2751,Advance shipping,0,Quezon City,14.676,121.0437,14.60885641,121.041735,1/17/2021,218
+TK130130,Late delivery,1,Quezon City,14.676,121.0437,14.60411559,121.0467588,1/30/2023,238
+CR145416,Advance shipping,0,Quezon City,14.676,121.0437,14.61684933,121.0360935,4/28/2023,205
+MC24341,Advance shipping,0,Caloocan,14.6507,120.9667,14.66093412,120.9676814,5/23/2021,217
+CR22514,Advance shipping,0,Manila,14.5995,120.9842,14.58619415,120.9782458,5/12/2021,222
+CR22516,Advance shipping,0,Manila,14.5995,120.9842,14.58619415,120.9782458,5/12/2021,213
+CR7152,Advance shipping,0,Caloocan,14.6507,120.9667,14.67470683,120.9670759,2/11/2021,220
+MC15114,Shipping on time,0,Quezon City,14.676,121.0437,14.56800109,121.0652679,3/30/2021,228
+TK62841,Advance shipping,0,Caloocan,14.6507,120.9667,14.67233648,120.9658786,1/2/2022,240
+TK51597,Advance shipping,0,Manila,14.5995,120.9842,14.53990668,121.0199935,10/29/2021,239
+TK120416,Advance shipping,0,Quezon City,14.676,121.0437,14.58425532,121.0784334,12/3/2022,240
+TK117394,Shipping on time,0,Manila,14.5995,120.9842,14.53548245,121.063553,11/16/2022,239
+TK62842,Advance shipping,0,Caloocan,14.6507,120.9667,14.67233648,120.9658786,1/2/2022,239
+TK67776,Late delivery,1,Quezon City,14.676,121.0437,14.67668201,121.0234089,1/30/2022,237
+TK58902,Advance shipping,0,Parañaque,14.4793,121.0198,14.5377241,121.0551827,12/10/2021,238
+TK58900,Advance shipping,0,Parañaque,14.4793,121.0198,14.5377241,121.0551827,12/10/2021,237
+MC168714,Advance shipping,0,Quezon City,14.676,121.0437,14.61225562,121.0498906,9/12/2023,214
+CR34193,Shipping canceled,0,Quezon City,14.676,121.0437,14.60458515,121.0247169,7/19/2021,219
+MC3258,Advance shipping,0,Manila,14.5995,120.9842,14.58393491,120.9710088,1/20/2021,223
+CR16561,Advance shipping,0,Quezon City,14.676,121.0437,14.61611532,121.049049,4/7/2021,216
+MC3842,Shipping canceled,0,Quezon City,14.676,121.0437,14.60848392,121.0264825,1/23/2021,215
+TK72529,Shipping canceled,0,Parañaque,14.4793,121.0198,14.53385513,121.0582935,2/28/2022,240
+CR29579,Advance shipping,0,Quezon City,14.676,121.0437,14.61615363,121.0234999,6/22/2021,201
+CR24868,Late delivery,1,Parañaque,14.4793,121.0198,14.54615661,121.057818,5/26/2021,233
+CR5651,Late delivery,1,Manila,14.5995,120.9842,14.53990668,121.0199935,2/2/2021,201
+CR2011,Late delivery,1,Quezon City,14.676,121.0437,14.59539938,121.0453994,1/12/2021,231
+TK122633,Late delivery,1,Parañaque,14.4793,121.0198,14.45124073,120.9841193,12/16/2022,239
+TK122635,Late delivery,1,Parañaque,14.4793,121.0198,14.45124073,120.9841193,12/16/2022,239
+TK122634,Late delivery,1,Parañaque,14.4793,121.0198,14.45124073,120.9841193,12/16/2022,240
+TK124245,Late delivery,1,Parañaque,14.4793,121.0198,14.54637745,121.0629441,12/26/2022,237
+TK122636,Late delivery,1,Parañaque,14.4793,121.0198,14.45124073,120.9841193,12/16/2022,240
+MC174266,Late delivery,1,Quezon City,14.676,121.0437,14.58897044,121.0977714,11/1/2023,232
+MC168802,Late delivery,1,Parañaque,14.4793,121.0198,14.53877833,121.0565659,9/12/2023,210
+CR168799,Late delivery,1,Parañaque,14.4793,121.0198,14.53877833,121.0565659,9/12/2023,212
+MC18347,Late delivery,1,Manila,14.5995,120.9842,14.53548245,121.063553,4/17/2021,207
+MC18348,Late delivery,1,Manila,14.5995,120.9842,14.53548245,121.063553,4/17/2021,209
+TK128429,Late delivery,1,Quezon City,14.676,121.0437,14.56623664,121.0819388,1/20/2023,237
+TK128427,Late delivery,1,Quezon City,14.676,121.0437,14.56623664,121.0819388,1/20/2023,240
+MC178846,Late delivery,1,Manila,14.5995,120.9842,14.51098386,121.059103,1/7/2024,228
+CR178927,Late delivery,1,Quezon City,14.676,121.0437,14.61763993,121.0710178,1/8/2024,216
+TK56358,Late delivery,1,Quezon City,14.676,121.0437,14.56800109,121.0652679,11/25/2021,240
+TK56360,Late delivery,1,Quezon City,14.676,121.0437,14.56800109,121.0652679,11/25/2021,236
+TK128425,Late delivery,1,Quezon City,14.676,121.0437,14.56623664,121.0819388,1/20/2023,238
+TK56356,Late delivery,1,Quezon City,14.676,121.0437,14.56800109,121.0652679,11/25/2021,239
+TK128428,Late delivery,1,Quezon City,14.676,121.0437,14.56623664,121.0819388,1/20/2023,235
+TK78290,Late delivery,1,Quezon City,14.676,121.0437,14.65042728,121.1056652,4/2/2022,238
+CR165761,Late delivery,1,Quezon City,14.676,121.0437,14.66985377,121.1227421,8/26/2023,229
+CR165762,Late delivery,1,Quezon City,14.676,121.0437,14.66985377,121.1227421,8/26/2023,213
+CR165760,Late delivery,1,Quezon City,14.676,121.0437,14.66985377,121.1227421,8/26/2023,224
+TK78291,Late delivery,1,Quezon City,14.676,121.0437,14.65042728,121.1056652,4/2/2022,236
+TK55341,Late delivery,1,Quezon City,14.676,121.0437,14.67414924,121.1225198,11/19/2021,239
+TK55345,Late delivery,1,Quezon City,14.676,121.0437,14.67414924,121.1225198,11/19/2021,238
+TK55344,Late delivery,1,Quezon City,14.676,121.0437,14.67414924,121.1225198,11/19/2021,240
+TK55343,Late delivery,1,Quezon City,14.676,121.0437,14.67414924,121.1225198,11/19/2021,240
+TK82504,Late delivery,1,Quezon City,14.676,121.0437,14.60571059,121.0274494,4/26/2022,236
+TK99195,Late delivery,1,Quezon City,14.676,121.0437,14.60412122,121.0539189,8/3/2022,237
+TK82503,Late delivery,1,Quezon City,14.676,121.0437,14.60571059,121.0274494,4/26/2022,235
+TK81079,Late delivery,1,Quezon City,14.676,121.0437,14.61021438,121.0248512,4/18/2022,238
+TK82502,Late delivery,1,Quezon City,14.676,121.0437,14.60571059,121.0274494,4/26/2022,240
+TK87221,Advance shipping,0,Manila,14.5995,120.9842,14.51381909,121.0948393,5/24/2022,236
+TK99691,Late delivery,1,Manila,14.5995,120.9842,14.53273936,121.0791788,8/6/2022,235
+TK81629,Advance shipping,0,Caloocan,14.6507,120.9667,14.71560804,120.9927925,4/21/2022,236
+TK87545,Shipping on time,0,Quezon City,14.676,121.0437,14.61907037,121.0205059,5/26/2022,240
+MC155664,Late delivery,1,Parañaque,14.4793,121.0198,14.43895066,120.963412,6/27/2023,225
+MC36529,Advance shipping,0,Caloocan,14.6507,120.9667,14.71721676,120.9833175,8/2/2021,217
+TK114663,Late delivery,1,Caloocan,14.6507,120.9667,14.68679593,120.9543432,10/31/2022,239
+CR36526,Advance shipping,0,Caloocan,14.6507,120.9667,14.71721676,120.9833175,8/2/2021,224
+MC154470,Advance shipping,0,Manila,14.5995,120.9842,14.53273936,121.0791788,6/21/2023,209
+TK114660,Late delivery,1,Caloocan,14.6507,120.9667,14.68679593,120.9543432,10/31/2022,236
+MC162635,Shipping on time,0,Quezon City,14.676,121.0437,14.58570849,121.0568265,8/7/2023,227
+CR160746,Late delivery,1,Manila,14.5995,120.9842,14.52700716,121.0645562,7/27/2023,212
+MC166788,Shipping on time,0,Quezon City,14.676,121.0437,14.61703563,121.0236234,9/1/2023,203
+TK114661,Late delivery,1,Caloocan,14.6507,120.9667,14.68679593,120.9543432,10/31/2022,236
+MC19770,Advance shipping,0,Manila,14.5995,120.9842,14.54175968,121.0651297,4/26/2021,232
+MC2737,Late delivery,1,Quezon City,14.676,121.0437,14.56555047,121.0993748,1/17/2021,223
+MC149601,Advance shipping,0,Quezon City,14.676,121.0437,14.60014775,121.0238747,5/22/2023,202
+CR146985,Advance shipping,0,Parañaque,14.4793,121.0198,14.54247249,121.064613,5/7/2023,204
+MC23286,Shipping on time,0,Parañaque,14.4793,121.0198,14.54247249,121.064613,5/17/2021,202
+TK126395,Late delivery,1,Quezon City,14.676,121.0437,14.61564746,121.0415975,1/8/2023,239
+TK115042,Late delivery,1,Quezon City,14.676,121.0437,14.61961172,121.0310288,11/2/2022,239
+TK104781,Late delivery,1,Parañaque,14.4793,121.0198,14.53504931,121.0520515,9/4/2022,240
+TK54948,Late delivery,1,Quezon City,14.676,121.0437,14.61021961,121.0540916,11/17/2021,237
+TK53676,Late delivery,1,Quezon City,14.676,121.0437,14.61807846,121.0413813,11/10/2021,240
+TK53979,Late delivery,1,Caloocan,14.6507,120.9667,14.65410618,120.9500731,11/12/2021,236
+TK70122,Advance shipping,0,Parañaque,14.4793,121.0198,14.54521874,121.066006,2/14/2022,240
+TK93572,Late delivery,1,Caloocan,14.6507,120.9667,14.72186908,120.9596276,7/1/2022,235
+TK94587,Shipping on time,0,Parañaque,14.4793,121.0198,14.39143445,121.0361381,7/7/2022,237
+TK96612,Advance shipping,0,Quezon City,14.676,121.0437,14.67873616,121.0455803,7/18/2022,240
+TK102945,Shipping on time,0,Parañaque,14.4793,121.0198,14.44659896,121.0022551,8/25/2022,239
+TK84074,Late delivery,1,Quezon City,14.676,121.0437,14.68448325,121.0927284,5/6/2022,236
+TK122319,Late delivery,1,Manila,14.5995,120.9842,14.5323841,121.0006465,12/15/2022,237
+TK122318,Late delivery,1,Manila,14.5995,120.9842,14.5323841,121.0006465,12/15/2022,236
+TK112832,Late delivery,1,Caloocan,14.6507,120.9667,14.65216013,120.9830761,10/21/2022,239
+TK112830,Late delivery,1,Caloocan,14.6507,120.9667,14.65216013,120.9830761,10/21/2022,235
+TK112828,Late delivery,1,Caloocan,14.6507,120.9667,14.65216013,120.9830761,10/21/2022,236
+TK112829,Late delivery,1,Caloocan,14.6507,120.9667,14.65216013,120.9830761,10/21/2022,237
+MC173226,Late delivery,1,Manila,14.5995,120.9842,14.50508038,121.0561735,10/17/2023,210
+MC34166,Late delivery,1,Parañaque,14.4793,121.0198,14.40250116,121.0115341,7/19/2021,208
+MC32808,Late delivery,1,Quezon City,14.676,121.0437,14.60047169,121.0362366,7/11/2021,221
+TK123904,Late delivery,1,Caloocan,14.6507,120.9667,14.69645611,120.9558578,12/24/2022,238
+TK123903,Late delivery,1,Caloocan,14.6507,120.9667,14.69645611,120.9558578,12/24/2022,238
+MC34165,Late delivery,1,Parañaque,14.4793,121.0198,14.40250116,121.0115341,7/19/2021,202
+TK87426,Late delivery,1,Parañaque,14.4793,121.0198,14.39888536,121.0596333,5/25/2022,240
+TK87429,Late delivery,1,Parañaque,14.4793,121.0198,14.39888536,121.0596333,5/25/2022,239
+TK88696,Advance shipping,0,Manila,14.5995,120.9842,14.55541361,121.0021218,6/2/2022,236
+MC155783,Late delivery,1,Quezon City,14.676,121.0437,14.60118105,121.0383134,6/28/2023,203
+CR28991,Advance shipping,0,Parañaque,14.4793,121.0198,14.53054871,121.0545654,6/19/2021,201
+MC158121,Advance shipping,0,Caloocan,14.6507,120.9667,14.69296029,120.9818446,7/12/2023,232
+TK45411,Shipping on time,0,Quezon City,14.676,121.0437,14.60014775,121.0238747,9/23/2021,238
+MC21759,Advance shipping,0,Quezon City,14.676,121.0437,14.58034234,121.0561778,5/8/2021,209
+TK68686,Advance shipping,0,Quezon City,14.676,121.0437,14.59539938,121.0453994,2/5/2022,240
+TK51877,Shipping on time,0,Manila,14.5995,120.9842,14.52700716,121.0645562,10/31/2021,235
+TK51880,Shipping on time,0,Manila,14.5995,120.9842,14.52700716,121.0645562,10/31/2021,236
+TK69688,Late delivery,1,Parañaque,14.4793,121.0198,14.54247249,121.064613,2/11/2022,240
+TK124214,Advance shipping,0,Quezon City,14.676,121.0437,14.61188951,121.0584657,12/26/2022,239
+TK109826,Shipping canceled,0,Quezon City,14.676,121.0437,14.61370504,121.0454911,10/3/2022,239
+TK114861,Shipping canceled,0,Quezon City,14.676,121.0437,14.60743591,121.0574877,11/1/2022,235
+TK93520,Advance shipping,0,Quezon City,14.676,121.0437,14.59980416,121.0469449,6/30/2022,237
+TK85966,Late delivery,1,Quezon City,14.676,121.0437,14.60259334,121.0239228,5/17/2022,235
+TK94402,Advance shipping,0,Caloocan,14.6507,120.9667,14.71560804,120.9927925,7/6/2022,238
+TK88693,Advance shipping,0,Manila,14.5995,120.9842,14.55541361,121.0021218,6/2/2022,239
+TK90175,Shipping on time,0,Parañaque,14.4793,121.0198,14.54247249,121.064613,6/11/2022,235
+CR162219,Shipping on time,0,Manila,14.5995,120.9842,14.54284585,121.0767909,8/5/2023,220
+CR155784,Late delivery,1,Quezon City,14.676,121.0437,14.60118105,121.0383134,6/28/2023,205
+MC28990,Advance shipping,0,Parañaque,14.4793,121.0198,14.53054871,121.0545654,6/19/2021,203
+MC2008,Late delivery,1,Quezon City,14.676,121.0437,14.59539938,121.0453994,1/12/2021,209
+MC150722,Advance shipping,0,Quezon City,14.676,121.0437,14.60216684,121.0480276,5/29/2023,234
+MC150721,Advance shipping,0,Quezon City,14.676,121.0437,14.60216684,121.0480276,5/29/2023,207
+CR170031,Advance shipping,0,Quezon City,14.676,121.0437,14.64731222,121.126423,9/19/2023,231
+CR37428,Late delivery,1,Quezon City,14.676,121.0437,14.66017831,121.0916226,8/7/2021,213
+TK58065,Advance shipping,0,Quezon City,14.676,121.0437,14.61640265,121.0754961,12/5/2021,239
+TK73254,Shipping on time,0,Quezon City,14.676,121.0437,14.58999373,121.0752929,3/3/2022,237
+TK105326,Shipping on time,0,Manila,14.5995,120.9842,14.54284585,121.0767909,9/7/2022,237
+TK105328,Shipping on time,0,Manila,14.5995,120.9842,14.54284585,121.0767909,9/7/2022,238
+TK54940,Advance shipping,0,Quezon City,14.676,121.0437,14.60259334,121.0239228,11/17/2021,235
+TK125638,Advance shipping,0,Quezon City,14.676,121.0437,14.567578,121.0530222,1/3/2023,239
+TK62543,Advance shipping,0,Quezon City,14.676,121.0437,14.60259334,121.0239228,12/31/2021,240
+TK53412,Late delivery,1,Quezon City,14.676,121.0437,14.56555047,121.0993748,11/8/2021,237
+TK86079,Late delivery,1,Quezon City,14.676,121.0437,14.56555047,121.0993748,5/18/2022,236
+TK81627,Advance shipping,0,Caloocan,14.6507,120.9667,14.71560804,120.9927925,4/21/2022,236
+TK81630,Advance shipping,0,Caloocan,14.6507,120.9667,14.71560804,120.9927925,4/21/2022,238
+TK82505,Late delivery,1,Quezon City,14.676,121.0437,14.60571059,121.0274494,4/26/2022,236
+TK99194,Late delivery,1,Quezon City,14.676,121.0437,14.60412122,121.0539189,8/3/2022,237
+TK97785,Late delivery,1,Parañaque,14.4793,121.0198,14.53495085,121.0511276,7/25/2022,239
+TK87547,Shipping on time,0,Quezon City,14.676,121.0437,14.61907037,121.0205059,5/26/2022,240
+TK121743,Advance shipping,0,Parañaque,14.4793,121.0198,14.54078532,121.0605439,12/11/2022,236
+TK107373,Advance shipping,0,Quezon City,14.676,121.0437,14.58034234,121.0561778,9/19/2022,239
+TK119770,Shipping on time,0,Caloocan,14.6507,120.9667,14.68679593,120.9543432,11/30/2022,239
+TK119772,Shipping on time,0,Caloocan,14.6507,120.9667,14.68679593,120.9543432,11/30/2022,240
+MC161934,Advance shipping,0,Parañaque,14.4793,121.0198,14.39888536,121.0596333,8/3/2023,221
+CR36079,Advance shipping,0,Parañaque,14.4793,121.0198,14.54202774,121.0523366,7/30/2021,216
+CR157949,Advance shipping,0,Parañaque,14.4793,121.0198,14.53036354,121.060186,7/11/2023,229
+TK113534,Advance shipping,0,Quezon City,14.676,121.0437,14.61907037,121.0205059,10/25/2022,240
+MC13573,Advance shipping,0,Quezon City,14.676,121.0437,14.60743591,121.0574877,3/21/2021,221
+CR134641,Advance shipping,0,Quezon City,14.676,121.0437,14.60743591,121.0574877,2/25/2023,213
+MC152617,Advance shipping,0,Quezon City,14.676,121.0437,14.60983926,121.0479575,6/9/2023,210
+MC132454,Shipping on time,0,Quezon City,14.676,121.0437,14.61907037,121.0205059,2/12/2023,226
+CR11215,Advance shipping,0,Caloocan,14.6507,120.9667,14.63469615,120.9661378,3/7/2021,211
+CR138272,Advance shipping,0,Parañaque,14.4793,121.0198,14.53125343,121.0689018,3/18/2023,205
+MC13574,Advance shipping,0,Quezon City,14.676,121.0437,14.60743591,121.0574877,3/21/2021,214
+TK62107,Late delivery,1,Manila,14.5995,120.9842,14.52700716,121.0645562,12/28/2021,235
+TK75396,Late delivery,1,Parañaque,14.4793,121.0198,14.43895066,120.963412,3/16/2022,236
+TK58801,Advance shipping,0,Parañaque,14.4793,121.0198,14.54074885,121.0670388,12/10/2021,236
+TK81628,Advance shipping,0,Caloocan,14.6507,120.9667,14.71560804,120.9927925,4/21/2022,237
+TK99193,Late delivery,1,Quezon City,14.676,121.0437,14.60412122,121.0539189,8/3/2022,237
+TK86080,Late delivery,1,Quezon City,14.676,121.0437,14.56555047,121.0993748,5/18/2022,237
+TK82645,Late delivery,1,Quezon City,14.676,121.0437,14.58236804,121.0840495,4/27/2022,236
+TK107372,Advance shipping,0,Quezon City,14.676,121.0437,14.58034234,121.0561778,9/19/2022,238
+TK112132,Advance shipping,0,Quezon City,14.676,121.0437,14.60925745,121.0281417,10/17/2022,240
+TK119771,Shipping on time,0,Caloocan,14.6507,120.9667,14.68679593,120.9543432,11/30/2022,235
+MC36527,Advance shipping,0,Caloocan,14.6507,120.9667,14.71721676,120.9833175,8/2/2021,208
+MC157952,Advance shipping,0,Parañaque,14.4793,121.0198,14.53036354,121.060186,7/11/2023,234
+MC164014,Advance shipping,0,Quezon City,14.676,121.0437,14.60458515,121.0247169,8/15/2023,203
+MC164011,Advance shipping,0,Quezon City,14.676,121.0437,14.60458515,121.0247169,8/15/2023,225
+MC137137,Late delivery,1,Parañaque,14.4793,121.0198,14.54074885,121.0670388,3/11/2023,217
+MC11216,Advance shipping,0,Caloocan,14.6507,120.9667,14.63469615,120.9661378,3/7/2021,227
+MC138271,Advance shipping,0,Parañaque,14.4793,121.0198,14.53125343,121.0689018,3/18/2023,203
+MC137138,Late delivery,1,Parañaque,14.4793,121.0198,14.54074885,121.0670388,3/11/2023,214
+CR152616,Advance shipping,0,Quezon City,14.676,121.0437,14.60983926,121.0479575,6/9/2023,224
+MC13577,Advance shipping,0,Quezon City,14.676,121.0437,14.60743591,121.0574877,3/21/2021,215
+CR1796,Late delivery,1,Quezon City,14.676,121.0437,14.567578,121.0530222,1/11/2021,233
+CR134203,Late delivery,1,Parañaque,14.4793,121.0198,14.53385513,121.0582935,2/22/2023,211
+CR2740,Late delivery,1,Quezon City,14.676,121.0437,14.56555047,121.0993748,1/17/2021,233
+TK125077,Shipping on time,0,Caloocan,14.6507,120.9667,14.71721676,120.9833175,12/31/2022,239
+TK103140,Advance shipping,0,Quezon City,14.676,121.0437,14.60458515,121.0247169,8/26/2022,236
+TK58067,Advance shipping,0,Quezon City,14.676,121.0437,14.61640265,121.0754961,12/5/2021,240
+TK65307,Advance shipping,0,Caloocan,14.6507,120.9667,14.69841676,120.9513752,1/16/2022,238
+TK75183,Advance shipping,0,Manila,14.5995,120.9842,14.51162565,121.0540027,3/15/2022,235
+TK94030,Advance shipping,0,Caloocan,14.6507,120.9667,14.65216013,120.9830761,7/3/2022,237
+TK90349,Late delivery,1,Quezon City,14.676,121.0437,14.61961172,121.0310288,6/12/2022,237
+TK98108,Late delivery,1,Quezon City,14.676,121.0437,14.61405466,121.0282051,7/27/2022,238
+TK99118,Advance shipping,0,Quezon City,14.676,121.0437,14.5629655,121.0738022,8/2/2022,240
+TK102983,Advance shipping,0,Quezon City,14.676,121.0437,14.61204588,121.0375001,8/25/2022,237
+TK91405,Late delivery,1,Manila,14.5995,120.9842,14.53548245,121.063553,6/18/2022,240
+TK79054,Advance shipping,0,Manila,14.5995,120.9842,14.50548978,121.0899486,4/6/2022,239
+TK94483,Advance shipping,0,Caloocan,14.6507,120.9667,14.68327346,120.9965216,7/6/2022,239
+TK91719,Late delivery,1,Manila,14.5995,120.9842,14.60623023,120.994374,6/20/2022,237
+TK118936,Late delivery,1,Quezon City,14.676,121.0437,14.62827723,121.0788324,11/25/2022,236
+TK114168,Shipping on time,0,Quezon City,14.676,121.0437,14.67668201,121.0234089,10/28/2022,237
+CR36869,Shipping canceled,0,Quezon City,14.676,121.0437,14.58513263,121.0675364,8/4/2021,219
+CR36870,Shipping canceled,0,Quezon City,14.676,121.0437,14.58513263,121.0675364,8/4/2021,201
+MC33071,Advance shipping,0,Parañaque,14.4793,121.0198,14.54795389,121.05247,7/12/2021,210
+MC166823,Late delivery,1,Caloocan,14.6507,120.9667,14.67350672,120.9944116,9/1/2023,232
+MC166821,Late delivery,1,Caloocan,14.6507,120.9667,14.67350672,120.9944116,9/1/2023,228
+MC33012,Shipping on time,0,Quezon City,14.676,121.0437,14.61684933,121.0360935,7/12/2021,225
+CR35536,Advance shipping,0,Quezon City,14.676,121.0437,14.59799493,121.0520337,7/27/2021,219
+CR37624,Late delivery,1,Quezon City,14.676,121.0437,14.6916869,121.0251625,8/8/2021,211
+CR162086,Shipping canceled,0,Quezon City,14.676,121.0437,14.5629655,121.0738022,8/4/2023,216
+TK46447,Shipping canceled,0,Parañaque,14.4793,121.0198,14.54137677,121.0665973,9/29/2021,235
+TK46446,Shipping canceled,0,Parañaque,14.4793,121.0198,14.54137677,121.0665973,9/29/2021,236
+MC142724,Late delivery,1,Manila,14.5995,120.9842,14.51162565,121.0540027,4/12/2023,227
+MC142722,Late delivery,1,Manila,14.5995,120.9842,14.51162565,121.0540027,4/12/2023,228
+MC142723,Late delivery,1,Manila,14.5995,120.9842,14.51162565,121.0540027,4/12/2023,234
+MC21448,Late delivery,1,Parañaque,14.4793,121.0198,14.39123012,121.0293443,5/6/2021,214
+MC15112,Shipping on time,0,Quezon City,14.676,121.0437,14.56800109,121.0652679,3/30/2021,209
+MC7153,Advance shipping,0,Caloocan,14.6507,120.9667,14.67470683,120.9670759,2/11/2021,223
+MC7154,Advance shipping,0,Caloocan,14.6507,120.9667,14.67470683,120.9670759,2/11/2021,206
+TK131025,Late delivery,1,Quezon City,14.676,121.0437,14.61961172,121.0310288,2/4/2023,240
+TK131024,Late delivery,1,Quezon City,14.676,121.0437,14.61961172,121.0310288,2/4/2023,238
+TK131023,Late delivery,1,Quezon City,14.676,121.0437,14.61961172,121.0310288,2/4/2023,238
+TK59461,Late delivery,1,Quezon City,14.676,121.0437,14.58513263,121.0675364,12/13/2021,236
+CR168801,Late delivery,1,Parañaque,14.4793,121.0198,14.53877833,121.0565659,9/12/2023,233
+TK56359,Late delivery,1,Quezon City,14.676,121.0437,14.56800109,121.0652679,11/25/2021,235
+MC168800,Late delivery,1,Parañaque,14.4793,121.0198,14.53877833,121.0565659,9/12/2023,225
+TK131021,Late delivery,1,Quezon City,14.676,121.0437,14.61961172,121.0310288,2/4/2023,240
+CR31785,Shipping on time,0,Quezon City,14.676,121.0437,14.607062,121.0289485,7/5/2021,205
+MC31784,Shipping on time,0,Quezon City,14.676,121.0437,14.607062,121.0289485,7/5/2021,221
+TK50330,Late delivery,1,Manila,14.5995,120.9842,14.54728489,121.0186031,10/21/2021,238
+TK50328,Late delivery,1,Manila,14.5995,120.9842,14.54728489,121.0186031,10/21/2021,240
+MC31786,Shipping on time,0,Quezon City,14.676,121.0437,14.607062,121.0289485,7/5/2021,206
+TK57218,Late delivery,1,Caloocan,14.6507,120.9667,14.67470683,120.9670759,11/30/2021,236
+TK57222,Late delivery,1,Caloocan,14.6507,120.9667,14.67470683,120.9670759,11/30/2021,239
+TK50329,Late delivery,1,Manila,14.5995,120.9842,14.54728489,121.0186031,10/21/2021,237
+TK50331,Late delivery,1,Manila,14.5995,120.9842,14.54728489,121.0186031,10/21/2021,237
+TK57219,Late delivery,1,Caloocan,14.6507,120.9667,14.67470683,120.9670759,11/30/2021,237
+MC31783,Shipping on time,0,Quezon City,14.676,121.0437,14.607062,121.0289485,7/5/2021,228
+TK57220,Late delivery,1,Caloocan,14.6507,120.9667,14.67470683,120.9670759,11/30/2021,240
+TK57221,Late delivery,1,Caloocan,14.6507,120.9667,14.67470683,120.9670759,11/30/2021,240
+TK110081,Late delivery,1,Parañaque,14.4793,121.0198,14.53064846,121.0572968,10/5/2022,240
+TK110079,Late delivery,1,Parañaque,14.4793,121.0198,14.53064846,121.0572968,10/5/2022,238
+TK110082,Late delivery,1,Parañaque,14.4793,121.0198,14.53064846,121.0572968,10/5/2022,238
+MC158389,Late delivery,1,Quezon City,14.676,121.0437,14.56623664,121.0819388,7/13/2023,208
+MC173757,Late delivery,1,Quezon City,14.676,121.0437,14.61453872,121.0362047,10/25/2023,207
+MC158359,Late delivery,1,Quezon City,14.676,121.0437,14.61981354,121.0599982,7/13/2023,217
+MC174706,Shipping on time,0,Caloocan,14.6507,120.9667,14.66159851,121.0089717,11/8/2023,218
+CR153271,Late delivery,1,Quezon City,14.676,121.0437,14.56686105,121.0873903,6/13/2023,224
+MC153267,Late delivery,1,Quezon City,14.676,121.0437,14.56686105,121.0873903,6/13/2023,225
+CR140784,Shipping on time,0,Quezon City,14.676,121.0437,14.58636842,121.0696712,4/1/2023,211
+MC140783,Shipping on time,0,Quezon City,14.676,121.0437,14.58636842,121.0696712,4/1/2023,207
+MC134567,Shipping on time,0,Quezon City,14.676,121.0437,14.61961172,121.0310288,2/24/2023,214
+MC177445,Late delivery,1,Quezon City,14.676,121.0437,14.58925052,121.0872391,12/18/2023,227
+MC175224,Late delivery,1,Quezon City,14.676,121.0437,14.63057699,121.0610061,11/15/2023,215
+MC175878,Late delivery,1,Quezon City,14.676,121.0437,14.6188732,121.0466435,11/25/2023,228
+TK84987,Late delivery,1,Quezon City,14.676,121.0437,14.61204588,121.0375001,5/12/2022,239
+TK91229,Late delivery,1,Quezon City,14.676,121.0437,14.61219203,121.0315098,6/17/2022,235
+TK81513,Late delivery,1,Quezon City,14.676,121.0437,14.56623664,121.0819388,4/20/2022,239
+CR40687,Late delivery,1,Quezon City,14.676,121.0437,14.6017898,121.0288942,8/26/2021,220
+CR17716,Late delivery,1,Quezon City,14.676,121.0437,14.61890161,121.0444516,4/14/2021,201
+CR134569,Shipping on time,0,Quezon City,14.676,121.0437,14.61961172,121.0310288,2/24/2023,219
+TK63963,Late delivery,1,Caloocan,14.6507,120.9667,14.65216013,120.9830761,1/8/2022,237
+TK84991,Late delivery,1,Quezon City,14.676,121.0437,14.61204588,121.0375001,5/12/2022,239
+TK112418,Shipping on time,0,Parañaque,14.4793,121.0198,14.39143445,121.0361381,10/19/2022,238
+TK91231,Late delivery,1,Quezon City,14.676,121.0437,14.61219203,121.0315098,6/17/2022,238
+TK91230,Late delivery,1,Quezon City,14.676,121.0437,14.61219203,121.0315098,6/17/2022,240
+TK84989,Late delivery,1,Quezon City,14.676,121.0437,14.61204588,121.0375001,5/12/2022,237
+TK84990,Late delivery,1,Quezon City,14.676,121.0437,14.61204588,121.0375001,5/12/2022,236
+CR158388,Late delivery,1,Quezon City,14.676,121.0437,14.56623664,121.0819388,7/13/2023,205
+MC158360,Late delivery,1,Quezon City,14.676,121.0437,14.61981354,121.0599982,7/13/2023,227
+MC40686,Late delivery,1,Quezon City,14.676,121.0437,14.6017898,121.0288942,8/26/2021,214
+CR17715,Late delivery,1,Quezon City,14.676,121.0437,14.61890161,121.0444516,4/14/2021,230
+CR153268,Late delivery,1,Quezon City,14.676,121.0437,14.56686105,121.0873903,6/13/2023,212
+TK110080,Late delivery,1,Parañaque,14.4793,121.0198,14.53064846,121.0572968,10/5/2022,240
+MC158361,Late delivery,1,Quezon City,14.676,121.0437,14.61981354,121.0599982,7/13/2023,217
+CR40685,Late delivery,1,Quezon City,14.676,121.0437,14.6017898,121.0288942,8/26/2021,229
+TK63962,Late delivery,1,Caloocan,14.6507,120.9667,14.65216013,120.9830761,1/8/2022,235
+MC158363,Late delivery,1,Quezon City,14.676,121.0437,14.61981354,121.0599982,7/13/2023,217
+MC158362,Late delivery,1,Quezon City,14.676,121.0437,14.61981354,121.0599982,7/13/2023,210
+MC153269,Late delivery,1,Quezon City,14.676,121.0437,14.56686105,121.0873903,6/13/2023,203
+TK81514,Late delivery,1,Quezon City,14.676,121.0437,14.56623664,121.0819388,4/20/2022,238
+TK111308,Late delivery,1,Parañaque,14.4793,121.0198,14.39855579,121.0108033,10/12/2022,236
+CR172903,Shipping on time,0,Quezon City,14.676,121.0437,14.56292947,121.0876392,10/12/2023,220
+MC161745,Advance shipping,0,Quezon City,14.676,121.0437,14.6017898,121.0288942,8/2/2023,208
+TK49054,Advance shipping,0,Parañaque,14.4793,121.0198,14.53175837,121.0679082,10/14/2021,238
+CR169326,Advance shipping,0,Quezon City,14.676,121.0437,14.69869638,121.0682394,9/15/2023,211
+TK116361,Shipping canceled,0,Quezon City,14.676,121.0437,14.67668201,121.0234089,11/10/2022,238
+TK70016,Shipping canceled,0,Caloocan,14.6507,120.9667,14.67237621,120.9595219,2/13/2022,238
+TK127670,Shipping on time,0,Caloocan,14.6507,120.9667,14.68048097,120.9738391,1/15/2023,238
+TK73059,Advance shipping,0,Manila,14.5995,120.9842,14.52424241,121.0834683,3/2/2022,239
+TK75972,Shipping on time,0,Parañaque,14.4793,121.0198,14.54615661,121.057818,3/19/2022,239
+TK98107,Late delivery,1,Quezon City,14.676,121.0437,14.61405466,121.0282051,7/27/2022,237
+TK101556,Advance shipping,0,Quezon City,14.676,121.0437,14.68448325,121.0927284,8/17/2022,240
+TK98106,Late delivery,1,Quezon City,14.676,121.0437,14.61405466,121.0282051,7/27/2022,235
+TK78363,Shipping canceled,0,Manila,14.5995,120.9842,14.6022021,120.9872458,4/2/2022,240
+MC174603,Late delivery,1,Quezon City,14.676,121.0437,14.60118846,121.027871,11/6/2023,202
+MC37919,Late delivery,1,Parañaque,14.4793,121.0198,14.54247249,121.064613,8/10/2021,218
+MC147712,Late delivery,1,Quezon City,14.676,121.0437,14.60267129,121.0464217,5/11/2023,227
+MC3398,Late delivery,1,Quezon City,14.676,121.0437,14.59539938,121.0453994,1/21/2021,217
+CR3399,Late delivery,1,Quezon City,14.676,121.0437,14.59539938,121.0453994,1/21/2021,216
+MC178629,Late delivery,1,Quezon City,14.676,121.0437,14.60005842,121.0311731,1/4/2024,221
+TK87796,Late delivery,1,Quezon City,14.676,121.0437,14.61188951,121.0584657,5/28/2022,235
+TK88927,Late delivery,1,Quezon City,14.676,121.0437,14.61907037,121.0205059,6/3/2022,238
+CR160544,Late delivery,1,Caloocan,14.6507,120.9667,14.71560804,120.9927925,7/26/2023,230
+CR160545,Late delivery,1,Caloocan,14.6507,120.9667,14.71560804,120.9927925,7/26/2023,201
+TK81690,Late delivery,1,Parañaque,14.4793,121.0198,14.53529596,121.0686342,4/21/2022,238
+MC160547,Late delivery,1,Caloocan,14.6507,120.9667,14.71560804,120.9927925,7/26/2023,221
+TK81689,Late delivery,1,Parañaque,14.4793,121.0198,14.53529596,121.0686342,4/21/2022,238
+TK88928,Late delivery,1,Quezon City,14.676,121.0437,14.61907037,121.0205059,6/3/2022,235
+CR160546,Late delivery,1,Caloocan,14.6507,120.9667,14.71560804,120.9927925,7/26/2023,204
+CR37918,Late delivery,1,Parañaque,14.4793,121.0198,14.54247249,121.064613,8/10/2021,219
+TK87795,Late delivery,1,Quezon City,14.676,121.0437,14.61188951,121.0584657,5/28/2022,236
+CR174328,Late delivery,1,Manila,14.5995,120.9842,14.54267069,121.0574882,11/2/2023,220
+CR159390,Late delivery,1,Manila,14.5995,120.9842,14.53754297,121.0345507,7/19/2023,220
+TK57445,Late delivery,1,Quezon City,14.676,121.0437,14.59980416,121.0469449,12/1/2021,239
+TK57448,Late delivery,1,Quezon City,14.676,121.0437,14.59980416,121.0469449,12/1/2021,237
+TK57446,Late delivery,1,Quezon City,14.676,121.0437,14.59980416,121.0469449,12/1/2021,240
+CR159389,Late delivery,1,Manila,14.5995,120.9842,14.53754297,121.0345507,7/19/2023,211
+TK57447,Late delivery,1,Quezon City,14.676,121.0437,14.59980416,121.0469449,12/1/2021,240
+MC159387,Late delivery,1,Manila,14.5995,120.9842,14.53754297,121.0345507,7/19/2023,207
+CR159388,Late delivery,1,Manila,14.5995,120.9842,14.53754297,121.0345507,7/19/2023,222
+MC159386,Late delivery,1,Manila,14.5995,120.9842,14.53754297,121.0345507,7/19/2023,225
+TK121346,Late delivery,1,Manila,14.5995,120.9842,14.55541361,121.0021218,12/9/2022,235
+MC165909,Late delivery,1,Parañaque,14.4793,121.0198,14.54510927,121.0021128,8/26/2023,209
+TK50712,Late delivery,1,Parañaque,14.4793,121.0198,14.52221787,121.0091867,10/24/2021,237
+TK121345,Late delivery,1,Manila,14.5995,120.9842,14.55541361,121.0021218,12/9/2022,237
+TK82689,Shipping on time,0,Quezon City,14.676,121.0437,14.60267129,121.0464217,4/27/2022,237
+CR165910,Late delivery,1,Parañaque,14.4793,121.0198,14.54510927,121.0021128,8/26/2023,233
+MC5407,Late delivery,1,Caloocan,14.6507,120.9667,14.6823121,120.9610945,2/1/2021,218
+TK82687,Shipping on time,0,Quezon City,14.676,121.0437,14.60267129,121.0464217,4/27/2022,239
+TK45728,Late delivery,1,Quezon City,14.676,121.0437,14.60014775,121.0238747,9/25/2021,239
+CR5408,Late delivery,1,Caloocan,14.6507,120.9667,14.6823121,120.9610945,2/1/2021,216
+TK115729,Late delivery,1,Caloocan,14.6507,120.9667,14.68679593,120.9543432,11/6/2022,238
+MC166992,Late delivery,1,Caloocan,14.6507,120.9667,14.62759922,121.0021409,9/2/2023,218
+MC32807,Late delivery,1,Quezon City,14.676,121.0437,14.60047169,121.0362366,7/11/2021,215
+MC32806,Late delivery,1,Quezon City,14.676,121.0437,14.60047169,121.0362366,7/11/2021,217
+CR19758,Late delivery,1,Parañaque,14.4793,121.0198,14.53280166,121.0506949,4/26/2021,229
+MC19759,Late delivery,1,Parañaque,14.4793,121.0198,14.53280166,121.0506949,4/26/2021,217
+CR7094,Late delivery,1,Quezon City,14.676,121.0437,14.61506974,121.0398958,2/11/2021,216
+TK128660,Late delivery,1,Quezon City,14.676,121.0437,14.61204588,121.0375001,1/21/2023,239
+MC7092,Late delivery,1,Quezon City,14.676,121.0437,14.61506974,121.0398958,2/11/2021,228
+CR133467,Late delivery,1,Caloocan,14.6507,120.9667,14.67237621,120.9595219,2/18/2023,201
+MC133466,Late delivery,1,Caloocan,14.6507,120.9667,14.67237621,120.9595219,2/18/2023,207
+CR24865,Late delivery,1,Parañaque,14.4793,121.0198,14.54615661,121.057818,5/26/2021,213
+MC21247,Late delivery,1,Parañaque,14.4793,121.0198,14.53111009,121.0557589,5/5/2021,215
+TK62445,Late delivery,1,Manila,14.5995,120.9842,14.51366018,121.0751094,12/30/2021,240
+TK62444,Late delivery,1,Manila,14.5995,120.9842,14.51366018,121.0751094,12/30/2021,235
+TK62446,Late delivery,1,Manila,14.5995,120.9842,14.51366018,121.0751094,12/30/2021,239
+TK72021,Late delivery,1,Quezon City,14.676,121.0437,14.6076532,121.0685026,2/25/2022,237
+TK61128,Late delivery,1,Caloocan,14.6507,120.9667,14.67350672,120.9944116,12/23/2021,236
+TK61127,Late delivery,1,Caloocan,14.6507,120.9667,14.67350672,120.9944116,12/23/2021,239
+TK75762,Late delivery,1,Parañaque,14.4793,121.0198,14.39143445,121.0361381,3/18/2022,236
+TK66687,Late delivery,1,Parañaque,14.4793,121.0198,14.53877833,121.0565659,1/24/2022,237
+TK51561,Late delivery,1,Quezon City,14.676,121.0437,14.56623664,121.0819388,10/29/2021,238
+TK61126,Late delivery,1,Caloocan,14.6507,120.9667,14.67350672,120.9944116,12/23/2021,240
+TK51562,Late delivery,1,Quezon City,14.676,121.0437,14.56623664,121.0819388,10/29/2021,236
+TK51560,Late delivery,1,Quezon City,14.676,121.0437,14.56623664,121.0819388,10/29/2021,239
+TK61129,Late delivery,1,Caloocan,14.6507,120.9667,14.67350672,120.9944116,12/23/2021,235
+TK89644,Late delivery,1,Manila,14.5995,120.9842,14.53382177,121.0765961,6/7/2022,239
+TK89643,Late delivery,1,Manila,14.5995,120.9842,14.53382177,121.0765961,6/7/2022,240
+MC157266,Late delivery,1,Quezon City,14.676,121.0437,14.61807846,121.0413813,7/7/2023,202
+CR7093,Late delivery,1,Quezon City,14.676,121.0437,14.61506974,121.0398958,2/11/2021,211
+CR24949,Late delivery,1,Quezon City,14.676,121.0437,14.61260609,121.0366727,5/26/2021,212
+TK122321,Late delivery,1,Manila,14.5995,120.9842,14.5323841,121.0006465,12/15/2022,235
+MC32805,Late delivery,1,Quezon City,14.676,121.0437,14.60047169,121.0362366,7/11/2021,203
+MC32804,Late delivery,1,Quezon City,14.676,121.0437,14.60047169,121.0362366,7/11/2021,226
+CR166994,Late delivery,1,Caloocan,14.6507,120.9667,14.62759922,121.0021409,9/2/2023,230
+CR6997,Late delivery,1,Parañaque,14.4793,121.0198,14.54459303,121.0668492,2/10/2021,229
+MC6998,Late delivery,1,Parañaque,14.4793,121.0198,14.54459303,121.0668492,2/10/2021,214
+MC21248,Late delivery,1,Parañaque,14.4793,121.0198,14.53111009,121.0557589,5/5/2021,227
+MC137579,Late delivery,1,Caloocan,14.6507,120.9667,14.68048097,120.9738391,3/13/2023,218
+TK75761,Late delivery,1,Parañaque,14.4793,121.0198,14.39143445,121.0361381,3/18/2022,240
+TK122320,Late delivery,1,Manila,14.5995,120.9842,14.5323841,121.0006465,12/15/2022,236
+TK116189,Late delivery,1,Caloocan,14.6507,120.9667,14.73878707,120.9886041,11/9/2022,236
+MC157265,Late delivery,1,Quezon City,14.676,121.0437,14.61807846,121.0413813,7/7/2023,226
+MC11672,Late delivery,1,Caloocan,14.6507,120.9667,14.67350672,120.9944116,3/9/2021,217
+MC137576,Late delivery,1,Caloocan,14.6507,120.9667,14.68048097,120.9738391,3/13/2023,232
+TK51563,Late delivery,1,Quezon City,14.676,121.0437,14.56623664,121.0819388,10/29/2021,240
+TK89642,Late delivery,1,Manila,14.5995,120.9842,14.53382177,121.0765961,6/7/2022,239
+MC29946,Late delivery,1,Quezon City,14.676,121.0437,14.61405466,121.0282051,6/24/2021,215
+MC133465,Late delivery,1,Caloocan,14.6507,120.9667,14.67237621,120.9595219,2/18/2023,208
+TK61125,Late delivery,1,Caloocan,14.6507,120.9667,14.67350672,120.9944116,12/23/2021,239
+MC174298,Shipping on time,0,Manila,14.5995,120.9842,14.50984007,121.083388,11/2/2023,232
+MC40946,Shipping on time,0,Parañaque,14.4793,121.0198,14.54496783,121.0647736,8/28/2021,203
+MC149906,Shipping on time,0,Quezon City,14.676,121.0437,14.60411559,121.0467588,5/24/2023,225
+MC179000,Late delivery,1,Quezon City,14.676,121.0437,14.57241114,121.0512538,1/9/2024,234
+TK58702,Shipping on time,0,Parañaque,14.4793,121.0198,14.53903557,121.057983,12/9/2021,237
+TK51503,Late delivery,1,Parañaque,14.4793,121.0198,14.54599024,121.0602514,10/28/2021,238
+TK86748,Shipping on time,0,Parañaque,14.4793,121.0198,14.53328651,121.0556782,5/22/2022,235
+CR131628,Shipping on time,0,Quezon City,14.676,121.0437,14.65042728,121.1056652,2/7/2023,205
+TK128918,Late delivery,1,Quezon City,14.676,121.0437,14.64496577,121.1260203,1/23/2023,240
+CR30821,Advance shipping,0,Quezon City,14.676,121.0437,14.64731222,121.126423,6/30/2021,220
+TK68118,Shipping on time,0,Quezon City,14.676,121.0437,14.64731222,121.126423,2/1/2022,236
+MC168013,Late delivery,1,Parañaque,14.4793,121.0198,14.53495085,121.0511276,9/8/2023,206
+CR35091,Advance shipping,0,Quezon City,14.676,121.0437,14.61853161,121.0434351,7/24/2021,211
+MC32840,Advance shipping,0,Quezon City,14.676,121.0437,14.61907037,121.0205059,7/11/2021,227
+MC35089,Advance shipping,0,Quezon City,14.676,121.0437,14.61853161,121.0434351,7/24/2021,209
+MC39032,Advance shipping,0,Manila,14.5995,120.9842,14.53504411,121.0200905,8/16/2021,202
