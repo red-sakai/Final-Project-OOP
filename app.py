@@ -501,17 +501,59 @@ class HexaHaulApp:
         @app.route("/submit-ticket", methods=["GET", "POST"])
         def submit_ticket():
             if request.method == "POST":
-                user_email = request.form.get("email")
-                issue = request.form.get("issue")
+                # Get form data
+                ticket_title = request.form.get("ticket_title")
+                ticket_description = request.form.get("ticket_description")
+                error_code = request.form.get("error_code")
+                tracking_id = request.form.get("tracking_id")
+                user_email = request.form.get("user_email", "Unknown user")
+                
+                # Check if there are file attachments
+                attachments = []
+                if 'attachments' in request.files:
+                    files = request.files.getlist('attachments')
+                    for file in files:
+                        if file and file.filename:
+                            attachments.append(file)
+                
+                # Create email message
                 msg = Message(
-                    subject="New Support Ticket",
+                    subject=f"Support Ticket: {ticket_title}",
                     sender="hexahaulprojects@gmail.com",
                     recipients=["hexahaulprojects@gmail.com"]
                 )
-                msg.body = f"Support ticket submitted by: {user_email}\n\nIssue Description:\n{issue}"
+                
+                # Create email body
+                msg.body = f"""
+                New support ticket submitted:
+                
+                From: {user_email}
+                Title: {ticket_title}
+                
+                Description:
+                {ticket_description}
+                
+                Error Code: {error_code or 'Not provided'}
+                Tracking ID: {tracking_id or 'Not provided'}
+                """
+                
+                # Add attachments if any
+                for file in attachments:
+                    msg.attach(file.filename, 
+                              'application/octet-stream', 
+                              file.read())
+                
+                # Send the email
                 self.mail.send(msg)
-                return redirect(url_for("index_html", ticket_submitted="1"))
-            return render_template("submit-ticket.html")
+                
+                # Flash success message
+                flash('Your support ticket has been submitted. Our team will get back to you shortly.', 'success')
+                
+                # Redirect back to sidebar page
+                return redirect(url_for("sidebar_html", _anchor="ticket"))
+                
+            # GET request - just show the form
+            return render_template("sidebar.html")
 
         @app.route("/personal-info")
         def personal_info():
