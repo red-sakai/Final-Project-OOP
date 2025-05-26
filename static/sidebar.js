@@ -164,7 +164,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const backBtn = document.getElementById('back-btn');
     if (backBtn) {
         backBtn.addEventListener('click', function() {
-            window.location.href = "/index";  // Redirect to index.html
+            window.location.href = "/index.html";  // Redirect to index.html
         });
     }
 

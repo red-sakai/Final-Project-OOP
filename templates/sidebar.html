@@ -224,8 +224,8 @@
                             <div class="profile-desc">This will be displayed on your profile.</div>
                         </div>
                         <div class="profile-value" id="nameValue">
-                            <span id="fullNameText">John Doe</span>
-                            <input type="text" id="fullNameInput" class="profile-input" placeholder="Florence Shaw" style="display:none;" />
+                            <span id="fullNameText">{{ session.get('user_name', 'User') }}</span>
+                            <input type="text" id="fullNameInput" class="profile-input" placeholder="Enter your name" style="display:none;" value="{{ session.get('user_name', '') }}" />
                             <a href="#" class="profile-edit-link" id="editNameBtn">Edit</a>
                         </div>
                     </div>
@@ -236,12 +236,12 @@
                             <div class="profile-desc">Add at least one contact email.</div>
                         </div>
                         <div class="profile-value" id="emailValue">
-                            <span id="emailText">johnyjohnyesdoepapa@.com</span>
-                            <input type="email" id="emailInput" class="profile-input" placeholder="hi@florenceshaw.com" style="display:none;" />
+                            <span id="emailText">{{ session.get('user_email', 'user@example.com') }}</span>
+                            <input type="email" id="emailInput" class="profile-input" placeholder="your@email.com" style="display:none;" value="{{ session.get('user_email', '') }}" />
                             <a href="#" class="profile-edit-link" id="editEmailBtn">Edit</a>
                             <div class="profile-secondary-email" id="secondaryEmailValue">
-                                <span id="secondaryEmailText">johnyjohnnodoepapa@gmail.com</span>
-                                <input type="email" id="secondaryEmailInput" class="profile-input" placeholder="f.shaw@gmail.com" style="display:none;" />
+                                <span id="secondaryEmailText">{{ session.get('secondary_email', '') }}</span>
+                                <input type="email" id="secondaryEmailInput" class="profile-input" placeholder="secondary@email.com" style="display:none;" value="{{ session.get('secondary_email', '') }}" />
                                 <a href="#" class="profile-edit-link" id="editSecondaryEmailBtn">Edit</a>
                             </div>
                         </div>
