@@ -847,3 +847,11 @@ html, body {
 .back-btn:hover svg, .back-btn:focus svg {
     stroke: #1877f2;
 }
+
+/* Add this to sidebar.css */
+.ticket-upload.highlight {
+    background-color: #f0f7ff;
+    border: 2px dashed #1877f2;
+    border-radius: 6px;
+    padding: 8px;
+}

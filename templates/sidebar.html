@@ -292,26 +292,27 @@
                 </div>
             </div>
         </div>
+        <!-- Update the ticket form to have proper action and method attributes -->
         <div id="ticket" class="content-section">
-            <form class="ticket-form">
+            <form class="ticket-form" action="/submit-ticket" method="POST" enctype="multipart/form-data">
                 <h2 class="ticket-title">Hi John, what do you need help with?</h2>
                 <div class="ticket-group">
                     <label for="ticket-title" class="ticket-label">Write a descriptive title</label>
                     <div class="ticket-title-row">
-                        <input type="text" id="ticket-title" maxlength="100" class="ticket-input" placeholder="e.g. The booking is not working" />
+                        <input type="text" id="ticket-title" name="ticket_title" maxlength="100" class="ticket-input" placeholder="e.g. The booking is not working" required />
                         <span class="ticket-char-count" id="ticketCharCount">0/100</span>
                     </div>
                 </div>
                 <div class="ticket-group">
                     <label for="ticket-description" class="ticket-label">Explain the problem</label>
                     <div class="ticket-editor">
-                        <textarea id="ticket-description" class="ticket-textarea" rows="6" placeholder="Describe your problem..."></textarea>
+                        <textarea id="ticket-description" name="ticket_description" class="ticket-textarea" rows="6" placeholder="Describe your problem..." required></textarea>
                     </div>
                 </div>
                 <div class="ticket-row">
                     <div class="ticket-upload">
                         <label class="ticket-upload-label">
-                            <input type="file" multiple style="display:none;">
+                            <input type="file" name="attachments" multiple style="display:none;">
                             <span class="ticket-upload-btn">Upload Files</span>
                         </label>
                         <span class="ticket-or">or Drop Files</span>
@@ -321,7 +322,7 @@
                         <span class="ticket-hints-title">Provide more details</span>
                         <ul>
                             <li>Since when is this problem affecting you?</li>
-                            <li>Is it the first time it’s affecting you?</li>
+                            <li>Is it the first time it's affecting you?</li>
                             <li>What is it preventing you to achieve?</li>
                         </ul>
                     </div>
@@ -329,14 +330,15 @@
                 <div class="ticket-row">
                     <div class="ticket-half">
                         <label class="ticket-label" for="ticket-error">Error code <span class="ticket-optional">(optional)</span></label>
-                        <input type="text" id="ticket-error" class="ticket-input" placeholder="00000000000000000000000000000000" />
+                        <input type="text" id="ticket-error" name="error_code" class="ticket-input" placeholder="00000000000000000000000000000000" />
                     </div>
                     <div class="ticket-half">
                         <label class="ticket-label" for="ticket-serial">Tracking ID <span class="ticket-optional">(optional)</span></label>
-                        <input type="text" id="ticket-serial" class="ticket-input" placeholder="00000000000000000000000000000000" />
+                        <input type="text" id="ticket-serial" name="tracking_id" class="ticket-input" placeholder="00000000000000000000000000000000" />
                     </div>
                 </div>
-                <button type="submit" class="ticket-submit-btn">Next</button>
+                <input type="hidden" name="user_email" id="user_email" value="">
+                <button type="submit" class="ticket-submit-btn">Submit Ticket</button>
             </form>
         </div>
     </div>

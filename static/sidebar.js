@@ -178,4 +178,77 @@ document.addEventListener('DOMContentLoaded', function() {
             });
         });
     }
+
+    // Populate user email in the hidden field for the ticket form
+    const userEmailElement = document.querySelector('.sidebar-profile-email');
+    const hiddenEmailField = document.getElementById('user_email');
+
+    if (userEmailElement && hiddenEmailField) {
+        hiddenEmailField.value = userEmailElement.textContent.trim();
+    }
+
+    // Character count for ticket title
+    const ticketTitle = document.getElementById('ticket-title');
+    const ticketCharCount = document.getElementById('ticketCharCount');
+
+    if (ticketTitle && ticketCharCount) {
+        ticketTitle.addEventListener('input', function() {
+            ticketCharCount.textContent = `${this.value.length}/100`;
+        });
+    }
+
+    // File upload display
+    const fileInput = document.querySelector('input[name="attachments"]');
+    const uploadBtn = document.querySelector('.ticket-upload-btn');
+
+    if (fileInput && uploadBtn) {
+        fileInput.addEventListener('change', function() {
+            if (this.files.length > 0) {
+                uploadBtn.textContent = `${this.files.length} file(s) selected`;
+            } else {
+                uploadBtn.textContent = 'Upload Files';
+            }
+        });
+        
+        // Add drag and drop functionality
+        const uploadArea = document.querySelector('.ticket-upload');
+        if (uploadArea) {
+            ['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
+                uploadArea.addEventListener(eventName, preventDefaults, false);
+            });
+            
+            function preventDefaults(e) {
+                e.preventDefault();
+                e.stopPropagation();
+            }
+            
+            ['dragenter', 'dragover'].forEach(eventName => {
+                uploadArea.addEventListener(eventName, highlight, false);
+            });
+            
+            ['dragleave', 'drop'].forEach(eventName => {
+                uploadArea.addEventListener(eventName, unhighlight, false);
+            });
+            
+            function highlight() {
+                uploadArea.classList.add('highlight');
+            }
+            
+            function unhighlight() {
+                uploadArea.classList.remove('highlight');
+            }
+            
+            uploadArea.addEventListener('drop', handleDrop, false);
+            
+            function handleDrop(e) {
+                const dt = e.dataTransfer;
+                const files = dt.files;
+                fileInput.files = files;
+                
+                if (files.length > 0) {
+                    uploadBtn.textContent = `${files.length} file(s) selected`;
+                }
+            }
+        }
+    }
 });
