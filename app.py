@@ -574,7 +574,57 @@ class HexaHaulApp:
                     recipients=["hexahaulprojects@gmail.com"]
                 )
                 
-                # Create email body
+                # Create HTML email body with styled formatting
+                logo_url = "https://i.imgur.com/upLAusA.png"
+                msg.html = f"""
+                <div style="background:#f7f7f7;padding:40px 0;">
+                  <div style="max-width:600px;margin:0 auto;background:#fff;border-radius:8px;overflow:hidden;box-shadow:0 2px 8px rgba(0,0,0,0.05);">
+                    <div style="background:#03335e;padding:24px 0;text-align:center;">
+                      <img src="{logo_url}" alt="HexaHaul Logo" style="width:64px;height:64px;margin-bottom:8px;">
+                      <h2 style="margin:0;font-family:sans-serif;color:#fff;">New Support Ticket</h2>
+                    </div>
+                    
+                    <div style="padding:32px 24px;">
+                      <table style="width:100%;border-collapse:collapse;font-family:sans-serif;">
+                        <tr>
+                          <th style="text-align:left;padding:8px 12px;background:#eaf6fb;color:#03335e;border-radius:4px;">From:</th>
+                          <td style="padding:8px 12px;">{user_email}</td>
+                        </tr>
+                        <tr>
+                          <th style="text-align:left;padding:8px 12px;background:#eaf6fb;color:#03335e;border-radius:4px;">Subject:</th>
+                          <td style="padding:8px 12px;font-weight:600;">{ticket_title}</td>
+                        </tr>
+                        <tr>
+                          <th style="text-align:left;padding:8px 12px;background:#eaf6fb;color:#03335e;border-radius:4px;vertical-align:top;">Description:</th>
+                          <td style="padding:8px 12px;white-space:pre-wrap;">{ticket_description}</td>
+                        </tr>
+                        <tr>
+                          <th style="text-align:left;padding:8px 12px;background:#eaf6fb;color:#03335e;border-radius:4px;">Error Code:</th>
+                          <td style="padding:8px 12px;font-family:monospace;">{error_code or 'Not provided'}</td>
+                        </tr>
+                        <tr>
+                          <th style="text-align:left;padding:8px 12px;background:#eaf6fb;color:#03335e;border-radius:4px;">Tracking ID:</th>
+                          <td style="padding:8px 12px;font-family:monospace;">{tracking_id or 'Not provided'}</td>
+                        </tr>
+                      </table>
+                      
+                      <div style="margin-top:24px;padding:16px;background:#f9f9f9;border-radius:4px;border-left:4px solid #1579c0;">
+                        <h3 style="margin:0 0 12px 0;font-family:sans-serif;color:#03335e;">Attachments</h3>
+                        <p style="margin:0;font-family:sans-serif;color:#555;font-size:14px;">
+                          {f"{len(attachments)} file(s) attached" if attachments else "No attachments provided"}
+                        </p>
+                      </div>
+                    </div>
+                    
+                    <div style="padding:16px 24px 24px 24px;background:#f0f7ff;text-align:center;font-family:sans-serif;font-size:14px;color:#555;">
+                      <p style="margin:0;">This ticket was submitted through the HexaHaul support system.</p>
+                      <p style="margin:6px 0 0 0;">Please handle according to support protocol.</p>
+                    </div>
+                  </div>
+                </div>
+                """
+                
+                # Add plain text alternative for email clients that don't support HTML
                 msg.body = f"""
                 New support ticket submitted:
                 
