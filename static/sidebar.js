@@ -164,7 +164,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const backBtn = document.getElementById('back-btn');
     if (backBtn) {
         backBtn.addEventListener('click', function() {
-            window.location.href = "/";  // Use the route instead of url_for in JS
+            window.location.href = "/index";  // Redirect to index.html
         });
     }
 
