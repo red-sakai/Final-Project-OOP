@@ -12,15 +12,13 @@ from models.products_database import ProductsDatabase, Product
 from abc import ABC, abstractmethod
 from enum import Enum
 from flask_mail import Mail, Message
-import random
 from transformers import pipeline
-import os
-import re
-import json
 from services.hexabot import hexabot_bp
+from models.activity_database import ActivityDatabase
 import csv
-import pandas as pd
-
+import os
+import json
+import random
 
 # Initialize DistilBERT QA pipeline
 qa_pipeline = pipeline("question-answering", model="distilbert-base-uncased-distilled-squad")
@@ -158,6 +156,7 @@ class HexaHaulApp:
         self.hexabox_db = HexaBoxesDatabase()
         self.salary_db = SalaryDatabase()
         self.product_db = ProductsDatabase()
+        self.activity_db = ActivityDatabase()
         
         print(f"Template folder: {template_dir}")
         print(f"Template folder exists: {os.path.exists(template_dir)}")
@@ -201,28 +200,36 @@ class HexaHaulApp:
                 username = request.form.get("username")
                 password = request.form.get("password")
                 
-                
                 user = authenticate_user_csv(username, password)
                 
                 if user:
-                
-                    session["username"] = user['Username']
-                    session["user_name"] = user['Full Name']
-                    session["user_email"] = user['Email Address']
                     session["logged_in"] = True
+                    session["user_name"] = user["full_name"]
+                    session["user_email"] = user["email"]
+                    session["username"] = user["username"]
                     
-                    flash('Login successful!', 'success')
-                    return redirect(url_for('index_html'))  
+                    # Log the login activity
+                    ip_address = request.environ.get('HTTP_X_FORWARDED_FOR', request.environ.get('REMOTE_ADDR', ''))
+                    user_agent = request.environ.get('HTTP_USER_AGENT', '')
+                    
+                    self.activity_db.log_activity(
+                        username=user["username"],
+                        email=user["email"],
+                        activity_type="LOGIN",
+                        description=f"User logged in successfully",
+                        ip_address=ip_address,
+                        user_agent=user_agent
+                    )
+                    
+                    return redirect(url_for("index_html"))
                 else:
-                    flash('Invalid username or password', 'error')
-                    return render_template("user-login.html", error="Invalid username or password")
+                    error_message = "Invalid username or password. Please try again."
+                    return render_template("user-login.html", error=error_message)
             
             return render_template("user-login.html")
 
         def authenticate_user_csv(username, password):
             """Authenticate user against CSV file"""
-    
-            
             csv_path = os.path.join('hexahaul_db', 'hh_user-login.csv')
             
             try:
@@ -230,7 +237,11 @@ class HexaHaulApp:
                     reader = csv.DictReader(csvfile)
                     for row in reader:
                         if row['Username'] == username and row['Password'] == password:
-                            return row
+                            return {
+                                'full_name': row['Full Name'],
+                                'email': row['Email Address'],
+                                'username': row['Username']
+                            }
             except FileNotFoundError:
                 print(f"CSV file not found: {csv_path}")
             except Exception as e:
@@ -238,17 +249,55 @@ class HexaHaulApp:
             
             return None
 
+        @app.route("/logout")
+        def logout():
+            # Log the logout activity before clearing session
+            if "username" in session and "user_email" in session:
+                self.activity_db.log_activity(
+                    username=session["username"],
+                    email=session["user_email"],
+                    activity_type="LOGOUT",
+                    description="User logged out",
+                    ip_address=request.environ.get('HTTP_X_FORWARDED_FOR', request.environ.get('REMOTE_ADDR', '')),
+                    user_agent=request.environ.get('HTTP_USER_AGENT', '')
+                )
+            
+            session.clear()
+            return redirect(url_for("user_login_html"))
+
+        @app.route("/api/user-activities")
+        def get_user_activities():
+            """API endpoint to get user activities for the sidebar"""
+            if "logged_in" not in session or not session["logged_in"]:
+                return jsonify({"error": "Not logged in"}), 401
+            
+            username = session.get("username")
+            email = session.get("user_email")
+            
+            if not username and not email:
+                return jsonify({"error": "No user identifier found"}), 400
+            
+            # Get recent activities for the user
+            activities = self.activity_db.get_recent_activities(
+                username=username, 
+                email=email, 
+                limit=10
+            )
+            
+            # Format activities for display
+            formatted_activities = []
+            for activity in activities:
+                formatted = self.activity_db.format_activity_for_display(activity)
+                formatted_activities.append(formatted)
+            
+            return jsonify({"activities": formatted_activities})
+
         @app.route("/user-dashboard")
         def user_dashboard():
             if "logged_in" not in session or not session["logged_in"]:
                 return redirect(url_for("user_login_html"))
 
             return render_template("user-dashboard.html", user_name=session.get("user_name"))
-
-        @app.route("/logout")
-        def logout():
-            session.clear()
-            return redirect(url_for("user_login_html"))
 
         @app.route("/")
         def home():
