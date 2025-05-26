@@ -169,10 +169,10 @@ document.addEventListener('DOMContentLoaded', function() {
         logoutBtn.addEventListener('click', function(e) {
             e.preventDefault();
             document.getElementById('logout-loading').style.display = 'flex';
-            // Optionally, redirect after a delay:
+            // Redirect to user-login.html after animation completes
             setTimeout(function() {
-                window.location.href = "/login";  // Use the route instead of url_for in JS
-            }, 2000); // 2 seconds
+                window.location.href = "/user-login.html";
+            }, 2500); // Match the truck animation duration
         });
     }
 
