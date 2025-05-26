@@ -19,6 +19,13 @@ function activateSection(section) {
             sectionDiv.style.opacity = 1;
         }, 50);
     }
+
+    // Load activities when activity section is activated
+    if (section === 'activity') {
+        setTimeout(() => {
+            loadUserActivities();
+        }, 100);
+    }
 }
 
 // DOM content loaded event handler
@@ -503,3 +510,35 @@ document.addEventListener('DOMContentLoaded', function() {
 function showActivityDetails(timestamp) {
     alert(`Activity details for ${timestamp}\n\nikaw na bahala dito carl`);
 }
+
+// Avatar image upload and update
+document.getElementById('avatarInput').addEventListener('change', function(e) {
+    const file = e.target.files[0];
+    if (!file) return;
+
+    const formData = new FormData();
+    formData.append('profile_image', file);
+
+    fetch('/upload-profile-image', {
+        method: 'POST',
+        body: formData,
+        credentials: 'same-origin'
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success && data.image_url) {
+            // Update all profile images instantly
+            document.querySelectorAll('img.sidebar-profile-img').forEach(img => {
+                img.src = data.image_url + '?t=' + new Date().getTime(); // cache bust
+            });
+            // Update the big avatar
+            const avatarCircle = document.getElementById('courierAvatarCircle');
+            if (avatarCircle) {
+                avatarCircle.src = data.image_url + '?t=' + new Date().getTime();
+            }
+        } else {
+            alert(data.message || 'Upload failed');
+        }
+    })
+    .catch(() => alert('Upload failed'));
+});
