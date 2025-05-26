@@ -603,34 +603,39 @@ nav {
 /* Sidebar profile section */
 .sidebar-profile {
     background: #eaf6fb;
-    border-radius: 10px;
-    box-shadow: 0 2px 8px rgba(3,51,94,0.04);
-    padding: 12px 16px;
-    margin-bottom: 32px;
+    border-radius: 14px;
+    box-shadow: 0 0 8px #b2dbf8;
+    padding: 18px 0 8px 0;
+    margin-bottom: 24px;
     display: flex;
+    flex-direction: column;
     align-items: center;
-    gap: 12px;
+    width: 100%;
+    max-width: 290px;
+    margin-left: auto;
+    margin-right: auto;
+    transition: box-shadow 0.2s;
+    height: 60px;
 }
 
 .profile-icon {
-    width: 40px;
-    height: 40px;
+    width: 50px;
+    height: 50px;
     border-radius: 50%;
     background: #e6e9ef;
-    object-fit: cover;
     border: 2px solid #b2dbf8;
-    flex-shrink: 0;
+    box-shadow: 0 0 4px #b2dbf8;
+    margin-bottom: 4px;
+    margin-left: -100px;
+    margin-top: -20px;
 }
 
 .profile-name {
-    font-size: 1.08rem;
-    font-weight: 600;
+    font-size: 23px;
+    font-weight: 700;
     color: #03335e;
-    letter-spacing: 0.2px;
-    margin: 0;
-    padding: 0;
-    line-height: 1.2;
-    white-space: nowrap;
+    margin-top: -50px;
+    text-align: left;
 }
 
 /* Dropdown sections */
@@ -808,15 +813,6 @@ nav {
 }
 
 /* Profile icon styles */
-.profile-icon {
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-    background: #e6e9ef;
-    object-fit: cover;
-    border: 2px solid #b2dbf8;
-    flex-shrink: 0;
-}
 
 /* Logout Modal styles */
 .logout-loading-overlay {
@@ -900,6 +896,7 @@ nav {
     text-shadow: 0 4px 24px #1579c044, 0 1px 0 #fff;
     animation: fadeIn 1.2s 1.2s both;
 }
+
 
 /*Main Card Container*/
 .card-container {

@@ -843,34 +843,39 @@ nav {
 /* Sidebar profile section */
 .sidebar-profile {
     background: #eaf6fb;
-    border-radius: 10px;
-    box-shadow: 0 2px 8px rgba(3,51,94,0.04);
-    padding: 12px 16px;
-    margin-bottom: 32px;
+    border-radius: 14px;
+    box-shadow: 0 0 8px #b2dbf8;
+    padding: 18px 0 8px 0;
+    margin-bottom: 24px;
     display: flex;
+    flex-direction: column;
     align-items: center;
-    gap: 12px;
+    width: 100%;
+    max-width: 290px;
+    margin-left: auto;
+    margin-right: auto;
+    transition: box-shadow 0.2s;
+    height: 60px;
 }
 
 .profile-icon {
-    width: 40px;
-    height: 40px;
+    width: 50px;
+    height: 50px;
     border-radius: 50%;
     background: #e6e9ef;
-    object-fit: cover;
     border: 2px solid #b2dbf8;
-    flex-shrink: 0;
+    box-shadow: 0 0 4px #b2dbf8;
+    margin-bottom: 4px;
+    margin-left: -100px;
+    margin-top: -20px;
 }
 
 .profile-name {
-    font-size: 1.08rem;
-    font-weight: 600;
+    font-size: 23px;
+    font-weight: 700;
     color: #03335e;
-    letter-spacing: 0.2px;
-    margin: 0;
-    padding: 0;
-    line-height: 1.2;
-    white-space: nowrap;
+    margin-top: -50px;
+    text-align: left;
 }
 
 /* Dropdown sections */
@@ -894,16 +899,15 @@ nav {
 }
 
 .sidebar-section.dropdown.open .dropdown-toggle .arrow {
-    transform: translateY(-50%) rotate(180deg); /* Rotates the arrow upside down */
+    transform: translateY(-50%) rotate(180deg);
 }
 
-/* Dropdown toggle: arrow at far right, text left */
 .dropdown-toggle {
     display: flex;
     align-items: center;
-    justify-content: flex-start; /* Text left, arrow right */
+    justify-content: flex-start;
     width: 100%;
-    padding: 18px 18px 18px 24px; /* More left padding for text */
+    padding: 18px 18px 18px 24px;
     font-size: 1.08rem;
     font-weight: 600;
     color: #03335e;
@@ -915,7 +919,6 @@ nav {
     position: relative;
 }
 
-/* Dropdown text left, arrow absolutely at far right */
 .dropdown-toggle .arrow {
     margin-left: auto;
     margin-right: 4px;
@@ -942,7 +945,7 @@ nav {
 }
 
 .dropdown.open .dropdown-menu {
-    max-height: 500px; /* Large enough for content, but not too large */
+    max-height: 500px;
     padding: 8px 0 8px 0;
 }
 
@@ -1050,77 +1053,13 @@ nav {
 }
 
 /* Profile icon styles */
-.profile-icon {
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-    background: #e6e9ef;
-    object-fit: cover;
-    border: 2px solid #b2dbf8;
-    flex-shrink: 0;
-}
 
-/* Add at the end or in your main CSS file */
-.modal-overlay {
-    position: fixed;
-    top: 0; left: 0; right: 0; bottom: 0;
-    background: rgba(3,51,94,0.18);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    z-index: 9999;
-    animation: fadeIn 0.4s;
-}
-.modal-box {
-    background: #fff;
-    border-radius: 14px;
-    box-shadow: 0 8px 32px rgba(3,51,94,0.12);
-    padding: 32px 28px 24px 28px;
-    text-align: center;
-    max-width: 340px;
-    animation: slideDown 0.6s cubic-bezier(.4,2,.6,1);
-}
-.modal-box h3 {
-    margin-top: 0;
-    color: #03335e;
-    font-size: 1.25rem;
-    font-weight: 700;
-}
-.modal-box p {
-    color: #1579c0;
-    margin: 18px 0 24px 0;
-    font-size: 1.05rem;
-}
-#close-modal-btn {
-    background: linear-gradient(90deg, #03335e 60%, #1579c0 100%);
-    color: #fff;
-    border: none;
-    border-radius: 8px;
-    padding: 10px 32px;
-    font-size: 1rem;
-    font-weight: 600;
-    cursor: pointer;
-    transition: background 0.2s, transform 0.1s;
-}
-#close-modal-btn:hover {
-    background: linear-gradient(90deg, #1579c0 60%, #03335e 100%);
-    transform: scale(1.04);
-}
-@keyframes fadeIn {
-    from { opacity: 0; }
-    to { opacity: 1; }
-}
-@keyframes slideDown {
-    from { opacity: 0; transform: translateY(-40px);}
-    to { opacity: 1; transform: translateY(0);}
-}
-
-/* Logout Loading Screen Styles */
+/* Logout Modal styles */
 .logout-loading-overlay {
     position: fixed;
     top: 0; left: 0; right: 0; bottom: 0;
-    background: rgba(3,51,94,0.28); /* More pronounced overlay */
-    backdrop-filter: blur(2px);     /* Add blur for focus */
+    background: rgba(3,51,94,0.28);
+    backdrop-filter: blur(2px);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -1158,7 +1097,7 @@ nav {
     position: absolute;
     left: -120px;
     top: 10px;
-    width: 140px; /* Slightly larger */
+    width: 140px;
     height: auto;
     animation: driveTruckBounce 2.5s cubic-bezier(.4,2,.6,1) forwards;
     filter: drop-shadow(0 0 24px #1579c0cc) drop-shadow(0 0 8px #fff8);
@@ -1198,78 +1137,12 @@ nav {
     animation: fadeIn 1.2s 1.2s both;
 }
 
-/* Chatbox language switcher styles */
-.chatbox-lang-switch-row {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 12px;
-    padding: 10px 0 2px 0;
-    background: #f7faff;
-    border-radius: 0 0 12px 12px;
-    margin-bottom: 2px;
-    animation: langSwitchFadeIn 0.7s cubic-bezier(.4,2,.6,1);
-}
-
-@keyframes langSwitchFadeIn {
-    from { opacity: 0; transform: translateY(-18px);}
-    to { opacity: 1; transform: translateY(0);}
-}
-
-.chatbox-lang-switch {
-    position: relative;
-    display: inline-block;
-    width: 48px;
-    height: 24px;
-}
-
-.chatbox-lang-switch input[type="checkbox"] {
-    opacity: 0;
-    width: 0;
-    height: 0;
-}
-
-.chatbox-lang-slider {
-    position: absolute;
-    cursor: pointer;
-    top: 0; left: 0; right: 0; bottom: 0;
-    background: #b2dbf8;
-    border-radius: 24px;
-    transition: background 0.4s cubic-bezier(.4,2,.6,1);
-}
-
-.chatbox-lang-slider:before {
-    content: "";
-    position: absolute;
-    left: 4px;
-    top: 4px;
-    width: 16px;
-    height: 16px;
-    background: #fff;
+.courier-avatar-img {
+    width: 220px;
+    height: 220px;
     border-radius: 50%;
-    transition: transform 0.4s cubic-bezier(.4,2,.6,1);
-    box-shadow: 0 2px 8px #03335e22;
-}
-
-.chatbox-lang-switch input:checked + .chatbox-lang-slider {
-    background: #03335e;
-}
-
-.chatbox-lang-switch input:checked + .chatbox-lang-slider:before {
-    transform: translateX(24px) scale(1.08);
-}
-
-.lang-label {
-    font-size: 13px;
-    font-weight: 600;
-    color: #03335e;
-    min-width: 48px;
-    text-align: center;
-    transition: color 0.3s;
-    user-select: none;
-}
-
-#lang-label-en.active, #lang-label-tl.active {
-    color: #1579c0;
-    text-shadow: 0 1px 8px #b2dbf8;
+    object-fit: cover;
+    background: #ccc;
+    display: block;
+    margin: 0 auto;
 }
