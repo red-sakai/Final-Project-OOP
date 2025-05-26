@@ -750,6 +750,7 @@ html, body {
     z-index: 99999;
     animation: fadeIn 0.4s;
 }
+
 .logout-loading-content {
     display: flex;
     flex-direction: column;
@@ -760,6 +761,50 @@ html, body {
     box-shadow: 0 8px 48px 0 rgba(21,121,192,0.18), 0 0 0 8px #b2dbf8;
     padding: 48px 48px 36px 48px;
     animation: popScale 0.7s cubic-bezier(.4,2,.6,1);
+}
+
+.truck-animation {
+    position: relative;
+    width: 400px;
+    height: 120px;
+    margin-bottom: 30px;
+    filter: drop-shadow(0 8px 32px #1579c0aa) drop-shadow(0 0 16px #fff8);
+}
+
+.truck-img {
+    position: absolute;
+    left: -120px;
+    top: 10px;
+    width: 140px;
+    height: auto;
+    animation: driveTruckBounce 2.5s cubic-bezier(.4,2,.6,1) forwards;
+    filter: drop-shadow(0 0 24px #1579c0cc) drop-shadow(0 0 8px #fff8);
+}
+
+.road {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 18px;
+    background: repeating-linear-gradient(
+        90deg,
+        #b2dbf8 0 30px,
+        #03335e 30px 60px
+    );
+    border-radius: 9px;
+    box-shadow: 0 2px 12px #03335e33;
+}
+
+.logout-message h2 {
+    color: #03335e;
+    font-size: 1.6rem;
+    font-weight: 800;
+    text-align: center;
+    margin-top: 10px;
+    letter-spacing: 0.5px;
+    text-shadow: 0 4px 24px #1579c044, 0 1px 0 #fff;
+    animation: fadeIn 1.2s 1.2s both;
 }
 
 /* Animation styles */
