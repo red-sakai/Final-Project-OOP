@@ -303,9 +303,9 @@ html, body {
 }
 
 .courier-avatar-wrapper {
-    width: 400px;   
+    width: 400px;
     height: 400px;
-    position:absolute;
+    position: absolute;
     margin: 0;
     margin-left: 900px;
     margin-top: -90px;
@@ -318,6 +318,16 @@ html, body {
     background: #ccc;
     display: block;
     margin-left: 1200px;
+}
+
+.courier-avatar-img {
+    width: 400px;
+    height: 400px;
+    border-radius: 50%;
+    object-fit: cover;
+    background: #ccc;
+    display: block;
+    margin: 0 auto;
 }
 
 .avatar-edit-btn {

@@ -639,34 +639,39 @@ nav {
 /* Sidebar profile section */
 .sidebar-profile {
     background: #eaf6fb;
-    border-radius: 10px;
-    box-shadow: 0 2px 8px rgba(3,51,94,0.04);
-    padding: 12px 16px;
-    margin-bottom: 32px;
+    border-radius: 14px;
+    box-shadow: 0 0 8px #b2dbf8;
+    padding: 18px 0 8px 0;
+    margin-bottom: 24px;
     display: flex;
+    flex-direction: column;
     align-items: center;
-    gap: 12px;
+    width: 100%;
+    max-width: 290px;
+    margin-left: auto;
+    margin-right: auto;
+    transition: box-shadow 0.2s;
+    height: 60px;
 }
 
 .profile-icon {
-    width: 40px;
-    height: 40px;
+    width: 50px;
+    height: 50px;
     border-radius: 50%;
     background: #e6e9ef;
-    object-fit: cover;
     border: 2px solid #b2dbf8;
-    flex-shrink: 0;
+    box-shadow: 0 0 4px #b2dbf8;
+    margin-bottom: 4px;
+    margin-left: -100px;
+    margin-top: -20px;
 }
 
 .profile-name {
-    font-size: 1.08rem;
-    font-weight: 600;
+    font-size: 23px;
+    font-weight: 700;
     color: #03335e;
-    letter-spacing: 0.2px;
-    margin: 0;
-    padding: 0;
-    line-height: 1.2;
-    white-space: nowrap;
+    margin-top: -50px;
+    text-align: left;
 }
 
 /* Dropdown sections */
@@ -844,15 +849,6 @@ nav {
 }
 
 /* Profile icon styles */
-.profile-icon {
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-    background: #e6e9ef;
-    object-fit: cover;
-    border: 2px solid #b2dbf8;
-    flex-shrink: 0;
-}
 
 /* Logout Modal styles */
 .logout-loading-overlay {
@@ -866,6 +862,7 @@ nav {
     z-index: 99999;
     animation: fadeIn 0.4s;
 }
+
 .logout-loading-content {
     display: flex;
     flex-direction: column;
@@ -877,11 +874,13 @@ nav {
     padding: 48px 48px 36px 48px;
     animation: popScale 0.7s cubic-bezier(.4,2,.6,1);
 }
+
 @keyframes popScale {
     0% { transform: scale(0.92); opacity: 0; }
     60% { transform: scale(1.04); opacity: 1; }
     100% { transform: scale(1); opacity: 1; }
 }
+
 .truck-animation {
     position: relative;
     width: 400px;
@@ -889,6 +888,7 @@ nav {
     margin-bottom: 30px;
     filter: drop-shadow(0 8px 32px #1579c0aa) drop-shadow(0 0 16px #fff8);
 }
+
 .truck-img {
     position: absolute;
     left: -120px;
@@ -898,6 +898,7 @@ nav {
     animation: driveTruckBounce 2.5s cubic-bezier(.4,2,.6,1) forwards;
     filter: drop-shadow(0 0 24px #1579c0cc) drop-shadow(0 0 8px #fff8);
 }
+
 @keyframes driveTruckBounce {
     0% { left: -120px; transform: scale(1); }
     70% { left: 220px; transform: scale(1.08); }
@@ -905,6 +906,7 @@ nav {
     92% { left: 260px; transform: scale(1.04) translateY(4px);}
     100% { left: 260px; transform: scale(1) translateY(0);}
 }
+
 .road {
     position: absolute;
     bottom: 0;
@@ -919,6 +921,7 @@ nav {
     border-radius: 9px;
     box-shadow: 0 2px 12px #03335e33;
 }
+
 .logout-message h2 {
     color: #03335e;
     font-size: 1.6rem;

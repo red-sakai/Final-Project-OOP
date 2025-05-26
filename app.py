@@ -20,6 +20,7 @@ import os
 import json
 import random
 import pandas as pd
+from werkzeug.utils import secure_filename
 
 # Initialize DistilBERT QA pipeline
 qa_pipeline = pipeline("question-answering", model="distilbert-base-uncased-distilled-squad")
@@ -208,6 +209,7 @@ class HexaHaulApp:
                     session["user_name"] = user["full_name"]
                     session["user_email"] = user["email"]
                     session["username"] = user["username"]
+                    session["user_image"] = user.get("user_image", "images/pfp.png")  # <-- Add this line
                     
                     # Log the login activity
                     ip_address = request.environ.get('HTTP_X_FORWARDED_FOR', request.environ.get('REMOTE_ADDR', ''))
@@ -232,7 +234,6 @@ class HexaHaulApp:
         def authenticate_user_csv(username, password):
             """Authenticate user against CSV file"""
             csv_path = os.path.join('hexahaul_db', 'hh_user-login.csv')
-            
             try:
                 with open(csv_path, 'r', newline='', encoding='utf-8') as csvfile:
                     reader = csv.DictReader(csvfile)
@@ -241,13 +242,13 @@ class HexaHaulApp:
                             return {
                                 'full_name': row['Full Name'],
                                 'email': row['Email Address'],
-                                'username': row['Username']
+                                'username': row['Username'],
+                                'user_image': row.get('Profile Image', 'images/pfp.png')  # <-- Add this line
                             }
             except FileNotFoundError:
                 print(f"CSV file not found: {csv_path}")
             except Exception as e:
                 print(f"Error reading CSV: {e}")
-            
             return None
 
         @app.route("/logout")
@@ -1690,6 +1691,50 @@ class HexaHaulApp:
             
             except Exception as e:
                 return jsonify({'success': False, 'message': str(e)})
+        
+        UPLOAD_FOLDER = os.path.join('static', 'user_images')
+        ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg', 'gif'}
+
+        def allowed_file(filename):
+            return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
+
+        # Add this route to handle uploads
+        @app.route('/upload-profile-image', methods=['POST'])
+        def upload_profile_image():
+            if 'user_email' not in session:
+                if request.is_json or request.accept_mimetypes['application/json']:
+                    return jsonify(success=False, message="Not logged in"), 401
+                return redirect(url_for('user_login_html'))
+
+            file = request.files.get('profile_image')
+            if file and allowed_file(file.filename):
+                filename = secure_filename(session['user_email'].replace('@', '').replace('.', '') + '_' + file.filename)
+                filepath = os.path.join(UPLOAD_FOLDER, filename)
+                os.makedirs(UPLOAD_FOLDER, exist_ok=True)
+                file.save(filepath)
+                # Always use forward slashes for web paths
+                relative_path = os.path.join('user_images', filename).replace('\\', '/')
+                session['user_image'] = relative_path
+
+                # Update CSV
+                csv_path = os.path.join('hexahaul_db', 'hh_user-login.csv')
+                try:
+                    df = pd.read_csv(csv_path)
+                    user_email = session['user_email']
+                    df.loc[df['Email Address'] == user_email, 'Profile Image'] = relative_path
+                    df.to_csv(csv_path, index=False)
+                except Exception as e:
+                    print(f"Error updating profile image in CSV: {e}")
+
+                image_url = url_for('static', filename=relative_path)
+                if request.is_json or request.accept_mimetypes['application/json']:
+                    return jsonify(success=True, image_url=image_url)
+                flash('Profile image updated!', 'success')
+            else:
+                if request.is_json or request.accept_mimetypes['application/json']:
+                    return jsonify(success=False, message="Invalid file type")
+                flash('Invalid file type.', 'error')
+            return redirect(request.referrer or url_for('sidebar_html'))
 
     def register_blueprints(self):
         self.app.register_blueprint(analytics_bp)

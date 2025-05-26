@@ -15,7 +15,7 @@
             Back to Home
         </button>
         <div class="sidebar-profile-block">
-            <img src="{{ url_for('static', filename='images/profile-icon.png') }}" alt="Profile Icon" class="sidebar-profile-img">
+            <img src="{{ url_for('static', filename=session.get('user_image', 'images/pfp.png')) }}" alt="Profile Icon" class="sidebar-profile-img">
             <div class="sidebar-profile-info">
                 <div class="sidebar-profile-name">{{ session.get('user_name', 'User') }}</div>
                 <div class="sidebar-profile-email">{{ session.get('user_email', 'user@example.com') }}</div>
@@ -94,7 +94,12 @@
                     </div>
                 </form>
                 <div class="courier-avatar-wrapper profile-avatar-side">
-                    <div class="courier-avatar" id="courierAvatarCircle"></div>
+                    <img 
+                        src="{{ url_for('static', filename=session.get('user_image', 'images/pfp.png')) }}" 
+                        alt="Profile Photo" 
+                        class="courier-avatar-img"
+                        id="courierAvatarCircle"
+                    >
                     <input type="file" id="avatarInput" accept="image/*" style="display:none;">
                     <label for="avatarInput" class="avatar-edit-btn">Change Photo</label>
                 </div>
