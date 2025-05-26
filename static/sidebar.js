@@ -501,5 +501,5 @@ document.addEventListener('DOMContentLoaded', function() {
 
 // Global function for activity details (can be expanded later)
 function showActivityDetails(timestamp) {
-    alert(`Activity details for ${timestamp}\n\nThis feature can be expanded to show more detailed information about the user's activity.`);
+    alert(`Activity details for ${timestamp}\n\nikaw na bahala dito carl`);
 }
