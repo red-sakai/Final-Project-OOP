@@ -582,6 +582,102 @@ class HexaHaulApp:
                 return jsonify({'success': True, 'message': 'Verification code resent.'})
             return jsonify({'success': False, 'message': 'Email not found.'}), 400
 
+        @app.route('/admin/vehicles')
+        def admin_vehicles():
+            # Check if admin is logged in
+            if 'admin_id' not in session:
+                flash('Please login to access the admin dashboard', 'error')
+                return redirect(url_for('admin_login'))
+                
+            # Get admin name from Flask session
+            admin_name = session.get('admin_name', 'Admin User')
+            
+            return render_template('admin_vehicles.html', admin_name=admin_name)
+
+        @app.route('/admin/employees')
+        def admin_employees():
+            # Check if admin is logged in
+            if 'admin_id' not in session:
+                flash('Please login to access the admin dashboard', 'error')
+                return redirect(url_for('admin_login'))
+                
+            # Get admin name from Flask session
+            admin_name = session.get('admin_name', 'Admin User')
+            
+            return render_template('admin_employees.html', admin_name=admin_name)
+
+        @app.route('/admin/hexaboxes')
+        def admin_hexaboxes():
+            # Check if admin is logged in
+            if 'admin_id' not in session:
+                flash('Please login to access the admin dashboard', 'error')
+                return redirect(url_for('admin_login'))
+                
+            # Get admin name from Flask session
+            admin_name = session.get('admin_name', 'Admin User')
+            
+            return render_template('admin_hexaboxes.html', admin_name=admin_name)
+
+        @app.route('/admin/utilities')
+        def admin_utilities():
+            # Check if admin is logged in
+            if 'admin_id' not in session:
+                flash('Please login to access the admin dashboard', 'error')
+                return redirect(url_for('admin_login'))
+                
+            # Get admin name from Flask session
+            admin_name = session.get('admin_name', 'Admin User')
+            
+            return render_template('admin_utilities.html', admin_name=admin_name)
+
+        @app.route('/admin/employee-salary')
+        def admin_employee_salary():
+            # Check if admin is logged in
+            if 'admin_id' not in session:
+                flash('Please login to access the admin dashboard', 'error')
+                return redirect(url_for('admin_login'))
+                
+            # Get admin name from Flask session
+            admin_name = session.get('admin_name', 'Admin User')
+            
+            return render_template('admin_employee_salary.html', admin_name=admin_name)
+
+        @app.route('/admin/products')
+        def admin_products():
+            # Check if admin is logged in
+            if 'admin_id' not in session:
+                flash('Please login to access the admin dashboard', 'error')
+                return redirect(url_for('admin_login'))
+                
+            # Get admin name from Flask session
+            admin_name = session.get('admin_name', 'Admin User')
+            
+            return render_template('admin_products.html', admin_name=admin_name)
+
+        @app.route('/admin/sales')
+        def admin_sales():
+            # Check if admin is logged in
+            if 'admin_id' not in session:
+                flash('Please login to access the admin dashboard', 'error')
+                return redirect(url_for('admin_login'))
+                
+            # Get admin name from Flask session
+            admin_name = session.get('admin_name', 'Admin User')
+            
+            return render_template('admin_sales.html', admin_name=admin_name)
+
+        @app.route('/admin/customers')
+        def admin_customers():
+            # Check if admin is logged in
+            if 'admin_id' not in session:
+                flash('Please login to access the admin dashboard', 'error')
+                return redirect(url_for('admin_login'))
+                
+            # Get admin name from Flask session
+            admin_name = session.get('admin_name', 'Admin User')
+            
+            return render_template('admin_customers.html', admin_name=admin_name)
+
     def register_blueprints(self):
         self.app.register_blueprint(analytics_bp)
         self.app.register_blueprint(hexabot_bp)
