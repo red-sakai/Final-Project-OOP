@@ -761,27 +761,56 @@ html, body {
     padding: 48px 48px 36px 48px;
     animation: popScale 0.7s cubic-bezier(.4,2,.6,1);
 }
+
+/* Animation styles */
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+@keyframes slideInLeft {
+    from { transform: translateX(-30px); opacity: 0; }
+    to { transform: translateX(0); opacity: 1; }
+}
+
+@keyframes slideInRight {
+    from { transform: translateX(30px); opacity: 0; }
+    to { transform: translateX(0); opacity: 1; }
+}
+
+@keyframes slideInUp {
+    from { transform: translateY(20px); opacity: 0; }
+    to { transform: translateY(0); opacity: 1; }
+}
+
+@keyframes pulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.05); }
+    100% { transform: scale(1); }
+}
+
+@keyframes bounce {
+    0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
+    40% { transform: translateY(-10px); }
+    60% { transform: translateY(-5px); }
+}
+
+@keyframes fadeInRight {
+    from { transform: translateX(30px); opacity: 0; }
+    to { transform: translateX(0); opacity: 1; }
+}
+
+@keyframes fadeOut {
+    from { opacity: 1; }
+    to { opacity: 0; }
+}
+
 @keyframes popScale {
     0% { transform: scale(0.92); opacity: 0; }
     60% { transform: scale(1.04); opacity: 1; }
     100% { transform: scale(1); opacity: 1; }
 }
-.truck-animation {
-    position: relative;
-    width: 400px;
-    height: 120px;
-    margin-bottom: 30px;
-    filter: drop-shadow(0 8px 32px #1579c0aa) drop-shadow(0 0 16px #fff8);
-}
-.truck-img {
-    position: absolute;
-    left: -120px;
-    top: 10px;
-    width: 140px;
-    height: auto;
-    animation: driveTruckBounce 2.5s cubic-bezier(.4,2,.6,1) forwards;
-    filter: drop-shadow(0 0 24px #1579c0cc) drop-shadow(0 0 8px #fff8);
-}
+
 @keyframes driveTruckBounce {
     0% { left: -120px; transform: scale(1); }
     70% { left: 220px; transform: scale(1.08); }
@@ -789,35 +818,63 @@ html, body {
     92% { left: 260px; transform: scale(1.04) translateY(4px);}
     100% { left: 260px; transform: scale(1) translateY(0);}
 }
-.road {
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    width: 100%;
-    height: 18px;
-    background: repeating-linear-gradient(
-        90deg,
-        #b2dbf8 0 30px,
-        #03335e 30px 60px
-    );
-    border-radius: 9px;
-    box-shadow: 0 2px 12px #03335e33;
+
+/* Apply animations to elements */
+.account-sidebar {
+    animation: slideInLeft 0.8s ease-out;
 }
-.logout-message h2 {
-    color: #03335e;
-    font-size: 1.6rem;
-    font-weight: 800;
-    text-align: center;
-    margin-top: 10px;
-    letter-spacing: 0.5px;
-    text-shadow: 0 4px 24px #1579c044, 0 1px 0 #fff;
-    animation: fadeIn 1.2s 1.2s both;
+
+.sidebar-profile-block {
+    animation: fadeIn 1s ease-out 0.3s both;
+}
+
+.sidebar-profile-img {
+    transition: transform 0.3s ease;
+}
+
+.sidebar-profile-img:hover {
+    transform: scale(1.1);
+}
+
+.sidebar-nav ul li {
+    opacity: 0;
+    animation: slideInLeft 0.5s ease-out forwards;
+}
+
+.sidebar-nav ul li:nth-child(1) {
+    animation-delay: 0.4s;
+}
+
+.sidebar-nav ul li:nth-child(2) {
+    animation-delay: 0.6s;
+}
+
+.sidebar-nav ul li:nth-child(3) {
+    animation-delay: 0.8s;
+}
+
+.sidebar-nav a {
+    transition: all 0.3s ease;
+}
+
+.sidebar-nav a:hover .sidebar-icon {
+    animation: pulse 0.5s ease infinite;
+}
+
+#logout-btn {
+    animation: fadeIn 0.8s ease-out 1s forwards;
+    transition: all 0.3s ease;
+}
+
+#logout-btn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
 }
 
 .back-btn {
-    margin: 16px 24px 16px 24px;
-    width: 200px;
-    padding: 10px;
+    margin: 0 0 24px 0;
+    width: calc(100% - 48px);  /* Make it consistent with sidebar width */
+    padding: 12px;
     background: #f5f5f5;
     color: #222;
     border: none;
@@ -827,9 +884,11 @@ html, body {
     cursor: pointer;
     display: flex;
     align-items: center;
-    margin-left: -60px;
     gap: 8px;
-    margin-top: -20px;
+    justify-content: center;
+    position: relative;
+    animation: fadeIn 0.8s ease-out;
+    transition: all 0.3s ease;
 }
 
 .back-btn svg {
@@ -846,6 +905,86 @@ html, body {
 
 .back-btn:hover svg, .back-btn:focus svg {
     stroke: #1877f2;
+}
+
+.content-section {
+    opacity: 0;
+}
+
+.content-section.active {
+    animation: fadeIn 0.5s ease-out forwards;
+}
+
+.profile-display {
+    animation: slideInUp 0.6s ease-out;
+}
+
+.profile-row {
+    opacity: 0;
+    animation: slideInRight 0.5s ease-out forwards;
+}
+
+.profile-row:nth-child(1) {
+    animation-delay: 0.3s;
+}
+
+.profile-row:nth-child(3) {
+    animation-delay: 0.5s;
+}
+
+.timeline-item {
+    opacity: 0;
+    animation: slideInUp 0.5s ease-out forwards;
+}
+
+.timeline-item:nth-child(1) {
+    animation-delay: 0.3s;
+}
+
+.timeline-item:nth-child(2) {
+    animation-delay: 0.5s;
+}
+
+.timeline-item:nth-child(3) {
+    animation-delay: 0.7s;
+}
+
+.timeline-btn:hover {
+    animation: pulse 1s ease infinite;
+}
+
+.ticket-submit-btn:hover {
+    animation: pulse 1s ease infinite;
+}
+
+.avatar-edit-btn {
+    transition: all 0.3s ease;
+}
+
+.avatar-edit-btn:hover {
+    transform: translateX(-50%) translateY(-3px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+#notification-container {
+    animation: fadeIn 0.5s ease-out;
+}
+
+.notification {
+    animation: fadeInRight 0.5s ease-out;
+    margin-bottom: 10px;
+}
+
+.notification.success {
+    background-color: #dff0d8;
+    border-left: 4px solid #3c763d;
+    color: #3c763d;
+}
+
+.notification.error {
+    background-color: #f2dede;
+    border-left: 4px solid #a94442;
+    color: #a94442;
 }
 
 /* Add this to sidebar.css */
