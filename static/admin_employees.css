@@ -130,6 +130,33 @@ body {
     background: rgba(255, 255, 255, 0.2);
 }
 
+/* Dashboard Button - new styles */
+.sidebar .dashboard {
+    position: absolute;
+    bottom: 70px; /* Position above the logout button */
+    width: 100%;
+    padding: 0 20px;
+}
+
+.sidebar .dashboard a {
+    display: flex;
+    align-items: center;
+    color: white;
+    text-decoration: none;
+    padding: 12px 20px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: var(--border-radius);
+    transition: all 0.3s;
+}
+
+.sidebar .dashboard a i {
+    margin-right: 10px;
+}
+
+.sidebar .dashboard a:hover {
+    background: rgba(255, 255, 255, 0.2);
+}
+
 /* Main Content */
 .main-content {
     flex: 1;
