@@ -994,3 +994,37 @@ html, body {
     border-radius: 6px;
     padding: 8px;
 }
+
+.loading-message {
+    text-align: center;
+    padding: 40px;
+    color: #888;
+    font-size: 16px;
+}
+
+.timeline-time {
+    font-size: 13px;
+    color: #666;
+    margin-bottom: 4px;
+    font-weight: 400;
+}
+
+.no-activities-message {
+    background: #f9fafb;
+    border-radius: 12px;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.04);
+    padding: 40px 32px;
+    text-align: center;
+    margin: 20px 0;
+}
+
+/* Activity type specific styles */
+.timeline-item[data-activity="LOGIN"] .timeline-avatar {
+    border-color: #22c55e;
+    background: #f0fdf4;
+}
+
+.timeline-item[data-activity="LOGOUT"] .timeline-avatar {
+    border-color: #ef4444;
+    background: #fef2f2;
+}

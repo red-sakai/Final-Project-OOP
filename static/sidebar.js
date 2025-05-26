@@ -336,4 +336,170 @@ document.addEventListener('DOMContentLoaded', function() {
             }, 500);
         }, 3000);
     }
+    
+    // Load user activities when activity section is activated
+    function loadUserActivities() {
+        const activityTimeline = document.getElementById('activity-timeline');
+        const loadingMessage = document.getElementById('activity-loading');
+        
+        if (!activityTimeline) return;
+        
+        // Show loading message
+        if (loadingMessage) {
+            loadingMessage.style.display = 'block';
+        }
+        
+        fetch('/api/user-activities')
+            .then(response => response.json())
+            .then(data => {
+                if (data.error) {
+                    console.error('Error fetching activities:', data.error);
+                    displayNoActivities();
+                    return;
+                }
+                
+                displayActivities(data.activities);
+            })
+            .catch(error => {
+                console.error('Error fetching user activities:', error);
+                displayNoActivities();
+            })
+            .finally(() => {
+                // Hide loading message
+                if (loadingMessage) {
+                    loadingMessage.style.display = 'none';
+                }
+            });
+    }
+    
+    function displayActivities(activities) {
+        const activityTimeline = document.getElementById('activity-timeline');
+        if (!activityTimeline) return;
+        
+        // Clear existing content except loading message
+        const loadingMessage = document.getElementById('activity-loading');
+        activityTimeline.innerHTML = '';
+        if (loadingMessage) {
+            activityTimeline.appendChild(loadingMessage);
+        }
+        
+        if (!activities || activities.length === 0) {
+            displayNoActivities();
+            return;
+        }
+        
+        activities.forEach((activity, index) => {
+            const timelineItem = document.createElement('div');
+            timelineItem.className = 'timeline-item';
+            timelineItem.style.opacity = '0';
+            timelineItem.style.animationDelay = `${index * 0.1}s`;
+            
+            const activityIcon = getActivityIcon(activity.activity_type);
+            const activityDescription = formatActivityDescription(activity);
+            
+            timelineItem.innerHTML = `
+                <div class="timeline-avatar">
+                    ${activityIcon}
+                </div>
+                <div class="timeline-content">
+                    <div class="timeline-date">${activity.date}</div>
+                    <div class="timeline-time">${activity.time}</div>
+                    <div class="timeline-action">${activityDescription}</div>
+                    <button class="timeline-btn" onclick="showActivityDetails('${activity.full_timestamp}')">View Details</button>
+                </div>
+            `;
+            
+            activityTimeline.appendChild(timelineItem);
+            
+            // Trigger animation
+            setTimeout(() => {
+                timelineItem.style.opacity = '1';
+                timelineItem.style.animation = 'slideInUp 0.5s ease-out forwards';
+            }, index * 100);
+        });
+    }
+    
+    function displayNoActivities() {
+        const activityTimeline = document.getElementById('activity-timeline');
+        if (!activityTimeline) return;
+        
+        const loadingMessage = document.getElementById('activity-loading');
+        activityTimeline.innerHTML = '';
+        if (loadingMessage) {
+            activityTimeline.appendChild(loadingMessage);
+        }
+        
+        const noActivitiesMessage = document.createElement('div');
+        noActivitiesMessage.className = 'no-activities-message';
+        noActivitiesMessage.style.textAlign = 'center';
+        noActivitiesMessage.style.padding = '40px';
+        noActivitiesMessage.style.color = '#888';
+        noActivitiesMessage.innerHTML = `
+            <p style="font-size: 18px; margin-bottom: 8px;">No recent activity found</p>
+            <p style="font-size: 14px;">Your login history will appear here</p>
+        `;
+        
+        activityTimeline.appendChild(noActivitiesMessage);
+    }
+    
+    function getActivityIcon(activityType) {
+        switch(activityType) {
+            case 'LOGIN':
+                return `<svg width="24" height="24" fill="#22c55e" viewBox="0 0 24 24">
+                    <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                </svg>`;
+            case 'LOGOUT':
+                return `<svg width="24" height="24" fill="#ef4444" viewBox="0 0 24 24">
+                    <path d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"/>
+                </svg>`;
+            default:
+                return `<img src="/static/images/profile-icon.png" alt="User" style="width: 24px; height: 24px; border-radius: 50%;">`;
+        }
+    }
+    
+    function formatActivityDescription(activity) {
+        switch(activity.activity_type) {
+            case 'LOGIN':
+                return 'Successfully logged in';
+            case 'LOGOUT':
+                return 'Logged out of account';
+            default:
+                return activity.description || 'Unknown activity';
+        }
+    }
+    
+    // Update the activateSection function to load activities when needed
+    function activateSection(section) {
+        // Remove 'active' from all nav links and sections
+        document.querySelectorAll('.sidebar-nav a').forEach(l => l.classList.remove('active'));
+        document.querySelectorAll('.content-section').forEach(sec => {
+            sec.classList.remove('active');
+            sec.style.opacity = 0; // Reset opacity for animation
+        });
+
+        // Activate the correct nav link and section
+        const navLink = document.querySelector('.sidebar-nav a[data-section="' + section + '"]');
+        const sectionDiv = document.getElementById(section);
+        
+        if (navLink) navLink.classList.add('active');
+        if (sectionDiv) {
+            sectionDiv.classList.add('active');
+            // Trigger animation by changing opacity after a short delay
+            setTimeout(() => {
+                sectionDiv.style.opacity = 1;
+            }, 50);
+        }
+
+        // Load activities when activity section is activated
+        if (section === 'activity') {
+            setTimeout(() => {
+                loadUserActivities();
+            }, 100);
+        }
+    }
 });
+
+// Global function for activity details (can be expanded later)
+function showActivityDetails(timestamp) {
+    alert(`Activity details for ${timestamp}\n\nThis feature can be expanded to show more detailed information about the user's activity.`);
+}
