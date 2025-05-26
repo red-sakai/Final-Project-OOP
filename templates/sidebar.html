@@ -164,15 +164,15 @@
 <body>
     <aside class="account-sidebar">
         <!-- Back Button -->
-        <button id="back-btn" class="back-btn"">
+        <button id="back-btn" class="back-btn">
             <svg width="20" height="20" fill="none" stroke="#222" stroke-width="2" viewBox="0 0 24 24"><path d="M15 18l-6-6 6-6"/></svg>
             Back to Home
         </button>
         <div class="sidebar-profile-block">
             <img src="{{ url_for('static', filename='images/profile-icon.png') }}" alt="Profile Icon" class="sidebar-profile-img">
             <div class="sidebar-profile-info">
-                <div class="sidebar-profile-name">John Doe</div>
-                <div class="sidebar-profile-email">JohnDoe@gmail.com</div>
+                <div class="sidebar-profile-name">{{ session.get('user_name', 'User') }}</div>
+                <div class="sidebar-profile-email">{{ session.get('user_email', 'user@example.com') }}</div>
             </div>
         </div>
         <nav class="sidebar-nav">
@@ -292,10 +292,10 @@
                 </div>
             </div>
         </div>
-        <!-- Update the ticket form to have proper action and method attributes -->
+        <!-- Update the ticket form -->
         <div id="ticket" class="content-section">
             <form class="ticket-form" action="/submit-ticket" method="POST" enctype="multipart/form-data">
-                <h2 class="ticket-title">Hi John, what do you need help with?</h2>
+                <h2 class="ticket-title">Hi {{ session.get('user_name', 'User').split()[0] }}, what do you need help with?</h2>
                 <div class="ticket-group">
                     <label for="ticket-title" class="ticket-label">Write a descriptive title</label>
                     <div class="ticket-title-row">
