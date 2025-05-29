@@ -1,501 +1,501 @@
-"Product Name","Order Item Id","Product Category Id","Product Category Name","Department Id","Department Name"
-"Smart watch ",MC179213,73,"Sporting Goods",2,Fitness
-"Nike Men's Free 5.0+ Running Shoe",TK101052,9,"Cardio Equipment",3,Footwear
-"Team Golf St. Louis Cardinals Putter Grip",TK121217,40,Accessories,6,Outdoors
-"Nike Men's Dri-FIT Victory Golf Polo",TK121561,24,"Women's Apparel",5,Golf
-"Nike Men's Dri-FIT Victory Golf Polo",MC133575,24,"Women's Apparel",5,Golf
-"Smart watch ",CR179190,73,"Sporting Goods",2,Fitness
-"Smart watch ",MC179143,73,"Sporting Goods",2,Fitness
-"Smart watch ",CR179139,73,"Sporting Goods",2,Fitness
-"Smart watch ",CR179131,73,"Sporting Goods",2,Fitness
-"Smart watch ",MC179128,73,"Sporting Goods",2,Fitness
-"Perfect Fitness Perfect Rip Deck",CR145886,17,Cleats,4,Apparel
-"Perfect Fitness Perfect Rip Deck",TK124607,17,Cleats,4,Apparel
-"Nike Men's CJ Elite 2 TD Football Cleat",TK73253,18,"Men's Footwear",4,Apparel
-"Nike Men's CJ Elite 2 TD Football Cleat",TK54942,18,"Men's Footwear",4,Apparel
-"Nike Men's CJ Elite 2 TD Football Cleat",TK104041,18,"Men's Footwear",4,Apparel
-"Nike Men's Free 5.0+ Running Shoe",CR43614,9,"Cardio Equipment",3,Footwear
-"Nike Men's Free 5.0+ Running Shoe",MC170721,9,"Cardio Equipment",3,Footwear
-"Perfect Fitness Perfect Rip Deck",TK48340,17,Cleats,4,Apparel
-"Under Armour Women's Micro G Skulpt Running S",TK60332,12,"Boxing & MMA",3,Footwear
-"Glove It Women's Mod Oval Golf Glove",TK60332,36,"Golf Balls",6,Outdoors
-"Nike Men's Dri-FIT Victory Golf Polo",TK77528,24,"Women's Apparel",5,Golf
-"Smart watch ",MC179079,73,"Sporting Goods",2,Fitness
-"Smart watch ",MC179072,73,"Sporting Goods",2,Fitness
-"Smart watch ",MC176534,73,"Sporting Goods",2,Fitness
-"Smart watch ",CR176485,73,"Sporting Goods",2,Fitness
-"Smart watch ",CR176478,73,"Sporting Goods",2,Fitness
-"Nike Men's Dri-FIT Victory Golf Polo",TK48587,24,"Women's Apparel",5,Golf
-"Nike Men's Dri-FIT Victory Golf Polo",MC33072,24,"Women's Apparel",5,Golf
-"Under Armour Girls' Toddler Spine Surge Runni",TK124607,29,"Shop By Sport",5,Golf
-"Nike Men's Dri-FIT Victory Golf Polo",MC37625,24,"Women's Apparel",5,Golf
-"Nike Men's Dri-FIT Victory Golf Polo",CR160004,24,"Women's Apparel",5,Golf
-"Perfect Fitness Perfect Rip Deck",TK108765,17,Cleats,4,Apparel
-"Nike Men's Dri-FIT Victory Golf Polo",TK108765,24,"Women's Apparel",5,Golf
-"Nike Men's Dri-FIT Victory Golf Polo",TK48326,24,"Women's Apparel",5,Golf
-"Nike Men's Dri-FIT Victory Golf Polo",MC43489,24,"Women's Apparel",5,Golf
-"Nike Men's Dri-FIT Victory Golf Polo",TK47568,24,"Women's Apparel",5,Golf
-"Under Armour Girls' Toddler Spine Surge Runni",MC162921,29,"Shop By Sport",5,Golf
-"Nike Men's Dri-FIT Victory Golf Polo",MC155727,24,"Women's Apparel",5,Golf
-"Nike Men's Dri-FIT Victory Golf Polo",TK47568,24,"Women's Apparel",5,Golf
-"Team Golf Pittsburgh Steelers Putter Grip",TK117704,40,Accessories,6,Outdoors
-"Nike Men's CJ Elite 2 TD Football Cleat",TK62544,18,"Men's Footwear",4,Apparel
-"Nike Men's CJ Elite 2 TD Football Cleat",TK58068,18,"Men's Footwear",4,Apparel
-"Porcelain crafts",CR178084,66,Crafts,4,Apparel
-"Porcelain crafts",MC178281,66,Crafts,4,Apparel
-"Perfect Fitness Perfect Rip Deck",TK104041,17,Cleats,4,Apparel
-"Nike Men's Dri-FIT Victory Golf Polo",TK69828,24,"Women's Apparel",5,Golf
-"Lawn mower",MC175136,68,Garden,6,Outdoors
-"Nike Men's Dri-FIT Victory Golf Polo",TK73060,24,"Women's Apparel",5,Golf
-"Nike Women's Tempo Shorts",TK109829,9,"Cardio Equipment",3,Footwear
-"Team Golf Pittsburgh Steelers Putter Grip",TK72527,40,Accessories,6,Outdoors
-"Perfect Fitness Perfect Rip Deck",TK93518,17,Cleats,4,Apparel
-"Nike Men's Dri-FIT Victory Golf Polo",TK114948,24,"Women's Apparel",5,Golf
-"Perfect Fitness Perfect Rip Deck",TK114695,17,Cleats,4,Apparel
-"Perfect Fitness Perfect Rip Deck",TK126499,17,Cleats,4,Apparel
-"Perfect Fitness Perfect Rip Deck",TK126499,17,Cleats,4,Apparel
-"Perfect Fitness Perfect Rip Deck",TK45545,17,Cleats,4,Apparel
-"Perfect Fitness Perfect Rip Deck",CR28992,17,Cleats,4,Apparel
-"Perfect Fitness Perfect Rip Deck",CR155782,17,Cleats,4,Apparel
-"Smart watch ",MC176406,73,"Sporting Goods",2,Fitness
-"Nike Dri-FIT Crew Sock 6 Pack",TK113005,7,Hockey,2,Fitness
-"Nike Dri-FIT Crew Sock 6 Pack",TK90607,7,Hockey,2,Fitness
-"Nike Dri-FIT Crew Sock 6 Pack",TK74532,7,Hockey,2,Fitness
-"Nike Dri-FIT Crew Sock 6 Pack",TK71782,7,Hockey,2,Fitness
-"Nike Dri-FIT Crew Sock 6 Pack",CR15760,7,Hockey,2,Fitness
-"Nike Dri-FIT Crew Sock 6 Pack",CR9682,7,Hockey,2,Fitness
-"Nike Dri-FIT Crew Sock 6 Pack",MC6780,7,Hockey,2,Fitness
-"Nike Women's Legend V-Neck T-Shirt",CR142021,7,Hockey,2,Fitness
-"Nike Women's Legend V-Neck T-Shirt",TK125913,7,Hockey,2,Fitness
-"Nike Women's Legend V-Neck T-Shirt",TK120828,7,Hockey,2,Fitness
-"Diamondback Women's Serene Classic Comfort Bi",TK69828,43,"Camping & Hiking",7,"Fan Shop"
-"Diamondback Women's Serene Classic Comfort Bi",TK58734,43,"Camping & Hiking",7,"Fan Shop"
-"Diamondback Women's Serene Classic Comfort Bi",TK58734,43,"Camping & Hiking",7,"Fan Shop"
-"Diamondback Women's Serene Classic Comfort Bi",TK125075,43,"Camping & Hiking",7,"Fan Shop"
-"Diamondback Women's Serene Classic Comfort Bi",TK125075,43,"Camping & Hiking",7,"Fan Shop"
-"Field & Stream Sportsman 16 Gun Fire Safe",TK54942,45,Fishing,7,"Fan Shop"
-"Diamondback Women's Serene Classic Comfort Bi",TK73253,43,"Camping & Hiking",7,"Fan Shop"
-"Field & Stream Sportsman 16 Gun Fire Safe",TK62544,45,Fishing,7,"Fan Shop"
-"Field & Stream Sportsman 16 Gun Fire Safe",TK53411,45,Fishing,7,"Fan Shop"
-"DVDs ",MC174982,67,DVDs,9,"Discs Shop"
-"Field & Stream Sportsman 16 Gun Fire Safe",TK53107,45,Fishing,7,"Fan Shop"
-"Diamondback Women's Serene Classic Comfort Bi",TK72158,43,"Camping & Hiking",7,"Fan Shop"
-"Diamondback Women's Serene Classic Comfort Bi",TK53107,43,"Camping & Hiking",7,"Fan Shop"
-"Fighting video games",CR176898,75,"Video Games",9,"Discs Shop"
-"DVDs ",CR174954,67,DVDs,9,"Discs Shop"
-"Under Armour Girls' Toddler Spine Surge Runni",CR157833,29,"Shop By Sport",5,Golf
-"Nike Men's Free 5.0+ Running Shoe",MC1160,9,"Cardio Equipment",3,Footwear
-"Under Armour Hustle Storm Medium Duffle Bag",MC133494,11,"Fitness Accessories",3,Footwear
-"Perfect Fitness Perfect Rip Deck",MC1160,17,Cleats,4,Apparel
-"Perfect Fitness Perfect Rip Deck",MC4332,17,Cleats,4,Apparel
-"Perfect Fitness Perfect Rip Deck",CR152108,17,Cleats,4,Apparel
-"Perfect Fitness Perfect Rip Deck",CR25195,17,Cleats,4,Apparel
-"Perfect Fitness Perfect Rip Deck",CR135802,17,Cleats,4,Apparel
-"Perfect Fitness Perfect Rip Deck",MC11526,17,Cleats,4,Apparel
-"Perfect Fitness Perfect Rip Deck",MC147289,17,Cleats,4,Apparel
-"Nike Men's Dri-FIT Victory Golf Polo",MC3341,24,"Women's Apparel",5,Golf
-"Nike Men's Dri-FIT Victory Golf Polo",MC3341,24,"Women's Apparel",5,Golf
-"Nike Men's Dri-FIT Victory Golf Polo",CR15812,24,"Women's Apparel",5,Golf
-"Nike Men's Dri-FIT Victory Golf Polo",CR132754,24,"Women's Apparel",5,Golf
-"Under Armour Girls' Toddler Spine Surge Runni",MC150263,29,"Shop By Sport",5,Golf
-"Nike Men's Dri-FIT Victory Golf Polo",MC8498,24,"Women's Apparel",5,Golf
-"Nike Men's Deutschland Weltmeister Winners Bl",CR25195,26,"Girls' Apparel",5,Golf
-"Under Armour Girls' Toddler Spine Surge Runni",CR22035,29,"Shop By Sport",5,Golf
-"Nike Men's Dri-FIT Victory Golf Polo",CR18112,24,"Women's Apparel",5,Golf
-"Polar FT4 Heart Rate Monitor",CR152108,38,"Kids' Golf Clubs",6,Outdoors
-"Titleist Pro V1x High Numbers Personalized Go",MC2751,37,Electronics,6,Outdoors
-"Perfect Fitness Perfect Rip Deck",TK130130,17,Cleats,4,Apparel
-"Nike Men's Free 5.0+ Running Shoe",CR145416,9,"Cardio Equipment",3,Footwear
-"Nike Men's Free 5.0+ Running Shoe",MC24341,9,"Cardio Equipment",3,Footwear
-"Nike Men's Dri-FIT Victory Golf Polo",CR22514,24,"Women's Apparel",5,Golf
-"Glove It Women's Imperial Golf Glove",CR22514,36,"Golf Balls",6,Outdoors
-"Perfect Fitness Perfect Rip Deck",CR7152,17,Cleats,4,Apparel
-"Nike Men's Dri-FIT Victory Golf Polo",MC15114,24,"Women's Apparel",5,Golf
-"Under Armour Kids' Mercenary Slide",TK62841,13,Electronics,3,Footwear
-"Perfect Fitness Perfect Rip Deck",TK51597,17,Cleats,4,Apparel
-"Perfect Fitness Perfect Rip Deck",TK120416,17,Cleats,4,Apparel
-"Nike Men's Dri-FIT Victory Golf Polo",TK117394,24,"Women's Apparel",5,Golf
-"Nike Men's Dri-FIT Victory Golf Polo",TK62841,24,"Women's Apparel",5,Golf
-"Under Armour Men's Tech II T-Shirt",TK67776,5,Lacrosse,2,Fitness
-"Nike Men's Free 5.0+ Running Shoe",TK58902,9,"Cardio Equipment",3,Footwear
-"Perfect Fitness Perfect Rip Deck",TK58902,17,Cleats,4,Apparel
-"Nike Men's Dri-FIT Victory Golf Polo",MC168714,24,"Women's Apparel",5,Golf
-"Nike Men's Dri-FIT Victory Golf Polo",CR34193,24,"Women's Apparel",5,Golf
-"Glove It Imperial Golf Towel",MC3258,41,Trade-In,6,Outdoors
-"adidas Kids' F5 Messi FG Soccer Cleat",CR16561,3,"Baseball & Softball",2,Fitness
-"Nike Men's Dri-FIT Victory Golf Polo",MC3842,24,"Women's Apparel",5,Golf
-"Nike Men's Dri-FIT Victory Golf Polo",TK72527,24,"Women's Apparel",5,Golf
-"Nike Women's Legend V-Neck T-Shirt",CR29579,7,Hockey,2,Fitness
-"Nike Women's Legend V-Neck T-Shirt",CR24868,7,Hockey,2,Fitness
-"Nike Women's Legend V-Neck T-Shirt",CR5651,7,Hockey,2,Fitness
-"Nike Women's Legend V-Neck T-Shirt",CR2011,7,Hockey,2,Fitness
-"Perfect Fitness Perfect Rip Deck",TK122633,17,Cleats,4,Apparel
-"Nike Men's CJ Elite 2 TD Football Cleat",TK122633,18,"Men's Footwear",4,Apparel
-"Nike Men's CJ Elite 2 TD Football Cleat",TK122633,18,"Men's Footwear",4,Apparel
-"Glove It Women's Mod Oval 3-Zip Carry All Gol",TK124245,41,Trade-In,6,Outdoors
-"Diamondback Women's Serene Classic Comfort Bi",TK122633,43,"Camping & Hiking",7,"Fan Shop"
-"Industrial consumer electronics",MC174266,65,"Consumer Electronics",10,Technology
-"Nike Men's Free 5.0+ Running Shoe",MC168802,9,"Cardio Equipment",3,Footwear
-"Nike Men's CJ Elite 2 TD Football Cleat",MC168802,18,"Men's Footwear",4,Apparel
-"Nike Men's Free 5.0+ Running Shoe",MC18347,9,"Cardio Equipment",3,Footwear
-"Nike Men's CJ Elite 2 TD Football Cleat",MC18347,18,"Men's Footwear",4,Apparel
-"Nike Men's CJ Elite 2 TD Football Cleat",TK128429,18,"Men's Footwear",4,Apparel
-"Under Armour Girls' Toddler Spine Surge Runni",TK128429,29,"Shop By Sport",5,Golf
-"Adult dog supplies",MC178846,72,"Pet Supplies",11,"Pet Shop"
-"Adult dog supplies",CR178927,72,"Pet Supplies",11,"Pet Shop"
-"Field & Stream Sportsman 16 Gun Fire Safe",TK56358,45,Fishing,7,"Fan Shop"
-"Diamondback Women's Serene Classic Comfort Bi",TK56358,43,"Camping & Hiking",7,"Fan Shop"
-"Perfect Fitness Perfect Rip Deck",TK128429,17,Cleats,4,Apparel
-"Under Armour Women's Ignite PIP VI Slide",TK56358,13,Electronics,3,Footwear
-"Nike Men's Dri-FIT Victory Golf Polo",TK128429,24,"Women's Apparel",5,Golf
-"Diamondback Women's Serene Classic Comfort Bi",TK78290,43,"Camping & Hiking",7,"Fan Shop"
-"Perfect Fitness Perfect Rip Deck",CR165761,17,Cleats,4,Apparel
-"Nike Men's Dri-FIT Victory Golf Polo",CR165761,24,"Women's Apparel",5,Golf
-"Nike Men's Dri-FIT Victory Golf Polo",CR165761,24,"Women's Apparel",5,Golf
-"Nike Men's Dri-FIT Victory Golf Polo",TK78290,24,"Women's Apparel",5,Golf
-"Nike Men's Free 5.0+ Running Shoe",TK55341,9,"Cardio Equipment",3,Footwear
-"Nike Men's CJ Elite 2 TD Football Cleat",TK55341,18,"Men's Footwear",4,Apparel
-"Diamondback Women's Serene Classic Comfort Bi",TK55341,43,"Camping & Hiking",7,"Fan Shop"
-"Diamondback Women's Serene Classic Comfort Bi",TK55341,43,"Camping & Hiking",7,"Fan Shop"
-"Nike Men's CJ Elite 2 TD Football Cleat",TK82504,18,"Men's Footwear",4,Apparel
-"Perfect Fitness Perfect Rip Deck",TK99195,17,Cleats,4,Apparel
-"Nike Men's CJ Elite 2 TD Football Cleat",TK82504,18,"Men's Footwear",4,Apparel
-"Nike Men's CJ Elite 2 TD Football Cleat",TK81079,18,"Men's Footwear",4,Apparel
-"Nike Men's CJ Elite 2 TD Football Cleat",TK82504,18,"Men's Footwear",4,Apparel
-"Nike Men's CJ Elite 2 TD Football Cleat",TK87221,18,"Men's Footwear",4,Apparel
-"Bridgestone e6 Straight Distance NFL Tennesse",TK99691,37,Electronics,6,Outdoors
-"Diamondback Women's Serene Classic Comfort Bi",TK81629,43,"Camping & Hiking",7,"Fan Shop"
-"Nike Men's CJ Elite 2 TD Football Cleat",TK87545,18,"Men's Footwear",4,Apparel
-"Nike Men's Free 5.0+ Running Shoe",MC155664,9,"Cardio Equipment",3,Footwear
-"Nike Men's Free 5.0+ Running Shoe",MC36529,9,"Cardio Equipment",3,Footwear
-"Nike Men's Free 5.0+ Running Shoe",TK114663,9,"Cardio Equipment",3,Footwear
-"Perfect Fitness Perfect Rip Deck",MC36529,17,Cleats,4,Apparel
-"Perfect Fitness Perfect Rip Deck",MC154470,17,Cleats,4,Apparel
-"Nike Men's Dri-FIT Victory Golf Polo",TK114663,24,"Women's Apparel",5,Golf
-"Nike Men's Dri-FIT Victory Golf Polo",MC162635,24,"Women's Apparel",5,Golf
-"Under Armour Girls' Toddler Spine Surge Runni",CR160746,29,"Shop By Sport",5,Golf
-"Under Armour Girls' Toddler Spine Surge Runni",MC166788,29,"Shop By Sport",5,Golf
-"Glove It Women's Imperial Golf Glove",TK114663,36,"Golf Balls",6,Outdoors
-"Nike Men's Free 5.0+ Running Shoe",MC19770,9,"Cardio Equipment",3,Footwear
-"Nike Men's Free 5.0+ Running Shoe",MC2737,9,"Cardio Equipment",3,Footwear
-"Under Armour Girls' Toddler Spine Surge Runni",MC149601,29,"Shop By Sport",5,Golf
-"Nike Men's Dri-FIT Victory Golf Polo",CR146985,24,"Women's Apparel",5,Golf
-"Nike Men's Dri-FIT Victory Golf Polo",MC23286,24,"Women's Apparel",5,Golf
-"Nike Men's Free 5.0+ Running Shoe",TK126395,9,"Cardio Equipment",3,Footwear
-"Under Armour Women's Ignite PIP VI Slide",TK115042,13,Electronics,3,Footwear
-"Perfect Fitness Perfect Rip Deck",TK104781,17,Cleats,4,Apparel
-"Under Armour Girls' Toddler Spine Surge Runni",TK54948,29,"Shop By Sport",5,Golf
-"Under Armour Girls' Toddler Spine Surge Runni",TK53676,29,"Shop By Sport",5,Golf
-"Perfect Fitness Perfect Rip Deck",TK53979,17,Cleats,4,Apparel
-"Nike Men's Dri-FIT Victory Golf Polo",TK70122,24,"Women's Apparel",5,Golf
-"Perfect Fitness Perfect Rip Deck",TK93572,17,Cleats,4,Apparel
-"Under Armour Girls' Toddler Spine Surge Runni",TK94587,29,"Shop By Sport",5,Golf
-"Under Armour Girls' Toddler Spine Surge Runni",TK96612,29,"Shop By Sport",5,Golf
-"Nike Men's Dri-FIT Victory Golf Polo",TK102945,24,"Women's Apparel",5,Golf
-"Perfect Fitness Perfect Rip Deck",TK84074,17,Cleats,4,Apparel
-"Nike Men's CJ Elite 2 TD Football Cleat",TK122319,18,"Men's Footwear",4,Apparel
-"Nike Men's CJ Elite 2 TD Football Cleat",TK122319,18,"Men's Footwear",4,Apparel
-"Nike Men's CJ Elite 2 TD Football Cleat",TK112832,18,"Men's Footwear",4,Apparel
-"Nike Men's CJ Elite 2 TD Football Cleat",TK112832,18,"Men's Footwear",4,Apparel
-"Nike Men's CJ Elite 2 TD Football Cleat",TK112832,18,"Men's Footwear",4,Apparel
-"Perfect Fitness Perfect Rip Deck",TK112832,17,Cleats,4,Apparel
-"Web Camera",MC173226,62,"Cameras ",10,Technology
-"Perfect Fitness Perfect Rip Deck",MC34166,17,Cleats,4,Apparel
-"Nike Men's CJ Elite 2 TD Football Cleat",MC32808,18,"Men's Footwear",4,Apparel
-"Nike Men's CJ Elite 2 TD Football Cleat",TK123904,18,"Men's Footwear",4,Apparel
-"Nike Men's CJ Elite 2 TD Football Cleat",TK123904,18,"Men's Footwear",4,Apparel
-"Field & Stream Sportsman 16 Gun Fire Safe",MC34166,45,Fishing,7,"Fan Shop"
-"Perfect Fitness Perfect Rip Deck",TK87426,17,Cleats,4,Apparel
-"Nike Men's Dri-FIT Victory Golf Polo",TK87426,24,"Women's Apparel",5,Golf
-"Bridgestone e6 Straight Distance NFL Carolina",TK88696,37,Electronics,6,Outdoors
-"Perfect Fitness Perfect Rip Deck",CR155782,17,Cleats,4,Apparel
-"Nike Men's Dri-FIT Victory Golf Polo",CR28992,24,"Women's Apparel",5,Golf
-"Under Armour Girls' Toddler Spine Surge Runni",MC158121,29,"Shop By Sport",5,Golf
-"Perfect Fitness Perfect Rip Deck",TK45411,17,Cleats,4,Apparel
-"Nike Men's Free 5.0+ Running Shoe",MC21759,9,"Cardio Equipment",3,Footwear
-"Nike Men's Free 5.0+ Running Shoe",TK68686,9,"Cardio Equipment",3,Footwear
-"adidas Men's F10 Messi TRX FG Soccer Cleat",TK51877,3,"Baseball & Softball",2,Fitness
-"Nike Men's Free 5.0+ Running Shoe",TK51877,9,"Cardio Equipment",3,Footwear
-"Perfect Fitness Perfect Rip Deck",TK69688,17,Cleats,4,Apparel
-"Under Armour Girls' Toddler Spine Surge Runni",TK124214,29,"Shop By Sport",5,Golf
-"Under Armour Hustle Storm Medium Duffle Bag",TK109829,11,"Fitness Accessories",3,Footwear
-"Under Armour Girls' Toddler Spine Surge Runni",TK114861,29,"Shop By Sport",5,Golf
-"Perfect Fitness Perfect Rip Deck",TK93518,17,Cleats,4,Apparel
-"Under Armour Girls' Toddler Spine Surge Runni",TK85966,29,"Shop By Sport",5,Golf
-"Nike Men's Free 5.0+ Running Shoe",TK94402,9,"Cardio Equipment",3,Footwear
-"Nike Men's Dri-FIT Victory Golf Polo",TK88696,24,"Women's Apparel",5,Golf
-"Nike Men's Dri-FIT Victory Golf Polo",TK90175,24,"Women's Apparel",5,Golf
-"Nike Men's Free TR 5.0 TB Training Shoe",CR162219,16,"As Seen on  TV!",3,Footwear
-"Perfect Fitness Perfect Rip Deck",CR155782,17,Cleats,4,Apparel
-"Nike Men's Dri-FIT Victory Golf Polo",CR28992,24,"Women's Apparel",5,Golf
-"Nike Men's Free 5.0+ Running Shoe",CR2011,9,"Cardio Equipment",3,Footwear
-"Nike Men's Dri-FIT Victory Golf Polo",MC150722,24,"Women's Apparel",5,Golf
-"Under Armour Girls' Toddler Spine Surge Runni",MC150722,29,"Shop By Sport",5,Golf
-"Nike Men's CJ Elite 2 TD Football Cleat",CR170031,18,"Men's Footwear",4,Apparel
-"Diamondback Women's Serene Classic Comfort Bi",CR37428,43,"Camping & Hiking",7,"Fan Shop"
-"Nike Men's Free 5.0+ Running Shoe",TK58068,9,"Cardio Equipment",3,Footwear
-"Nike Women's Tempo Shorts",TK73253,9,"Cardio Equipment",3,Footwear
-"Perfect Fitness Perfect Rip Deck",TK105326,17,Cleats,4,Apparel
-"Under Armour Girls' Toddler Spine Surge Runni",TK105326,29,"Shop By Sport",5,Golf
-"Nike Men's Dri-FIT Victory Golf Polo",TK54942,24,"Women's Apparel",5,Golf
-"Under Armour Girls' Toddler Spine Surge Runni",TK125638,29,"Shop By Sport",5,Golf
-"Under Armour Girls' Toddler Spine Surge Runni",TK62544,29,"Shop By Sport",5,Golf
-"Bridgestone e6 Straight Distance NFL Tennesse",TK53411,37,Electronics,6,Outdoors
-"Perfect Fitness Perfect Rip Deck",TK86079,17,Cleats,4,Apparel
-"Perfect Fitness Perfect Rip Deck",TK81629,17,Cleats,4,Apparel
-"Nike Men's Dri-FIT Victory Golf Polo",TK81629,24,"Women's Apparel",5,Golf
-"Nike Men's Dri-FIT Victory Golf Polo",TK82504,24,"Women's Apparel",5,Golf
-"Under Armour Girls' Toddler Spine Surge Runni",TK99195,29,"Shop By Sport",5,Golf
-"Under Armour Girls' Toddler Spine Surge Runni",TK97785,29,"Shop By Sport",5,Golf
-"Nike Men's Dri-FIT Victory Golf Polo",TK87545,24,"Women's Apparel",5,Golf
-"Perfect Fitness Perfect Rip Deck",TK121743,17,Cleats,4,Apparel
-"Nike Men's Dri-FIT Victory Golf Polo",TK107373,24,"Women's Apparel",5,Golf
-"Nike Men's Dri-FIT Victory Golf Polo",TK119770,24,"Women's Apparel",5,Golf
-"Under Armour Girls' Toddler Spine Surge Runni",TK119770,29,"Shop By Sport",5,Golf
-"Brooks Women's Ghost 6 Running Shoe",MC161934,12,"Boxing & MMA",3,Footwear
-"Nike Men's Free 5.0+ Running Shoe",CR36079,9,"Cardio Equipment",3,Footwear
-"Nike Men's Dri-FIT Victory Golf Polo",CR157949,24,"Women's Apparel",5,Golf
-"TYR Boys' Team Digi Jammer",TK113534,26,"Girls' Apparel",5,Golf
-"Nike Men's Free 5.0+ Running Shoe",MC13573,9,"Cardio Equipment",3,Footwear
-"Perfect Fitness Perfect Rip Deck",CR134641,17,Cleats,4,Apparel
-"Under Armour Girls' Toddler Spine Surge Runni",MC152617,29,"Shop By Sport",5,Golf
-"Nike Men's Dri-FIT Victory Golf Polo",MC132454,24,"Women's Apparel",5,Golf
-"Team Golf San Francisco Giants Putter Grip",CR11215,40,Accessories,6,Outdoors
-"Titleist Pro V1x Golf Balls",CR138272,37,Electronics,6,Outdoors
-"Bridgestone e6 Straight Distance NFL San Dieg",MC13573,37,Electronics,6,Outdoors
-"Perfect Fitness Perfect Rip Deck",TK62107,17,Cleats,4,Apparel
-"Nike Men's Dri-FIT Victory Golf Polo",TK75396,24,"Women's Apparel",5,Golf
-"Perfect Fitness Perfect Rip Deck",TK58801,17,Cleats,4,Apparel
-"Columbia Men's PFG Anchor Tough T-Shirt",TK81629,29,"Shop By Sport",5,Golf
-"Nike Men's Dri-FIT Victory Golf Polo",TK99195,24,"Women's Apparel",5,Golf
-"Under Armour Girls' Toddler Spine Surge Runni",TK86079,29,"Shop By Sport",5,Golf
-"Nike Men's Dri-FIT Victory Golf Polo",TK82645,24,"Women's Apparel",5,Golf
-"Under Armour Girls' Toddler Spine Surge Runni",TK107373,29,"Shop By Sport",5,Golf
-"Nike Men's Dri-FIT Victory Golf Polo",TK112132,24,"Women's Apparel",5,Golf
-"Nike Men's Dri-FIT Victory Golf Polo",TK119770,24,"Women's Apparel",5,Golf
-"Perfect Fitness Perfect Rip Deck",MC36529,17,Cleats,4,Apparel
-"Nike Men's Dri-FIT Victory Golf Polo",CR157949,24,"Women's Apparel",5,Golf
-"Under Armour Girls' Toddler Spine Surge Runni",MC164014,29,"Shop By Sport",5,Golf
-"Under Armour Girls' Toddler Spine Surge Runni",MC164014,29,"Shop By Sport",5,Golf
-"Nike Men's Free 5.0+ Running Shoe",MC137137,9,"Cardio Equipment",3,Footwear
-"Under Armour Women's Ignite Slide",CR11215,13,Electronics,3,Footwear
-"Perfect Fitness Perfect Rip Deck",CR138272,17,Cleats,4,Apparel
-"Perfect Fitness Perfect Rip Deck",MC137137,17,Cleats,4,Apparel
-"Nike Men's Dri-FIT Victory Golf Polo",MC152617,24,"Women's Apparel",5,Golf
-"Nike Men's Dri-FIT Victory Golf Polo",MC13573,24,"Women's Apparel",5,Golf
-"Under Armour Girls' Toddler Spine Surge Runni",CR1796,29,"Shop By Sport",5,Golf
-"Nike Men's Dri-FIT Victory Golf Polo",CR134203,24,"Women's Apparel",5,Golf
-"Team Golf Tennessee Volunteers Putter Grip",MC2737,40,Accessories,6,Outdoors
-"Perfect Fitness Perfect Rip Deck",TK125075,17,Cleats,4,Apparel
-"Perfect Fitness Perfect Rip Deck",TK103140,17,Cleats,4,Apparel
-"Perfect Fitness Perfect Rip Deck",TK58068,17,Cleats,4,Apparel
-"Under Armour Girls' Toddler Spine Surge Runni",TK65307,29,"Shop By Sport",5,Golf
-"Nike Men's Dri-FIT Victory Golf Polo",TK75183,24,"Women's Apparel",5,Golf
-"Perfect Fitness Perfect Rip Deck",TK94030,17,Cleats,4,Apparel
-"Perfect Fitness Perfect Rip Deck",TK90349,17,Cleats,4,Apparel
-"Nike Men's Dri-FIT Victory Golf Polo",TK98108,24,"Women's Apparel",5,Golf
-"Nike Men's Dri-FIT Victory Golf Polo",TK99118,24,"Women's Apparel",5,Golf
-"Nike Men's Dri-FIT Victory Golf Polo",TK102983,24,"Women's Apparel",5,Golf
-"Under Armour Girls' Toddler Spine Surge Runni",TK91405,29,"Shop By Sport",5,Golf
-"Nike Men's Free 5.0+ Running Shoe",TK79054,9,"Cardio Equipment",3,Footwear
-"Nike Men's Dri-FIT Victory Golf Polo",TK94483,24,"Women's Apparel",5,Golf
-"Nike Men's Dri-FIT Victory Golf Polo",TK91719,24,"Women's Apparel",5,Golf
-"Perfect Fitness Perfect Rip Deck",TK118936,17,Cleats,4,Apparel
-"Nike Men's Dri-FIT Victory Golf Polo",TK114168,24,"Women's Apparel",5,Golf
-"Nike Men's Free 5.0+ Running Shoe",CR36869,9,"Cardio Equipment",3,Footwear
-"Under Armour Women's Ignite Slide",CR36869,13,Electronics,3,Footwear
-"Perfect Fitness Perfect Rip Deck",MC33072,17,Cleats,4,Apparel
-"Nike Men's Dri-FIT Victory Golf Polo",MC166823,24,"Women's Apparel",5,Golf
-"Nike Men's Dri-FIT Victory Golf Polo",MC166823,24,"Women's Apparel",5,Golf
-"Under Armour Girls' Toddler Spine Surge Runni",MC33012,29,"Shop By Sport",5,Golf
-"Nike Men's Dri-FIT Victory Golf Polo",CR35536,24,"Women's Apparel",5,Golf
-"Nike Men's Dri-FIT Victory Golf Polo",MC37625,24,"Women's Apparel",5,Golf
-"Perfect Fitness Perfect Rip Deck",CR162086,17,Cleats,4,Apparel
-"Nike Men's Dri-FIT Victory Golf Polo",TK46447,24,"Women's Apparel",5,Golf
-"Nike Men's Dri-FIT Victory Golf Polo",TK46447,24,"Women's Apparel",5,Golf
-"Nike Men's Free 5.0+ Running Shoe",MC142724,9,"Cardio Equipment",3,Footwear
-"Nike Men's Free 5.0+ Running Shoe",MC142724,9,"Cardio Equipment",3,Footwear
-"Perfect Fitness Perfect Rip Deck",MC142724,17,Cleats,4,Apparel
-"Nike Men's Dri-FIT Victory Golf Polo",MC21448,24,"Women's Apparel",5,Golf
-"adidas Men's F10 Messi TRX FG Soccer Cleat",MC15114,3,"Baseball & Softball",2,Fitness
-"Perfect Fitness Perfect Rip Deck",CR7152,17,Cleats,4,Apparel
-"Nike Men's Dri-FIT Victory Golf Polo",CR7152,24,"Women's Apparel",5,Golf
-"Under Armour Girls' Toddler Spine Surge Runni",TK131025,29,"Shop By Sport",5,Golf
-"Team Golf Texas Longhorns Putter Grip",TK131025,40,Accessories,6,Outdoors
-"Team Golf Pittsburgh Steelers Putter Grip",TK131025,40,Accessories,6,Outdoors
-"Nike Men's Free 5.0+ Running Shoe",TK59461,9,"Cardio Equipment",3,Footwear
-"Nike Men's Dri-FIT Victory Golf Polo",MC168802,24,"Women's Apparel",5,Golf
-"Nike Men's Free 5.0+ Running Shoe",TK56358,9,"Cardio Equipment",3,Footwear
-"Perfect Fitness Perfect Rip Deck",MC168802,17,Cleats,4,Apparel
-"Nike Men's Free 5.0+ Running Shoe",TK131025,9,"Cardio Equipment",3,Footwear
-"Nike Men's CJ Elite 2 TD Football Cleat",CR31785,18,"Men's Footwear",4,Apparel
-"Nike Men's CJ Elite 2 TD Football Cleat",CR31785,18,"Men's Footwear",4,Apparel
-"Nike Men's CJ Elite 2 TD Football Cleat",TK50330,18,"Men's Footwear",4,Apparel
-"Field & Stream Sportsman 16 Gun Fire Safe",TK50330,45,Fishing,7,"Fan Shop"
-"Field & Stream Sportsman 16 Gun Fire Safe",CR31785,45,Fishing,7,"Fan Shop"
-"Under Armour Girls' Toddler Spine Surge Runni",TK57218,29,"Shop By Sport",5,Golf
-"Nike Men's Dri-FIT Victory Golf Polo",TK57218,24,"Women's Apparel",5,Golf
-"Under Armour Girls' Toddler Spine Surge Runni",TK50330,29,"Shop By Sport",5,Golf
-"Nike Men's Free 5.0+ Running Shoe",TK50330,9,"Cardio Equipment",3,Footwear
-"Nike Men's Dri-FIT Victory Golf Polo",TK57218,24,"Women's Apparel",5,Golf
-"Nike Men's Dri-FIT Victory Golf Polo",CR31785,24,"Women's Apparel",5,Golf
-"Nike Men's Dri-FIT Victory Golf Polo",TK57218,24,"Women's Apparel",5,Golf
-"Hirzl Women's Soffft Flex Golf Glove",TK57218,36,"Golf Balls",6,Outdoors
-"Nike Men's CJ Elite 2 TD Football Cleat",TK110081,18,"Men's Footwear",4,Apparel
-"Nike Men's Dri-FIT Victory Golf Polo",TK110081,24,"Women's Apparel",5,Golf
-"Diamondback Women's Serene Classic Comfort Bi",TK110081,43,"Camping & Hiking",7,"Fan Shop"
-"Perfect Fitness Perfect Rip Deck",MC158389,17,Cleats,4,Apparel
-"Children's heaters",MC173757,63,"Children's Clothing",4,Apparel
-"Nike Men's CJ Elite 2 TD Football Cleat",MC158359,18,"Men's Footwear",4,Apparel
-"DVDs ",MC174706,67,DVDs,9,"Discs Shop"
-"Nike Men's CJ Elite 2 TD Football Cleat",CR153271,18,"Men's Footwear",4,Apparel
-"Nike Men's CJ Elite 2 TD Football Cleat",CR153271,18,"Men's Footwear",4,Apparel
-"Nike Men's CJ Elite 2 TD Football Cleat",CR140784,18,"Men's Footwear",4,Apparel
-"Perfect Fitness Perfect Rip Deck",CR140784,17,Cleats,4,Apparel
-"Nike Men's CJ Elite 2 TD Football Cleat",MC134567,18,"Men's Footwear",4,Apparel
-"Baby sweater",MC177445,60,"Baby ",4,Apparel
-"Lawn mower",MC175224,68,Garden,6,Outdoors
-"Rock music",MC175878,71,Music,9,"Discs Shop"
-"Nike Men's Free 5.0+ Running Shoe",TK84987,9,"Cardio Equipment",3,Footwear
-"Nike Men's CJ Elite 2 TD Football Cleat",TK91229,18,"Men's Footwear",4,Apparel
-"Under Armour Girls' Toddler Spine Surge Runni",TK81513,29,"Shop By Sport",5,Golf
-"Nike Men's Dri-FIT Victory Golf Polo",CR40687,24,"Women's Apparel",5,Golf
-"Nike Men's Free 5.0+ Running Shoe",CR17716,9,"Cardio Equipment",3,Footwear
-"Under Armour Girls' Toddler Spine Surge Runni",MC134567,29,"Shop By Sport",5,Golf
-"Nike Men's Free 5.0+ Running Shoe",TK63963,9,"Cardio Equipment",3,Footwear
-"adidas Kids' F5 Messi FG Soccer Cleat",TK84987,3,"Baseball & Softball",2,Fitness
-"Perfect Fitness Perfect Rip Deck",TK112418,17,Cleats,4,Apparel
-"Perfect Fitness Perfect Rip Deck",TK91229,17,Cleats,4,Apparel
-"Perfect Fitness Perfect Rip Deck",TK91229,17,Cleats,4,Apparel
-"Perfect Fitness Perfect Rip Deck",TK84987,17,Cleats,4,Apparel
-"Nike Men's Dri-FIT Victory Golf Polo",TK84987,24,"Women's Apparel",5,Golf
-"Perfect Fitness Perfect Rip Deck",MC158389,17,Cleats,4,Apparel
-"Nike Men's Dri-FIT Victory Golf Polo",MC158359,24,"Women's Apparel",5,Golf
-"Team Golf St. Louis Cardinals Putter Grip",CR40687,40,Accessories,6,Outdoors
-"Nike Men's Free 5.0+ Running Shoe",CR17716,9,"Cardio Equipment",3,Footwear
-"Perfect Fitness Perfect Rip Deck",CR153271,17,Cleats,4,Apparel
-"Perfect Fitness Perfect Rip Deck",TK110081,17,Cleats,4,Apparel
-"Under Armour Girls' Toddler Spine Surge Runni",MC158359,29,"Shop By Sport",5,Golf
-"Under Armour Girls' Toddler Spine Surge Runni",CR40687,29,"Shop By Sport",5,Golf
-"Nike Men's Dri-FIT Victory Golf Polo",TK63963,24,"Women's Apparel",5,Golf
-"Under Armour Girls' Toddler Spine Surge Runni",MC158359,29,"Shop By Sport",5,Golf
-"Nike Men's Dri-FIT Victory Golf Polo",MC158359,24,"Women's Apparel",5,Golf
-"Nike Men's Dri-FIT Victory Golf Polo",CR153271,24,"Women's Apparel",5,Golf
-"Perfect Fitness Perfect Rip Deck",TK81513,17,Cleats,4,Apparel
-"Team Golf Tennessee Volunteers Putter Grip",TK111308,40,Accessories,6,Outdoors
-"Web Camera",CR172903,62,"Cameras ",10,Technology
-"Nike Men's CJ Elite 2 TD Football Cleat",MC161745,18,"Men's Footwear",4,Apparel
-"Nike Men's CJ Elite 2 TD Football Cleat",TK49054,18,"Men's Footwear",4,Apparel
-"Nike Men's CJ Elite 2 TD Football Cleat",CR169326,18,"Men's Footwear",4,Apparel
-"Perfect Fitness Perfect Rip Deck",TK116361,17,Cleats,4,Apparel
-"Perfect Fitness Perfect Rip Deck",TK70016,17,Cleats,4,Apparel
-"Perfect Fitness Perfect Rip Deck",TK127670,17,Cleats,4,Apparel
-"Under Armour Girls' Toddler Spine Surge Runni",TK73059,29,"Shop By Sport",5,Golf
-"Nike Men's Dri-FIT Victory Golf Polo",TK75972,24,"Women's Apparel",5,Golf
-"Nike Men's Free 5.0+ Running Shoe",TK98108,9,"Cardio Equipment",3,Footwear
-"Nike Men's Dri-FIT Victory Golf Polo",TK101556,24,"Women's Apparel",5,Golf
-"Hirzl Women's Soffft Flex Golf Glove",TK98108,36,"Golf Balls",6,Outdoors
-"Perfect Fitness Perfect Rip Deck",TK78363,17,Cleats,4,Apparel
-"Porcelain crafts",MC174603,66,Crafts,4,Apparel
-"Field & Stream Sportsman 16 Gun Fire Safe",MC37919,45,Fishing,7,"Fan Shop"
-"Nike Men's Dri-FIT Victory Golf Polo",MC147712,24,"Women's Apparel",5,Golf
-"Diamondback Women's Serene Classic Comfort Bi",MC3398,43,"Camping & Hiking",7,"Fan Shop"
-"Field & Stream Sportsman 16 Gun Fire Safe",MC3398,45,Fishing,7,"Fan Shop"
-"Men's gala suit",MC178629,70,"Men's Clothing",4,Apparel
-"Nike Men's CJ Elite 2 TD Football Cleat",TK87796,18,"Men's Footwear",4,Apparel
-"Diamondback Women's Serene Classic Comfort Bi",TK88927,43,"Camping & Hiking",7,"Fan Shop"
-"Under Armour Girls' Toddler Spine Surge Runni",CR160544,29,"Shop By Sport",5,Golf
-"Nike Men's Dri-FIT Victory Golf Polo",CR160544,24,"Women's Apparel",5,Golf
-"Nike Men's Dri-FIT Victory Golf Polo",TK81690,24,"Women's Apparel",5,Golf
-"Nike Men's Free 5.0+ Running Shoe",CR160544,9,"Cardio Equipment",3,Footwear
-"Under Armour Girls' Toddler Spine Surge Runni",TK81690,29,"Shop By Sport",5,Golf
-"Team Golf Tennessee Volunteers Putter Grip",TK88927,40,Accessories,6,Outdoors
-"Nike Men's Free 5.0+ Running Shoe",CR160544,9,"Cardio Equipment",3,Footwear
-"Perfect Fitness Perfect Rip Deck",MC37919,17,Cleats,4,Apparel
-"Nike Men's Dri-FIT Victory Golf Polo",TK87796,24,"Women's Apparel",5,Golf
-"Industrial consumer electronics",CR174328,65,"Consumer Electronics",10,Technology
-"Nike Men's CJ Elite 2 TD Football Cleat",CR159390,18,"Men's Footwear",4,Apparel
-"Bridgestone e6 Straight Distance NFL Tennesse",TK57445,37,Electronics,6,Outdoors
-"Diamondback Women's Serene Classic Comfort Bi",TK57445,43,"Camping & Hiking",7,"Fan Shop"
-"Nike Men's Dri-FIT Victory Golf Polo",TK57445,24,"Women's Apparel",5,Golf
-"Nike Men's Dri-FIT Victory Golf Polo",CR159390,24,"Women's Apparel",5,Golf
-"Perfect Fitness Perfect Rip Deck",TK57445,17,Cleats,4,Apparel
-"Perfect Fitness Perfect Rip Deck",CR159390,17,Cleats,4,Apparel
-"Nike Men's Dri-FIT Victory Golf Polo",CR159390,24,"Women's Apparel",5,Golf
-"Under Armour Girls' Toddler Spine Surge Runni",CR159390,29,"Shop By Sport",5,Golf
-"Nike Men's Free 5.0+ Running Shoe",TK121346,9,"Cardio Equipment",3,Footwear
-"Nike Men's CJ Elite 2 TD Football Cleat",MC165909,18,"Men's Footwear",4,Apparel
-"Nike Men's Dri-FIT Victory Golf Polo",TK50712,24,"Women's Apparel",5,Golf
-"Perfect Fitness Perfect Rip Deck",TK121346,17,Cleats,4,Apparel
-"Perfect Fitness Perfect Rip Deck",TK82689,17,Cleats,4,Apparel
-"Polar FT4 Heart Rate Monitor",MC165909,38,"Kids' Golf Clubs",6,Outdoors
-"Perfect Fitness Perfect Rip Deck",MC5407,17,Cleats,4,Apparel
-"Perfect Fitness Perfect Rip Deck",TK82689,17,Cleats,4,Apparel
-"Nike Men's Dri-FIT Victory Golf Polo",TK45728,24,"Women's Apparel",5,Golf
-"Nike Men's Dri-FIT Victory Golf Polo",MC5407,24,"Women's Apparel",5,Golf
-"Perfect Fitness Perfect Rip Deck",TK115729,17,Cleats,4,Apparel
-"Diamondback Women's Serene Classic Comfort Bi",MC166992,43,"Camping & Hiking",7,"Fan Shop"
-"Field & Stream Sportsman 16 Gun Fire Safe",MC32808,45,Fishing,7,"Fan Shop"
-"Field & Stream Sportsman 16 Gun Fire Safe",MC32808,45,Fishing,7,"Fan Shop"
-"Nike Men's CJ Elite 2 TD Football Cleat",CR19758,18,"Men's Footwear",4,Apparel
-"Field & Stream Sportsman 16 Gun Fire Safe",CR19758,45,Fishing,7,"Fan Shop"
-"Nike Men's CJ Elite 2 TD Football Cleat",CR7094,18,"Men's Footwear",4,Apparel
-"Nike Men's CJ Elite 2 TD Football Cleat",TK128660,18,"Men's Footwear",4,Apparel
-"Perfect Fitness Perfect Rip Deck",CR7094,17,Cleats,4,Apparel
-"Diamondback Women's Serene Classic Comfort Bi",CR133467,43,"Camping & Hiking",7,"Fan Shop"
-"Diamondback Women's Serene Classic Comfort Bi",CR133467,43,"Camping & Hiking",7,"Fan Shop"
-"Field & Stream Sportsman 16 Gun Fire Safe",CR24868,45,Fishing,7,"Fan Shop"
-"Field & Stream Sportsman 16 Gun Fire Safe",MC21247,45,Fishing,7,"Fan Shop"
-"Perfect Fitness Perfect Rip Deck",TK62445,17,Cleats,4,Apparel
-"Nike Men's CJ Elite 2 TD Football Cleat",TK62445,18,"Men's Footwear",4,Apparel
-"Diamondback Women's Serene Classic Comfort Bi",TK62445,43,"Camping & Hiking",7,"Fan Shop"
-"Nike Men's CJ Elite 2 TD Football Cleat",TK72021,18,"Men's Footwear",4,Apparel
-"Nike Men's CJ Elite 2 TD Football Cleat",TK61128,18,"Men's Footwear",4,Apparel
-"Nike Men's CJ Elite 2 TD Football Cleat",TK61128,18,"Men's Footwear",4,Apparel
-"Nike Men's CJ Elite 2 TD Football Cleat",TK75762,18,"Men's Footwear",4,Apparel
-"Under Armour Girls' Toddler Spine Surge Runni",TK66687,29,"Shop By Sport",5,Golf
-"Diamondback Women's Serene Classic Comfort Bi",TK51561,43,"Camping & Hiking",7,"Fan Shop"
-"Field & Stream Sportsman 16 Gun Fire Safe",TK61128,45,Fishing,7,"Fan Shop"
-"Field & Stream Sportsman 16 Gun Fire Safe",TK51561,45,Fishing,7,"Fan Shop"
-"Field & Stream Sportsman 16 Gun Fire Safe",TK51561,45,Fishing,7,"Fan Shop"
-"Diamondback Women's Serene Classic Comfort Bi",TK61128,43,"Camping & Hiking",7,"Fan Shop"
-"Nike Men's CJ Elite 2 TD Football Cleat",TK89644,18,"Men's Footwear",4,Apparel
-"Nike Men's CJ Elite 2 TD Football Cleat",TK89644,18,"Men's Footwear",4,Apparel
-"Nike Men's Dri-FIT Victory Golf Polo",MC157266,24,"Women's Apparel",5,Golf
-"adidas Kids' F5 Messi FG Soccer Cleat",CR7094,3,"Baseball & Softball",2,Fitness
-"Under Armour Women's Micro G Skulpt Running S",CR24949,12,"Boxing & MMA",3,Footwear
-"Glove It Women's Mod Oval Golf Glove",TK122319,36,"Golf Balls",6,Outdoors
-"Perfect Fitness Perfect Rip Deck",MC32808,17,Cleats,4,Apparel
-"Perfect Fitness Perfect Rip Deck",MC32808,17,Cleats,4,Apparel
-"Perfect Fitness Perfect Rip Deck",MC166992,17,Cleats,4,Apparel
-"Perfect Fitness Perfect Rip Deck",CR6997,17,Cleats,4,Apparel
-"Under Armour Girls' Toddler Spine Surge Runni",CR6997,29,"Shop By Sport",5,Golf
-"Nike Men's Dri-FIT Victory Golf Polo",MC21247,24,"Women's Apparel",5,Golf
-"Under Armour Girls' Toddler Spine Surge Runni",MC137579,29,"Shop By Sport",5,Golf
-"Nike Men's Dri-FIT Victory Golf Polo",TK75762,24,"Women's Apparel",5,Golf
-"Perfect Fitness Perfect Rip Deck",TK122319,17,Cleats,4,Apparel
-"Perfect Fitness Perfect Rip Deck",TK116189,17,Cleats,4,Apparel
-"Perfect Fitness Perfect Rip Deck",MC157266,17,Cleats,4,Apparel
-"Perfect Fitness Perfect Rip Deck",MC11672,17,Cleats,4,Apparel
-"Nike Men's Free 5.0+ Running Shoe",MC137579,9,"Cardio Equipment",3,Footwear
-"Under Armour Girls' Toddler Spine Surge Runni",TK51561,29,"Shop By Sport",5,Golf
-"Perfect Fitness Perfect Rip Deck",TK89644,17,Cleats,4,Apparel
-"Nike Men's Free 5.0+ Running Shoe",MC29946,9,"Cardio Equipment",3,Footwear
-"Perfect Fitness Perfect Rip Deck",CR133467,17,Cleats,4,Apparel
-"Nike Men's Dri-FIT Victory Golf Polo",TK61128,24,"Women's Apparel",5,Golf
-"Industrial consumer electronics",MC174298,65,"Consumer Electronics",10,Technology
-"Under Armour Women's Micro G Skulpt Running S",MC40946,12,"Boxing & MMA",3,Footwear
-"GolfBuddy VT3 GPS Watch",MC149906,38,"Kids' Golf Clubs",6,Outdoors
-"Adult dog supplies",MC179000,72,"Pet Supplies",11,"Pet Shop"
-"Field & Stream Sportsman 16 Gun Fire Safe",TK58702,45,Fishing,7,"Fan Shop"
-"Field & Stream Sportsman 16 Gun Fire Safe",TK51503,45,Fishing,7,"Fan Shop"
-"Nike Men's CJ Elite 2 TD Football Cleat",TK86748,18,"Men's Footwear",4,Apparel
-"Nike Men's CJ Elite 2 TD Football Cleat",CR131628,18,"Men's Footwear",4,Apparel
-"Nike Men's Dri-FIT Victory Golf Polo",TK128918,24,"Women's Apparel",5,Golf
-"Nike Men's Free 5.0+ Running Shoe",CR30821,9,"Cardio Equipment",3,Footwear
-"Perfect Fitness Perfect Rip Deck",TK68118,17,Cleats,4,Apparel
-"Nike Men's CJ Elite 2 TD Football Cleat",MC168013,18,"Men's Footwear",4,Apparel
-"Nike Men's CJ Elite 2 TD Football Cleat",CR35091,18,"Men's Footwear",4,Apparel
-"Nike Men's CJ Elite 2 TD Football Cleat",MC32840,18,"Men's Footwear",4,Apparel
-"Nike Men's CJ Elite 2 TD Football Cleat",CR35091,18,"Men's Footwear",4,Apparel
-"Nike Men's CJ Elite 2 TD Football Cleat",MC39032,18,"Men's Footwear",4,Apparel
+"Order Item Id","Product Name","Product Category Id","Product Category Name","Department Id","Department Name"
+MC179213,"Smart watch ",73,"Sporting Goods",2,Fitness
+TK101052,"Nike Men's Free 5.0+ Running Shoe",9,"Cardio Equipment",3,Footwear
+TK121217,"Team Golf St. Louis Cardinals Putter Grip",40,Accessories,6,Outdoors
+TK121561,"Nike Men's Dri-FIT Victory Golf Polo",24,"Women's Apparel",5,Golf
+MC133575,"Nike Men's Dri-FIT Victory Golf Polo",24,"Women's Apparel",5,Golf
+CR179190,"Smart watch ",73,"Sporting Goods",2,Fitness
+MC179143,"Smart watch ",73,"Sporting Goods",2,Fitness
+CR179139,"Smart watch ",73,"Sporting Goods",2,Fitness
+CR179131,"Smart watch ",73,"Sporting Goods",2,Fitness
+MC179128,"Smart watch ",73,"Sporting Goods",2,Fitness
+CR145886,"Perfect Fitness Perfect Rip Deck",17,Cleats,4,Apparel
+TK124607,"Perfect Fitness Perfect Rip Deck",17,Cleats,4,Apparel
+TK73253,"Nike Men's CJ Elite 2 TD Football Cleat",18,"Men's Footwear",4,Apparel
+TK54942,"Nike Men's CJ Elite 2 TD Football Cleat",18,"Men's Footwear",4,Apparel
+TK104041,"Nike Men's CJ Elite 2 TD Football Cleat",18,"Men's Footwear",4,Apparel
+CR43614,"Nike Men's Free 5.0+ Running Shoe",9,"Cardio Equipment",3,Footwear
+MC170721,"Nike Men's Free 5.0+ Running Shoe",9,"Cardio Equipment",3,Footwear
+TK48340,"Perfect Fitness Perfect Rip Deck",17,Cleats,4,Apparel
+TK60332,"Under Armour Women's Micro G Skulpt Running S",12,"Boxing & MMA",3,Footwear
+TK60332,"Glove It Women's Mod Oval Golf Glove",36,"Golf Balls",6,Outdoors
+TK77528,"Nike Men's Dri-FIT Victory Golf Polo",24,"Women's Apparel",5,Golf
+MC179079,"Smart watch ",73,"Sporting Goods",2,Fitness
+MC179072,"Smart watch ",73,"Sporting Goods",2,Fitness
+MC176534,"Smart watch ",73,"Sporting Goods",2,Fitness
+CR176485,"Smart watch ",73,"Sporting Goods",2,Fitness
+CR176478,"Smart watch ",73,"Sporting Goods",2,Fitness
+TK48587,"Nike Men's Dri-FIT Victory Golf Polo",24,"Women's Apparel",5,Golf
+MC33072,"Nike Men's Dri-FIT Victory Golf Polo",24,"Women's Apparel",5,Golf
+TK124607,"Under Armour Girls' Toddler Spine Surge Runni",29,"Shop By Sport",5,Golf
+MC37625,"Nike Men's Dri-FIT Victory Golf Polo",24,"Women's Apparel",5,Golf
+CR160004,"Nike Men's Dri-FIT Victory Golf Polo",24,"Women's Apparel",5,Golf
+TK108765,"Perfect Fitness Perfect Rip Deck",17,Cleats,4,Apparel
+TK108765,"Nike Men's Dri-FIT Victory Golf Polo",24,"Women's Apparel",5,Golf
+TK48326,"Nike Men's Dri-FIT Victory Golf Polo",24,"Women's Apparel",5,Golf
+MC43489,"Nike Men's Dri-FIT Victory Golf Polo",24,"Women's Apparel",5,Golf
+TK47568,"Nike Men's Dri-FIT Victory Golf Polo",24,"Women's Apparel",5,Golf
+MC162921,"Under Armour Girls' Toddler Spine Surge Runni",29,"Shop By Sport",5,Golf
+MC155727,"Nike Men's Dri-FIT Victory Golf Polo",24,"Women's Apparel",5,Golf
+TK47568,"Nike Men's Dri-FIT Victory Golf Polo",24,"Women's Apparel",5,Golf
+TK117704,"Team Golf Pittsburgh Steelers Putter Grip",40,Accessories,6,Outdoors
+TK62544,"Nike Men's CJ Elite 2 TD Football Cleat",18,"Men's Footwear",4,Apparel
+TK58068,"Nike Men's CJ Elite 2 TD Football Cleat",18,"Men's Footwear",4,Apparel
+CR178084,"Porcelain crafts",66,Crafts,4,Apparel
+MC178281,"Porcelain crafts",66,Crafts,4,Apparel
+TK104041,"Perfect Fitness Perfect Rip Deck",17,Cleats,4,Apparel
+TK69828,"Nike Men's Dri-FIT Victory Golf Polo",24,"Women's Apparel",5,Golf
+MC175136,"Lawn mower",68,Garden,6,Outdoors
+TK73060,"Nike Men's Dri-FIT Victory Golf Polo",24,"Women's Apparel",5,Golf
+TK109829,"Nike Women's Tempo Shorts",9,"Cardio Equipment",3,Footwear
+TK72527,"Team Golf Pittsburgh Steelers Putter Grip",40,Accessories,6,Outdoors
+TK93518,"Perfect Fitness Perfect Rip Deck",17,Cleats,4,Apparel
+TK114948,"Nike Men's Dri-FIT Victory Golf Polo",24,"Women's Apparel",5,Golf
+TK114695,"Perfect Fitness Perfect Rip Deck",17,Cleats,4,Apparel
+TK126499,"Perfect Fitness Perfect Rip Deck",17,Cleats,4,Apparel
+TK126499,"Perfect Fitness Perfect Rip Deck",17,Cleats,4,Apparel
+TK45545,"Perfect Fitness Perfect Rip Deck",17,Cleats,4,Apparel
+CR28992,"Perfect Fitness Perfect Rip Deck",17,Cleats,4,Apparel
+CR155782,"Perfect Fitness Perfect Rip Deck",17,Cleats,4,Apparel
+MC176406,"Smart watch ",73,"Sporting Goods",2,Fitness
+TK113005,"Nike Dri-FIT Crew Sock 6 Pack",7,Hockey,2,Fitness
+TK90607,"Nike Dri-FIT Crew Sock 6 Pack",7,Hockey,2,Fitness
+TK74532,"Nike Dri-FIT Crew Sock 6 Pack",7,Hockey,2,Fitness
+TK71782,"Nike Dri-FIT Crew Sock 6 Pack",7,Hockey,2,Fitness
+CR15760,"Nike Dri-FIT Crew Sock 6 Pack",7,Hockey,2,Fitness
+CR9682,"Nike Dri-FIT Crew Sock 6 Pack",7,Hockey,2,Fitness
+MC6780,"Nike Dri-FIT Crew Sock 6 Pack",7,Hockey,2,Fitness
+CR142021,"Nike Women's Legend V-Neck T-Shirt",7,Hockey,2,Fitness
+TK125913,"Nike Women's Legend V-Neck T-Shirt",7,Hockey,2,Fitness
+TK120828,"Nike Women's Legend V-Neck T-Shirt",7,Hockey,2,Fitness
+TK69828,"Diamondback Women's Serene Classic Comfort Bi",43,"Camping & Hiking",7,"Fan Shop"
+TK58734,"Diamondback Women's Serene Classic Comfort Bi",43,"Camping & Hiking",7,"Fan Shop"
+TK58734,"Diamondback Women's Serene Classic Comfort Bi",43,"Camping & Hiking",7,"Fan Shop"
+TK125075,"Diamondback Women's Serene Classic Comfort Bi",43,"Camping & Hiking",7,"Fan Shop"
+TK125075,"Diamondback Women's Serene Classic Comfort Bi",43,"Camping & Hiking",7,"Fan Shop"
+TK54942,"Field & Stream Sportsman 16 Gun Fire Safe",45,Fishing,7,"Fan Shop"
+TK73253,"Diamondback Women's Serene Classic Comfort Bi",43,"Camping & Hiking",7,"Fan Shop"
+TK62544,"Field & Stream Sportsman 16 Gun Fire Safe",45,Fishing,7,"Fan Shop"
+TK53411,"Field & Stream Sportsman 16 Gun Fire Safe",45,Fishing,7,"Fan Shop"
+MC174982,"DVDs ",67,DVDs,9,"Discs Shop"
+TK53107,"Field & Stream Sportsman 16 Gun Fire Safe",45,Fishing,7,"Fan Shop"
+TK72158,"Diamondback Women's Serene Classic Comfort Bi",43,"Camping & Hiking",7,"Fan Shop"
+TK53107,"Diamondback Women's Serene Classic Comfort Bi",43,"Camping & Hiking",7,"Fan Shop"
+CR176898,"Fighting video games",75,"Video Games",9,"Discs Shop"
+CR174954,"DVDs ",67,DVDs,9,"Discs Shop"
+CR157833,"Under Armour Girls' Toddler Spine Surge Runni",29,"Shop By Sport",5,Golf
+MC1160,"Nike Men's Free 5.0+ Running Shoe",9,"Cardio Equipment",3,Footwear
+MC133494,"Under Armour Hustle Storm Medium Duffle Bag",11,"Fitness Accessories",3,Footwear
+MC1160,"Perfect Fitness Perfect Rip Deck",17,Cleats,4,Apparel
+MC4332,"Perfect Fitness Perfect Rip Deck",17,Cleats,4,Apparel
+CR152108,"Perfect Fitness Perfect Rip Deck",17,Cleats,4,Apparel
+CR25195,"Perfect Fitness Perfect Rip Deck",17,Cleats,4,Apparel
+CR135802,"Perfect Fitness Perfect Rip Deck",17,Cleats,4,Apparel
+MC11526,"Perfect Fitness Perfect Rip Deck",17,Cleats,4,Apparel
+MC147289,"Perfect Fitness Perfect Rip Deck",17,Cleats,4,Apparel
+MC3341,"Nike Men's Dri-FIT Victory Golf Polo",24,"Women's Apparel",5,Golf
+MC3341,"Nike Men's Dri-FIT Victory Golf Polo",24,"Women's Apparel",5,Golf
+CR15812,"Nike Men's Dri-FIT Victory Golf Polo",24,"Women's Apparel",5,Golf
+CR132754,"Nike Men's Dri-FIT Victory Golf Polo",24,"Women's Apparel",5,Golf
+MC150263,"Under Armour Girls' Toddler Spine Surge Runni",29,"Shop By Sport",5,Golf
+MC8498,"Nike Men's Dri-FIT Victory Golf Polo",24,"Women's Apparel",5,Golf
+CR25195,"Nike Men's Deutschland Weltmeister Winners Bl",26,"Girls' Apparel",5,Golf
+CR22035,"Under Armour Girls' Toddler Spine Surge Runni",29,"Shop By Sport",5,Golf
+CR18112,"Nike Men's Dri-FIT Victory Golf Polo",24,"Women's Apparel",5,Golf
+CR152108,"Polar FT4 Heart Rate Monitor",38,"Kids' Golf Clubs",6,Outdoors
+MC2751,"Titleist Pro V1x High Numbers Personalized Go",37,Electronics,6,Outdoors
+TK130130,"Perfect Fitness Perfect Rip Deck",17,Cleats,4,Apparel
+CR145416,"Nike Men's Free 5.0+ Running Shoe",9,"Cardio Equipment",3,Footwear
+MC24341,"Nike Men's Free 5.0+ Running Shoe",9,"Cardio Equipment",3,Footwear
+CR22514,"Nike Men's Dri-FIT Victory Golf Polo",24,"Women's Apparel",5,Golf
+CR22514,"Glove It Women's Imperial Golf Glove",36,"Golf Balls",6,Outdoors
+CR7152,"Perfect Fitness Perfect Rip Deck",17,Cleats,4,Apparel
+MC15114,"Nike Men's Dri-FIT Victory Golf Polo",24,"Women's Apparel",5,Golf
+TK62841,"Under Armour Kids' Mercenary Slide",13,Electronics,3,Footwear
+TK51597,"Perfect Fitness Perfect Rip Deck",17,Cleats,4,Apparel
+TK120416,"Perfect Fitness Perfect Rip Deck",17,Cleats,4,Apparel
+TK117394,"Nike Men's Dri-FIT Victory Golf Polo",24,"Women's Apparel",5,Golf
+TK62841,"Nike Men's Dri-FIT Victory Golf Polo",24,"Women's Apparel",5,Golf
+TK67776,"Under Armour Men's Tech II T-Shirt",5,Lacrosse,2,Fitness
+TK58902,"Nike Men's Free 5.0+ Running Shoe",9,"Cardio Equipment",3,Footwear
+TK58902,"Perfect Fitness Perfect Rip Deck",17,Cleats,4,Apparel
+MC168714,"Nike Men's Dri-FIT Victory Golf Polo",24,"Women's Apparel",5,Golf
+CR34193,"Nike Men's Dri-FIT Victory Golf Polo",24,"Women's Apparel",5,Golf
+MC3258,"Glove It Imperial Golf Towel",41,Trade-In,6,Outdoors
+CR16561,"adidas Kids' F5 Messi FG Soccer Cleat",3,"Baseball & Softball",2,Fitness
+MC3842,"Nike Men's Dri-FIT Victory Golf Polo",24,"Women's Apparel",5,Golf
+TK72527,"Nike Men's Dri-FIT Victory Golf Polo",24,"Women's Apparel",5,Golf
+CR29579,"Nike Women's Legend V-Neck T-Shirt",7,Hockey,2,Fitness
+CR24868,"Nike Women's Legend V-Neck T-Shirt",7,Hockey,2,Fitness
+CR5651,"Nike Women's Legend V-Neck T-Shirt",7,Hockey,2,Fitness
+CR2011,"Nike Women's Legend V-Neck T-Shirt",7,Hockey,2,Fitness
+TK122633,"Perfect Fitness Perfect Rip Deck",17,Cleats,4,Apparel
+TK122633,"Nike Men's CJ Elite 2 TD Football Cleat",18,"Men's Footwear",4,Apparel
+TK122633,"Nike Men's CJ Elite 2 TD Football Cleat",18,"Men's Footwear",4,Apparel
+TK124245,"Glove It Women's Mod Oval 3-Zip Carry All Gol",41,Trade-In,6,Outdoors
+TK122633,"Diamondback Women's Serene Classic Comfort Bi",43,"Camping & Hiking",7,"Fan Shop"
+MC174266,"Industrial consumer electronics",65,"Consumer Electronics",10,Technology
+MC168802,"Nike Men's Free 5.0+ Running Shoe",9,"Cardio Equipment",3,Footwear
+MC168802,"Nike Men's CJ Elite 2 TD Football Cleat",18,"Men's Footwear",4,Apparel
+MC18347,"Nike Men's Free 5.0+ Running Shoe",9,"Cardio Equipment",3,Footwear
+MC18347,"Nike Men's CJ Elite 2 TD Football Cleat",18,"Men's Footwear",4,Apparel
+TK128429,"Nike Men's CJ Elite 2 TD Football Cleat",18,"Men's Footwear",4,Apparel
+TK128429,"Under Armour Girls' Toddler Spine Surge Runni",29,"Shop By Sport",5,Golf
+MC178846,"Adult dog supplies",72,"Pet Supplies",11,"Pet Shop"
+CR178927,"Adult dog supplies",72,"Pet Supplies",11,"Pet Shop"
+TK56358,"Field & Stream Sportsman 16 Gun Fire Safe",45,Fishing,7,"Fan Shop"
+TK56358,"Diamondback Women's Serene Classic Comfort Bi",43,"Camping & Hiking",7,"Fan Shop"
+TK128429,"Perfect Fitness Perfect Rip Deck",17,Cleats,4,Apparel
+TK56358,"Under Armour Women's Ignite PIP VI Slide",13,Electronics,3,Footwear
+TK128429,"Nike Men's Dri-FIT Victory Golf Polo",24,"Women's Apparel",5,Golf
+TK78290,"Diamondback Women's Serene Classic Comfort Bi",43,"Camping & Hiking",7,"Fan Shop"
+CR165761,"Perfect Fitness Perfect Rip Deck",17,Cleats,4,Apparel
+CR165761,"Nike Men's Dri-FIT Victory Golf Polo",24,"Women's Apparel",5,Golf
+CR165761,"Nike Men's Dri-FIT Victory Golf Polo",24,"Women's Apparel",5,Golf
+TK78290,"Nike Men's Dri-FIT Victory Golf Polo",24,"Women's Apparel",5,Golf
+TK55341,"Nike Men's Free 5.0+ Running Shoe",9,"Cardio Equipment",3,Footwear
+TK55341,"Nike Men's CJ Elite 2 TD Football Cleat",18,"Men's Footwear",4,Apparel
+TK55341,"Diamondback Women's Serene Classic Comfort Bi",43,"Camping & Hiking",7,"Fan Shop"
+TK55341,"Diamondback Women's Serene Classic Comfort Bi",43,"Camping & Hiking",7,"Fan Shop"
+TK82504,"Nike Men's CJ Elite 2 TD Football Cleat",18,"Men's Footwear",4,Apparel
+TK99195,"Perfect Fitness Perfect Rip Deck",17,Cleats,4,Apparel
+TK82504,"Nike Men's CJ Elite 2 TD Football Cleat",18,"Men's Footwear",4,Apparel
+TK81079,"Nike Men's CJ Elite 2 TD Football Cleat",18,"Men's Footwear",4,Apparel
+TK82504,"Nike Men's CJ Elite 2 TD Football Cleat",18,"Men's Footwear",4,Apparel
+TK87221,"Nike Men's CJ Elite 2 TD Football Cleat",18,"Men's Footwear",4,Apparel
+TK99691,"Bridgestone e6 Straight Distance NFL Tennesse",37,Electronics,6,Outdoors
+TK81629,"Diamondback Women's Serene Classic Comfort Bi",43,"Camping & Hiking",7,"Fan Shop"
+TK87545,"Nike Men's CJ Elite 2 TD Football Cleat",18,"Men's Footwear",4,Apparel
+MC155664,"Nike Men's Free 5.0+ Running Shoe",9,"Cardio Equipment",3,Footwear
+MC36529,"Nike Men's Free 5.0+ Running Shoe",9,"Cardio Equipment",3,Footwear
+TK114663,"Nike Men's Free 5.0+ Running Shoe",9,"Cardio Equipment",3,Footwear
+MC36529,"Perfect Fitness Perfect Rip Deck",17,Cleats,4,Apparel
+MC154470,"Perfect Fitness Perfect Rip Deck",17,Cleats,4,Apparel
+TK114663,"Nike Men's Dri-FIT Victory Golf Polo",24,"Women's Apparel",5,Golf
+MC162635,"Nike Men's Dri-FIT Victory Golf Polo",24,"Women's Apparel",5,Golf
+CR160746,"Under Armour Girls' Toddler Spine Surge Runni",29,"Shop By Sport",5,Golf
+MC166788,"Under Armour Girls' Toddler Spine Surge Runni",29,"Shop By Sport",5,Golf
+TK114663,"Glove It Women's Imperial Golf Glove",36,"Golf Balls",6,Outdoors
+MC19770,"Nike Men's Free 5.0+ Running Shoe",9,"Cardio Equipment",3,Footwear
+MC2737,"Nike Men's Free 5.0+ Running Shoe",9,"Cardio Equipment",3,Footwear
+MC149601,"Under Armour Girls' Toddler Spine Surge Runni",29,"Shop By Sport",5,Golf
+CR146985,"Nike Men's Dri-FIT Victory Golf Polo",24,"Women's Apparel",5,Golf
+MC23286,"Nike Men's Dri-FIT Victory Golf Polo",24,"Women's Apparel",5,Golf
+TK126395,"Nike Men's Free 5.0+ Running Shoe",9,"Cardio Equipment",3,Footwear
+TK115042,"Under Armour Women's Ignite PIP VI Slide",13,Electronics,3,Footwear
+TK104781,"Perfect Fitness Perfect Rip Deck",17,Cleats,4,Apparel
+TK54948,"Under Armour Girls' Toddler Spine Surge Runni",29,"Shop By Sport",5,Golf
+TK53676,"Under Armour Girls' Toddler Spine Surge Runni",29,"Shop By Sport",5,Golf
+TK53979,"Perfect Fitness Perfect Rip Deck",17,Cleats,4,Apparel
+TK70122,"Nike Men's Dri-FIT Victory Golf Polo",24,"Women's Apparel",5,Golf
+TK93572,"Perfect Fitness Perfect Rip Deck",17,Cleats,4,Apparel
+TK94587,"Under Armour Girls' Toddler Spine Surge Runni",29,"Shop By Sport",5,Golf
+TK96612,"Under Armour Girls' Toddler Spine Surge Runni",29,"Shop By Sport",5,Golf
+TK102945,"Nike Men's Dri-FIT Victory Golf Polo",24,"Women's Apparel",5,Golf
+TK84074,"Perfect Fitness Perfect Rip Deck",17,Cleats,4,Apparel
+TK122319,"Nike Men's CJ Elite 2 TD Football Cleat",18,"Men's Footwear",4,Apparel
+TK122319,"Nike Men's CJ Elite 2 TD Football Cleat",18,"Men's Footwear",4,Apparel
+TK112832,"Nike Men's CJ Elite 2 TD Football Cleat",18,"Men's Footwear",4,Apparel
+TK112832,"Nike Men's CJ Elite 2 TD Football Cleat",18,"Men's Footwear",4,Apparel
+TK112832,"Nike Men's CJ Elite 2 TD Football Cleat",18,"Men's Footwear",4,Apparel
+TK112832,"Perfect Fitness Perfect Rip Deck",17,Cleats,4,Apparel
+MC173226,"Web Camera",62,"Cameras ",10,Technology
+MC34166,"Perfect Fitness Perfect Rip Deck",17,Cleats,4,Apparel
+MC32808,"Nike Men's CJ Elite 2 TD Football Cleat",18,"Men's Footwear",4,Apparel
+TK123904,"Nike Men's CJ Elite 2 TD Football Cleat",18,"Men's Footwear",4,Apparel
+TK123904,"Nike Men's CJ Elite 2 TD Football Cleat",18,"Men's Footwear",4,Apparel
+MC34166,"Field & Stream Sportsman 16 Gun Fire Safe",45,Fishing,7,"Fan Shop"
+TK87426,"Perfect Fitness Perfect Rip Deck",17,Cleats,4,Apparel
+TK87426,"Nike Men's Dri-FIT Victory Golf Polo",24,"Women's Apparel",5,Golf
+TK88696,"Bridgestone e6 Straight Distance NFL Carolina",37,Electronics,6,Outdoors
+CR155782,"Perfect Fitness Perfect Rip Deck",17,Cleats,4,Apparel
+CR28992,"Nike Men's Dri-FIT Victory Golf Polo",24,"Women's Apparel",5,Golf
+MC158121,"Under Armour Girls' Toddler Spine Surge Runni",29,"Shop By Sport",5,Golf
+TK45411,"Perfect Fitness Perfect Rip Deck",17,Cleats,4,Apparel
+MC21759,"Nike Men's Free 5.0+ Running Shoe",9,"Cardio Equipment",3,Footwear
+TK68686,"Nike Men's Free 5.0+ Running Shoe",9,"Cardio Equipment",3,Footwear
+TK51877,"adidas Men's F10 Messi TRX FG Soccer Cleat",3,"Baseball & Softball",2,Fitness
+TK51877,"Nike Men's Free 5.0+ Running Shoe",9,"Cardio Equipment",3,Footwear
+TK69688,"Perfect Fitness Perfect Rip Deck",17,Cleats,4,Apparel
+TK124214,"Under Armour Girls' Toddler Spine Surge Runni",29,"Shop By Sport",5,Golf
+TK109829,"Under Armour Hustle Storm Medium Duffle Bag",11,"Fitness Accessories",3,Footwear
+TK114861,"Under Armour Girls' Toddler Spine Surge Runni",29,"Shop By Sport",5,Golf
+TK93518,"Perfect Fitness Perfect Rip Deck",17,Cleats,4,Apparel
+TK85966,"Under Armour Girls' Toddler Spine Surge Runni",29,"Shop By Sport",5,Golf
+TK94402,"Nike Men's Free 5.0+ Running Shoe",9,"Cardio Equipment",3,Footwear
+TK88696,"Nike Men's Dri-FIT Victory Golf Polo",24,"Women's Apparel",5,Golf
+TK90175,"Nike Men's Dri-FIT Victory Golf Polo",24,"Women's Apparel",5,Golf
+CR162219,"Nike Men's Free TR 5.0 TB Training Shoe",16,"As Seen on  TV!",3,Footwear
+CR155782,"Perfect Fitness Perfect Rip Deck",17,Cleats,4,Apparel
+CR28992,"Nike Men's Dri-FIT Victory Golf Polo",24,"Women's Apparel",5,Golf
+CR2011,"Nike Men's Free 5.0+ Running Shoe",9,"Cardio Equipment",3,Footwear
+MC150722,"Nike Men's Dri-FIT Victory Golf Polo",24,"Women's Apparel",5,Golf
+MC150722,"Under Armour Girls' Toddler Spine Surge Runni",29,"Shop By Sport",5,Golf
+CR170031,"Nike Men's CJ Elite 2 TD Football Cleat",18,"Men's Footwear",4,Apparel
+CR37428,"Diamondback Women's Serene Classic Comfort Bi",43,"Camping & Hiking",7,"Fan Shop"
+TK58068,"Nike Men's Free 5.0+ Running Shoe",9,"Cardio Equipment",3,Footwear
+TK73253,"Nike Women's Tempo Shorts",9,"Cardio Equipment",3,Footwear
+TK105326,"Perfect Fitness Perfect Rip Deck",17,Cleats,4,Apparel
+TK105326,"Under Armour Girls' Toddler Spine Surge Runni",29,"Shop By Sport",5,Golf
+TK54942,"Nike Men's Dri-FIT Victory Golf Polo",24,"Women's Apparel",5,Golf
+TK125638,"Under Armour Girls' Toddler Spine Surge Runni",29,"Shop By Sport",5,Golf
+TK62544,"Under Armour Girls' Toddler Spine Surge Runni",29,"Shop By Sport",5,Golf
+TK53411,"Bridgestone e6 Straight Distance NFL Tennesse",37,Electronics,6,Outdoors
+TK86079,"Perfect Fitness Perfect Rip Deck",17,Cleats,4,Apparel
+TK81629,"Perfect Fitness Perfect Rip Deck",17,Cleats,4,Apparel
+TK81629,"Nike Men's Dri-FIT Victory Golf Polo",24,"Women's Apparel",5,Golf
+TK82504,"Nike Men's Dri-FIT Victory Golf Polo",24,"Women's Apparel",5,Golf
+TK99195,"Under Armour Girls' Toddler Spine Surge Runni",29,"Shop By Sport",5,Golf
+TK97785,"Under Armour Girls' Toddler Spine Surge Runni",29,"Shop By Sport",5,Golf
+TK87545,"Nike Men's Dri-FIT Victory Golf Polo",24,"Women's Apparel",5,Golf
+TK121743,"Perfect Fitness Perfect Rip Deck",17,Cleats,4,Apparel
+TK107373,"Nike Men's Dri-FIT Victory Golf Polo",24,"Women's Apparel",5,Golf
+TK119770,"Nike Men's Dri-FIT Victory Golf Polo",24,"Women's Apparel",5,Golf
+TK119770,"Under Armour Girls' Toddler Spine Surge Runni",29,"Shop By Sport",5,Golf
+MC161934,"Brooks Women's Ghost 6 Running Shoe",12,"Boxing & MMA",3,Footwear
+CR36079,"Nike Men's Free 5.0+ Running Shoe",9,"Cardio Equipment",3,Footwear
+CR157949,"Nike Men's Dri-FIT Victory Golf Polo",24,"Women's Apparel",5,Golf
+TK113534,"TYR Boys' Team Digi Jammer",26,"Girls' Apparel",5,Golf
+MC13573,"Nike Men's Free 5.0+ Running Shoe",9,"Cardio Equipment",3,Footwear
+CR134641,"Perfect Fitness Perfect Rip Deck",17,Cleats,4,Apparel
+MC152617,"Under Armour Girls' Toddler Spine Surge Runni",29,"Shop By Sport",5,Golf
+MC132454,"Nike Men's Dri-FIT Victory Golf Polo",24,"Women's Apparel",5,Golf
+CR11215,"Team Golf San Francisco Giants Putter Grip",40,Accessories,6,Outdoors
+CR138272,"Titleist Pro V1x Golf Balls",37,Electronics,6,Outdoors
+MC13573,"Bridgestone e6 Straight Distance NFL San Dieg",37,Electronics,6,Outdoors
+TK62107,"Perfect Fitness Perfect Rip Deck",17,Cleats,4,Apparel
+TK75396,"Nike Men's Dri-FIT Victory Golf Polo",24,"Women's Apparel",5,Golf
+TK58801,"Perfect Fitness Perfect Rip Deck",17,Cleats,4,Apparel
+TK81629,"Columbia Men's PFG Anchor Tough T-Shirt",29,"Shop By Sport",5,Golf
+TK99195,"Nike Men's Dri-FIT Victory Golf Polo",24,"Women's Apparel",5,Golf
+TK86079,"Under Armour Girls' Toddler Spine Surge Runni",29,"Shop By Sport",5,Golf
+TK82645,"Nike Men's Dri-FIT Victory Golf Polo",24,"Women's Apparel",5,Golf
+TK107373,"Under Armour Girls' Toddler Spine Surge Runni",29,"Shop By Sport",5,Golf
+TK112132,"Nike Men's Dri-FIT Victory Golf Polo",24,"Women's Apparel",5,Golf
+TK119770,"Nike Men's Dri-FIT Victory Golf Polo",24,"Women's Apparel",5,Golf
+MC36529,"Perfect Fitness Perfect Rip Deck",17,Cleats,4,Apparel
+CR157949,"Nike Men's Dri-FIT Victory Golf Polo",24,"Women's Apparel",5,Golf
+MC164014,"Under Armour Girls' Toddler Spine Surge Runni",29,"Shop By Sport",5,Golf
+MC164014,"Under Armour Girls' Toddler Spine Surge Runni",29,"Shop By Sport",5,Golf
+MC137137,"Nike Men's Free 5.0+ Running Shoe",9,"Cardio Equipment",3,Footwear
+CR11215,"Under Armour Women's Ignite Slide",13,Electronics,3,Footwear
+CR138272,"Perfect Fitness Perfect Rip Deck",17,Cleats,4,Apparel
+MC137137,"Perfect Fitness Perfect Rip Deck",17,Cleats,4,Apparel
+MC152617,"Nike Men's Dri-FIT Victory Golf Polo",24,"Women's Apparel",5,Golf
+MC13573,"Nike Men's Dri-FIT Victory Golf Polo",24,"Women's Apparel",5,Golf
+CR1796,"Under Armour Girls' Toddler Spine Surge Runni",29,"Shop By Sport",5,Golf
+CR134203,"Nike Men's Dri-FIT Victory Golf Polo",24,"Women's Apparel",5,Golf
+MC2737,"Team Golf Tennessee Volunteers Putter Grip",40,Accessories,6,Outdoors
+TK125075,"Perfect Fitness Perfect Rip Deck",17,Cleats,4,Apparel
+TK103140,"Perfect Fitness Perfect Rip Deck",17,Cleats,4,Apparel
+TK58068,"Perfect Fitness Perfect Rip Deck",17,Cleats,4,Apparel
+TK65307,"Under Armour Girls' Toddler Spine Surge Runni",29,"Shop By Sport",5,Golf
+TK75183,"Nike Men's Dri-FIT Victory Golf Polo",24,"Women's Apparel",5,Golf
+TK94030,"Perfect Fitness Perfect Rip Deck",17,Cleats,4,Apparel
+TK90349,"Perfect Fitness Perfect Rip Deck",17,Cleats,4,Apparel
+TK98108,"Nike Men's Dri-FIT Victory Golf Polo",24,"Women's Apparel",5,Golf
+TK99118,"Nike Men's Dri-FIT Victory Golf Polo",24,"Women's Apparel",5,Golf
+TK102983,"Nike Men's Dri-FIT Victory Golf Polo",24,"Women's Apparel",5,Golf
+TK91405,"Under Armour Girls' Toddler Spine Surge Runni",29,"Shop By Sport",5,Golf
+TK79054,"Nike Men's Free 5.0+ Running Shoe",9,"Cardio Equipment",3,Footwear
+TK94483,"Nike Men's Dri-FIT Victory Golf Polo",24,"Women's Apparel",5,Golf
+TK91719,"Nike Men's Dri-FIT Victory Golf Polo",24,"Women's Apparel",5,Golf
+TK118936,"Perfect Fitness Perfect Rip Deck",17,Cleats,4,Apparel
+TK114168,"Nike Men's Dri-FIT Victory Golf Polo",24,"Women's Apparel",5,Golf
+CR36869,"Nike Men's Free 5.0+ Running Shoe",9,"Cardio Equipment",3,Footwear
+CR36869,"Under Armour Women's Ignite Slide",13,Electronics,3,Footwear
+MC33072,"Perfect Fitness Perfect Rip Deck",17,Cleats,4,Apparel
+MC166823,"Nike Men's Dri-FIT Victory Golf Polo",24,"Women's Apparel",5,Golf
+MC166823,"Nike Men's Dri-FIT Victory Golf Polo",24,"Women's Apparel",5,Golf
+MC33012,"Under Armour Girls' Toddler Spine Surge Runni",29,"Shop By Sport",5,Golf
+CR35536,"Nike Men's Dri-FIT Victory Golf Polo",24,"Women's Apparel",5,Golf
+MC37625,"Nike Men's Dri-FIT Victory Golf Polo",24,"Women's Apparel",5,Golf
+CR162086,"Perfect Fitness Perfect Rip Deck",17,Cleats,4,Apparel
+TK46447,"Nike Men's Dri-FIT Victory Golf Polo",24,"Women's Apparel",5,Golf
+TK46447,"Nike Men's Dri-FIT Victory Golf Polo",24,"Women's Apparel",5,Golf
+MC142724,"Nike Men's Free 5.0+ Running Shoe",9,"Cardio Equipment",3,Footwear
+MC142724,"Nike Men's Free 5.0+ Running Shoe",9,"Cardio Equipment",3,Footwear
+MC142724,"Perfect Fitness Perfect Rip Deck",17,Cleats,4,Apparel
+MC21448,"Nike Men's Dri-FIT Victory Golf Polo",24,"Women's Apparel",5,Golf
+MC15114,"adidas Men's F10 Messi TRX FG Soccer Cleat",3,"Baseball & Softball",2,Fitness
+CR7152,"Perfect Fitness Perfect Rip Deck",17,Cleats,4,Apparel
+CR7152,"Nike Men's Dri-FIT Victory Golf Polo",24,"Women's Apparel",5,Golf
+TK131025,"Under Armour Girls' Toddler Spine Surge Runni",29,"Shop By Sport",5,Golf
+TK131025,"Team Golf Texas Longhorns Putter Grip",40,Accessories,6,Outdoors
+TK131025,"Team Golf Pittsburgh Steelers Putter Grip",40,Accessories,6,Outdoors
+TK59461,"Nike Men's Free 5.0+ Running Shoe",9,"Cardio Equipment",3,Footwear
+MC168802,"Nike Men's Dri-FIT Victory Golf Polo",24,"Women's Apparel",5,Golf
+TK56358,"Nike Men's Free 5.0+ Running Shoe",9,"Cardio Equipment",3,Footwear
+MC168802,"Perfect Fitness Perfect Rip Deck",17,Cleats,4,Apparel
+TK131025,"Nike Men's Free 5.0+ Running Shoe",9,"Cardio Equipment",3,Footwear
+CR31785,"Nike Men's CJ Elite 2 TD Football Cleat",18,"Men's Footwear",4,Apparel
+CR31785,"Nike Men's CJ Elite 2 TD Football Cleat",18,"Men's Footwear",4,Apparel
+TK50330,"Nike Men's CJ Elite 2 TD Football Cleat",18,"Men's Footwear",4,Apparel
+TK50330,"Field & Stream Sportsman 16 Gun Fire Safe",45,Fishing,7,"Fan Shop"
+CR31785,"Field & Stream Sportsman 16 Gun Fire Safe",45,Fishing,7,"Fan Shop"
+TK57218,"Under Armour Girls' Toddler Spine Surge Runni",29,"Shop By Sport",5,Golf
+TK57218,"Nike Men's Dri-FIT Victory Golf Polo",24,"Women's Apparel",5,Golf
+TK50330,"Under Armour Girls' Toddler Spine Surge Runni",29,"Shop By Sport",5,Golf
+TK50330,"Nike Men's Free 5.0+ Running Shoe",9,"Cardio Equipment",3,Footwear
+TK57218,"Nike Men's Dri-FIT Victory Golf Polo",24,"Women's Apparel",5,Golf
+CR31785,"Nike Men's Dri-FIT Victory Golf Polo",24,"Women's Apparel",5,Golf
+TK57218,"Nike Men's Dri-FIT Victory Golf Polo",24,"Women's Apparel",5,Golf
+TK57218,"Hirzl Women's Soffft Flex Golf Glove",36,"Golf Balls",6,Outdoors
+TK110081,"Nike Men's CJ Elite 2 TD Football Cleat",18,"Men's Footwear",4,Apparel
+TK110081,"Nike Men's Dri-FIT Victory Golf Polo",24,"Women's Apparel",5,Golf
+TK110081,"Diamondback Women's Serene Classic Comfort Bi",43,"Camping & Hiking",7,"Fan Shop"
+MC158389,"Perfect Fitness Perfect Rip Deck",17,Cleats,4,Apparel
+MC173757,"Children's heaters",63,"Children's Clothing",4,Apparel
+MC158359,"Nike Men's CJ Elite 2 TD Football Cleat",18,"Men's Footwear",4,Apparel
+MC174706,"DVDs ",67,DVDs,9,"Discs Shop"
+CR153271,"Nike Men's CJ Elite 2 TD Football Cleat",18,"Men's Footwear",4,Apparel
+CR153271,"Nike Men's CJ Elite 2 TD Football Cleat",18,"Men's Footwear",4,Apparel
+CR140784,"Nike Men's CJ Elite 2 TD Football Cleat",18,"Men's Footwear",4,Apparel
+CR140784,"Perfect Fitness Perfect Rip Deck",17,Cleats,4,Apparel
+MC134567,"Nike Men's CJ Elite 2 TD Football Cleat",18,"Men's Footwear",4,Apparel
+MC177445,"Baby sweater",60,"Baby ",4,Apparel
+MC175224,"Lawn mower",68,Garden,6,Outdoors
+MC175878,"Rock music",71,Music,9,"Discs Shop"
+TK84987,"Nike Men's Free 5.0+ Running Shoe",9,"Cardio Equipment",3,Footwear
+TK91229,"Nike Men's CJ Elite 2 TD Football Cleat",18,"Men's Footwear",4,Apparel
+TK81513,"Under Armour Girls' Toddler Spine Surge Runni",29,"Shop By Sport",5,Golf
+CR40687,"Nike Men's Dri-FIT Victory Golf Polo",24,"Women's Apparel",5,Golf
+CR17716,"Nike Men's Free 5.0+ Running Shoe",9,"Cardio Equipment",3,Footwear
+MC134567,"Under Armour Girls' Toddler Spine Surge Runni",29,"Shop By Sport",5,Golf
+TK63963,"Nike Men's Free 5.0+ Running Shoe",9,"Cardio Equipment",3,Footwear
+TK84987,"adidas Kids' F5 Messi FG Soccer Cleat",3,"Baseball & Softball",2,Fitness
+TK112418,"Perfect Fitness Perfect Rip Deck",17,Cleats,4,Apparel
+TK91229,"Perfect Fitness Perfect Rip Deck",17,Cleats,4,Apparel
+TK91229,"Perfect Fitness Perfect Rip Deck",17,Cleats,4,Apparel
+TK84987,"Perfect Fitness Perfect Rip Deck",17,Cleats,4,Apparel
+TK84987,"Nike Men's Dri-FIT Victory Golf Polo",24,"Women's Apparel",5,Golf
+MC158389,"Perfect Fitness Perfect Rip Deck",17,Cleats,4,Apparel
+MC158359,"Nike Men's Dri-FIT Victory Golf Polo",24,"Women's Apparel",5,Golf
+CR40687,"Team Golf St. Louis Cardinals Putter Grip",40,Accessories,6,Outdoors
+CR17716,"Nike Men's Free 5.0+ Running Shoe",9,"Cardio Equipment",3,Footwear
+CR153271,"Perfect Fitness Perfect Rip Deck",17,Cleats,4,Apparel
+TK110081,"Perfect Fitness Perfect Rip Deck",17,Cleats,4,Apparel
+MC158359,"Under Armour Girls' Toddler Spine Surge Runni",29,"Shop By Sport",5,Golf
+CR40687,"Under Armour Girls' Toddler Spine Surge Runni",29,"Shop By Sport",5,Golf
+TK63963,"Nike Men's Dri-FIT Victory Golf Polo",24,"Women's Apparel",5,Golf
+MC158359,"Under Armour Girls' Toddler Spine Surge Runni",29,"Shop By Sport",5,Golf
+MC158359,"Nike Men's Dri-FIT Victory Golf Polo",24,"Women's Apparel",5,Golf
+CR153271,"Nike Men's Dri-FIT Victory Golf Polo",24,"Women's Apparel",5,Golf
+TK81513,"Perfect Fitness Perfect Rip Deck",17,Cleats,4,Apparel
+TK111308,"Team Golf Tennessee Volunteers Putter Grip",40,Accessories,6,Outdoors
+CR172903,"Web Camera",62,"Cameras ",10,Technology
+MC161745,"Nike Men's CJ Elite 2 TD Football Cleat",18,"Men's Footwear",4,Apparel
+TK49054,"Nike Men's CJ Elite 2 TD Football Cleat",18,"Men's Footwear",4,Apparel
+CR169326,"Nike Men's CJ Elite 2 TD Football Cleat",18,"Men's Footwear",4,Apparel
+TK116361,"Perfect Fitness Perfect Rip Deck",17,Cleats,4,Apparel
+TK70016,"Perfect Fitness Perfect Rip Deck",17,Cleats,4,Apparel
+TK127670,"Perfect Fitness Perfect Rip Deck",17,Cleats,4,Apparel
+TK73059,"Under Armour Girls' Toddler Spine Surge Runni",29,"Shop By Sport",5,Golf
+TK75972,"Nike Men's Dri-FIT Victory Golf Polo",24,"Women's Apparel",5,Golf
+TK98108,"Nike Men's Free 5.0+ Running Shoe",9,"Cardio Equipment",3,Footwear
+TK101556,"Nike Men's Dri-FIT Victory Golf Polo",24,"Women's Apparel",5,Golf
+TK98108,"Hirzl Women's Soffft Flex Golf Glove",36,"Golf Balls",6,Outdoors
+TK78363,"Perfect Fitness Perfect Rip Deck",17,Cleats,4,Apparel
+MC174603,"Porcelain crafts",66,Crafts,4,Apparel
+MC37919,"Field & Stream Sportsman 16 Gun Fire Safe",45,Fishing,7,"Fan Shop"
+MC147712,"Nike Men's Dri-FIT Victory Golf Polo",24,"Women's Apparel",5,Golf
+MC3398,"Diamondback Women's Serene Classic Comfort Bi",43,"Camping & Hiking",7,"Fan Shop"
+MC3398,"Field & Stream Sportsman 16 Gun Fire Safe",45,Fishing,7,"Fan Shop"
+MC178629,"Men's gala suit",70,"Men's Clothing",4,Apparel
+TK87796,"Nike Men's CJ Elite 2 TD Football Cleat",18,"Men's Footwear",4,Apparel
+TK88927,"Diamondback Women's Serene Classic Comfort Bi",43,"Camping & Hiking",7,"Fan Shop"
+CR160544,"Under Armour Girls' Toddler Spine Surge Runni",29,"Shop By Sport",5,Golf
+CR160544,"Nike Men's Dri-FIT Victory Golf Polo",24,"Women's Apparel",5,Golf
+TK81690,"Nike Men's Dri-FIT Victory Golf Polo",24,"Women's Apparel",5,Golf
+CR160544,"Nike Men's Free 5.0+ Running Shoe",9,"Cardio Equipment",3,Footwear
+TK81690,"Under Armour Girls' Toddler Spine Surge Runni",29,"Shop By Sport",5,Golf
+TK88927,"Team Golf Tennessee Volunteers Putter Grip",40,Accessories,6,Outdoors
+CR160544,"Nike Men's Free 5.0+ Running Shoe",9,"Cardio Equipment",3,Footwear
+MC37919,"Perfect Fitness Perfect Rip Deck",17,Cleats,4,Apparel
+TK87796,"Nike Men's Dri-FIT Victory Golf Polo",24,"Women's Apparel",5,Golf
+CR174328,"Industrial consumer electronics",65,"Consumer Electronics",10,Technology
+CR159390,"Nike Men's CJ Elite 2 TD Football Cleat",18,"Men's Footwear",4,Apparel
+TK57445,"Bridgestone e6 Straight Distance NFL Tennesse",37,Electronics,6,Outdoors
+TK57445,"Diamondback Women's Serene Classic Comfort Bi",43,"Camping & Hiking",7,"Fan Shop"
+TK57445,"Nike Men's Dri-FIT Victory Golf Polo",24,"Women's Apparel",5,Golf
+CR159390,"Nike Men's Dri-FIT Victory Golf Polo",24,"Women's Apparel",5,Golf
+TK57445,"Perfect Fitness Perfect Rip Deck",17,Cleats,4,Apparel
+CR159390,"Perfect Fitness Perfect Rip Deck",17,Cleats,4,Apparel
+CR159390,"Nike Men's Dri-FIT Victory Golf Polo",24,"Women's Apparel",5,Golf
+CR159390,"Under Armour Girls' Toddler Spine Surge Runni",29,"Shop By Sport",5,Golf
+TK121346,"Nike Men's Free 5.0+ Running Shoe",9,"Cardio Equipment",3,Footwear
+MC165909,"Nike Men's CJ Elite 2 TD Football Cleat",18,"Men's Footwear",4,Apparel
+TK50712,"Nike Men's Dri-FIT Victory Golf Polo",24,"Women's Apparel",5,Golf
+TK121346,"Perfect Fitness Perfect Rip Deck",17,Cleats,4,Apparel
+TK82689,"Perfect Fitness Perfect Rip Deck",17,Cleats,4,Apparel
+MC165909,"Polar FT4 Heart Rate Monitor",38,"Kids' Golf Clubs",6,Outdoors
+MC5407,"Perfect Fitness Perfect Rip Deck",17,Cleats,4,Apparel
+TK82689,"Perfect Fitness Perfect Rip Deck",17,Cleats,4,Apparel
+TK45728,"Nike Men's Dri-FIT Victory Golf Polo",24,"Women's Apparel",5,Golf
+MC5407,"Nike Men's Dri-FIT Victory Golf Polo",24,"Women's Apparel",5,Golf
+TK115729,"Perfect Fitness Perfect Rip Deck",17,Cleats,4,Apparel
+MC166992,"Diamondback Women's Serene Classic Comfort Bi",43,"Camping & Hiking",7,"Fan Shop"
+MC32808,"Field & Stream Sportsman 16 Gun Fire Safe",45,Fishing,7,"Fan Shop"
+MC32808,"Field & Stream Sportsman 16 Gun Fire Safe",45,Fishing,7,"Fan Shop"
+CR19758,"Nike Men's CJ Elite 2 TD Football Cleat",18,"Men's Footwear",4,Apparel
+CR19758,"Field & Stream Sportsman 16 Gun Fire Safe",45,Fishing,7,"Fan Shop"
+CR7094,"Nike Men's CJ Elite 2 TD Football Cleat",18,"Men's Footwear",4,Apparel
+TK128660,"Nike Men's CJ Elite 2 TD Football Cleat",18,"Men's Footwear",4,Apparel
+CR7094,"Perfect Fitness Perfect Rip Deck",17,Cleats,4,Apparel
+CR133467,"Diamondback Women's Serene Classic Comfort Bi",43,"Camping & Hiking",7,"Fan Shop"
+CR133467,"Diamondback Women's Serene Classic Comfort Bi",43,"Camping & Hiking",7,"Fan Shop"
+CR24868,"Field & Stream Sportsman 16 Gun Fire Safe",45,Fishing,7,"Fan Shop"
+MC21247,"Field & Stream Sportsman 16 Gun Fire Safe",45,Fishing,7,"Fan Shop"
+TK62445,"Perfect Fitness Perfect Rip Deck",17,Cleats,4,Apparel
+TK62445,"Nike Men's CJ Elite 2 TD Football Cleat",18,"Men's Footwear",4,Apparel
+TK62445,"Diamondback Women's Serene Classic Comfort Bi",43,"Camping & Hiking",7,"Fan Shop"
+TK72021,"Nike Men's CJ Elite 2 TD Football Cleat",18,"Men's Footwear",4,Apparel
+TK61128,"Nike Men's CJ Elite 2 TD Football Cleat",18,"Men's Footwear",4,Apparel
+TK61128,"Nike Men's CJ Elite 2 TD Football Cleat",18,"Men's Footwear",4,Apparel
+TK75762,"Nike Men's CJ Elite 2 TD Football Cleat",18,"Men's Footwear",4,Apparel
+TK66687,"Under Armour Girls' Toddler Spine Surge Runni",29,"Shop By Sport",5,Golf
+TK51561,"Diamondback Women's Serene Classic Comfort Bi",43,"Camping & Hiking",7,"Fan Shop"
+TK61128,"Field & Stream Sportsman 16 Gun Fire Safe",45,Fishing,7,"Fan Shop"
+TK51561,"Field & Stream Sportsman 16 Gun Fire Safe",45,Fishing,7,"Fan Shop"
+TK51561,"Field & Stream Sportsman 16 Gun Fire Safe",45,Fishing,7,"Fan Shop"
+TK61128,"Diamondback Women's Serene Classic Comfort Bi",43,"Camping & Hiking",7,"Fan Shop"
+TK89644,"Nike Men's CJ Elite 2 TD Football Cleat",18,"Men's Footwear",4,Apparel
+TK89644,"Nike Men's CJ Elite 2 TD Football Cleat",18,"Men's Footwear",4,Apparel
+MC157266,"Nike Men's Dri-FIT Victory Golf Polo",24,"Women's Apparel",5,Golf
+CR7094,"adidas Kids' F5 Messi FG Soccer Cleat",3,"Baseball & Softball",2,Fitness
+CR24949,"Under Armour Women's Micro G Skulpt Running S",12,"Boxing & MMA",3,Footwear
+TK122319,"Glove It Women's Mod Oval Golf Glove",36,"Golf Balls",6,Outdoors
+MC32808,"Perfect Fitness Perfect Rip Deck",17,Cleats,4,Apparel
+MC32808,"Perfect Fitness Perfect Rip Deck",17,Cleats,4,Apparel
+MC166992,"Perfect Fitness Perfect Rip Deck",17,Cleats,4,Apparel
+CR6997,"Perfect Fitness Perfect Rip Deck",17,Cleats,4,Apparel
+CR6997,"Under Armour Girls' Toddler Spine Surge Runni",29,"Shop By Sport",5,Golf
+MC21247,"Nike Men's Dri-FIT Victory Golf Polo",24,"Women's Apparel",5,Golf
+MC137579,"Under Armour Girls' Toddler Spine Surge Runni",29,"Shop By Sport",5,Golf
+TK75762,"Nike Men's Dri-FIT Victory Golf Polo",24,"Women's Apparel",5,Golf
+TK122319,"Perfect Fitness Perfect Rip Deck",17,Cleats,4,Apparel
+TK116189,"Perfect Fitness Perfect Rip Deck",17,Cleats,4,Apparel
+MC157266,"Perfect Fitness Perfect Rip Deck",17,Cleats,4,Apparel
+MC11672,"Perfect Fitness Perfect Rip Deck",17,Cleats,4,Apparel
+MC137579,"Nike Men's Free 5.0+ Running Shoe",9,"Cardio Equipment",3,Footwear
+TK51561,"Under Armour Girls' Toddler Spine Surge Runni",29,"Shop By Sport",5,Golf
+TK89644,"Perfect Fitness Perfect Rip Deck",17,Cleats,4,Apparel
+MC29946,"Nike Men's Free 5.0+ Running Shoe",9,"Cardio Equipment",3,Footwear
+CR133467,"Perfect Fitness Perfect Rip Deck",17,Cleats,4,Apparel
+TK61128,"Nike Men's Dri-FIT Victory Golf Polo",24,"Women's Apparel",5,Golf
+MC174298,"Industrial consumer electronics",65,"Consumer Electronics",10,Technology
+MC40946,"Under Armour Women's Micro G Skulpt Running S",12,"Boxing & MMA",3,Footwear
+MC149906,"GolfBuddy VT3 GPS Watch",38,"Kids' Golf Clubs",6,Outdoors
+MC179000,"Adult dog supplies",72,"Pet Supplies",11,"Pet Shop"
+TK58702,"Field & Stream Sportsman 16 Gun Fire Safe",45,Fishing,7,"Fan Shop"
+TK51503,"Field & Stream Sportsman 16 Gun Fire Safe",45,Fishing,7,"Fan Shop"
+TK86748,"Nike Men's CJ Elite 2 TD Football Cleat",18,"Men's Footwear",4,Apparel
+CR131628,"Nike Men's CJ Elite 2 TD Football Cleat",18,"Men's Footwear",4,Apparel
+TK128918,"Nike Men's Dri-FIT Victory Golf Polo",24,"Women's Apparel",5,Golf
+CR30821,"Nike Men's Free 5.0+ Running Shoe",9,"Cardio Equipment",3,Footwear
+TK68118,"Perfect Fitness Perfect Rip Deck",17,Cleats,4,Apparel
+MC168013,"Nike Men's CJ Elite 2 TD Football Cleat",18,"Men's Footwear",4,Apparel
+CR35091,"Nike Men's CJ Elite 2 TD Football Cleat",18,"Men's Footwear",4,Apparel
+MC32840,"Nike Men's CJ Elite 2 TD Football Cleat",18,"Men's Footwear",4,Apparel
+CR35091,"Nike Men's CJ Elite 2 TD Football Cleat",18,"Men's Footwear",4,Apparel
+MC39032,"Nike Men's CJ Elite 2 TD Football Cleat",18,"Men's Footwear",4,Apparel
