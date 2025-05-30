@@ -456,8 +456,7 @@ class HexaHaulApp:
                 new_password = request.form.get("new_password")
                 if user_password_reset_manager.verify_otp(email, otp):
                     user_password_reset_manager.clear_otp(email)
-                    flash("Password changed successfully. Please login.")
-                    return redirect(url_for("user_login_html"))
+                    return redirect(url_for("change_password", email=email))
                 else:
                     flash("Invalid OTP. Please try again.")
             return render_template("verify-otp.html", email=email)
@@ -670,8 +669,10 @@ class HexaHaulApp:
         def personal_info():
             return render_template("personal-info.html")
 
-        @app.route("/change-password")
+        @app.route("/change-password", methods=["GET", "POST"])
         def change_password():
+            if request.method == "POST":
+                return redirect(url_for("user_login_html"))
             return render_template("change-password.html")
 
         @app.route("/update-email")
