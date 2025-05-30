@@ -14,7 +14,7 @@ warnings.filterwarnings('ignore')
 Base = declarative_base()
 
 # Database configuration
-emp_connection = {
+connection = {
     'host': 'localhost', 
     'port': 3306,
     'username': 'your_username', # Input mysql username (eg. root)
@@ -22,7 +22,7 @@ emp_connection = {
     'database': 'schema_name' # Input mysql schema/database
 }
 
-emp_engine = create_engine(f"mysql+mysqlconnector://{emp_connection['username']}:{emp_connection['password']}@{emp_connection['host']}/{emp_connection['database']}", echo=False)
+engine = create_engine(f"mysql+mysqlconnector://{connection['username']}:{connection['password']}@{connection['host']}/{connection['database']}", echo=False)
 
-emp_Session = sessionmaker(bind=emp_engine)
-emp_session = emp_Session()
+Session = sessionmaker(bind=engine)
+session = Session()
