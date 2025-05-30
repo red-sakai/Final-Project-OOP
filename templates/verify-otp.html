@@ -1,18 +1,136 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>Verify OTP</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='forgot-password.css') }}">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>LogistIQ | HexaHaul</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='verification-code.css') }}" />
+    <link rel="icon" href="{{ url_for('static', filename='images/HexaHaul icon transparent.png') }}" />
 </head>
 <body>
-    <h2>Enter OTP</h2>
-    <form method="post">
-        <input type="hidden" name="email" value="{{ email }}">
-        <label>OTP:</label>
-        <input type="text" name="otp" maxlength="6" required>
-        <label>New Password:</label>
-        <input type="password" name="new_password" required>
-        <button type="submit">Change Password</button>
-    </form>
+    <div class="verification-code-background">
+        <div class="verification-code-container">
+            <div class="verification-code-panel">
+                <div class="verification-code-header">
+                    <p class="verification-code">Verification Code</p>
+                    <p class="verification-code-text">
+                        A verification code has been sent to <strong id="email-display">{{ email }}</strong>
+                    </p>
+                </div>
+                <form method="post" autocomplete="off" id="otp-form">
+                    <input type="hidden" name="email" value="{{ email }}">
+                    <div class="otp-box">
+                        <input type="text" maxlength="1" name="otp1" class="otp-input" required pattern="[0-9]*" inputmode="numeric" autocomplete="off">
+                        <input type="text" maxlength="1" name="otp2" class="otp-input" required pattern="[0-9]*" inputmode="numeric" autocomplete="off">
+                        <input type="text" maxlength="1" name="otp3" class="otp-input" required pattern="[0-9]*" inputmode="numeric" autocomplete="off">
+                        <input type="text" maxlength="1" name="otp4" class="otp-input" required pattern="[0-9]*" inputmode="numeric" autocomplete="off">
+                        <input type="text" maxlength="1" name="otp5" class="otp-input" required pattern="[0-9]*" inputmode="numeric" autocomplete="off">
+                        <input type="text" maxlength="1" name="otp6" class="otp-input" required pattern="[0-9]*" inputmode="numeric" autocomplete="off">
+                    </div>
+                    <div id="otp-error-message" class="error-message">
+                        {% with messages = get_flashed_messages() %}
+                          {% if messages %}
+                            {{ messages[0] }}
+                          {% else %}
+                            Please enter a valid verification code.
+                          {% endif %}
+                        {% endwith %}
+                    </div>
+                    <button type="submit" class="reset-password-button" id="continue-btn" style="margin-top: 24px;">Continue</button>
+                </form>
+                <div class="resend-code-container">
+                    <p class="resend-code-gray" id="gray">
+                        Didn't receive the code?
+                    </p>
+                    <p class="resend-code-blue" id="blue">
+                        <a href="#" id="resend-link" style="color:#095190; text-decoration:underline;">Resend the code</a>
+                        <span class="timer" id="countdown" style="margin-left:8px;">03:00</span>
+                    </p>
+                    <div id="resend-message" class="error-message"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        // Autofocus next input
+        const inputs = document.querySelectorAll('.otp-input');
+        inputs.forEach((input, idx) => {
+            input.addEventListener('input', function() {
+                if (this.value.length === 1 && idx < inputs.length - 1) {
+                    inputs[idx + 1].focus();
+                }
+            });
+            input.addEventListener('keydown', function(e) {
+                if (e.key === "Backspace" && this.value === "" && idx > 0) {
+                    inputs[idx - 1].focus();
+                }
+            });
+        });
+
+        // On form submit, combine OTP and POST to Flask
+        document.getElementById('otp-form').addEventListener('submit', function(e) {
+            let otp = '';
+            inputs.forEach(input => otp += input.value);
+            let otpHidden = document.createElement('input');
+            otpHidden.type = 'hidden';
+            otpHidden.name = 'otp';
+            otpHidden.value = otp;
+            this.appendChild(otpHidden);
+        });
+
+        // Resend code logic
+        const resendLink = document.getElementById('resend-link');
+        const countdownEl = document.getElementById('countdown');
+        const resendMsg = document.getElementById('resend-message');
+        let timeLeft = 180;
+        let timerActive = false;
+
+        function updateTimer() {
+            const minutes = String(Math.floor(timeLeft / 60)).padStart(2, '0');
+            const seconds = String(timeLeft % 60).padStart(2, '0');
+            countdownEl.textContent = `${minutes}:${seconds}`;
+            if (timeLeft > 0) {
+                timeLeft--;
+                setTimeout(updateTimer, 1000);
+            } else {
+                resendLink.style.pointerEvents = 'auto';
+                resendLink.style.opacity = 1;
+                countdownEl.textContent = '';
+                timerActive = false;
+            }
+        }
+
+        function startTimer() {
+            timeLeft = 180;
+            resendLink.style.pointerEvents = 'none';
+            resendLink.style.opacity = 0.5;
+            timerActive = true;
+            updateTimer();
+        }
+
+        resendLink.addEventListener('click', function(e) {
+            e.preventDefault();
+            if (timerActive) return;
+            resendMsg.textContent = '';
+            fetch('{{ url_for("forgot_password") }}', {
+                method: 'POST',
+                headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+                body: `email=${encodeURIComponent("{{ email }}")}`
+            })
+            .then(response => response.text())
+            .then(data => {
+                resendMsg.style.color = 'green';
+                resendMsg.textContent = 'Verification code resent.';
+                startTimer();
+            })
+            .catch(() => {
+                resendMsg.style.color = 'red';
+                resendMsg.textContent = 'Failed to resend code.';
+            });
+        });
+
+        // Start timer on page load
+        startTimer();
+    </script>
 </body>
 </html>
