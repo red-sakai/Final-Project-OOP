@@ -22,8 +22,13 @@ import random
 import pandas as pd
 from werkzeug.utils import secure_filename
 
-# Initialize DistilBERT QA pipeline
-qa_pipeline = pipeline("question-answering", model="distilbert-base-uncased-distilled-squad")
+def get_qa_pipeline():
+    """Lazily load and cache the QA pipeline to avoid OOM on startup."""
+    # Lazy Load - delaying the initialization to save memory
+    if not hasattr(get_qa_pipeline, "_pipeline"):
+        from transformers import pipeline
+        get_qa_pipeline._pipeline = pipeline("question-answering", model="distilbert-base-uncased-distilled-squad")
+    return get_qa_pipeline._pipeline
 
 class BaseManager(ABC):
     @abstractmethod
