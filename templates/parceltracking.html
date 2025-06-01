@@ -68,8 +68,20 @@
                             </div>
                             <div>
                                 <span class="loc-title">Origin</span>
-                                <span class="loc-place">Las Piñas City</span>
-                                <span class="loc-date">May 12, 2025 • 9:30 AM</span>
+                                <span class="loc-place">
+                                    {% if order_data and order_data.customerPlace %}
+                                        {{ order_data.customerPlace }}
+                                    {% else %}
+                                        Origin Location
+                                    {% endif %}
+                                </span>
+                                <span class="loc-date">
+                                    {% if order_data and order_data.orderDate %}
+                                        {{ order_data.orderDate }}
+                                    {% else %}
+                                        Order Date
+                                    {% endif %}
+                                </span>
                             </div>
                         </div>
                         
@@ -81,8 +93,20 @@
                             </div>
                             <div>
                                 <span class="loc-title">Destination</span>
-                                <span class="loc-place">Sta. Mesa Manila</span>
-                                <span class="loc-date">Expected: May 17, 2025</span>
+                                <span class="loc-place">
+                                    {% if order_data and order_data.branchPlace %}
+                                        {{ order_data.branchPlace }}
+                                    {% else %}
+                                        Destination Location
+                                    {% endif %}
+                                </span>
+                                <span class="loc-date">
+                                    {% if order_data and order_data.expectedDeliveryDate %}
+                                        Expected: {{ order_data.expectedDeliveryDate }}
+                                    {% else %}
+                                        Expected: Delivery Date
+                                    {% endif %}
+                                </span>
                             </div>
                         </div>
                     </div>
