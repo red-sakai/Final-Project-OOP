@@ -704,6 +704,22 @@ body {
     to { transform: translateY(0); opacity: 1;}
 }
 
+/* Map marker animations */
+@keyframes markerPulse {
+    0% { transform: scale(1); opacity: 1; }
+    50% { transform: scale(1.2); opacity: 0.8; }
+    100% { transform: scale(1); opacity: 1; }
+}
+
+.marker-updated {
+    animation: markerPulse 0.5s ease-out;
+}
+
+.leaflet-div-icon {
+    background: transparent;
+    border: none;
+}
+
 /* Responsive Design */
 @media (max-width: 900px) {
     .main-content {
