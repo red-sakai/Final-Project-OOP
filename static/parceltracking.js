@@ -85,8 +85,8 @@ function setupMapWithOrderData(map, orderData) {
         const route = e.routes[0];
         const routeLine = route.coordinates.map(coord => [coord.lat, coord.lng]);
 
-        // Animate the parcel marker along the route
-        animateParcelAlongRoute(map, routeLine, orderData);
+        // Animate the parcel marker along the route (at least 20 seconds)
+        animateParcelAlongRoute(map, routeLine, orderData, 20000);
     });
 
     // Store for refresh
@@ -98,8 +98,8 @@ function setupMapWithOrderData(map, orderData) {
     };
 }
 
-// Animate the parcel marker along the route polyline
-function animateParcelAlongRoute(map, routeLine, orderData) {
+// Animate the parcel marker along the route polyline, with a minimum duration
+function animateParcelAlongRoute(map, routeLine, orderData, minDurationMs) {
     // Remove previous marker if any
     if (window.mapObjects.parcelMarker) {
         map.removeLayer(window.mapObjects.parcelMarker);
@@ -120,7 +120,9 @@ function animateParcelAlongRoute(map, routeLine, orderData) {
     // Animation variables
     let i = 0;
     const totalPoints = routeLine.length;
-    const animationSpeed = 40; // ms between points (slower = more realistic)
+    // Calculate the interval so that the animation takes at least minDurationMs
+    const animationSpeed = Math.max(10, Math.ceil(minDurationMs / totalPoints));
+
     function moveMarker() {
         if (i < totalPoints) {
             marker.setLatLng(routeLine[i]);
@@ -136,6 +138,8 @@ function animateParcelAlongRoute(map, routeLine, orderData) {
     // Save marker for refresh
     window.mapObjects.parcelMarker = marker;
     window.mapObjects.routeLine = routeLine;
+    window.mapObjects.animationSpeed = animationSpeed;
+    window.mapObjects.minDurationMs = minDurationMs;
 }
 
 // Determine color based on order ID prefix
@@ -170,7 +174,7 @@ function animatePolyline(line) {
 function updateMapData() {
     // On refresh, re-animate the parcel from current position to destination
     if (!window.mapObjects || !window.mapObjects.routeLine) return;
-    const { map, orderData, routeLine } = window.mapObjects;
+    const { map, orderData, routeLine, minDurationMs } = window.mapObjects;
 
     // Start animation from a random point along the route (simulate progress)
     let startIdx = Math.floor(routeLine.length * (0.7 + Math.random() * 0.2));
@@ -179,7 +183,8 @@ function updateMapData() {
 
     let i = startIdx;
     const totalPoints = routeLine.length;
-    const animationSpeed = 40;
+    const animationSpeed = Math.max(10, Math.ceil((minDurationMs || 20000) / (totalPoints - startIdx)));
+
     function moveMarker() {
         if (i < totalPoints) {
             marker.setLatLng(routeLine[i]);
