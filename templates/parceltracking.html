@@ -178,7 +178,13 @@
                         <div class="info-icon"><i class="fa-solid fa-box"></i></div>
                         <div class="info-content">
                             <h3>Package</h3>
-                            <p>Standard • 2.5kg</p>
+                            <p>
+                                {% if order_data and order_data.productName %}
+                                    {{ order_data.productName }}
+                                {% else %}
+                                    Standard • 2.5kg
+                                {% endif %}
+                            </p>
                         </div>
                     </div>
                 </div>
