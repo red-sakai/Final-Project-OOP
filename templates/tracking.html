@@ -117,8 +117,8 @@
             <h2 class="fade-slide-right" id="tracking-header">We Provide Best Courier Services</h2>
             <p class="track-text fade-slide-right" id="tracking-subheader">Stay updated with live tracking from dispatch to delivery.</p>
             <p class="track-text2 fade-slide-right tracking-subheader">Track your parcel now!</p>
-            <form action="{{ url_for('parceltracking') }}" method="get">
-                <input type="text" class="track-input" name="tracking_id" placeholder="Tracking ID" required />
+            <form id="tracking-form" action="{{ url_for('parceltracking') }}" method="get">
+                <input type="text" class="track-input" id="tracking-input" name="tracking_id" placeholder="Tracking ID" required />
                 <button type="submit" class="track-button">Track Order</button>
             </form>
         </div>
@@ -132,5 +132,17 @@
         </div>
     </div>
     <script src="{{ url_for('static', filename='tracking.js') }}"></script>
+    <script>
+    // --- Order Item Id validation ---
+    // The list is passed from Flask as a template variable.
+    const validOrderItemIds = {{ order_item_ids|tojson }};
+    document.getElementById('tracking-form').addEventListener('submit', function(e) {
+        const input = document.getElementById('tracking-input').value.trim();
+        if (!validOrderItemIds.includes(input)) {
+            alert('Invalid Tracking ID. Please enter a valid Order Item Id.');
+            e.preventDefault();
+        }
+    });
+    </script>
 </body>
 </html>
