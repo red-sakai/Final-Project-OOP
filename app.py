@@ -571,7 +571,43 @@ class HexaHaulApp:
         @app.route("/parceltracking")
         def parceltracking():
             tracking_id = request.args.get("tracking_id", "")
-            return render_template("parceltracking.html", tracking_id=tracking_id)
+            courier = None
+            if tracking_id:
+                # Find the order in hh_order.csv
+                order_csv_path = os.path.join('hexahaul_db', 'hh_order.csv')
+                driver_id = None
+                try:
+                    with open(order_csv_path, 'r', encoding='utf-8') as f:
+                        reader = csv.DictReader(f)
+                        for row in reader:
+                            if row['Order Item Id'] == tracking_id:
+                                driver_id = row.get('driver_id')
+                                break
+                except Exception as e:
+                    print(f"Error reading hh_order.csv: {e}")
+
+                # Find the courier in hh_employee_biography.csv
+                if driver_id:
+                    emp_csv_path = os.path.join('hexahaul_db', 'hh_employee_biography.csv')
+                    try:
+                        with open(emp_csv_path, 'r', encoding='utf-8') as f:
+                            reader = csv.DictReader(f)
+                            for row in reader:
+                                if row['Employee Id'] == driver_id:
+                                    courier = {
+                                        'employee_id': row['Employee Id'],
+                                        'first_name': row['First Name'],
+                                        'last_name': row['Last Name'],
+                                        'gender': row['Gender'],
+                                        'age': row['Age'],
+                                        'birthdate': row['birth_date'],
+                                        'contact_number': row['Contact Number']
+                                    }
+                                    break
+                    except Exception as e:
+                        print(f"Error reading hh_employee_biography.csv: {e}")
+
+            return render_template("parceltracking.html", tracking_id=tracking_id, courier=courier)
 
         @app.route("/submit-ticket", methods=["GET", "POST"])
         def submit_ticket():

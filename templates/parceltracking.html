@@ -59,7 +59,13 @@
             <div class="courier-card enhanced-courier-card">
                 <div class="courier-avatar enhanced-avatar"></div>
                 <div class="courier-info">
-                    <span class="courier-name">John Doe</span><br>
+                    <span class="courier-name">
+                        {% if courier %}
+                            {{ courier.first_name }} {{ courier.last_name }}
+                        {% else %}
+                            John Doe
+                        {% endif %}
+                    </span><br>
                     <span class="courier-role">Courier Delivery Rider</span>
                 </div>
                 <button class="call-btn enhanced-call-btn"><i class="fa-brands fa-whatsapp"></i></button>
@@ -72,13 +78,23 @@
             <span class="close-btn" id="close-modal">&times;</span>
             <h2>Courier Rider Details</h2>
             <ul class="employee-details">
-                <li><strong>Employee ID:</strong> 00123</li>
-                <li><strong>First Name:</strong> John</li>
-                <li><strong>Last Name:</strong> Doe</li>
-                <li><strong>Sex:</strong> Male</li>
-                <li><strong>Age:</strong> 28</li>
-                <li><strong>Birthdate:</strong> 1997-04-15</li>
-                <li><strong>Contact Details:</strong> 091237418</li>
+                {% if courier %}
+                    <li><strong>Employee ID:</strong> {{ courier.employee_id }}</li>
+                    <li><strong>First Name:</strong> {{ courier.first_name }}</li>
+                    <li><strong>Last Name:</strong> {{ courier.last_name }}</li>
+                    <li><strong>Sex:</strong> {{ courier.gender }}</li>
+                    <li><strong>Age:</strong> {{ courier.age }}</li>
+                    <li><strong>Birthdate:</strong> {{ courier.birthdate }}</li>
+                    <li><strong>Contact Details:</strong> {{ courier.contact_number }}</li>
+                {% else %}
+                    <li><strong>Employee ID:</strong> 00123</li>
+                    <li><strong>First Name:</strong> John</li>
+                    <li><strong>Last Name:</strong> Doe</li>
+                    <li><strong>Sex:</strong> Male</li>
+                    <li><strong>Age:</strong> 28</li>
+                    <li><strong>Birthdate:</strong> 1997-04-15</li>
+                    <li><strong>Contact Details:</strong> 091237418</li>
+                {% endif %}
             </ul>
         </div>
     </div>
