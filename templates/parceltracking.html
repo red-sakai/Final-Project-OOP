@@ -15,12 +15,23 @@
     </div>
     <div class="main-content">
         <div class="sidebar">
-            <div class="card2">
-                <div class="carder">
+            <div class="card2 enhanced-card">
+                <div class="carder enhanced-carder">
                     <i class="fa-solid fa-box icon"></i>
                     <span class="text2">Tracking ID<br>{{ tracking_id }}</span>
                 </div>
-                <div class="location-card">
+                <!-- Progress Bar -->
+                <div class="progress-bar-container">
+                    <div class="progress-bar-bg">
+                        <div class="progress-bar-fill"></div>
+                    </div>
+                    <div class="progress-labels">
+                        <span>Dispatched</span>
+                        <span>In Transit</span>
+                        <span>Delivered</span>
+                    </div>
+                </div>
+                <div class="location-card enhanced-location-card">
                     <div class="loc-row">
                         <i class="fa-solid fa-location-dot start"></i>
                         <div>
@@ -42,22 +53,22 @@
             </div>
         </div>
         <div class="content-area">
-            <div class="map-container">
+            <div class="map-container enhanced-map-container">
                 <div id="map"></div>
             </div>
-            <div class="courier-card">
-                <div class="courier-avatar"></div>
+            <div class="courier-card enhanced-courier-card">
+                <div class="courier-avatar enhanced-avatar"></div>
                 <div class="courier-info">
                     <span class="courier-name">John Doe</span><br>
                     <span class="courier-role">Courier Delivery Rider</span>
                 </div>
-                <button class="call-btn"><i class="fa-brands fa-whatsapp"></i></button>
+                <button class="call-btn enhanced-call-btn"><i class="fa-brands fa-whatsapp"></i></button>
             </div>
         </div>
     </div>
     <!-- Employee Details Modal -->
     <div id="employee-modal" class="modal">
-        <div class="modal-content">
+        <div class="modal-content enhanced-modal-content">
             <span class="close-btn" id="close-modal">&times;</span>
             <h2>Courier Rider Details</h2>
             <ul class="employee-details">
