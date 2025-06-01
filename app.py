@@ -604,7 +604,20 @@ class HexaHaulApp:
             
             if tracking_id:
                 order_csv_path = os.path.join('hexahaul_db', 'hh_order.csv')
+                product_csv_path = os.path.join('hexahaul_db', 'hh_product_info.csv')
                 driver_id = None
+                product_name = None
+                # --- Read product info into a dict for fast lookup ---
+                product_lookup = {}
+                try:
+                    with open(product_csv_path, 'r', newline='', encoding='utf-8') as prodfile:
+                        prod_reader = csv.DictReader(prodfile)
+                        for prod_row in prod_reader:
+                            # Normalize key for lookup
+                            product_lookup[prod_row['Order Item Id']] = prod_row['Product Name'].strip()
+                except Exception as e:
+                    print(f"Error reading product info CSV: {e}")
+                # --- Read order info and merge product name ---
                 try:
                     with open(order_csv_path, 'r', newline='', encoding='utf-8') as csvfile:
                         reader = csv.DictReader(csvfile)
@@ -623,9 +636,11 @@ class HexaHaulApp:
                                 cust_lon = float(row['Customer Longitude'])
                                 branch_lat = float(row['Branch Latitude'])
                                 branch_lon = float(row['Branch Longitude'])
-                                # Reverse geocode for each order using actual coordinates
+                                # reverse geocode
                                 customer_place = reverse_geocode(cust_lat, cust_lon)
                                 branch_place = reverse_geocode(branch_lat, branch_lon)
+                                # Lookup product name
+                                product_name = product_lookup.get(row['Order Item Id'], None)
                                 order_data = {
                                     'orderItemId': row['Order Item Id'],
                                     'deliveryStatus': row['Delivery Status'],
@@ -638,7 +653,8 @@ class HexaHaulApp:
                                     'expectedDeliveryDate': expected_delivery_str,
                                     'customerPlace': customer_place,
                                     'branchPlace': branch_place,
-                                    'driverId': driver_id
+                                    'driverId': driver_id,
+                                    'productName': product_name
                                 }
                                 break
                 except Exception as e:
