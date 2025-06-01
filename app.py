@@ -21,6 +21,8 @@ import json
 import random
 import pandas as pd
 from werkzeug.utils import secure_filename
+import requests
+from datetime import datetime, timedelta
 
 def get_qa_pipeline():
     """Lazily load and cache the QA pipeline to avoid OOM on startup."""
@@ -568,6 +570,32 @@ class HexaHaulApp:
             tracking_id = request.args.get("tracking_id", "")
             return render_template("parcel-tracker.html", tracking_id=tracking_id)
 
+        def reverse_geocode(lat, lon):
+            """Reverse geocode using Nominatim (OpenStreetMap)"""
+            try:
+                url = f"https://nominatim.openstreetmap.org/reverse"
+                params = {
+                    "lat": lat,
+                    "lon": lon,
+                    "format": "json",
+                    "zoom": 12,
+                    "addressdetails": 1
+                }
+                headers = {
+                    "User-Agent": "HexaHaulParcelTracker/1.0"
+                }
+                resp = requests.get(url, params=params, headers=headers, timeout=5)
+                if resp.status_code == 200:
+                    data = resp.json()
+                    address = data.get("address", {})
+                    for key in ("city", "town", "village", "municipality", "county"):
+                        if key in address:
+                            return address[key]
+                    return data.get("display_name", "Unknown Location")
+            except Exception as e:
+                print(f"Reverse geocoding failed: {e}")
+            return "Unknown Location"
+
         @app.route("/parceltracking")
         def parceltracking():
             tracking_id = request.args.get("tracking_id", "")
@@ -575,7 +603,6 @@ class HexaHaulApp:
             order_data = None
             
             if tracking_id:
-                # Find the order in hh_order.csv
                 order_csv_path = os.path.join('hexahaul_db', 'hh_order.csv')
                 driver_id = None
                 try:
@@ -584,23 +611,39 @@ class HexaHaulApp:
                         for row in reader:
                             if row['Order Item Id'] == tracking_id:
                                 driver_id = int(row['driver_id'])
-                                # Store order data for the template
+                                order_date_str = row['order date (DateOrders)']
+                                try:
+                                    order_date = datetime.strptime(order_date_str, "%Y-%m-%d")
+                                except Exception:
+                                    order_date = None
+                                offset_days = 5
+                                expected_delivery_date = order_date + timedelta(days=offset_days) if order_date else None
+                                expected_delivery_str = expected_delivery_date.strftime("%Y-%m-%d") if expected_delivery_date else "Unknown"
+                                cust_lat = float(row['Customer Latitude'])
+                                cust_lon = float(row['Customer Longitude'])
+                                branch_lat = float(row['Branch Latitude'])
+                                branch_lon = float(row['Branch Longitude'])
+                                # Reverse geocode for each order using actual coordinates
+                                customer_place = reverse_geocode(cust_lat, cust_lon)
+                                branch_place = reverse_geocode(branch_lat, branch_lon)
                                 order_data = {
                                     'orderItemId': row['Order Item Id'],
                                     'deliveryStatus': row['Delivery Status'],
                                     'originBranch': row['Origin Branch'],
-                                    'branchLatitude': float(row['Branch Latitude']),
-                                    'branchLongitude': float(row['Branch Longitude']),
-                                    'customerLatitude': float(row['Customer Latitude']),
-                                    'customerLongitude': float(row['Customer Longitude']),
-                                    'orderDate': row['order date (DateOrders)'],
+                                    'branchLatitude': branch_lat,
+                                    'branchLongitude': branch_lon,
+                                    'customerLatitude': cust_lat,
+                                    'customerLongitude': cust_lon,
+                                    'orderDate': order_date_str,
+                                    'expectedDeliveryDate': expected_delivery_str,
+                                    'customerPlace': customer_place,
+                                    'branchPlace': branch_place,
                                     'driverId': driver_id
                                 }
                                 break
                 except Exception as e:
                     print(f"Error reading order CSV: {e}")
 
-                # Find the courier in hh_employee_biography.csv
                 if driver_id:
                     emp_csv_path = os.path.join('hexahaul_db', 'hh_employee_biography.csv')
                     try:
@@ -621,7 +664,6 @@ class HexaHaulApp:
                     except Exception as e:
                         print(f"Error reading employee CSV: {e}")
 
-            # Pass order_data as JSON for use in JS
             return render_template("parceltracking.html", tracking_id=tracking_id, courier=courier, order_data=order_data)
 
         @app.route("/submit-ticket", methods=["GET", "POST"])
