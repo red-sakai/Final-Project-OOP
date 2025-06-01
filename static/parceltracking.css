@@ -232,3 +232,106 @@ body {
     margin-bottom: 10px;
     font-size: 1.08em;
 }
+
+/* Enhanced Card Styles */
+.enhanced-card {
+    background: linear-gradient(135deg, #f7fafc 0%, #e3e9f3 100%);
+    box-shadow: 0 8px 32px #03335e22, 0 1.5px 6px #03335e11;
+    border-radius: 32px;
+    border: 1px solid #e0e6ed;
+    transition: box-shadow 0.2s;
+}
+.enhanced-card:hover {
+    box-shadow: 0 12px 36px #03335e33, 0 2px 8px #03335e22;
+}
+
+.enhanced-carder {
+    background: linear-gradient(90deg, #fff 60%, #eaf6fb 100%);
+    border: 1px solid #e0e6ed;
+    box-shadow: 0 2px 8px #03335e11;
+    transition: box-shadow 0.2s;
+}
+.enhanced-carder:hover {
+    box-shadow: 0 4px 16px #03335e22;
+}
+
+.enhanced-location-card {
+    background: linear-gradient(120deg, #fff 80%, #f0f7ff 100%);
+    border: 1px solid #e0e6ed;
+}
+
+/* Progress Bar */
+.progress-bar-container {
+    margin: 18px 0 10px 0;
+    width: 100%;
+}
+.progress-bar-bg {
+    background: #e0e6ed;
+    border-radius: 8px;
+    height: 10px;
+    width: 100%;
+    position: relative;
+    margin-bottom: 6px;
+}
+.progress-bar-fill {
+    background: linear-gradient(90deg, #03335E 60%, #1976d2 100%);
+    height: 100%;
+    width: 60%; /* Example: 60% progress */
+    border-radius: 8px;
+    transition: width 0.5s;
+}
+.progress-labels {
+    display: flex;
+    justify-content: space-between;
+    font-size: 12px;
+    color: #888;
+    margin-top: 2px;
+    padding: 0 2px;
+}
+
+/* Enhanced Map Container */
+.enhanced-map-container {
+    border: 1.5px solid #e0e6ed;
+    background: linear-gradient(120deg, #f7fafc 80%, #e3e9f3 100%);
+    box-shadow: 0 4px 20px #03335e11;
+    border-radius: 24px;
+    overflow: hidden;
+}
+
+/* Enhanced Courier Card */
+.enhanced-courier-card {
+    background: linear-gradient(90deg, #fff 80%, #eaf6fb 100%);
+    border: 1px solid #e0e6ed;
+    box-shadow: 0 2px 8px #03335e11;
+    border-radius: 32px;
+    transition: box-shadow 0.2s;
+}
+.enhanced-courier-card:hover {
+    box-shadow: 0 6px 18px #03335e22;
+}
+.enhanced-avatar {
+    background: linear-gradient(135deg, #e3e9f3 0%, #b3c6e0 100%);
+    border: 2px solid #03335E;
+    box-shadow: 0 2px 8px #03335e22;
+    transition: box-shadow 0.2s;
+}
+.enhanced-avatar:hover {
+    box-shadow: 0 4px 16px #03335e33;
+}
+.enhanced-call-btn {
+    background: linear-gradient(135deg, #25d366 60%, #128c7e 100%);
+    box-shadow: 0 2px 8px #25d36633;
+    transition: background 0.2s, box-shadow 0.2s;
+}
+.enhanced-call-btn:hover {
+    background: linear-gradient(135deg, #128c7e 60%, #25d366 100%);
+    box-shadow: 0 4px 16px #128c7e33;
+}
+
+/* Enhanced Modal */
+.enhanced-modal-content {
+    border: 1.5px solid #e0e6ed;
+    background: linear-gradient(120deg, #fff 80%, #f0f7ff 100%);
+    box-shadow: 0 4px 24px #03335e22;
+    border-radius: 24px;
+}
