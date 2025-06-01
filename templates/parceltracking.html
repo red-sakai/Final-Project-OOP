@@ -199,6 +199,12 @@
     </div>
     
     <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+    {% if order_data %}
+    <script>
+        // Pass order data from Flask to JavaScript
+        const orderData = {{ order_data|tojson }};
+    </script>
+    {% endif %}
     <script src="{{ url_for('static', filename='parceltracking.js') }}"></script>
 </body>
 </html>

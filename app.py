@@ -572,42 +572,57 @@ class HexaHaulApp:
         def parceltracking():
             tracking_id = request.args.get("tracking_id", "")
             courier = None
+            order_data = None
+            
             if tracking_id:
                 # Find the order in hh_order.csv
                 order_csv_path = os.path.join('hexahaul_db', 'hh_order.csv')
                 driver_id = None
                 try:
-                    with open(order_csv_path, 'r', encoding='utf-8') as f:
-                        reader = csv.DictReader(f)
+                    with open(order_csv_path, 'r', newline='', encoding='utf-8') as csvfile:
+                        reader = csv.DictReader(csvfile)
                         for row in reader:
                             if row['Order Item Id'] == tracking_id:
-                                driver_id = row.get('driver_id')
+                                driver_id = int(row['driver_id'])
+                                # Store order data for the template
+                                order_data = {
+                                    'orderItemId': row['Order Item Id'],
+                                    'deliveryStatus': row['Delivery Status'],
+                                    'originBranch': row['Origin Branch'],
+                                    'branchLatitude': float(row['Branch Latitude']),
+                                    'branchLongitude': float(row['Branch Longitude']),
+                                    'customerLatitude': float(row['Customer Latitude']),
+                                    'customerLongitude': float(row['Customer Longitude']),
+                                    'orderDate': row['order date (DateOrders)'],
+                                    'driverId': driver_id
+                                }
                                 break
                 except Exception as e:
-                    print(f"Error reading hh_order.csv: {e}")
+                    print(f"Error reading order CSV: {e}")
 
                 # Find the courier in hh_employee_biography.csv
                 if driver_id:
                     emp_csv_path = os.path.join('hexahaul_db', 'hh_employee_biography.csv')
                     try:
-                        with open(emp_csv_path, 'r', encoding='utf-8') as f:
-                            reader = csv.DictReader(f)
+                        with open(emp_csv_path, 'r', newline='', encoding='utf-8') as csvfile:
+                            reader = csv.DictReader(csvfile)
                             for row in reader:
-                                if row['Employee Id'] == driver_id:
+                                if int(row['Employee Id']) == driver_id:
                                     courier = {
-                                        'employee_id': row['Employee Id'],
+                                        'employee_id': int(row['Employee Id']),
                                         'first_name': row['First Name'],
                                         'last_name': row['Last Name'],
                                         'gender': row['Gender'],
-                                        'age': row['Age'],
+                                        'age': int(row['Age']),
                                         'birthdate': row['birth_date'],
                                         'contact_number': row['Contact Number']
                                     }
                                     break
                     except Exception as e:
-                        print(f"Error reading hh_employee_biography.csv: {e}")
+                        print(f"Error reading employee CSV: {e}")
 
-            return render_template("parceltracking.html", tracking_id=tracking_id, courier=courier)
+            # Pass order_data as JSON for use in JS
+            return render_template("parceltracking.html", tracking_id=tracking_id, courier=courier, order_data=order_data)
 
         @app.route("/submit-ticket", methods=["GET", "POST"])
         def submit_ticket():
