@@ -167,7 +167,11 @@
                         <div class="info-icon"><i class="fa-solid fa-calendar-day"></i></div>
                         <div class="info-content">
                             <h3>Delivery Estimate</h3>
-                            <p>May 17, 2025 • 9AM-5PM</p>
+                            <p>{% if order_data and order_data.expectedDeliveryDate %}
+                                    Expected: {{ order_data.expectedDeliveryDate }}
+                                {% else %}
+                                    Expected: Delivery Date
+                                {% endif %}</p>
                         </div>
                     </div>
                     <div class="info-card">
