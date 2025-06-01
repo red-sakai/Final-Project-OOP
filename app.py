@@ -327,7 +327,17 @@ class HexaHaulApp:
         @app.route("/tracking.html")
         def tracking_html():
             print("Tracking route accessed")
-            return render_template("tracking.html")
+            # Read Order Item Ids from CSV
+            csv_path = os.path.join('hexahaul_db', 'hh_order.csv')
+            order_item_ids = []
+            try:
+                with open(csv_path, 'r', encoding='utf-8') as f:
+                    reader = csv.DictReader(f)
+                    for row in reader:
+                        order_item_ids.append(row['Order Item Id'])
+            except Exception as e:
+                print(f"Error reading hh_order.csv: {e}")
+            return render_template("tracking.html", order_item_ids=order_item_ids)
 
         @app.route("/FAQ")
         @app.route("/FAQ.html")
