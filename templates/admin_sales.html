@@ -69,12 +69,12 @@
                 <div class="stat-card">
                     <i class="fas fa-money-bill-wave"></i>
                     <h3>Total Revenue</h3>
-                    <p class="count">${{ '{:,.2f}'.format(total_revenue) }}</p>
+                    <p class="count">₱{{ '{:,.2f}'.format(total_revenue) }}</p>
                 </div>
                 <div class="stat-card">
                     <i class="fas fa-hand-holding-usd"></i>
                     <h3>Total Profit</h3>
-                    <p class="count">${{ '{:,.2f}'.format(total_profit) }}</p>
+                    <p class="count">₱{{ '{:,.2f}'.format(total_profit) }}</p>
                 </div>
                 <div class="stat-card">
                     <i class="fas fa-shopping-cart"></i>
@@ -119,10 +119,10 @@
                             <td>{{ sale.order_item_id }}</td>
                             <td>{{ sale.payment_type }}</td>
                             <td>{{ sale.order_date.strftime('%Y-%m-%d') }}</td>
-                            <td>${{ '{:,.2f}'.format(sale.product_price) }}</td>
+                            <td>₱{{ '{:,.2f}'.format(sale.product_price) }}</td>
                             <td>{{ sale.order_item_quantity }}</td>
-                            <td>${{ '{:,.2f}'.format(sale.order_item_total) }}</td>
-                            <td>${{ '{:,.2f}'.format(sale.order_profit_per_order) }}</td>
+                            <td>₱{{ '{:,.2f}'.format(sale.order_item_total) }}</td>
+                            <td>₱{{ '{:,.2f}'.format(sale.order_profit_per_order) }}</td>
                             <td><span class="status {{ 'profitable' if sale.order_profit_per_order > 0 else 'loss' }}">
                                 {{ 'Profitable' if sale.order_profit_per_order > 0 else 'Loss' }}
                             </span></td>
@@ -163,7 +163,7 @@
                     <input type="date" id="orderDate" name="order_date" required>
                 </div>
                 <div class="form-group">
-                    <label for="productPrice">Product Price ($):</label>
+                    <label for="productPrice">Product Price (₱):</label>
                     <input type="number" id="productPrice" name="product_price" step="0.01" min="0" required>
                 </div>
                 <div class="form-group">
