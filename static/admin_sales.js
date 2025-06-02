@@ -89,23 +89,23 @@ document.addEventListener('DOMContentLoaded', function() {
         let totalProfit = 0;
         
         visibleRows.forEach(row => {
-            // Parse sales value (assuming it's in the 8th column)
-            const salesStr = row.cells[7].textContent.replace('$', '').replace(/,/g, '');
-            const sales = parseFloat(salesStr);
-            
-            // Parse profit value (assuming it's in the 9th column)
-            const profitStr = row.cells[8].textContent.replace('$', '').replace(/,/g, '');
+            // Parse revenue value (assuming it's in the 7th column, index 6)
+            const revenueStr = row.cells[6].textContent.replace('₱', '').replace(/,/g, '');
+            const revenue = parseFloat(revenueStr);
+
+            // Parse profit value (assuming it's in the 8th column, index 7)
+            const profitStr = row.cells[7].textContent.replace('₱', '').replace(/,/g, '');
             const profit = parseFloat(profitStr);
-            
-            if (!isNaN(sales)) totalRevenue += sales;
+
+            if (!isNaN(revenue)) totalRevenue += revenue;
             if (!isNaN(profit)) totalProfit += profit;
         });
-        
+
         // Update stats in the UI
-        document.querySelector('.stat-card:nth-child(1) .count').textContent = '$' + totalRevenue.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2});
-        document.querySelector('.stat-card:nth-child(2) .count').textContent = '$' + totalProfit.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2});
+        document.querySelector('.stat-card:nth-child(1) .count').textContent = '₱' + totalRevenue.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2});
+        document.querySelector('.stat-card:nth-child(2) .count').textContent = '₱' + totalProfit.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2});
         document.querySelector('.stat-card:nth-child(3) .count').textContent = visibleRows.length;
-        
+
         // Calculate profit margin
         const profitMargin = totalRevenue > 0 ? (totalProfit / totalRevenue * 100) : 0;
         document.querySelector('.stat-card:nth-child(4) .count').textContent = profitMargin.toFixed(1) + '%';
