@@ -452,6 +452,22 @@ class HexaHaulApp:
         def forgot_password():
             if request.method == "POST":
                 email = request.form.get("email")
+                # --- Check if email exists in CSV ---
+                csv_path = os.path.join('hexahaul_db', 'hh_user-login.csv')
+                email_found = False
+                try:
+                    with open(csv_path, 'r', encoding='utf-8') as csvfile:
+                        reader = csv.DictReader(csvfile)
+                        for row in reader:
+                            if row.get('Email Address', '').strip().lower() == email.strip().lower():
+                                email_found = True
+                                break
+                except Exception as e:
+                    print(f"Error reading user CSV: {e}")
+                if not email_found:
+                    flash("Email not found in user records", "error")
+                    return render_template("forgot-password.html", error="Email not found in user records")
+                # --- If found, proceed as before ---
                 otp = user_password_reset_manager.generate_otp(email)
                 user_password_reset_manager.send_otp(email, otp)
                 flash("OTP sent to your email. Please check your inbox.")
