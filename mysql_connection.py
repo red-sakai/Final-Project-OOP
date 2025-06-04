@@ -6,6 +6,10 @@ from sqlalchemy.orm import sessionmaker, relationship
 from datetime import datetime, date
 import warnings
 import sys
+import random
+import os
+import traceback 
+from pathlib import Path
 
 # Suppress specific warnings
 warnings.filterwarnings('ignore')
@@ -22,7 +26,7 @@ connection = {
     'database': 'schema_name' # Input mysql schema/database
 }
 
-engine = create_engine(f"mysql+mysqlconnector://{connection['username']}:{connection['password']}@{connection['host']}/{connection['database']}", echo=False)
+engine = create_engine(f"mysql+mysqldb://{connection['username']}:{connection['password']}@{connection['host']}/{connection['database']}", echo=False)
 
 Session = sessionmaker(bind=engine)
 session = Session()
