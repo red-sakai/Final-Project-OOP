@@ -88,6 +88,88 @@ class Sales(Base):
 class OrderSystem:
     def __init__(self):
         self.session = session
+        self.csv_path = "stuff/hexahaul_db"
+
+        # Define mappings for CSV column names
+        self.order_column_mapping = {
+            'order_id': 'Order Item Id',
+            'delivery_status': 'Delivery Status',
+            'late_delivery_risk': 'Late_delivery_risk',
+            'origin_branch': 'Origin Branch',
+            'branch_latitude': 'Branch Latitude',
+            'branch_longitude': 'Branch Longitude',
+            'customer_latitude': 'Customer Latitude',
+            'customer_longitude': 'Customer Longitude',
+            'order_date': 'order date (DateOrders)',
+            'driver_id': 'driver_id'
+        }
+
+        self.customer_column_mapping = {
+            'order_id': 'Order Item Id',
+            'fname': 'Customer Fname',
+            'lname': 'Customer Lname',
+            'customer_id': 'Customer Id',
+            'customer_city': 'Customer City',
+            'customer_country': 'Customer Country',
+            'customer_segment': 'Customer Segment'
+        }
+
+        self.product_column_mapping = {
+            'order_id': 'Order Item Id',
+            'product_name': 'Product Name',
+            'product_category_id': 'Product Category Id',
+            'product_category_name': 'Product Category Name',
+            'dep_id': 'Department Id',
+            'dep_name': 'Department Name'
+        }
+
+        self.sales_column_mapping = {
+            'order_id': 'Order Item Id',
+            'type': 'Type',
+            'benefit_per_order': 'Benefit per order',
+            'sales_per_customer': 'Sales per customer',
+            'order_discount': 'Order Item Discount Rate',
+            'profit_ratio': 'Order Item Profit Ratio',
+            'order_quantity': 'Order Item Quantity',
+            'sales': 'Sales',
+            'order_item_total': 'Order Item Total',
+            'order_profit': 'Order Profit Per Order',
+            'product_price': 'Product Price',
+            'date': 'order date (DateOrders)'
+        }
+
+    def _read_csv(self, file_name):
+        """Read data from a CSV file."""
+        file_path = os.path.join(self.csv_path, file_name)
+        if os.path.exists(file_path):
+            return pd.read_csv(file_path)
+        return pd.DataFrame()
+
+    def _write_csv(self, file_name, data):
+        """Write data to a CSV file."""
+        file_path = os.path.join(self.csv_path, file_name)
+        data.to_csv(file_path, index=False)
+
+    def _update_csv(self, file_name, new_data):
+        """Update the CSV file with new data."""
+        df = self._read_csv(file_name)
+        if not df.empty:
+            # Update existing records by matching 'Order Item Id'
+            for index, row in new_data.iterrows():
+                df.loc[df['Order Item Id'] == row['Order Item Id'], row.index] = row
+            # Append new records if they don't exist yet
+            df = pd.concat([df, new_data[~new_data['Order Item Id'].isin(df['Order Item Id'])]], ignore_index=True)
+        else:
+            df = new_data
+
+        self._write_csv(file_name, df)
+
+    def _map_keys_to_columns(self, data: dict, mapping: dict) -> dict:
+        """
+        Map dictionary keys to CSV column names according to mapping.
+        Only keys present in mapping are included.
+        """
+        return {mapping[key]: value for key, value in data.items() if key in mapping}
     
     def add_complete_order_record(self, order_data: dict, user_data: dict, product_data: dict, sales_data: dict):
         """Add a complete order record with all related information"""
@@ -95,6 +177,11 @@ class OrderSystem:
             order_id = self._create_new_order(order_data, user_data, product_data, sales_data)
             self.session.commit()
             print(f"Order {order_id} successfully created!")
+            # Transform and update CSV files
+            self._update_csv("hh_order.csv", pd.DataFrame([self._map_keys_to_columns(order_data, self.order_column_mapping)]))
+            self._update_csv("hh_customer_info.csv", pd.DataFrame([self._map_keys_to_columns(user_data, self.customer_column_mapping)]))
+            self._update_csv("hh_product_info.csv", pd.DataFrame([self._map_keys_to_columns(product_data, self.product_column_mapping)]))
+            self._update_csv("hh_sales.csv", pd.DataFrame([self._map_keys_to_columns(sales_data, self.sales_column_mapping)]))
             return order_id
         except Exception as e:
             self.session.rollback()
@@ -195,6 +282,24 @@ class OrderSystem:
                 # Flush to ensure order of operations
                 self.session.flush()
                 
+                # Update CSV files with new order id data
+                self._update_csv("hh_order.csv", pd.DataFrame([self._map_keys_to_columns(order_data, self.order_column_mapping)]))
+                self._update_csv("hh_customer_info.csv", pd.DataFrame([self._map_keys_to_columns(user_data, self.customer_column_mapping)]))
+                self._update_csv("hh_product_info.csv", pd.DataFrame([self._map_keys_to_columns(product_data, self.product_column_mapping)]))
+                self._update_csv("hh_sales.csv", pd.DataFrame([self._map_keys_to_columns(sales_data, self.sales_column_mapping)]))
+                
+                # Remove old order data from CSVs as well
+                for file_name in [
+                    "hh_order.csv",
+                    "hh_customer_info.csv",
+                    "hh_product_info.csv",
+                    "hh_sales.csv"
+                ]:
+                    df = self._read_csv(file_name)
+                    if not df.empty:
+                        df = df[df['Order Item Id'] != original_order_id]
+                        self._write_csv(file_name, df)
+                
             else:
                 # No order ID change, just update existing records
                 print("Updating existing records...")
@@ -224,6 +329,12 @@ class OrderSystem:
                     for key, value in sales_data.items():
                         if hasattr(sales, key) and key != 'order_id':
                             setattr(sales, key, value)
+                
+                # Update CSV files with updated data
+                self._update_csv("hh_order.csv", pd.DataFrame([self._map_keys_to_columns(order_data, self.order_column_mapping)]))
+                self._update_csv("hh_customer_info.csv", pd.DataFrame([self._map_keys_to_columns(user_data, self.customer_column_mapping)]))
+                self._update_csv("hh_product_info.csv", pd.DataFrame([self._map_keys_to_columns(product_data, self.product_column_mapping)]))
+                self._update_csv("hh_sales.csv", pd.DataFrame([self._map_keys_to_columns(sales_data, self.sales_column_mapping)]))
             
             # Commit all changes
             self.session.commit()
@@ -235,14 +346,25 @@ class OrderSystem:
             print(f"Error updating order: {e}")
             raise
 
+
+
     def delete_order_record(self, order_id: str):
-        """Delete complete order record"""
         try:
             order = self.session.query(CustomerOrder).filter_by(order_id=order_id).first()
             if order:
                 self.session.delete(order)  # Cascade will handle related records
                 self.session.commit()
                 print(f"Order {order_id} successfully deleted!")
+                for file_name in [
+                    "hh_order.csv",
+                    "hh_customer_info.csv",
+                    "hh_product_info.csv",
+                    "hh_sales.csv"
+                ]:
+                    df = self._read_csv(file_name)
+                    if not df.empty:
+                        df = df[df['Order Item Id'] != order_id]
+                        self._write_csv(file_name, df)
                 return True
             else:
                 print(f"Order {order_id} not found!")
@@ -352,7 +474,7 @@ def get_branch_info():
     valid_branches = list(branches_dict.keys())
     normalized_branches = {b.lower(): b for b in valid_branches}
 
-    print("📍 Available Branches:")
+    print("Available Branches:")
     for i, branch in enumerate(valid_branches, 1):
         print(f"  {i}. {branch}")
     print()
@@ -378,7 +500,7 @@ def get_branch_info():
 
 def get_customer_location():
     """Get customer location coordinates"""
-    print("📍 Customer Location:")
+    print("Customer Location:")
     
     while True:
         try:
@@ -405,7 +527,7 @@ def get_customer_location():
 
 def get_customer_info():
     """Get complete customer information"""
-    print("👤 Customer Information:")
+    print("Customer Information:")
     
     while True:
         fname = input("First Name: ").strip().title()
@@ -454,7 +576,7 @@ def get_customer_info():
 
 def get_product_data():
     """Get product information with database validation"""
-    print("📦 Product Information:")
+    print("Product Information:")
     
     # Get existing products
     existing_products_df = pd.read_sql("SELECT DISTINCT `Product Name` FROM hh_product_info", con=engine)
@@ -579,7 +701,7 @@ def _handle_department_info():
 
 def get_sales_data():
     """Get sales/order information"""
-    print("💰 Sales Information:")
+    print("Sales Information:")
     
     # Order type
     order_type = input("Order Type (e.g., TRANSFER): ").strip().upper() or "TRANSFER"
@@ -692,7 +814,7 @@ def get_existing_order_for_update(order_id):
         statuses = ["Order Placed", "In Transit", "Delivered", "Cancelled"]
         print(f"Available statuses: {', '.join(statuses)}")
         while True:
-            new_status = input("Enter new delivery status: ").strip()
+            new_status = input("Enter new delivery status: ").strip().title()
             if new_status in statuses:
                 delivery_status = new_status
                 break
@@ -979,7 +1101,7 @@ def main():
     
     try:
         while True:
-            print("\n🏪 Order Management System")
+            print("\nOrder Management System")
             print("1. Create New Order")
             print("2. Update existing Order")
             print("3. View Order")
@@ -1029,29 +1151,29 @@ def main():
                 if order:
                     print(f"\n{order}")
                     if order.customer_info:
-                        print(f"👤 {order.customer_info}")
+                        print(f"{order.customer_info}")
                     if order.product_info:
-                        print(f"📦 {order.product_info}")
+                        print(f"{order.product_info}")
                     if order.sales_info:
-                        print(f"💰 {order.sales_info}")
+                        print(f"{order.sales_info}")
                 else:
                     print("Order not found")
             
             elif choice == '4':
                 order_id = input("Enter Order ID to delete: ").strip()
-                confirm = input(f"⚠️  Confirm deletion of order {order_id}? (y/n): ").lower().strip()
+                confirm = input(f"Confirm deletion of order {order_id}? (y/n): ").lower().strip()
                 if confirm in ['y', 'yes']:
                     order_system.delete_order_record(order_id)
             
             elif choice == '5':
-                print("👋 Goodbye!")
+                print("Goodbye!")
                 break
             
             else:
                 print("Invalid option. Please choose 1-4.")
                 
     except KeyboardInterrupt:
-        print("\n\n👋 Program interrupted. Goodbye!")
+        print("\n\nProgram interrupted. Goodbye!")
     
     except Exception as e:
         print(f"Unexpected error: {e}")
