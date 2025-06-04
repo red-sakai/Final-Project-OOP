@@ -78,41 +78,20 @@ document.addEventListener('DOMContentLoaded', function() {
     passwordInput.addEventListener('input', checkPasswords);
     confirmInput.addEventListener('input', checkPasswords);
 
-    form.addEventListener('submit', function(e) {
-        e.preventDefault();
-        
-        if (!checkPasswords()) {
-            return;
-        }
+    // REMOVE the AJAX fetch submit handler and let the form submit normally
+    // form.addEventListener('submit', function(e) {
+    //     e.preventDefault();
+    //     if (!checkPasswords()) {
+    //         return;
+    //     }
+    //     // ...AJAX code...
+    // });
 
-        // Submit form data to update password
-        const formData = new FormData(form);
-        
-        fetch('/admin-new-password', {
-            method: 'POST',
-            headers: {
-                'X-Requested-With': 'XMLHttpRequest',
-                'Accept': 'application/json'
-            },
-            body: formData
-        })
-        .then(response => {
-            if (!response.ok) {
-                throw new Error(`HTTP error! status: ${response.status}`);
-            }
-            return response.json();
-        })
-        .then(data => {
-            if (data.success) {
-                showSuccessPopup();
-            } else {
-                showErrorPopup(data.message || 'Failed to update password');
-            }
-        })
-        .catch(error => {
-            console.error('Error:', error);
-            showErrorPopup('An error occurred while updating the password: ' + error.message);
-        });
+    // Instead, just validate and let the form submit if valid
+    form.addEventListener('submit', function(e) {
+        if (!checkPasswords()) {
+            e.preventDefault();
+        }
     });
 
     function showSuccessPopup() {
