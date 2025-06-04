@@ -452,6 +452,22 @@ class HexaHaulApp:
         def forgot_password():
             if request.method == "POST":
                 email = request.form.get("email")
+                # --- Check if email exists in CSV ---
+                csv_path = os.path.join('hexahaul_db', 'hh_user-login.csv')
+                email_found = False
+                try:
+                    with open(csv_path, 'r', encoding='utf-8') as csvfile:
+                        reader = csv.DictReader(csvfile)
+                        for row in reader:
+                            if row.get('Email Address', '').strip().lower() == email.strip().lower():
+                                email_found = True
+                                break
+                except Exception as e:
+                    print(f"Error reading user CSV: {e}")
+                if not email_found:
+                    flash("Email not found in user records", "error")
+                    return render_template("forgot-password.html", error="Email not found in user records")
+                # --- If found, proceed as before ---
                 otp = user_password_reset_manager.generate_otp(email)
                 user_password_reset_manager.send_otp(email, otp)
                 flash("OTP sent to your email. Please check your inbox.")
@@ -1745,11 +1761,13 @@ class HexaHaulApp:
                 flash('All fields are required.', 'error')
                 return redirect(url_for('user_signup_html'))
 
-            new_user = [full_name, email, username, password]
-            
+            # Always include default profile picture path
+            default_profile_pic = 'images/pfp.png'
+            new_user = [full_name, email, username, password, default_profile_pic]
+
             import os
             csv_path = os.path.join('hexahaul_db', 'hh_user-login.csv')
-            
+
             try:
                 # Ensure file ends with newline before appending
                 with open(csv_path, 'r+', encoding='utf-8') as f:
@@ -1759,20 +1777,20 @@ class HexaHaulApp:
                         last_char = f.read(1)
                         if last_char != '\n':  # If last character is not newline
                             f.write('\n')  # Add newline
-        
-        # Now append the new user
+
+                # Now append the new user with profile picture path
                 with open(csv_path, 'a', newline='', encoding='utf-8') as csvfile:
                     writer = csv.writer(csvfile)
                     writer.writerow(new_user)
-                    
+
                 print("DEBUG - Successfully wrote to CSV")
                 flash('User added successfully!', 'success')
                 return redirect(url_for('user_signup_html')) 
-                
+
             except Exception as e:
                 print(f"ERROR writing to CSV: {e}")
                 flash(f'Error adding user: {str(e)}', 'error')
-                
+
             return redirect(url_for('user_login_html'))
                 
         # New route to handle profile updates
@@ -1878,6 +1896,7 @@ class HexaHaulApp:
         self.app.debug = True
         print("Flask app routes:")
         print(self.app.url_map)
+        
         
         template_dir = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'templates')
         if os.path.exists(template_dir):
