@@ -518,7 +518,16 @@ class HexaHaulApp:
                 new_password = request.form.get('new_password')
                 confirm_password = request.form.get('confirm_password')
                 if new_password == confirm_password and len(new_password) >= 8:
-                    flash("Password reset successful. Please login.")
+                    # --- Update admin password in CSV ---
+                    csv_path = os.path.join('hexahaul_db', 'hh_admins.csv')
+                    try:
+                        df = pd.read_csv(csv_path)
+                        # Update the password for the row with matching email
+                        df.loc[df['admin_email'].str.strip().str.lower() == email.strip().lower(), 'admin_password'] = new_password
+                        df.to_csv(csv_path, index=False)
+                        flash("Password reset successful. Please login.")
+                    except Exception as e:
+                        flash(f"Error updating admin password: {e}", "error")
                     return redirect(url_for('admin_login'))
                 else:
                     flash("Passwords do not match or do not meet requirements.")
