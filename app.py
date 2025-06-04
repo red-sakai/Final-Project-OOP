@@ -812,6 +812,18 @@ class HexaHaulApp:
         @app.route("/change-password", methods=["GET", "POST"])
         def change_password():
             if request.method == "POST":
+                email = request.args.get("email") or request.form.get("email")
+                new_password = request.form.get("new_password")
+                if email and new_password:
+                    csv_path = os.path.join('hexahaul_db', 'hh_user-login.csv')
+                    try:
+                        df = pd.read_csv(csv_path)
+                        # Update the password for the row with matching email
+                        df.loc[df['Email Address'].str.strip().str.lower() == email.strip().lower(), 'Password'] = new_password
+                        df.to_csv(csv_path, index=False)
+                        flash("Password updated successfully. Please login.", "success")
+                    except Exception as e:
+                        flash(f"Error updating password: {e}", "error")
                 return redirect(url_for("user_login_html"))
             return render_template("change-password.html")
 
@@ -1879,6 +1891,7 @@ class HexaHaulApp:
                     print(f"Error updating profile image in CSV: {e}")
 
                 image_url = url_for('static', filename=relative_path)
+               
                 if request.is_json or request.accept_mimetypes['application/json']:
                     return jsonify(success=True, image_url=image_url)
                 flash('Profile image updated!', 'success')
