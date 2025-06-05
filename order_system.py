@@ -88,7 +88,7 @@ class Sales(Base):
 class OrderSystem:
     def __init__(self):
         self.session = session
-        self.csv_path = "stuff/hexahaul_db"
+        self.csv_path = "hexahaul_db"
 
         # Define mappings for CSV column names
         self.order_column_mapping = {
