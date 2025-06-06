@@ -38,3 +38,37 @@
     font-size: 13px;
     color: #888;
 }
+.back-dashboard {
+    margin: 24px 0 8px 0;
+    display: flex;
+    justify-content: center;
+}
+.animated-btn {
+    background: #f5f8fb;
+    color: #1579c0;
+    border: 2px solid #1579c0;
+    border-radius: 6px;
+    padding: 10px 20px;
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.2s, color 0.2s, box-shadow 0.2s, transform 0.2s;
+    box-shadow: 0 2px 8px rgba(21,121,192,0.07);
+    outline: none;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+.animated-btn:hover, .animated-btn.bounce {
+    background: #1579c0;
+    color: #fff;
+    box-shadow: 0 4px 16px rgba(21,121,192,0.13);
+    animation: bounce 0.4s;
+}
+@keyframes bounce {
+    0%   { transform: scale(1); }
+    30%  { transform: scale(1.08); }
+    50%  { transform: scale(0.97); }
+    70%  { transform: scale(1.03); }
+    100% { transform: scale(1); }
+}
