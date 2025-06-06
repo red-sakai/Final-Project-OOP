@@ -69,11 +69,7 @@
                     </tr>
                     <tr>
                         <td colspan="8" style="background:#f9f9f9;">
-                            <form method="post" action="{{ url_for('admin_support_ticket_reply') }}" style="display:flex;align-items:center;gap:10px;">
-                                <input type="hidden" name="ticket_id" value="{{ ticket.ticket_id }}">
-                                <textarea name="reply_message" rows="2" placeholder="Type your reply..." style="flex:1;resize:vertical;" required></textarea>
-                                <button type="submit" style="padding:6px 16px;background:#1579c0;color:#fff;border:none;border-radius:4px;cursor:pointer;">Send Reply</button>
-                            </form>
+                            <a href="{{ url_for('admin_support_ticket_reply_page', ticket_id=ticket.ticket_id) }}" class="reply-btn" style="padding:6px 16px;background:#1579c0;color:#fff;border:none;border-radius:4px;cursor:pointer;text-decoration:none;">Reply</a>
                             {% if ticket.admin_reply %}
                                 <div style="margin-top:6px;font-size:14px;color:#1579c0;">
                                     <strong>Admin Reply:</strong> {{ ticket.admin_reply }}<br>
