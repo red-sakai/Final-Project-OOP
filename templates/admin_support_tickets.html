@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Support Tickets | Admin</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='admin-dashboard.css') }}">
+    <style>
+        .support-tickets-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 30px;
+            background: #fff;
+            border-radius: 12px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+            overflow: hidden;
+        }
+        .support-tickets-table th, .support-tickets-table td {
+            padding: 12px 16px;
+            border-bottom: 1px solid #eaeef2;
+            text-align: left;
+        }
+        .support-tickets-table th {
+            background: #f5f8fb;
+            color: #03335e;
+            font-weight: 600;
+        }
+        .support-tickets-table tr:last-child td {
+            border-bottom: none;
+        }
+        .support-tickets-table td {
+            font-size: 15px;
+            color: #333;
+        }
+        .support-tickets-table .ticket-title {
+            font-weight: 600;
+            color: #1579c0;
+        }
+        .support-tickets-table .ticket-desc {
+            max-width: 300px;
+            white-space: pre-line;
+            word-break: break-word;
+        }
+        .support-tickets-table .ticket-id {
+            font-family: monospace;
+            font-size: 13px;
+            color: #888;
+        }
+    </style>
+</head>
+<body>
+    <div class="admin-container">
+        <div class="sidebar">
+            <div class="logo">
+                <img src="{{ url_for('static', filename='images/HexaHaul icon transparent.png') }}" alt="HexaHaul Logo" class="logo-icon">
+                <h2>HexaHaul</h2>
+            </div>
+            <div class="user-profile">
+                <img src="{{ url_for('static', filename='images/profile-icon.png') }}" alt="Admin Profile">
+                <div class="user-details">
+                    <span class="user-name">{{ admin_name }}</span>
+                    <span class="user-role">Administrator</span>
+                </div>
+            </div>
+            <div class="logout">
+                <a href="javascript:void(0);" id="logout-btn"><i class="fas fa-sign-out-alt"></i> Logout</a>
+            </div>
+        </div>
+        <div class="main-content">
+            <div class="header">
+                <h1><i class="fas fa-ticket-alt"></i> Support Tickets</h1>
+            </div>
+            <table class="support-tickets-table">
+                <thead>
+                    <tr>
+                        <th>Ticket ID</th>
+                        <th>User Email</th>
+                        <th>Title</th>
+                        <th>Description</th>
+                        <th>Error Code</th>
+                        <th>Tracking ID</th>
+                        <th>Submitted</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for ticket in tickets %}
+                    <tr>
+                        <td class="ticket-id">{{ ticket.ticket_id }}</td>
+                        <td>{{ ticket.user_email }}</td>
+                        <td class="ticket-title">{{ ticket.ticket_title }}</td>
+                        <td class="ticket-desc">{{ ticket.ticket_description }}</td>
+                        <td>{{ ticket.error_code }}</td>
+                        <td>{{ ticket.tracking_id }}</td>
+                        <td>{{ ticket.timestamp }}</td>
+                    </tr>
+                    {% else %}
+                    <tr>
+                        <td colspan="7" style="text-align:center; color:#888;">No tickets found.</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <script src="{{ url_for('static', filename='admin-dashboard.js') }}"></script>
+</body>
+</html>
