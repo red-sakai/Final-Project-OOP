@@ -1881,6 +1881,7 @@ class HexaHaulApp:
         @app.route('/update-profile', methods=['POST'])
        
         def update_profile():
+
             # Make sure user is logged in
 
             if 'user_email' not in session:
@@ -2083,6 +2084,30 @@ Admin Reply:
                 flash(f'Error sending reply email: {e}', 'error')
 
             return redirect(url_for('admin_support_tickets'))
+
+        @app.route('/admin/support-tickets/reply/<ticket_id>', methods=['GET'])
+        def admin_support_ticket_reply_page(ticket_id):
+            # Check if admin is logged in
+            if 'admin_id' not in session:
+                flash('Please login to access the admin dashboard', 'error')
+                return redirect(url_for('admin_login'))
+
+            csv_path = os.path.join('hexahaul_db', 'hh_support_tickets.csv')
+            ticket = None
+            try:
+                import pandas as pd
+                df = pd.read_csv(csv_path)
+                row = df[df['ticket_id'] == ticket_id]
+                if not row.empty:
+                    ticket = row.iloc[0].to_dict()
+            except Exception as e:
+                print(f"Error reading support ticket for reply: {e}")
+
+            if not ticket:
+                flash('Ticket not found.', 'error')
+                return redirect(url_for('admin_support_tickets'))
+
+            return render_template('admin_support_ticket_reply.html', ticket=ticket)
 
     def register_blueprints(self):
         self.app.register_blueprint(analytics_bp)
