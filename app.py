@@ -1930,7 +1930,7 @@ class HexaHaulApp:
                 return jsonify({'success': True})
             
             except Exception as e:
-                return jsonify({'success': False, 'message': str(e)})
+                return jsonify({'success': False, 'message': str(e)}), 500
         
         UPLOAD_FOLDER = os.path.join('static', 'user_images')
         ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg', 'gif'}
@@ -2179,3 +2179,7 @@ def vehicles_deployed_graph():
 if __name__ == "__main__":
     app_instance = HexaHaulApp()
     app_instance.run()
+
+# This allows Gunicorn to find 'app' when running 'gunicorn app:app'
+app_instance = HexaHaulApp()
+app = app_instance.app
