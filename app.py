@@ -23,7 +23,7 @@ import pandas as pd
 from werkzeug.utils import secure_filename
 import requests
 from datetime import datetime, timedelta
-import uuid  # <-- Add this import at the top
+import uuid
 
 def get_qa_pipeline():
     """Lazily load and cache the QA pipeline to avoid OOM on startup."""
@@ -821,6 +821,35 @@ class HexaHaulApp:
                 
                 # Send the email
                 self.mail.send(msg)
+                
+                # --- Append ticket to CSV ---
+                ticket_id = str(uuid.uuid4())
+                timestamp = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+                csv_path = os.path.join('hexahaul_db', 'hh_support_tickets.csv')
+                ticket_row = [
+                    ticket_id,
+                    user_email,
+                    ticket_title,
+                    ticket_description,
+                    error_code,
+                    tracking_id,
+                    timestamp,
+                    "",  # admin_reply
+                    ""   # reply_timestamp
+                ]
+                # Write header if file is empty
+                write_header = not os.path.exists(csv_path) or os.path.getsize(csv_path) == 0
+                try:
+                    with open(csv_path, 'a', newline='', encoding='utf-8') as csvfile:
+                        writer = csv.writer(csvfile)
+                        if write_header:
+                            writer.writerow([
+                                "ticket_id","user_email","ticket_title","ticket_description",
+                                "error_code","tracking_id","timestamp","admin_reply","reply_timestamp"
+                            ])
+                        writer.writerow(ticket_row)
+                except Exception as e:
+                    print(f"Error writing support ticket to CSV: {e}")
                 
                 # Flash success message
                 flash('Your support ticket has been submitted. Our team will get back to you shortly.', 'success')
@@ -1856,6 +1885,7 @@ class HexaHaulApp:
                 # Find the row with the current email
                 user_row = df[df['Email Address'] == current_email]
                 
+               
                 if len(user_row) == 0:
                     return jsonify({'success': False, 'message': 'User not found'})
                 
