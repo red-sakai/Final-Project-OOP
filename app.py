@@ -24,6 +24,7 @@ from werkzeug.utils import secure_filename
 import requests
 from datetime import datetime, timedelta
 import uuid
+from markupsafe import Markup
 
 def get_qa_pipeline():
     """Lazily load and cache the QA pipeline to avoid OOM on startup."""
@@ -1878,6 +1879,7 @@ class HexaHaulApp:
                 
         # New route to handle profile updates
         @app.route('/update-profile', methods=['POST'])
+       
         def update_profile():
             # Make sure user is logged in
 
@@ -1996,6 +1998,91 @@ class HexaHaulApp:
 
             admin_name = session.get('admin_name', 'Admin User')
             return render_template('admin_support_tickets.html', tickets=tickets, admin_name=admin_name)
+
+        @app.route('/admin/support-tickets/reply', methods=['POST'])
+        def admin_support_ticket_reply():
+            ticket_id = request.form.get('ticket_id')
+            reply_message = request.form.get('reply_message')
+            if not ticket_id or not reply_message:
+                flash('Missing ticket ID or reply message.', 'error')
+                return redirect(url_for('admin_support_tickets'))
+
+            csv_path = os.path.join('hexahaul_db', 'hh_support_tickets.csv')
+            updated_rows = []
+            user_email = None
+            ticket_title = None
+            ticket_description = None
+
+            # Read and update the CSV
+            try:
+                import pandas as pd
+                df = pd.read_csv(csv_path)
+                idx = df.index[df['ticket_id'] == ticket_id].tolist()
+                if not idx:
+                    flash('Ticket not found.', 'error')
+                    return redirect(url_for('admin_support_tickets'))
+                row_idx = idx[0]
+                user_email = df.at[row_idx, 'user_email']
+                ticket_title = df.at[row_idx, 'ticket_title']
+                ticket_description = df.at[row_idx, 'ticket_description']
+                df.at[row_idx, 'admin_reply'] = reply_message
+                from datetime import datetime
+                reply_timestamp = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+                df.at[row_idx, 'reply_timestamp'] = reply_timestamp
+                df.to_csv(csv_path, index=False)
+            except Exception as e:
+                flash(f'Error updating ticket: {e}', 'error')
+                return redirect(url_for('admin_support_tickets'))
+
+            # Send reply email using existing styled template
+            try:
+                logo_url = "https://i.imgur.com/upLAusA.png"
+                msg = Message(
+                    subject=f"HexaHaul Support Reply: {ticket_title}",
+                    sender="hexahaulprojects@gmail.com",
+                    recipients=[user_email]
+                )
+                msg.html = f"""
+                <div style="background:#f7f7f7;padding:40px 0;">
+                  <div style="max-width:600px;margin:0 auto;background:#fff;border-radius:8px;overflow:hidden;box-shadow:0 2px 8px rgba(0,0,0,0.05);">
+                    <div style="background:#03335e;padding:24px 0;text-align:center;">
+                      <img src="{logo_url}" alt="HexaHaul Logo" style="width:64px;height:64px;margin-bottom:8px;">
+                      <h2 style="margin:0;font-family:sans-serif;color:#fff;">Support Ticket Reply</h2>
+                    </div>
+                    <div style="padding:32px 24px;">
+                      <p style="font-family:sans-serif;color:#333;font-size:16px;">
+                        <strong>Your Ticket:</strong> {ticket_title}<br>
+                        <span style="color:#888;font-size:14px;">{{ ticket_id }}</span>
+                      </p>
+                      <div style="margin:16px 0;padding:16px;background:#f9f9f9;border-radius:4px;">
+                        <strong>Description:</strong><br>
+                        <span style="white-space:pre-line;">{ticket_description}</span>
+                      </div>
+                      <div style="margin:16px 0;padding:16px;background:#eaf6fb;border-radius:4px;">
+                        <strong>Admin Reply:</strong><br>
+                        <span style="white-space:pre-line;">{reply_message}</span>
+                      </div>
+                    </div>
+                    <div style="padding:16px 24px 24px 24px;background:#f0f7ff;text-align:center;font-family:sans-serif;font-size:14px;color:#555;">
+                      <p style="margin:0;">If you have further questions, please reply to this email or submit a new ticket.</p>
+                    </div>
+                  </div>
+                </div>
+                """
+                msg.body = f"""Your support ticket has received a reply.
+
+Ticket: {ticket_title}
+Description: {ticket_description}
+
+Admin Reply:
+{reply_message}
+"""
+                self.mail.send(msg)
+                flash('Reply sent successfully!', 'success')
+            except Exception as e:
+                flash(f'Error sending reply email: {e}', 'error')
+
+            return redirect(url_for('admin_support_tickets'))
 
     def register_blueprints(self):
         self.app.register_blueprint(analytics_bp)
