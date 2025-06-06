@@ -4,48 +4,7 @@
     <meta charset="UTF-8">
     <title>Support Tickets | Admin</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='admin-dashboard.css') }}">
-    <style>
-        .support-tickets-table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: 30px;
-            background: #fff;
-            border-radius: 12px;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
-            overflow: hidden;
-        }
-        .support-tickets-table th, .support-tickets-table td {
-            padding: 12px 16px;
-            border-bottom: 1px solid #eaeef2;
-            text-align: left;
-        }
-        .support-tickets-table th {
-            background: #f5f8fb;
-            color: #03335e;
-            font-weight: 600;
-        }
-        .support-tickets-table tr:last-child td {
-            border-bottom: none;
-        }
-        .support-tickets-table td {
-            font-size: 15px;
-            color: #333;
-        }
-        .support-tickets-table .ticket-title {
-            font-weight: 600;
-            color: #1579c0;
-        }
-        .support-tickets-table .ticket-desc {
-            max-width: 300px;
-            white-space: pre-line;
-            word-break: break-word;
-        }
-        .support-tickets-table .ticket-id {
-            font-family: monospace;
-            font-size: 13px;
-            color: #888;
-        }
-    </style>
+    <link rel="stylesheet" href="{{ url_for('static', filename='admin_support_tickets.css') }}">
 </head>
 <body>
     <div class="admin-container">
@@ -133,6 +92,7 @@
         </div>
     </div>
     <script src="{{ url_for('static', filename='admin-dashboard.js') }}"></script>
+    <script src="{{ url_for('static', filename='admin_support_tickets.js') }}"></script>
     {% with messages = get_flashed_messages(with_categories=true) %}
       {% if messages %}
         <script>
