@@ -736,12 +736,25 @@ class HexaHaulApp:
                 
                 # Check if there are file attachments
                 attachments = []
+                attachment_paths = []  # <-- New: to store file paths
                 if 'attachments' in request.files:
                     files = request.files.getlist('attachments')
                     for file in files:
                         if file and file.filename:
+                            # Use werkzeug for secure and unique filenames
+                            from werkzeug.utils import secure_filename
+                            import time
+                            filename = secure_filename(
+                                f"{str(uuid.uuid4())}_{int(time.time())}_{file.filename}"
+                            )
+                            upload_dir = os.path.join('static', 'support_attachments')
+                            os.makedirs(upload_dir, exist_ok=True)
+                            filepath = os.path.join(upload_dir, filename)
+                            file.save(filepath)
+                            # Store relative path for web access
+                            rel_path = os.path.join('support_attachments', filename).replace('\\', '/')
+                            attachment_paths.append(rel_path)
                             attachments.append(file)
-                
                 # Create email message
                 msg = Message(
                     subject=f"Support Ticket: {ticket_title}",
@@ -826,6 +839,8 @@ class HexaHaulApp:
                 ticket_id = str(uuid.uuid4())
                 timestamp = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
                 csv_path = os.path.join('hexahaul_db', 'hh_support_tickets.csv')
+                # Add attachments column (comma-separated paths)
+                attachments_str = ",".join(attachment_paths) if attachment_paths else ""
                 ticket_row = [
                     ticket_id,
                     user_email,
@@ -835,7 +850,8 @@ class HexaHaulApp:
                     tracking_id,
                     timestamp,
                     "",  # admin_reply
-                    ""   # reply_timestamp
+                    "",  # reply_timestamp
+                    attachments_str  # <-- New column
                 ]
                 # Write header if file is empty
                 write_header = not os.path.exists(csv_path) or os.path.getsize(csv_path) == 0
@@ -845,7 +861,7 @@ class HexaHaulApp:
                         if write_header:
                             writer.writerow([
                                 "ticket_id","user_email","ticket_title","ticket_description",
-                                "error_code","tracking_id","timestamp","admin_reply","reply_timestamp"
+                                "error_code","tracking_id","timestamp","admin_reply","reply_timestamp","attachments"
                             ])
                         writer.writerow(ticket_row)
                 except Exception as e:
@@ -1864,6 +1880,7 @@ class HexaHaulApp:
         @app.route('/update-profile', methods=['POST'])
         def update_profile():
             # Make sure user is logged in
+
             if 'user_email' not in session:
                 return jsonify({'success': False, 'message': 'User not logged in'})
             
@@ -1970,6 +1987,9 @@ class HexaHaulApp:
                 with open(csv_path, 'r', encoding='utf-8') as csvfile:
                     reader = csv.DictReader(csvfile)
                     for row in reader:
+                        # Ensure 'attachments' key exists for template
+                        if 'attachments' not in row:
+                            row['attachments'] = ""
                         tickets.append(row)
             except Exception as e:
                 print(f"Error reading support tickets CSV: {e}")

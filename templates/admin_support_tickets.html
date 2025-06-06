@@ -79,6 +79,7 @@
                         <th>Error Code</th>
                         <th>Tracking ID</th>
                         <th>Submitted</th>
+                        <th>Attachments</th> <!-- New column -->
                     </tr>
                 </thead>
                 <tbody>
@@ -91,10 +92,25 @@
                         <td>{{ ticket.error_code }}</td>
                         <td>{{ ticket.tracking_id }}</td>
                         <td>{{ ticket.timestamp }}</td>
+                        <td>
+                            {% if ticket.attachments %}
+                                {% for path in ticket.attachments.split(',') %}
+                                    {% if path.endswith('.png') or path.endswith('.jpg') or path.endswith('.jpeg') or path.endswith('.gif') %}
+                                        <a href="{{ url_for('static', filename=path) }}" target="_blank">
+                                            <img src="{{ url_for('static', filename=path) }}" alt="Attachment" style="max-width:60px;max-height:60px;border-radius:6px;margin:2px;">
+                                        </a>
+                                    {% else %}
+                                        <a href="{{ url_for('static', filename=path) }}" target="_blank">File</a>
+                                    {% endif %}
+                                {% endfor %}
+                            {% else %}
+                                <span style="color:#aaa;">None</span>
+                            {% endif %}
+                        </td>
                     </tr>
                     {% else %}
                     <tr>
-                        <td colspan="7" style="text-align:center; color:#888;">No tickets found.</td>
+                        <td colspan="8" style="text-align:center; color:#888;">No tickets found.</td>
                     </tr>
                     {% endfor %}
                 </tbody>
