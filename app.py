@@ -23,6 +23,7 @@ import pandas as pd
 from werkzeug.utils import secure_filename
 import requests
 from datetime import datetime, timedelta
+import uuid  # <-- Add this import at the top
 
 def get_qa_pipeline():
     """Lazily load and cache the QA pipeline to avoid OOM on startup."""
@@ -364,27 +365,43 @@ class HexaHaulApp:
             if request.method == 'POST':
                 username = request.form.get('username')
                 password = request.form.get('password')
-                
-                # Get database session
-                db_session = get_db_session()
-                
+
+                # --- PATCH: Read from CSV directly for admin authentication ---
+                csv_path = os.path.join('hexahaul_db', 'hh_admins.csv')
+                found_admin = None
                 try:
-                    # Authenticate admin
-                    admin = Admin.authenticate(db_session, username, password)
-                    
-                    if admin:
-                        # Set admin session
-                        session['admin_id'] = admin.id
-                        session['admin_username'] = admin.admin_username
-                        session['admin_name'] = f"{admin.admin_fname} {admin.admin_lname}"
-                        
-                        # Redirect to admin dashboard
-                        return redirect(url_for('admin_dashboard'))
-                    else:
-                        flash('Invalid username or password', 'error')
-                finally:
-                    db_session.close()
-                    
+                    with open(csv_path, 'r', encoding='utf-8') as csvfile:
+                        reader = csv.DictReader(csvfile)
+                        for row in reader:
+                            # Compare with whitespace trimmed, case-sensitive
+                            if (row['admin_username'].strip() == username.strip() and
+                                row['admin_password'].strip() == password.strip()):
+                                found_admin = row
+                                break
+                except Exception as e:
+                    print(f"Error reading admin CSV: {e}")
+
+                if found_admin:
+                    # Set admin session
+                    session['admin_id'] = found_admin.get('admin_username')
+                    session['admin_username'] = found_admin.get('admin_username')
+                    session['admin_name'] = f"{found_admin.get('admin_fname', '')} {found_admin.get('admin_lname', '')}".strip()
+                    return redirect(url_for('admin_dashboard'))
+                else:
+                    # Fallback to SQLAlchemy authentication if not found in CSV
+                    db_session = get_db_session()
+                    try:
+                        admin = Admin.authenticate(db_session, username, password)
+                        if admin:
+                            session['admin_id'] = admin.id
+                            session['admin_username'] = admin.admin_username
+                            session['admin_name'] = f"{admin.admin_fname} {admin.admin_lname}"
+                            return redirect(url_for('admin_dashboard'))
+                        else:
+                            flash('Invalid username or password', 'error')
+                    finally:
+                        db_session.close()
+
             return render_template('admin-login.html')
 
         @app.route("/admin/dashboard")
@@ -1909,6 +1926,26 @@ class HexaHaulApp:
                     return jsonify(success=False, message="Invalid file type")
                 flash('Invalid file type.', 'error')
             return redirect(request.referrer or url_for('sidebar_html'))
+
+        @app.route('/admin/support-tickets')
+        def admin_support_tickets():
+            # Check if admin is logged in
+            if 'admin_id' not in session:
+                flash('Please login to access the admin dashboard', 'error')
+                return redirect(url_for('admin_login'))
+
+            tickets = []
+            csv_path = os.path.join('hexahaul_db', 'hh_support_tickets.csv')
+            try:
+                with open(csv_path, 'r', encoding='utf-8') as csvfile:
+                    reader = csv.DictReader(csvfile)
+                    for row in reader:
+                        tickets.append(row)
+            except Exception as e:
+                print(f"Error reading support tickets CSV: {e}")
+
+            admin_name = session.get('admin_name', 'Admin User')
+            return render_template('admin_support_tickets.html', tickets=tickets, admin_name=admin_name)
 
     def register_blueprints(self):
         self.app.register_blueprint(analytics_bp)
