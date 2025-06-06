@@ -426,10 +426,10 @@ class EmployeeManagement:
         salary_data_csv = transform_data(salary_data, salary_mapping)
         vehicle_data_csv = transform_data(vehicle_data, vehicle_mapping) if vehicle_data else None
 
-        self._update_csv_file('stuff/hexahaul_db/hh_employee_biography.csv', bio_data_csv, is_update, key='Employee Id')
-        self._update_csv_file('stuff/hexahaul_db/hh_employee_salary.csv', salary_data_csv, is_update, key='Employee Id')
+        self._update_csv_file('hexahaul_db/hh_employee_biography.csv', bio_data_csv, is_update, key='Employee Id')
+        self._update_csv_file('hexahaul_db/hh_employee_salary.csv', salary_data_csv, is_update, key='Employee Id')
         if vehicle_data_csv:
-            self._update_csv_file('stuff/hexahaul_db/hh_vehicle.csv', vehicle_data_csv, is_update, key='Employee Id')
+            self._update_csv_file('hexahaul_db/hh_vehicle.csv', vehicle_data_csv, is_update, key='Employee Id')
 
     def _update_csv_file(self, file_path, data_dict, is_update, key='Employee Id'):
         """Update CSV file with proper error handling."""
@@ -566,7 +566,7 @@ class EmployeeManagement:
                     
                     # Now delete from CSV 
                     try:
-                        self._delete_from_csv('stuff/hexahaul_db/hh_vehicle.csv', employee_id, key='Employee Id')
+                        self._delete_from_csv('hexahaul_db/hh_vehicle.csv', employee_id, key='Employee Id')
                     except Exception as csv_error:
                         print(f"Warning: Could not remove vehicle CSV record for employee {employee_id}: {csv_error}")
 
@@ -589,9 +589,9 @@ class EmployeeManagement:
                 print(f"Deleted employee {employee_id} and all related records from database")
 
                 # Delete from all CSV files
-                self._delete_from_csv('stuff/hexahaul_db/hh_employee_biography.csv', employee_id)
-                self._delete_from_csv('stuff/hexahaul_db/hh_employee_salary.csv', employee_id)
-                self._delete_from_csv('stuff/hexahaul_db/hh_vehicle.csv', employee_id)
+                self._delete_from_csv('hexahaul_db/hh_employee_biography.csv', employee_id)
+                self._delete_from_csv('hexahaul_db/hh_employee_salary.csv', employee_id)
+                self._delete_from_csv('hexahaul_db/hh_vehicle.csv', employee_id)
 
             else:
                 print(f"Employee {employee_id} not found")
