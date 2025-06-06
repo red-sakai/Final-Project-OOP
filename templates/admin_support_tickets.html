@@ -92,8 +92,16 @@
             </table>
         </div>
     </div>
-    <script src="{{ url_for('static', filename='admin-dashboard.js') }}"></script>
-    <script src="{{ url_for('static', filename='admin_support_tickets.js') }}"></script>
+    <!-- Logout Animation Overlay -->
+    <div id="logout-overlay" class="logout-overlay">
+        <div class="logout-content">
+            <i class="fas fa-briefcase logout-icon"></i>
+            <h2 id="logout-message">Packing Up For The Day...</h2>
+            <div class="logout-progress">
+                <div class="logout-progress-bar"></div>
+            </div>
+        </div>
+    </div>
     <script>
       // Animation and redirect for Back to Dashboard button
       document.addEventListener('DOMContentLoaded', function() {
@@ -110,7 +118,11 @@
           });
         }
       });
+      // Set URLs for logout
+      const logoutUrl = "{{ url_for('admin_login') }}";
     </script>
+    <script src="{{ url_for('static', filename='admin-dashboard.js') }}"></script>
+    <script src="{{ url_for('static', filename='admin_support_tickets.js') }}"></script>
     {% with messages = get_flashed_messages(with_categories=true) %}
       {% if messages %}
         <script>
