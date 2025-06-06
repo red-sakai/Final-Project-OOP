@@ -37,4 +37,62 @@ document.addEventListener('DOMContentLoaded', function() {
             }, 2500);
         });
     }
+
+    // Tab switching logic
+    const tabBtns = document.querySelectorAll('.tab-btn');
+    const ticketRows = document.querySelectorAll('.ticket-row');
+
+    tabBtns.forEach(btn => {
+        btn.addEventListener('click', function() {
+            tabBtns.forEach(b => b.classList.remove('active'));
+            this.classList.add('active');
+            const status = this.getAttribute('data-status');
+            ticketRows.forEach(row => {
+                const detailRow = row.nextElementSibling;
+                if (row.getAttribute('data-status') === status) {
+                    row.style.display = '';
+                    if (detailRow && detailRow.classList.contains('ticket-row-detail')) {
+                        detailRow.style.display = '';
+                    }
+                } else {
+                    row.style.display = 'none';
+                    if (detailRow && detailRow.classList.contains('ticket-row-detail')) {
+                        detailRow.style.display = 'none';
+                    }
+                }
+            });
+        });
+    });
+
+    // Done button logic
+    document.querySelectorAll('.done-btn').forEach(btn => {
+        btn.addEventListener('click', function() {
+            const ticketId = this.getAttribute('data-ticket-id');
+            if (!ticketId) return;
+            btn.disabled = true;
+            btn.textContent = 'Marking...';
+            fetch(`/admin/support/ticket/done/${ticketId}`, {
+                method: 'POST',
+                headers: {
+                    'X-Requested-With': 'XMLHttpRequest',
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({})
+            })
+            .then(res => {
+                if (res.ok) {
+                    window.location.reload();
+                } else {
+                    btn.disabled = false;
+                    btn.textContent = 'Done';
+                    alert('Failed to mark as done.');
+                }
+            })
+            .catch(() => {
+                btn.disabled = false;
+                btn.textContent = 'Done';
+                alert('Failed to mark as done.');
+            });
+        });
+    });
 });

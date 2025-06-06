@@ -2109,6 +2109,28 @@ Admin Reply:
 
             return render_template('admin_support_ticket_reply.html', ticket=ticket)
 
+        @app.route('/admin/support/ticket/done/<ticket_id>', methods=['POST'])
+        def admin_support_ticket_done(ticket_id):
+            """
+            Mark a support ticket as done by updating its status in the CSV.
+            """
+            import pandas as pd
+            csv_path = os.path.join('hexahaul_db', 'hh_support_tickets.csv')
+            try:
+                df = pd.read_csv(csv_path)
+                idx = df.index[df['ticket_id'] == ticket_id].tolist()
+                if not idx:
+                    return jsonify({'success': False, 'message': 'Ticket not found'}), 404
+                row_idx = idx[0]
+                # If status column does not exist, add it and default all to 'new'
+                if 'status' not in df.columns:
+                    df['status'] = 'new'
+                df.at[row_idx, 'status'] = 'done'
+                df.to_csv(csv_path, index=False)
+                return '', 204
+            except Exception as e:
+                return jsonify({'success': False, 'message': str(e)}), 500
+
     def register_blueprints(self):
         self.app.register_blueprint(analytics_bp)
         self.app.register_blueprint(hexabot_bp)
