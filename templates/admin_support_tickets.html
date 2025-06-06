@@ -33,6 +33,10 @@
             <div class="header">
                 <h1><i class="fas fa-ticket-alt"></i> Support Tickets</h1>
             </div>
+            <div class="tickets-tabs">
+                <button class="tab-btn active" data-status="new">New</button>
+                <button class="tab-btn" data-status="done">Done</button>
+            </div>
             <table class="support-tickets-table">
                 <thead>
                     <tr>
@@ -43,12 +47,19 @@
                         <th>Error Code</th>
                         <th>Tracking ID</th>
                         <th>Submitted</th>
-                        <th>Attachments</th> <!-- New column -->
+                        <th>Attachments</th>
                     </tr>
                 </thead>
                 <tbody>
+                    {% set found = false %}
                     {% for ticket in tickets %}
-                    <tr>
+                        {% set ticket_status = ticket.status if ticket.status in ['new', 'done'] else 'new' %}
+                        {% if ticket_status == 'new' %}
+                            <tr class="ticket-row" data-status="new">
+                        {% elif ticket_status == 'done' %}
+                            <tr class="ticket-row" data-status="done" style="display:none;">
+                        {% endif %}
+                        {% set found = true %}
                         <td class="ticket-id">{{ ticket.ticket_id }}</td>
                         <td>{{ ticket.user_email }}</td>
                         <td class="ticket-title">{{ ticket.ticket_title }}</td>
@@ -72,9 +83,14 @@
                             {% endif %}
                         </td>
                     </tr>
-                    <tr>
+                    <tr class="ticket-row-detail" data-status="{{ ticket_status }}">
                         <td colspan="8" style="background:#f9f9f9;">
                             <a href="{{ url_for('admin_support_ticket_reply_page', ticket_id=ticket.ticket_id) }}" class="reply-btn" style="padding:6px 16px;background:#1579c0;color:#fff;border:none;border-radius:4px;cursor:pointer;text-decoration:none;">Reply</a>
+                            {% if ticket_status != 'done' %}
+                                <button class="done-btn" data-ticket-id="{{ ticket.ticket_id }}" style="margin-left:10px;padding:6px 16px;background:#28a745;color:#fff;border:none;border-radius:4px;cursor:pointer;">Done</button>
+                            {% else %}
+                                <span class="done-label" style="margin-left:10px;color:#28a745;font-weight:600;">Done</span>
+                            {% endif %}
                             {% if ticket.admin_reply %}
                                 <div style="margin-top:6px;font-size:14px;color:#1579c0;">
                                     <strong>Admin Reply:</strong> {{ ticket.admin_reply }}<br>
@@ -83,11 +99,12 @@
                             {% endif %}
                         </td>
                     </tr>
-                    {% else %}
+                    {% endfor %}
+                    {% if not found %}
                     <tr>
                         <td colspan="8" style="text-align:center; color:#888;">No tickets found.</td>
                     </tr>
-                    {% endfor %}
+                    {% endif %}
                 </tbody>
             </table>
         </div>
