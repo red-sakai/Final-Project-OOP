@@ -83,7 +83,11 @@
                             {% endif %}
                         </td>
                     </tr>
-                    <tr class="ticket-row-detail" data-status="{{ ticket_status }}">
+                    {% if ticket_status == 'new' %}
+                        <tr class="ticket-row-detail" data-status="new">
+                    {% elif ticket_status == 'done' %}
+                        <tr class="ticket-row-detail" data-status="done" style="display:none;">
+                    {% endif %}
                         <td colspan="8" style="background:#f9f9f9;">
                             <a href="{{ url_for('admin_support_ticket_reply_page', ticket_id=ticket.ticket_id) }}" class="reply-btn" style="padding:6px 16px;background:#1579c0;color:#fff;border:none;border-radius:4px;cursor:pointer;text-decoration:none;">Reply</a>
                             {% if ticket_status != 'done' %}
