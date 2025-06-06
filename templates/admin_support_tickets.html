@@ -20,6 +20,11 @@
                     <span class="user-role">Administrator</span>
                 </div>
             </div>
+            <div class="back-dashboard">
+                <button id="back-dashboard-btn" class="animated-btn">
+                    <i class="fas fa-arrow-left"></i> Back to Dashboard
+                </button>
+            </div>
             <div class="logout">
                 <a href="javascript:void(0);" id="logout-btn"><i class="fas fa-sign-out-alt"></i> Logout</a>
             </div>
@@ -89,6 +94,23 @@
     </div>
     <script src="{{ url_for('static', filename='admin-dashboard.js') }}"></script>
     <script src="{{ url_for('static', filename='admin_support_tickets.js') }}"></script>
+    <script>
+      // Animation and redirect for Back to Dashboard button
+      document.addEventListener('DOMContentLoaded', function() {
+        var btn = document.getElementById('back-dashboard-btn');
+        if (btn) {
+          btn.addEventListener('mouseenter', function() {
+            btn.classList.add('bounce');
+          });
+          btn.addEventListener('mouseleave', function() {
+            btn.classList.remove('bounce');
+          });
+          btn.addEventListener('click', function() {
+            window.location.href = "{{ url_for('admin_dashboard') }}";
+          });
+        }
+      });
+    </script>
     {% with messages = get_flashed_messages(with_categories=true) %}
       {% if messages %}
         <script>
