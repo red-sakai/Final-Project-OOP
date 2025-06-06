@@ -72,3 +72,47 @@
     70%  { transform: scale(1.03); }
     100% { transform: scale(1); }
 }
+.tickets-tabs {
+    display: flex;
+    gap: 12px;
+    margin-bottom: 18px;
+    margin-top: 10px;
+}
+.tab-btn {
+    padding: 8px 24px;
+    border: none;
+    border-radius: 6px 6px 0 0;
+    background: #eaeef2;
+    color: #1579c0;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.2s, color 0.2s;
+    outline: none;
+    font-size: 15px;
+}
+.tab-btn.active {
+    background: #1579c0;
+    color: #fff;
+    box-shadow: 0 2px 8px rgba(21,121,192,0.08);
+}
+.done-btn {
+    background: #28a745;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    padding: 6px 16px;
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+    margin-left: 10px;
+    transition: background 0.2s, box-shadow 0.2s;
+}
+.done-btn:hover {
+    background: #218838;
+    box-shadow: 0 2px 8px rgba(40,167,69,0.13);
+}
+.done-label {
+    margin-left: 10px;
+    color: #28a745;
+    font-weight: 600;
+}
