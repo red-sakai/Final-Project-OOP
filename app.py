@@ -25,6 +25,17 @@ import requests
 from datetime import datetime, timedelta
 import uuid
 from markupsafe import Markup
+from sqlalchemy import create_engine, text
+import mysql.connector
+
+def get_mysql_connection():
+    """Create and return a MySQL connection for hh_user_login_db table access."""
+    return mysql.connector.connect(
+        host="localhost",
+        user="root",
+        password="Jhered143!",
+        database="hh_user_login_db"
+    )
 
 def get_qa_pipeline():
     """Lazily load and cache the QA pipeline to avoid OOM on startup."""
@@ -210,9 +221,13 @@ class HexaHaulApp:
             if request.method == "POST":
                 username = request.form.get("username")
                 password = request.form.get("password")
-                
-                user = authenticate_user_csv(username, password)
-                
+
+                # Try MySQL authentication first
+                user = authenticate_user_mysql(username, password)
+                if not user:
+                    # Fallback to CSV authentication
+                    user = authenticate_user_csv(username, password)
+
                 if user:
                     session["logged_in"] = True
                     session["user_name"] = user["full_name"]
@@ -239,6 +254,35 @@ class HexaHaulApp:
                     return render_template("user-login.html", error=error_message)
             
             return render_template("user-login.html")
+
+        def authenticate_user_mysql(username, password):
+            """
+            Authenticate user against MySQL hh_user_login_db table.
+            Returns user dict if found, else None.
+            """
+            try:
+                conn = get_mysql_connection()
+                cursor = conn.cursor(dictionary=True)
+                # Adjust table/column names as needed
+                query = """
+                    SELECT * FROM hh_user_login_db
+                    WHERE Username = %s AND Password = %s
+                    LIMIT 1
+                """
+                cursor.execute(query, (username, password))
+                row = cursor.fetchone()
+                cursor.close()
+                conn.close()
+                if row:
+                    return {
+                        'full_name': row.get('Full Name') or row.get('Full_Name') or row.get('full_name'),
+                        'email': row.get('Email Address') or row.get('Email_Address') or row.get('email'),
+                        'username': row.get('Username') or row.get('username'),
+                        'user_image': row.get('Profile Image') or row.get('Profile_Image') or row.get('user_image', 'images/pfp.png')
+                    }
+            except Exception as e:
+                print(f"Error authenticating user from MySQL: {e}")
+            return None
 
         def authenticate_user_csv(username, password):
             """Authenticate user against CSV file"""
