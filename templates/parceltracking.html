@@ -44,7 +44,12 @@
                         <div class="step completed">
                             <div class="step-icon"><i class="fa-solid fa-warehouse"></i></div>
                             <div class="step-label">Dispatched</div>
-                            <div class="step-date">May 12, 2025</div>
+                            <div class="step-date">
+                                    {% if order_data and order_data.orderDate %}
+                                        {{ order_data.orderDate }}
+                                    {% else %}
+                                        Order Date
+                                    {% endif %}</div>
                         </div>
                         <div class="connector active"></div>
                         <div class="step active">
@@ -56,7 +61,12 @@
                         <div class="step">
                             <div class="step-icon"><i class="fa-solid fa-check"></i></div>
                             <div class="step-label">Delivered</div>
-                            <div class="step-date">Expected: May 17</div>
+                            <div class="step-date">
+                                    {% if order_data and order_data.expectedDeliveryDate %}
+                                        Expected: {{ order_data.expectedDeliveryDate }}
+                                    {% else %}
+                                        Expected: Delivery Date
+                                    {% endif %}</div>
                         </div>
                     </div>
                     

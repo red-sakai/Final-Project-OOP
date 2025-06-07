@@ -1,0 +1,118 @@
+.support-tickets-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 30px;
+    background: #fff;
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+    overflow: hidden;
+}
+.support-tickets-table th, .support-tickets-table td {
+    padding: 12px 16px;
+    border-bottom: 1px solid #eaeef2;
+    text-align: left;
+}
+.support-tickets-table th {
+    background: #f5f8fb;
+    color: #03335e;
+    font-weight: 600;
+}
+.support-tickets-table tr:last-child td {
+    border-bottom: none;
+}
+.support-tickets-table td {
+    font-size: 15px;
+    color: #333;
+}
+.support-tickets-table .ticket-title {
+    font-weight: 600;
+    color: #1579c0;
+}
+.support-tickets-table .ticket-desc {
+    max-width: 300px;
+    white-space: pre-line;
+    word-break: break-word;
+}
+.support-tickets-table .ticket-id {
+    font-family: monospace;
+    font-size: 13px;
+    color: #888;
+}
+.back-dashboard {
+    margin: 24px 0 8px 0;
+    display: flex;
+    justify-content: center;
+}
+.animated-btn {
+    background: #f5f8fb;
+    color: #1579c0;
+    border: 2px solid #1579c0;
+    border-radius: 6px;
+    padding: 10px 20px;
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.2s, color 0.2s, box-shadow 0.2s, transform 0.2s;
+    box-shadow: 0 2px 8px rgba(21,121,192,0.07);
+    outline: none;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+.animated-btn:hover, .animated-btn.bounce {
+    background: #1579c0;
+    color: #fff;
+    box-shadow: 0 4px 16px rgba(21,121,192,0.13);
+    animation: bounce 0.4s;
+}
+@keyframes bounce {
+    0%   { transform: scale(1); }
+    30%  { transform: scale(1.08); }
+    50%  { transform: scale(0.97); }
+    70%  { transform: scale(1.03); }
+    100% { transform: scale(1); }
+}
+.tickets-tabs {
+    display: flex;
+    gap: 12px;
+    margin-bottom: 18px;
+    margin-top: 10px;
+}
+.tab-btn {
+    padding: 8px 24px;
+    border: none;
+    border-radius: 6px 6px 0 0;
+    background: #eaeef2;
+    color: #1579c0;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.2s, color 0.2s;
+    outline: none;
+    font-size: 15px;
+}
+.tab-btn.active {
+    background: #1579c0;
+    color: #fff;
+    box-shadow: 0 2px 8px rgba(21,121,192,0.08);
+}
+.done-btn {
+    background: #28a745;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    padding: 6px 16px;
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+    margin-left: 10px;
+    transition: background 0.2s, box-shadow 0.2s;
+}
+.done-btn:hover {
+    background: #218838;
+    box-shadow: 0 2px 8px rgba(40,167,69,0.13);
+}
+.done-label {
+    margin-left: 10px;
+    color: #28a745;
+    font-weight: 600;
+}

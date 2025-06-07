@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Reply to Support Ticket</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='admin-dashboard.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='admin_support_tickets.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='admin_support_ticket_reply.css') }}">
+</head>
+<body>
+    <div class="reply-container animated-fadein">
+        <div class="reply-header">Reply to Support Ticket</div>
+        <div class="ticket-info">
+            <strong>Ticket ID:</strong> {{ ticket.ticket_id }}<br>
+            <strong>User Email:</strong> {{ ticket.user_email }}<br>
+            <strong>Title:</strong> {{ ticket.ticket_title }}<br>
+            <strong>Description:</strong> <span style="white-space:pre-line;">{{ ticket.ticket_description }}</span>
+        </div>
+        <form class="reply-form" method="post" action="{{ url_for('admin_support_ticket_reply') }}">
+            <input type="hidden" name="ticket_id" value="{{ ticket.ticket_id }}">
+            <textarea name="reply_message" placeholder="Type your reply..." required></textarea>
+            <button type="submit">Send Reply</button>
+        </form>
+        <a href="{{ url_for('admin_support_tickets') }}" class="back-link">&larr; Back to Tickets</a>
+    </div>
+    <script src="{{ url_for('static', filename='admin_support_ticket_reply.js') }}"></script>
+    {% with messages = get_flashed_messages(with_categories=true) %}
+      {% if messages %}
+        <script>
+          {% for category, message in messages %}
+            alert("{{ message|escape }}");
+          {% endfor %}
+        </script>
+      {% endif %}
+    {% endwith %}
+</body>
+</html>

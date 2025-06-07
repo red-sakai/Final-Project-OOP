@@ -77,6 +77,11 @@
                     </form>
                     <div class="admin-forgot-password">
                         <a href="{{ url_for('admin_forgot_password_page') }}">Forgot Password?</a>
+                    </div>
+                    <div>
+                        <button onclick="window.location.href='{{ url_for('user_login_html') }}'" style="padding:8px 20px;border-radius:6px;border:none;background:#1579c0;color:#fff;font-weight:600;cursor:pointer;">
+                            Go to User Login
+                        </button>
                     </div> 
                 </div>
             </div>
