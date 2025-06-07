@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Support Tickets | Admin</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='admin-dashboard.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='admin_support_tickets.css') }}">
+</head>
+<body>
+    <div class="admin-container">
+        <div class="sidebar">
+            <div class="logo">
+                <img src="{{ url_for('static', filename='images/HexaHaul icon transparent.png') }}" alt="HexaHaul Logo" class="logo-icon">
+                <h2>HexaHaul</h2>
+            </div>
+            <div class="user-profile">
+                <img src="{{ url_for('static', filename='images/profile-icon.png') }}" alt="Admin Profile">
+                <div class="user-details">
+                    <span class="user-name">{{ admin_name }}</span>
+                    <span class="user-role">Administrator</span>
+                </div>
+            </div>
+            <div class="back-dashboard">
+                <button id="back-dashboard-btn" class="animated-btn">
+                    <i class="fas fa-arrow-left"></i> Back to Dashboard
+                </button>
+            </div>
+            <div class="logout">
+                <a href="javascript:void(0);" id="logout-btn"><i class="fas fa-sign-out-alt"></i> Logout</a>
+            </div>
+        </div>
+        <div class="main-content">
+            <div class="header">
+                <h1><i class="fas fa-ticket-alt"></i> Support Tickets</h1>
+            </div>
+            <div class="tickets-tabs">
+                <button class="tab-btn active" data-status="new">New</button>
+                <button class="tab-btn" data-status="done">Done</button>
+            </div>
+            <table class="support-tickets-table">
+                <thead>
+                    <tr>
+                        <th>Ticket ID</th>
+                        <th>User Email</th>
+                        <th>Title</th>
+                        <th>Description</th>
+                        <th>Error Code</th>
+                        <th>Tracking ID</th>
+                        <th>Submitted</th>
+                        <th>Attachments</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% set found = false %}
+                    {% for ticket in tickets %}
+                        {% set ticket_status = ticket.status if ticket.status in ['new', 'done'] else 'new' %}
+                        {% if ticket_status == 'new' %}
+                            <tr class="ticket-row" data-status="new">
+                        {% elif ticket_status == 'done' %}
+                            <tr class="ticket-row" data-status="done" style="display:none;">
+                        {% endif %}
+                        {% set found = true %}
+                        <td class="ticket-id">{{ ticket.ticket_id }}</td>
+                        <td>{{ ticket.user_email }}</td>
+                        <td class="ticket-title">{{ ticket.ticket_title }}</td>
+                        <td class="ticket-desc">{{ ticket.ticket_description }}</td>
+                        <td>{{ ticket.error_code }}</td>
+                        <td>{{ ticket.tracking_id }}</td>
+                        <td>{{ ticket.timestamp }}</td>
+                        <td>
+                            {% if ticket.attachments %}
+                                {% for path in ticket.attachments.split(',') %}
+                                    {% if path.endswith('.png') or path.endswith('.jpg') or path.endswith('.jpeg') or path.endswith('.gif') %}
+                                        <a href="{{ url_for('static', filename=path) }}" target="_blank">
+                                            <img src="{{ url_for('static', filename=path) }}" alt="Attachment" style="max-width:60px;max-height:60px;border-radius:6px;margin:2px;">
+                                        </a>
+                                    {% else %}
+                                        <a href="{{ url_for('static', filename=path) }}" target="_blank">File</a>
+                                    {% endif %}
+                                {% endfor %}
+                            {% else %}
+                                <span style="color:#aaa;">None</span>
+                            {% endif %}
+                        </td>
+                    </tr>
+                    {% if ticket_status == 'new' %}
+                        <tr class="ticket-row-detail" data-status="new">
+                    {% elif ticket_status == 'done' %}
+                        <tr class="ticket-row-detail" data-status="done" style="display:none;">
+                    {% endif %}
+                        <td colspan="8" style="background:#f9f9f9;">
+                            <a href="{{ url_for('admin_support_ticket_reply_page', ticket_id=ticket.ticket_id) }}" class="reply-btn" style="padding:6px 16px;background:#1579c0;color:#fff;border:none;border-radius:4px;cursor:pointer;text-decoration:none;">Reply</a>
+                            {% if ticket_status != 'done' %}
+                                <button class="done-btn" data-ticket-id="{{ ticket.ticket_id }}" style="margin-left:10px;padding:6px 16px;background:#28a745;color:#fff;border:none;border-radius:4px;cursor:pointer;">Done</button>
+                            {% else %}
+                                <span class="done-label" style="margin-left:10px;color:#28a745;font-weight:600;">Done</span>
+                            {% endif %}
+                            {% if ticket.admin_reply %}
+                                <div style="margin-top:6px;font-size:14px;color:#1579c0;">
+                                    <strong>Admin Reply:</strong> {{ ticket.admin_reply }}<br>
+                                    <span style="color:#888;">at {{ ticket.reply_timestamp }}</span>
+                                </div>
+                            {% endif %}
+                        </td>
+                    </tr>
+                    {% endfor %}
+                    {% if not found %}
+                    <tr>
+                        <td colspan="8" style="text-align:center; color:#888;">No tickets found.</td>
+                    </tr>
+                    {% endif %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <!-- Logout Animation Overlay -->
+    <div id="logout-overlay" class="logout-overlay">
+        <div class="logout-content">
+            <i class="fas fa-briefcase logout-icon"></i>
+            <h2 id="logout-message">Packing Up For The Day...</h2>
+            <div class="logout-progress">
+                <div class="logout-progress-bar"></div>
+            </div>
+        </div>
+    </div>
+    <script>
+      // Animation and redirect for Back to Dashboard button
+      document.addEventListener('DOMContentLoaded', function() {
+        var btn = document.getElementById('back-dashboard-btn');
+        if (btn) {
+          btn.addEventListener('mouseenter', function() {
+            btn.classList.add('bounce');
+          });
+          btn.addEventListener('mouseleave', function() {
+            btn.classList.remove('bounce');
+          });
+          btn.addEventListener('click', function() {
+            window.location.href = "{{ url_for('admin_dashboard') }}";
+          });
+        }
+      });
+      // Set URLs for logout
+      const logoutUrl = "{{ url_for('admin_login') }}";
+    </script>
+    <script src="{{ url_for('static', filename='admin-dashboard.js') }}"></script>
+    <script src="{{ url_for('static', filename='admin_support_tickets.js') }}"></script>
+    {% with messages = get_flashed_messages(with_categories=true) %}
+      {% if messages %}
+        <script>
+          {% for category, message in messages %}
+            alert("{{ message|escape }}");
+          {% endfor %}
+        </script>
+      {% endif %}
+    {% endwith %}
+</body>
+</html>

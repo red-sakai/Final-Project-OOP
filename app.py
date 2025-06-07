@@ -23,6 +23,19 @@ import pandas as pd
 from werkzeug.utils import secure_filename
 import requests
 from datetime import datetime, timedelta
+import uuid
+from markupsafe import Markup
+from sqlalchemy import create_engine, text
+import mysql.connector
+
+def get_mysql_connection():
+    """Create and return a MySQL connection for hh_user_login_db table access."""
+    return mysql.connector.connect(
+        host="localhost",
+        user="root",
+        password="Jhered143!",
+        database="hh_user_login_db"
+    )
 
 def get_qa_pipeline():
     """Lazily load and cache the QA pipeline to avoid OOM on startup."""
@@ -208,9 +221,13 @@ class HexaHaulApp:
             if request.method == "POST":
                 username = request.form.get("username")
                 password = request.form.get("password")
-                
-                user = authenticate_user_csv(username, password)
-                
+
+                # Try MySQL authentication first
+                user = authenticate_user_mysql(username, password)
+                if not user:
+                    # Fallback to CSV authentication
+                    user = authenticate_user_csv(username, password)
+
                 if user:
                     session["logged_in"] = True
                     session["user_name"] = user["full_name"]
@@ -237,6 +254,35 @@ class HexaHaulApp:
                     return render_template("user-login.html", error=error_message)
             
             return render_template("user-login.html")
+
+        def authenticate_user_mysql(username, password):
+            """
+            Authenticate user against MySQL hh_user_login_db table.
+            Returns user dict if found, else None.
+            """
+            try:
+                conn = get_mysql_connection()
+                cursor = conn.cursor(dictionary=True)
+                # Adjust table/column names as needed
+                query = """
+                    SELECT * FROM hh_user_login_db
+                    WHERE Username = %s AND Password = %s
+                    LIMIT 1
+                """
+                cursor.execute(query, (username, password))
+                row = cursor.fetchone()
+                cursor.close()
+                conn.close()
+                if row:
+                    return {
+                        'full_name': row.get('Full Name') or row.get('Full_Name') or row.get('full_name'),
+                        'email': row.get('Email Address') or row.get('Email_Address') or row.get('email'),
+                        'username': row.get('Username') or row.get('username'),
+                        'user_image': row.get('Profile Image') or row.get('Profile_Image') or row.get('user_image', 'images/pfp.png')
+                    }
+            except Exception as e:
+                print(f"Error authenticating user from MySQL: {e}")
+            return None
 
         def authenticate_user_csv(username, password):
             """Authenticate user against CSV file"""
@@ -364,27 +410,43 @@ class HexaHaulApp:
             if request.method == 'POST':
                 username = request.form.get('username')
                 password = request.form.get('password')
-                
-                # Get database session
-                db_session = get_db_session()
-                
+
+                # --- PATCH: Read from CSV directly for admin authentication ---
+                csv_path = os.path.join('hexahaul_db', 'hh_admins.csv')
+                found_admin = None
                 try:
-                    # Authenticate admin
-                    admin = Admin.authenticate(db_session, username, password)
-                    
-                    if admin:
-                        # Set admin session
-                        session['admin_id'] = admin.id
-                        session['admin_username'] = admin.admin_username
-                        session['admin_name'] = f"{admin.admin_fname} {admin.admin_lname}"
-                        
-                        # Redirect to admin dashboard
-                        return redirect(url_for('admin_dashboard'))
-                    else:
-                        flash('Invalid username or password', 'error')
-                finally:
-                    db_session.close()
-                    
+                    with open(csv_path, 'r', encoding='utf-8') as csvfile:
+                        reader = csv.DictReader(csvfile)
+                        for row in reader:
+                            # Compare with whitespace trimmed, case-sensitive
+                            if (row['admin_username'].strip() == username.strip() and
+                                row['admin_password'].strip() == password.strip()):
+                                found_admin = row
+                                break
+                except Exception as e:
+                    print(f"Error reading admin CSV: {e}")
+
+                if found_admin:
+                    # Set admin session
+                    session['admin_id'] = found_admin.get('admin_username')
+                    session['admin_username'] = found_admin.get('admin_username')
+                    session['admin_name'] = f"{found_admin.get('admin_fname', '')} {found_admin.get('admin_lname', '')}".strip()
+                    return redirect(url_for('admin_dashboard'))
+                else:
+                    # Fallback to SQLAlchemy authentication if not found in CSV
+                    db_session = get_db_session()
+                    try:
+                        admin = Admin.authenticate(db_session, username, password)
+                        if admin:
+                            session['admin_id'] = admin.id
+                            session['admin_username'] = admin.admin_username
+                            session['admin_name'] = f"{admin.admin_fname} {admin.admin_lname}"
+                            return redirect(url_for('admin_dashboard'))
+                        else:
+                            flash('Invalid username or password', 'error')
+                    finally:
+                        db_session.close()
+
             return render_template('admin-login.html')
 
         @app.route("/admin/dashboard")
@@ -452,6 +514,22 @@ class HexaHaulApp:
         def forgot_password():
             if request.method == "POST":
                 email = request.form.get("email")
+                # --- Check if email exists in CSV ---
+                csv_path = os.path.join('hexahaul_db', 'hh_user-login.csv')
+                email_found = False
+                try:
+                    with open(csv_path, 'r', encoding='utf-8') as csvfile:
+                        reader = csv.DictReader(csvfile)
+                        for row in reader:
+                            if row.get('Email Address', '').strip().lower() == email.strip().lower():
+                                email_found = True
+                                break
+                except Exception as e:
+                    print(f"Error reading user CSV: {e}")
+                if not email_found:
+                    flash("Email not found in user records", "error")
+                    return render_template("forgot-password.html", error="Email not found in user records")
+                # --- If found, proceed as before ---
                 otp = user_password_reset_manager.generate_otp(email)
                 user_password_reset_manager.send_otp(email, otp)
                 flash("OTP sent to your email. Please check your inbox.")
@@ -502,7 +580,16 @@ class HexaHaulApp:
                 new_password = request.form.get('new_password')
                 confirm_password = request.form.get('confirm_password')
                 if new_password == confirm_password and len(new_password) >= 8:
-                    flash("Password reset successful. Please login.")
+                    # --- Update admin password in CSV ---
+                    csv_path = os.path.join('hexahaul_db', 'hh_admins.csv')
+                    try:
+                        df = pd.read_csv(csv_path)
+                        # Update the password for the row with matching email
+                        df.loc[df['admin_email'].str.strip().str.lower() == email.strip().lower(), 'admin_password'] = new_password
+                        df.to_csv(csv_path, index=False)
+                        flash("Password reset successful. Please login.")
+                    except Exception as e:
+                        flash(f"Error updating admin password: {e}", "error")
                     return redirect(url_for('admin_login'))
                 else:
                     flash("Passwords do not match or do not meet requirements.")
@@ -694,12 +781,25 @@ class HexaHaulApp:
                 
                 # Check if there are file attachments
                 attachments = []
+                attachment_paths = []  # <-- New: to store file paths
                 if 'attachments' in request.files:
                     files = request.files.getlist('attachments')
                     for file in files:
                         if file and file.filename:
+                            # Use werkzeug for secure and unique filenames
+                            from werkzeug.utils import secure_filename
+                            import time
+                            filename = secure_filename(
+                                f"{str(uuid.uuid4())}_{int(time.time())}_{file.filename}"
+                            )
+                            upload_dir = os.path.join('static', 'support_attachments')
+                            os.makedirs(upload_dir, exist_ok=True)
+                            filepath = os.path.join(upload_dir, filename)
+                            file.save(filepath)
+                            # Store relative path for web access
+                            rel_path = os.path.join('support_attachments', filename).replace('\\', '/')
+                            attachment_paths.append(rel_path)
                             attachments.append(file)
-                
                 # Create email message
                 msg = Message(
                     subject=f"Support Ticket: {ticket_title}",
@@ -780,6 +880,38 @@ class HexaHaulApp:
                 # Send the email
                 self.mail.send(msg)
                 
+                # --- Append ticket to CSV ---
+                ticket_id = str(uuid.uuid4())
+                timestamp = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+                csv_path = os.path.join('hexahaul_db', 'hh_support_tickets.csv')
+                # Add attachments column (comma-separated paths)
+                attachments_str = ",".join(attachment_paths) if attachment_paths else ""
+                ticket_row = [
+                    ticket_id,
+                    user_email,
+                    ticket_title,
+                    ticket_description,
+                    error_code,
+                    tracking_id,
+                    timestamp,
+                    "",  # admin_reply
+                    "",  # reply_timestamp
+                    attachments_str  # <-- New column
+                ]
+                # Write header if file is empty
+                write_header = not os.path.exists(csv_path) or os.path.getsize(csv_path) == 0
+                try:
+                    with open(csv_path, 'a', newline='', encoding='utf-8') as csvfile:
+                        writer = csv.writer(csvfile)
+                        if write_header:
+                            writer.writerow([
+                                "ticket_id","user_email","ticket_title","ticket_description",
+                                "error_code","tracking_id","timestamp","admin_reply","reply_timestamp","attachments"
+                            ])
+                        writer.writerow(ticket_row)
+                except Exception as e:
+                    print(f"Error writing support ticket to CSV: {e}")
+                
                 # Flash success message
                 flash('Your support ticket has been submitted. Our team will get back to you shortly.', 'success')
                 
@@ -796,6 +928,18 @@ class HexaHaulApp:
         @app.route("/change-password", methods=["GET", "POST"])
         def change_password():
             if request.method == "POST":
+                email = request.args.get("email") or request.form.get("email")
+                new_password = request.form.get("new_password")
+                if email and new_password:
+                    csv_path = os.path.join('hexahaul_db', 'hh_user-login.csv')
+                    try:
+                        df = pd.read_csv(csv_path)
+                        # Update the password for the row with matching email
+                        df.loc[df['Email Address'].str.strip().str.lower() == email.strip().lower(), 'Password'] = new_password
+                        df.to_csv(csv_path, index=False)
+                        flash("Password updated successfully. Please login.", "success")
+                    except Exception as e:
+                        flash(f"Error updating password: {e}", "error")
                 return redirect(url_for("user_login_html"))
             return render_template("change-password.html")
 
@@ -1745,11 +1889,13 @@ class HexaHaulApp:
                 flash('All fields are required.', 'error')
                 return redirect(url_for('user_signup_html'))
 
-            new_user = [full_name, email, username, password]
-            
+            # Always include default profile picture path
+            default_profile_pic = 'images/pfp.png'
+            new_user = [full_name, email, username, password, default_profile_pic]
+
             import os
             csv_path = os.path.join('hexahaul_db', 'hh_user-login.csv')
-            
+
             try:
                 # Ensure file ends with newline before appending
                 with open(csv_path, 'r+', encoding='utf-8') as f:
@@ -1759,26 +1905,29 @@ class HexaHaulApp:
                         last_char = f.read(1)
                         if last_char != '\n':  # If last character is not newline
                             f.write('\n')  # Add newline
-        
-        # Now append the new user
+
+                # Now append the new user with profile picture path
                 with open(csv_path, 'a', newline='', encoding='utf-8') as csvfile:
                     writer = csv.writer(csvfile)
                     writer.writerow(new_user)
-                    
+
                 print("DEBUG - Successfully wrote to CSV")
                 flash('User added successfully!', 'success')
                 return redirect(url_for('user_signup_html')) 
-                
+
             except Exception as e:
                 print(f"ERROR writing to CSV: {e}")
                 flash(f'Error adding user: {str(e)}', 'error')
-                
+
             return redirect(url_for('user_login_html'))
                 
         # New route to handle profile updates
         @app.route('/update-profile', methods=['POST'])
+       
         def update_profile():
+
             # Make sure user is logged in
+
             if 'user_email' not in session:
                 return jsonify({'success': False, 'message': 'User not logged in'})
             
@@ -1800,6 +1949,7 @@ class HexaHaulApp:
                 # Find the row with the current email
                 user_row = df[df['Email Address'] == current_email]
                 
+               
                 if len(user_row) == 0:
                     return jsonify({'success': False, 'message': 'User not found'})
                 
@@ -1824,7 +1974,7 @@ class HexaHaulApp:
                 return jsonify({'success': True})
             
             except Exception as e:
-                return jsonify({'success': False, 'message': str(e)})
+                return jsonify({'success': False, 'message': str(e)}), 500
         
         UPLOAD_FOLDER = os.path.join('static', 'user_images')
         ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg', 'gif'}
@@ -1861,6 +2011,7 @@ class HexaHaulApp:
                     print(f"Error updating profile image in CSV: {e}")
 
                 image_url = url_for('static', filename=relative_path)
+               
                 if request.is_json or request.accept_mimetypes['application/json']:
                     return jsonify(success=True, image_url=image_url)
                 flash('Profile image updated!', 'success')
@@ -1870,14 +2021,170 @@ class HexaHaulApp:
                 flash('Invalid file type.', 'error')
             return redirect(request.referrer or url_for('sidebar_html'))
 
+        @app.route('/admin/support-tickets')
+        def admin_support_tickets():
+            # Check if admin is logged in
+            if 'admin_id' not in session:
+                flash('Please login to access the admin dashboard', 'error')
+                return redirect(url_for('admin_login'))
+
+            tickets = []
+            csv_path = os.path.join('hexahaul_db', 'hh_support_tickets.csv')
+            try:
+                with open(csv_path, 'r', encoding='utf-8') as csvfile:
+                    reader = csv.DictReader(csvfile)
+                    for row in reader:
+                        # Ensure 'attachments' key exists for template
+                        if 'attachments' not in row:
+                            row['attachments'] = ""
+                        tickets.append(row)
+            except Exception as e:
+                print(f"Error reading support tickets CSV: {e}")
+
+            admin_name = session.get('admin_name', 'Admin User')
+            return render_template('admin_support_tickets.html', tickets=tickets, admin_name=admin_name)
+
+        @app.route('/admin/support-tickets/reply', methods=['POST'])
+        def admin_support_ticket_reply():
+            ticket_id = request.form.get('ticket_id')
+            reply_message = request.form.get('reply_message')
+            if not ticket_id or not reply_message:
+                flash('Missing ticket ID or reply message.', 'error')
+                return redirect(url_for('admin_support_tickets'))
+
+            csv_path = os.path.join('hexahaul_db', 'hh_support_tickets.csv')
+            updated_rows = []
+            user_email = None
+            ticket_title = None
+            ticket_description = None
+
+            # Read and update the CSV
+            try:
+                import pandas as pd
+                df = pd.read_csv(csv_path)
+                idx = df.index[df['ticket_id'] == ticket_id].tolist()
+                if not idx:
+                    flash('Ticket not found.', 'error')
+                    return redirect(url_for('admin_support_tickets'))
+                row_idx = idx[0]
+                user_email = df.at[row_idx, 'user_email']
+                ticket_title = df.at[row_idx, 'ticket_title']
+                ticket_description = df.at[row_idx, 'ticket_description']
+                df.at[row_idx, 'admin_reply'] = reply_message
+                from datetime import datetime
+                reply_timestamp = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+                df.at[row_idx, 'reply_timestamp'] = reply_timestamp
+                df.to_csv(csv_path, index=False)
+            except Exception as e:
+                flash(f'Error updating ticket: {e}', 'error')
+                return redirect(url_for('admin_support_tickets'))
+
+            # Send reply email using existing styled template
+            try:
+                logo_url = "https://i.imgur.com/upLAusA.png"
+                msg = Message(
+                    subject=f"HexaHaul Support Reply: {ticket_title}",
+                    sender="hexahaulprojects@gmail.com",
+                    recipients=[user_email]
+                )
+                msg.html = f"""
+                <div style="background:#f7f7f7;padding:40px 0;">
+                  <div style="max-width:600px;margin:0 auto;background:#fff;border-radius:8px;overflow:hidden;box-shadow:0 2px 8px rgba(0,0,0,0.05);">
+                    <div style="background:#03335e;padding:24px 0;text-align:center;">
+                      <img src="{logo_url}" alt="HexaHaul Logo" style="width:64px;height:64px;margin-bottom:8px;">
+                      <h2 style="margin:0;font-family:sans-serif;color:#fff;">Support Ticket Reply</h2>
+                    </div>
+                    <div style="padding:32px 24px;">
+                      <p style="font-family:sans-serif;color:#333;font-size:16px;">
+                        <strong>Your Ticket:</strong> {ticket_title}<br>
+                        <span style="color:#888;font-size:14px;">{{ ticket_id }}</span>
+                      </p>
+                      <div style="margin:16px 0;padding:16px;background:#f9f9f9;border-radius:4px;">
+                        <strong>Description:</strong><br>
+                        <span style="white-space:pre-line;">{ticket_description}</span>
+                      </div>
+                      <div style="margin:16px 0;padding:16px;background:#eaf6fb;border-radius:4px;">
+                        <strong>Admin Reply:</strong><br>
+                        <span style="white-space:pre-line;">{reply_message}</span>
+                      </div>
+                    </div>
+                    <div style="padding:16px 24px 24px 24px;background:#f0f7ff;text-align:center;font-family:sans-serif;font-size:14px;color:#555;">
+                      <p style="margin:0;">If you have further questions, please reply to this email or submit a new ticket.</p>
+                    </div>
+                  </div>
+                </div>
+                """
+                msg.body = f"""Your support ticket has received a reply.
+
+Ticket: {ticket_title}
+Description: {ticket_description}
+
+Admin Reply:
+{reply_message}
+"""
+                self.mail.send(msg)
+                flash('Reply sent successfully!', 'success')
+            except Exception as e:
+                flash(f'Error sending reply email: {e}', 'error')
+
+            return redirect(url_for('admin_support_tickets'))
+
+        @app.route('/admin/support-tickets/reply/<ticket_id>', methods=['GET'])
+        def admin_support_ticket_reply_page(ticket_id):
+            # Check if admin is logged in
+            if 'admin_id' not in session:
+                flash('Please login to access the admin dashboard', 'error')
+                return redirect(url_for('admin_login'))
+
+            csv_path = os.path.join('hexahaul_db', 'hh_support_tickets.csv')
+            ticket = None
+            try:
+                import pandas as pd
+                df = pd.read_csv(csv_path)
+                row = df[df['ticket_id'] == ticket_id]
+                if not row.empty:
+                    ticket = row.iloc[0].to_dict()
+            except Exception as e:
+                print(f"Error reading support ticket for reply: {e}")
+
+            if not ticket:
+                flash('Ticket not found.', 'error')
+                return redirect(url_for('admin_support_tickets'))
+
+            return render_template('admin_support_ticket_reply.html', ticket=ticket)
+
+        @app.route('/admin/support/ticket/done/<ticket_id>', methods=['POST'])
+        def admin_support_ticket_done(ticket_id):
+            """
+            Mark a support ticket as done by updating its status in the CSV.
+            """
+            import pandas as pd
+            csv_path = os.path.join('hexahaul_db', 'hh_support_tickets.csv')
+            try:
+                df = pd.read_csv(csv_path)
+                idx = df.index[df['ticket_id'] == ticket_id].tolist()
+                if not idx:
+                    return jsonify({'success': False, 'message': 'Ticket not found'}), 404
+                row_idx = idx[0]
+                # If status column does not exist, add it and default all to 'new'
+                if 'status' not in df.columns:
+                    df['status'] = 'new'
+                df.at[row_idx, 'status'] = 'done'
+                df.to_csv(csv_path, index=False)
+                return '', 204
+            except Exception as e:
+                return jsonify({'success': False, 'message': str(e)}), 500
+
     def register_blueprints(self):
         self.app.register_blueprint(analytics_bp)
         self.app.register_blueprint(hexabot_bp)
 
     def run(self):
         self.app.debug = True
+        self.app.run(host="0.0.0.0", port=5000)
         print("Flask app routes:")
         print(self.app.url_map)
+        
         
         template_dir = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'templates')
         if os.path.exists(template_dir):
@@ -1916,3 +2223,7 @@ def vehicles_deployed_graph():
 if __name__ == "__main__":
     app_instance = HexaHaulApp()
     app_instance.run()
+
+# This allows Gunicorn to find 'app' when running 'gunicorn app:app'
+app_instance = HexaHaulApp()
+app = app_instance.app
