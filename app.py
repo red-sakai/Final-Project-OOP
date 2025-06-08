@@ -27,14 +27,19 @@ import uuid
 from markupsafe import Markup
 from sqlalchemy import create_engine, text
 import mysql.connector
+from dotenv import load_dotenv
+
+# Load environment variables from .env file
+load_dotenv()
 
 def get_mysql_connection():
-    """Create and return a MySQL connection for hh_user_login_db table access."""
+    """Create and return a MySQL connection for hh_user_login_db table access using .env credentials."""
     return mysql.connector.connect(
-        host="localhost",
-        user="root",
-        password="Jhered143!",
-        database="hh_user_login_db"
+        host=os.getenv("MYSQL_HOST"),
+        user=os.getenv("MYSQL_USER"),
+        password=os.getenv("MYSQL_PASSWORD"),
+        database=os.getenv("MYSQL_DATABASE"),
+        port=int(os.getenv("MYSQL_PORT"))
     )
 
 def get_qa_pipeline():
