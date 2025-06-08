@@ -2,3 +2,6 @@ __pycache__/
 *.pyc
 database/hexahaul.db
 venv/
+.env
+REMOVED
+replacements.txt
