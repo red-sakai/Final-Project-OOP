@@ -1982,24 +1982,27 @@ class HexaHaulApp:
                 file.save(filepath)
                 # Always use forward slashes for web paths
                 relative_path = os.path.join('user_images', filename).replace('\\', '/')
-                session['user_image'] = relative_path
 
-                # Update MySQL profile_image for the logged-in user
+                # Update MySQL profile_image for the logged-in user (by email_address or username)
                 try:
                     conn = get_mysql_connection()
                     cursor = conn.cursor()
+                    user_email = session['user_email']
+                    user_username = session.get('username')
                     update_query = """
                         UPDATE hh_user_login
                         SET profile_image = %s
-                        WHERE `Email Address` = %s OR email = %s
+                        WHERE (email_address = %s OR Username = %s OR username = %s)
                     """
-                    user_email = session['user_email']
-                    cursor.execute(update_query, (relative_path, user_email, user_email))
+                    cursor.execute(update_query, (relative_path, user_email, user_username, user_username))
                     conn.commit()
                     cursor.close()
                     conn.close()
                 except Exception as e:
                     print(f"Error updating profile image in MySQL: {e}")
+
+                # Always update session image for current session
+                session['user_image'] = relative_path
 
                 image_url = url_for('static', filename=relative_path)
                
