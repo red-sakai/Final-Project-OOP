@@ -227,18 +227,15 @@ class HexaHaulApp:
                 username = request.form.get("username")
                 password = request.form.get("password")
 
-                # Try MySQL authentication first
+                # Only use MySQL authentication
                 user = authenticate_user_mysql(username, password)
-                if not user:
-                    # Fallback to CSV authentication
-                    user = authenticate_user_csv(username, password)
 
                 if user:
                     session["logged_in"] = True
                     session["user_name"] = user["full_name"]
                     session["user_email"] = user["email"]
                     session["username"] = user["username"]
-                    session["user_image"] = user.get("user_image", "images/pfp.png")  # <-- Add this line
+                    session["user_image"] = user.get("user_image", "images/pfp.png")
                     
                     # Log the login activity
                     ip_address = request.environ.get('HTTP_X_FORWARDED_FOR', request.environ.get('REMOTE_ADDR', ''))
@@ -268,9 +265,8 @@ class HexaHaulApp:
             try:
                 conn = get_mysql_connection()
                 cursor = conn.cursor(dictionary=True)
-                # Adjust table/column names as needed
                 query = """
-                    SELECT * FROM hh_user_login_db
+                    SELECT * FROM hh_user_login
                     WHERE Username = %s AND Password = %s
                     LIMIT 1
                 """
@@ -283,30 +279,10 @@ class HexaHaulApp:
                         'full_name': row.get('Full Name') or row.get('Full_Name') or row.get('full_name'),
                         'email': row.get('Email Address') or row.get('Email_Address') or row.get('email'),
                         'username': row.get('Username') or row.get('username'),
-                        'user_image': row.get('Profile Image') or row.get('Profile_Image') or row.get('user_image', 'images/pfp.png')
+                        'user_image': row.get('profile_image') or row.get('Profile Image') or row.get('Profile_Image') or row.get('user_image', 'images/pfp.png')
                     }
             except Exception as e:
                 print(f"Error authenticating user from MySQL: {e}")
-            return None
-
-        def authenticate_user_csv(username, password):
-            """Authenticate user against CSV file"""
-            csv_path = os.path.join('hexahaul_db', 'hh_user-login.csv')
-            try:
-                with open(csv_path, 'r', newline='', encoding='utf-8') as csvfile:
-                    reader = csv.DictReader(csvfile)
-                    for row in reader:
-                        if row['Username'] == username and row['Password'] == password:
-                            return {
-                                'full_name': row['Full Name'],
-                                'email': row['Email Address'],
-                                'username': row['Username'],
-                                'user_image': row.get('Profile Image', 'images/pfp.png')  # <-- Add this line
-                            }
-            except FileNotFoundError:
-                print(f"CSV file not found: {csv_path}")
-            except Exception as e:
-                print(f"Error reading CSV: {e}")
             return None
 
         @app.route("/logout")
@@ -1997,7 +1973,10 @@ class HexaHaulApp:
 
             file = request.files.get('profile_image')
             if file and allowed_file(file.filename):
-                filename = secure_filename(session['user_email'].replace('@', '').replace('.', '') + '_' + file.filename)
+                # Use werkzeug to make a secure and unique filename
+                import time
+                unique_part = str(uuid.uuid4()) + '_' + str(int(time.time()))
+                filename = secure_filename(unique_part + '_' + file.filename)
                 filepath = os.path.join(UPLOAD_FOLDER, filename)
                 os.makedirs(UPLOAD_FOLDER, exist_ok=True)
                 file.save(filepath)
@@ -2005,15 +1984,22 @@ class HexaHaulApp:
                 relative_path = os.path.join('user_images', filename).replace('\\', '/')
                 session['user_image'] = relative_path
 
-                # Update CSV
-                csv_path = os.path.join('hexahaul_db', 'hh_user-login.csv')
+                # Update MySQL profile_image for the logged-in user
                 try:
-                    df = pd.read_csv(csv_path)
+                    conn = get_mysql_connection()
+                    cursor = conn.cursor()
+                    update_query = """
+                        UPDATE hh_user_login
+                        SET profile_image = %s
+                        WHERE `Email Address` = %s OR email = %s
+                    """
                     user_email = session['user_email']
-                    df.loc[df['Email Address'] == user_email, 'Profile Image'] = relative_path
-                    df.to_csv(csv_path, index=False)
+                    cursor.execute(update_query, (relative_path, user_email, user_email))
+                    conn.commit()
+                    cursor.close()
+                    conn.close()
                 except Exception as e:
-                    print(f"Error updating profile image in CSV: {e}")
+                    print(f"Error updating profile image in MySQL: {e}")
 
                 image_url = url_for('static', filename=relative_path)
                

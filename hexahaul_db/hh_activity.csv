@@ -57,3 +57,8 @@ id,Username,Email,Activity_Type,Activity_Description,Timestamp,IP_Address,User_A
 56,jhered123,jheredtest@gmail.com,LOGIN,User logged in successfully,6/6/2025 16:43,127.0.0.1,"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/134.0.0.0 Safari/537.36 OPR/119.0.0.0"
 57,jhered123,jheredtest@gmail.com,LOGIN,User logged in successfully,6/6/2025 20:14,127.0.0.1,"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/134.0.0.0 Safari/537.36 OPR/119.0.0.0"
 58,jhered123,jheredtest@gmail.com,LOGIN,User logged in successfully,6/7/2025 1:46,127.0.0.1,"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/134.0.0.0 Safari/537.36 OPR/119.0.0.0"
+test6,,LOGIN,User logged in successfully,2025-06-08 23:32:58,127.0.0.1,"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/137.0.0.0 Safari/537.36"
+test6,,LOGIN,User logged in successfully,2025-06-08 23:33:02,127.0.0.1,"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/137.0.0.0 Safari/537.36"
+test6,,LOGIN,User logged in successfully,2025-06-08 23:35:43,127.0.0.1,"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/137.0.0.0 Safari/537.36"
+test6,,LOGIN,User logged in successfully,2025-06-08 23:36:00,127.0.0.1,"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/137.0.0.0 Safari/537.36"
+test6,,LOGIN,User logged in successfully,2025-06-08 23:36:54,127.0.0.1,"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/137.0.0.0 Safari/537.36"
