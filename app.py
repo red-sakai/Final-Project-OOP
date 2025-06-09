@@ -9,13 +9,16 @@ from models.admin_database import init_admin_db, get_db_session, Admin, get_defa
 from models.utilities_database import UtilitiesDatabase
 from models.salary_database import SalaryDatabase, EmployeeSalary
 from models.products_database import ProductsDatabase, Product
+from models.sales_database import SalesDatabase
 from abc import ABC, abstractmethod
 from enum import Enum
 from flask_mail import Mail, Message
 from transformers import pipeline
 from services.hexabot import hexabot_bp
 from models.activity_database import ActivityDatabase
+from models.customers_database import CustomerDatabase
 import csv
+import time
 import os
 import json
 import random
@@ -46,7 +49,6 @@ def get_qa_pipeline():
     """Lazily load and cache the QA pipeline to avoid OOM on startup."""
     # Lazy Load - delaying the initialization to save memory
     if not hasattr(get_qa_pipeline, "_pipeline"):
-        from transformers import pipeline
         get_qa_pipeline._pipeline = pipeline("question-answering", model="distilbert-base-uncased-distilled-squad")
     return get_qa_pipeline._pipeline
 
@@ -810,8 +812,6 @@ class HexaHaulApp:
                     for file in files:
                         if file and file.filename:
                             # Use werkzeug for secure and unique filenames
-                            from werkzeug.utils import secure_filename
-                            import time
                             filename = secure_filename(
                                 f"{str(uuid.uuid4())}_{int(time.time())}_{file.filename}"
                             )
@@ -1682,9 +1682,6 @@ class HexaHaulApp:
             if 'admin_id' not in session:
                 flash('Please login to access the admin dashboard', 'error')
                 return redirect(url_for('admin_login'))
-            
-            from models.sales_database import SalesDatabase
-            
             # Initialize sales database and get sales data
             sales_db = SalesDatabase()
             sales = sales_db.get_all_sales()
@@ -1708,9 +1705,6 @@ class HexaHaulApp:
             if 'admin_id' not in session:
                 flash('Please login to access the admin dashboard', 'error')
                 return redirect(url_for('admin_login'))
-            
-            from models.customers_database import CustomerDatabase
-            
             # Initialize customer database and get customer data
             customer_db = CustomerDatabase()
             customers = customer_db.get_all_customers()
@@ -1740,11 +1734,8 @@ class HexaHaulApp:
 
         @app.route('/admin/customers/add', methods=['POST'])
         def admin_add_customer():
-            from models.customers_database import CustomerDatabase
-            
             try:
                 # Generate a unique customer ID (in a real app, this would be more systematic)
-                import random
                 customer_id = f"CUST-{random.randint(10000, 99999)}"
                 
                 data = {
@@ -1772,8 +1763,6 @@ class HexaHaulApp:
         
         @app.route('/admin/customers/update', methods=['POST'])
         def admin_update_customer():
-            from models.customers_database import CustomerDatabase
-            
             try:
                 customer_id = request.form.get('customer_id')
                 
@@ -1801,8 +1790,6 @@ class HexaHaulApp:
         
         @app.route('/admin/customers/delete', methods=['POST'])
         def admin_delete_customer():
-            from models.customers_database import CustomerDatabase
-            
             try:
                 customer_id = request.form.get('customer_id')
                 
@@ -1821,7 +1808,6 @@ class HexaHaulApp:
         
         @app.route('/admin/sales/add', methods=['POST'])
         def admin_add_sale():
-            from models.sales_database import SalesDatabase
             
             try:
                 data = {
@@ -1855,8 +1841,6 @@ class HexaHaulApp:
         
         @app.route('/admin/sales/update', methods=['POST'])
         def admin_update_sale():
-            from models.sales_database import SalesDatabase
-            
             try:
                 sale_id = int(request.form.get('sale_id'))
                 
@@ -1890,9 +1874,7 @@ class HexaHaulApp:
             return redirect(url_for('admin_sales'))
         
         @app.route('/admin/sales/delete', methods=['POST'])
-        def admin_delete_sale():
-            from models.sales_database import SalesDatabase
-            
+        def admin_delete_sale():    
             try:
                 sale_id = int(request.form.get('sale_id'))
                 
@@ -2071,7 +2053,7 @@ class HexaHaulApp:
 
             # Read and update the CSV
             try:
-                import pandas as pd
+
                 df = pd.read_csv(csv_path)
                 idx = df.index[df['ticket_id'] == ticket_id].tolist()
                 if not idx:
@@ -2082,7 +2064,6 @@ class HexaHaulApp:
                 ticket_title = df.at[row_idx, 'ticket_title']
                 ticket_description = df.at[row_idx, 'ticket_description']
                 df.at[row_idx, 'admin_reply'] = reply_message
-                from datetime import datetime
                 reply_timestamp = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
                 df.at[row_idx, 'reply_timestamp'] = reply_timestamp
                 df.to_csv(csv_path, index=False)
@@ -2150,7 +2131,6 @@ Admin Reply:
             csv_path = os.path.join('hexahaul_db', 'hh_support_tickets.csv')
             ticket = None
             try:
-                import pandas as pd
                 df = pd.read_csv(csv_path)
                 row = df[df['ticket_id'] == ticket_id]
                 if not row.empty:
@@ -2169,7 +2149,6 @@ Admin Reply:
             """
             Mark a support ticket as done by updating its status in the CSV.
             """
-            import pandas as pd
             csv_path = os.path.join('hexahaul_db', 'hh_support_tickets.csv')
             try:
                 df = pd.read_csv(csv_path)
@@ -2232,8 +2211,6 @@ Admin Reply:
                 return jsonify({'success': False, 'message': 'No file selected'}), 400
 
             # Save the file to static/profile_images/
-            from werkzeug.utils import secure_filename
-            import time
             filename = secure_filename(f"{session['username']}_{int(time.time())}_{file.filename}")
             upload_dir = os.path.join('static', 'profile_images')
             os.makedirs(upload_dir, exist_ok=True)
