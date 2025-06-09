@@ -521,26 +521,33 @@ class HexaHaulApp:
         def forgot_password():
             if request.method == "POST":
                 email = request.form.get("email")
-                # --- Check if email exists in CSV ---
-                csv_path = os.path.join('hexahaul_db', 'hh_user-login.csv')
+                
+                # Check if email exists in MySQL hh_user_login table
                 email_found = False
                 try:
-                    with open(csv_path, 'r', encoding='utf-8') as csvfile:
-                        reader = csv.DictReader(csvfile)
-                        for row in reader:
-                            if row.get('Email Address', '').strip().lower() == email.strip().lower():
-                                email_found = True
-                                break
+                    conn = get_mysql_connection()
+                    cursor = conn.cursor()
+                    
+                    # Query to check if email exists in email_address column
+                    query = "SELECT 1 FROM hh_user_login WHERE email_address = %s LIMIT 1"
+                    cursor.execute(query, (email,))
+                    email_found = cursor.fetchone() is not None
+                    
+                    cursor.close()
+                    conn.close()
                 except Exception as e:
-                    print(f"Error reading user CSV: {e}")
+                    print(f"Error checking email in MySQL: {e}")
+                
                 if not email_found:
-                    flash("Email not found in user records", "error")
+                    flash("Email not found. Please use a registered email address.", "error")
                     return render_template("forgot-password.html", error="Email not found in user records")
-                # --- If found, proceed as before ---
+                
+                # If email is found, proceed with OTP generation and sending
                 otp = user_password_reset_manager.generate_otp(email)
                 user_password_reset_manager.send_otp(email, otp)
                 flash("OTP sent to your email. Please check your inbox.")
                 return redirect(url_for("verify_otp", email=email))
+                
             return render_template("forgot-password.html")
 
         @app.route("/verify-otp", methods=["GET", "POST"])
