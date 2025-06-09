@@ -496,16 +496,23 @@ class HexaHaulApp:
             """Handle admin forgot password form submission"""
             email = request.form.get("email")
             
-            # Check if email exists in admin database (hh_admins.csv)
-            admin_emails = []
+            # Check if email exists in admin database (MySQL hh_admins table)
+            email_found = False
             try:
-                with open('hexahaul_db/hh_admins.csv', 'r') as f:
-                    reader = csv.DictReader(f)
-                    admin_emails = [row['admin_email'] for row in reader]
+                conn = get_mysql_connection()
+                cursor = conn.cursor()
+                
+                # Query to check if email exists in admin_email column
+                query = "SELECT 1 FROM hh_admins WHERE admin_email = %s LIMIT 1"
+                cursor.execute(query, (email,))
+                email_found = cursor.fetchone() is not None
+                
+                cursor.close()
+                conn.close()
             except Exception as e:
-                print(f"Error reading admin CSV: {e}")
+                print(f"Error checking admin email in MySQL: {e}")
             
-            if email in admin_emails:
+            if email_found:
                 # Generate and send OTP
                 otp = admin_password_reset_manager.generate_otp(email)
                 admin_password_reset_manager.send_otp(email, otp)
