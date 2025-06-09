@@ -352,21 +352,46 @@ class HexaHaulApp:
             print("Services route accessed")
             return render_template("services.html")
 
-        @app.route("/tracking")
-        @app.route("/tracking.html")
+        @app.route("/tracking", methods=["GET", "POST"])
+        @app.route("/tracking.html", methods=["GET", "POST"])
         def tracking_html():
-            print("Tracking route accessed")
-            # Read Order Item Ids from CSV
-            csv_path = os.path.join('hexahaul_db', 'hh_order.csv')
-            order_item_ids = []
+            error_message = None
+            if request.method == "POST":
+                order_item_id = request.form.get("tracking_id", "").strip()
+                # Validate order_item_id in MySQL
+                try:
+                    conn = get_mysql_connection()
+                    cursor = conn.cursor()
+                    query = "SELECT 1 FROM hh_order WHERE order_item_id = %s LIMIT 1"
+                    cursor.execute(query, (order_item_id,))
+                    exists = cursor.fetchone() is not None
+                    cursor.close()
+                    conn.close()
+                except Exception as e:
+                    print(f"Error validating order_item_id in MySQL: {e}")
+                    exists = False
+                if exists:
+                    return redirect(url_for("parceltracking", tracking_id=order_item_id))
+                else:
+                    error_message = "Invalid Tracking ID. Please enter a valid Order Item Id."
+            return render_template("tracking.html", error=error_message)
+
+        @app.route("/validate-order-item-id", methods=["POST"])
+        def validate_order_item_id():
+            data = request.get_json()
+            order_item_id = data.get("order_item_id", "").strip()
+            exists = False
             try:
-                with open(csv_path, 'r', encoding='utf-8') as f:
-                    reader = csv.DictReader(f)
-                    for row in reader:
-                        order_item_ids.append(row['Order Item Id'])
+                conn = get_mysql_connection()
+                cursor = conn.cursor()
+                query = "SELECT 1 FROM hh_order WHERE order_item_id = %s LIMIT 1"
+                cursor.execute(query, (order_item_id,))
+                exists = cursor.fetchone() is not None
+                cursor.close()
+                conn.close()
             except Exception as e:
-                print(f"Error reading hh_order.csv: {e}")
-            return render_template("tracking.html", order_item_ids=order_item_ids)
+                print(f"Error validating order_item_id in MySQL: {e}")
+            return jsonify({"exists": exists})
 
         @app.route("/FAQ")
         @app.route("/FAQ.html")
