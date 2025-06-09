@@ -17,8 +17,8 @@
         <div class="sidebar-profile-block">
             <img src="{{ url_for('static', filename=session.get('user_image', 'images/pfp.png')) }}" alt="Profile Icon" class="sidebar-profile-img">
             <div class="sidebar-profile-info">
-                <!-- Use session['full_name'] if available -->
-                <div class="sidebar-profile-name" id="sidebarFullName">{{ session.get('full_name', session.get('user_name', 'User')) }}</div>
+                <!-- Ensure full_name is properly displayed -->
+                <div class="sidebar-profile-name" id="sidebarFullName">{{ session.get('full_name', 'User') }}</div>
                 <div class="sidebar-profile-email">{{ session.get('user_email', 'user@example.com') }}</div>
             </div>
         </div>
@@ -71,8 +71,8 @@
                             <div class="profile-desc">This will be displayed on your profile.</div>
                         </div>
                         <div class="profile-value" id="nameValue">
-                            <span id="fullNameText">{{ session.get('full_name', session.get('user_name', 'User')) }}</span>
-                            <input type="text" id="fullNameInput" class="profile-input" placeholder="Enter your name" style="display:none;" value="{{ session.get('full_name', session.get('user_name', '')) }}" />
+                            <span id="fullNameText">{{ session.get('full_name', 'User') }}</span>
+                            <input type="text" id="fullNameInput" class="profile-input" placeholder="Enter your name" style="display:none;" value="{{ session.get('full_name', '') }}" />
                             <a href="#" class="profile-edit-link" id="editNameBtn">Edit</a>
                             <a href="#" class="profile-edit-link" id="saveNameBtn" style="display:none;">Save</a>
                             <span id="nameUpdateStatus" style="color:green;display:none;">Saved!</span>
