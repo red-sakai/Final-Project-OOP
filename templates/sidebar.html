@@ -88,11 +88,8 @@
                             <span id="emailText">{{ session.get('user_email', 'user@example.com') }}</span>
                             <input type="email" id="emailInput" class="profile-input" placeholder="your@email.com" style="display:none;" value="{{ session.get('user_email', '') }}" />
                             <a href="#" class="profile-edit-link" id="editEmailBtn">Edit</a>
-                            <div class="profile-secondary-email" id="secondaryEmailValue">
-                                <span id="secondaryEmailText">{{ session.get('secondary_email', '') }}</span>
-                                <input type="email" id="secondaryEmailInput" class="profile-input" placeholder="secondary@email.com" style="display:none;" value="{{ session.get('secondary_email', '') }}" />
-                                <a href="#" class="profile-edit-link" id="editSecondaryEmailBtn">Edit</a>
-                            </div>
+                            <a href="#" class="profile-edit-link" id="saveEmailBtn" style="display:none;">Save</a>
+                            <span id="emailUpdateStatus" style="color:green;display:none;">Saved!</span>
                         </div>
                     </div>
                 </form>
@@ -185,8 +182,6 @@
     <!-- Include the separate JavaScript file -->
     <script src="{{ url_for('static', filename='sidebar.js') }}"></script>
     <script>
-// ...existing code...
-
 // Full name edit/save logic
 document.addEventListener('DOMContentLoaded', function() {
     const editBtn = document.getElementById('editNameBtn');
@@ -239,9 +234,57 @@ document.addEventListener('DOMContentLoaded', function() {
             });
         });
     }
-});
 
-// ...existing code...
+    // Email edit/save logic
+    const editEmailBtn = document.getElementById('editEmailBtn');
+    const saveEmailBtn = document.getElementById('saveEmailBtn');
+    const emailText = document.getElementById('emailText');
+    const emailInput = document.getElementById('emailInput');
+    const emailUpdateStatus = document.getElementById('emailUpdateStatus');
+
+    if (editEmailBtn && saveEmailBtn && emailText && emailInput) {
+        editEmailBtn.addEventListener('click', function(e) {
+            e.preventDefault();
+            emailInput.style.display = '';
+            saveEmailBtn.style.display = '';
+            emailText.style.display = 'none';
+            editEmailBtn.style.display = 'none';
+            emailInput.focus();
+        });
+
+        saveEmailBtn.addEventListener('click', function(e) {
+            e.preventDefault();
+            const newEmail = emailInput.value.trim();
+            if (!newEmail) return;
+            // AJAX to update email in MySQL
+            fetch('/update_email', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Accept': 'application/json'
+                },
+                body: JSON.stringify({ email: newEmail })
+            })
+            .then(res => res.json())
+            .then(data => {
+                if (data.success) {
+                    emailText.textContent = newEmail;
+                    emailUpdateStatus.style.display = '';
+                    setTimeout(() => { emailUpdateStatus.style.display = 'none'; }, 1200);
+                } else {
+                    alert(data.message || 'Failed to update email');
+                }
+            })
+            .catch(() => alert('Error updating email'))
+            .finally(() => {
+                emailInput.style.display = 'none';
+                saveEmailBtn.style.display = 'none';
+                emailText.style.display = '';
+                editEmailBtn.style.display = '';
+            });
+        });
+    }
+});
 </script>
 </body>
 </html>

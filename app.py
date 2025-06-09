@@ -1906,114 +1906,72 @@ class HexaHaulApp:
         @app.route('/update-profile', methods=['POST'])
        
         def update_profile():
-
             # Make sure user is logged in
-
             if 'user_email' not in session:
                 return jsonify({'success': False, 'message': 'User not logged in'})
             
-            # Get the data from request
             data = request.get_json()
             field = data.get('field')
             value = data.get('value')
-            
-            # Get current email from session
             current_email = session.get('user_email')
             
+            # Only allow name update here (email handled separately)
             try:
-                # Path to CSV file
-                csv_path = os.path.join('hexahaul_db', 'hh_user-login.csv')
-                
-                # Read the CSV file into a pandas DataFrame
-                df = pd.read_csv(csv_path)
-                
-                # Find the row with the current email
-                user_row = df[df['Email Address'] == current_email]
-                
-               
-                if len(user_row) == 0:
-                    return jsonify({'success': False, 'message': 'User not found'})
-                
-                # Update the appropriate field
                 if field == 'name':
-                    df.loc[df['Email Address'] == current_email, 'Full Name'] = value
-                    # Update the session name
-                    session['user_name'] = value
-                elif field == 'email':
-                    # First save the current email to find the user row
-                    old_email = current_email
-                    # Update the email in the DataFrame
-                    df.loc[df['Email Address'] == old_email, 'Email Address'] = value
-                    # Update the session email
-                    session['user_email'] = value
-                else:
-                    return jsonify({'success': False, 'message': 'Invalid field'})
-                
-                # Save the updated DataFrame back to CSV
-                df.to_csv(csv_path, index=False)
-                
-                return jsonify({'success': True})
-            
-            except Exception as e:
-                return jsonify({'success': False, 'message': str(e)}), 500
-        
-        UPLOAD_FOLDER = os.path.join('static', 'user_images')
-        ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg', 'gif'}
-
-        def allowed_file(filename):
-            return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
-
-        # Add this route to handle uploads
-        @app.route('/upload-profile-image', methods=['POST'])
-        def upload_profile_image():
-            if 'user_email' not in session:
-                if request.is_json or request.accept_mimetypes['application/json']:
-                    return jsonify(success=False, message="Not logged in"), 401
-                return redirect(url_for('user_login_html'))
-
-            file = request.files.get('profile_image')
-            if file and allowed_file(file.filename):
-                # Use werkzeug to make a secure and unique filename
-                import time
-                unique_part = str(uuid.uuid4()) + '_' + str(int(time.time()))
-                filename = secure_filename(unique_part + '_' + file.filename)
-                filepath = os.path.join(UPLOAD_FOLDER, filename)
-                os.makedirs(UPLOAD_FOLDER, exist_ok=True)
-                file.save(filepath)
-                # Always use forward slashes for web paths
-                relative_path = os.path.join('user_images', filename).replace('\\', '/')
-
-                # Update MySQL profile_image for the logged-in user (by email_address or username)
-                try:
+                    # Update full name in MySQL
                     conn = get_mysql_connection()
                     cursor = conn.cursor()
-                    user_email = session['user_email']
                     user_username = session.get('username')
                     update_query = """
                         UPDATE hh_user_login
-                        SET profile_image = %s
-                        WHERE (email_address = %s OR Username = %s OR username = %s)
+                        SET `full_name` = %s
+                        WHERE (`email_address` = %s OR `Username` = %s OR `username` = %s)
                     """
-                    cursor.execute(update_query, (relative_path, user_email, user_username, user_username))
+                    cursor.execute(update_query, (value, current_email, user_username, user_username))
                     conn.commit()
                     cursor.close()
                     conn.close()
-                except Exception as e:
-                    print(f"Error updating profile image in MySQL: {e}")
+                    session['user_name'] = value
+                    session['full_name'] = value
+                    return jsonify({'success': True})
+                elif field == 'email':
+                    # Email update is handled by /update_email route
+                    return jsonify({'success': False, 'message': 'Use /update_email for email changes'})
+                else:
+                    return jsonify({'success': False, 'message': 'Invalid field'})
+            except Exception as e:
+                return jsonify({'success': False, 'message': str(e)}), 500
 
-                # Always update session image for current session
-                session['user_image'] = relative_path
+        # New route to update the user's contact email in MySQL and session
+        @app.route('/update_email', methods=['POST'])
+        def update_email_route():
+            if 'user_email' not in session:
+                return jsonify({'success': False, 'message': 'User not logged in'}), 401
+            data = request.get_json()
+            new_email = data.get('email', '').strip()
+            if not new_email:
+                return jsonify({'success': False, 'message': 'No email provided'}), 400
 
-                image_url = url_for('static', filename=relative_path)
-               
-                if request.is_json or request.accept_mimetypes['application/json']:
-                    return jsonify(success=True, image_url=image_url)
-                flash('Profile image updated!', 'success')
-            else:
-                if request.is_json or request.accept_mimetypes['application/json']:
-                    return jsonify(success=False, message="Invalid file type")
-                flash('Invalid file type.', 'error')
-            return redirect(request.referrer or url_for('sidebar_html'))
+            user_email = session.get('user_email')
+            user_username = session.get('username')
+            try:
+                conn = get_mysql_connection()
+                cursor = conn.cursor()
+                # Update email_address in MySQL
+                update_query = """
+                    UPDATE hh_user_login
+                    SET `email_address` = %s
+                    WHERE (`email_address` = %s OR `Username` = %s OR `username` = %s)
+                """
+                cursor.execute(update_query, (new_email, user_email, user_username, user_username))
+                conn.commit()
+                cursor.close()
+                conn.close()
+                # Update session
+                session['user_email'] = new_email
+                return jsonify({'success': True, 'email': new_email})
+            except Exception as e:
+                return jsonify({'success': False, 'message': str(e)}), 500
 
         @app.route('/admin/support-tickets')
         def admin_support_tickets():
@@ -2198,6 +2156,51 @@ Admin Reply:
                 session['full_name'] = new_full_name
                 session['user_name'] = new_full_name
                 return jsonify({'success': True})
+            except Exception as e:
+                return jsonify({'success': False, 'message': str(e)}), 500
+
+        # --- Ensure this route is present and correct ---
+        @app.route('/upload-profile-image', methods=['POST'])
+        def upload_profile_image():
+            if 'user_email' not in session or 'username' not in session:
+                return jsonify({'success': False, 'message': 'User not logged in'}), 401
+
+            if 'profile_image' not in request.files:
+                return jsonify({'success': False, 'message': 'No file uploaded'}), 400
+
+            file = request.files['profile_image']
+            if not file or file.filename == '':
+                return jsonify({'success': False, 'message': 'No file selected'}), 400
+
+            # Save the file to static/profile_images/
+            from werkzeug.utils import secure_filename
+            import time
+            filename = secure_filename(f"{session['username']}_{int(time.time())}_{file.filename}")
+            upload_dir = os.path.join('static', 'profile_images')
+            os.makedirs(upload_dir, exist_ok=True)
+            filepath = os.path.join(upload_dir, filename)
+            file.save(filepath)
+
+            # Store relative path for web access
+            rel_path = os.path.join('profile_images', filename).replace('\\', '/')
+
+            # Update the user's profile image in MySQL
+            try:
+                conn = get_mysql_connection()
+                cursor = conn.cursor()
+                update_query = """
+                    UPDATE hh_user_login
+                    SET profile_image = %s
+                    WHERE (email_address = %s OR Username = %s OR username = %s)
+                """
+                cursor.execute(update_query, (rel_path, session['user_email'], session['username'], session['username']))
+                conn.commit()
+                cursor.close()
+                conn.close()
+                # Update session
+                session['user_image'] = rel_path
+                image_url = url_for('static', filename=rel_path)
+                return jsonify({'success': True, 'image_url': image_url})
             except Exception as e:
                 return jsonify({'success': False, 'message': str(e)}), 500
 
