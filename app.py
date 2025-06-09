@@ -696,85 +696,94 @@ class HexaHaulApp:
             order_data = None
             
             if tracking_id:
-                order_csv_path = os.path.join('hexahaul_db', 'hh_order.csv')
-                product_csv_path = os.path.join('hexahaul_db', 'hh_product_info.csv')
-                driver_id = None
-                product_name = None
-                # --- Read product info into a dict for fast lookup ---
-                product_lookup = {}
+                # Get order data from MySQL instead of CSV
                 try:
-                    with open(product_csv_path, 'r', newline='', encoding='utf-8') as prodfile:
-                        prod_reader = csv.DictReader(prodfile)
-                        for prod_row in prod_reader:
-                            # Normalize key for lookup
-                            product_lookup[prod_row['Order Item Id']] = prod_row['Product Name'].strip()
-                except Exception as e:
-                    print(f"Error reading product info CSV: {e}")
-                # --- Read order info and merge product name ---
-                try:
-                    with open(order_csv_path, 'r', newline='', encoding='utf-8') as csvfile:
-                        reader = csv.DictReader(csvfile)
-                        for row in reader:
-                            if row['Order Item Id'] == tracking_id:
-                                driver_id = int(row['driver_id'])
-                                order_date_str = row['order date (DateOrders)']
-                                try:
-                                    order_date = datetime.strptime(order_date_str, "%Y-%m-%d")
-                                except Exception:
-                                    order_date = None
-                                offset_days = 5
-                                expected_delivery_date = order_date + timedelta(days=offset_days) if order_date else None
-                                expected_delivery_str = expected_delivery_date.strftime("%Y-%m-%d") if expected_delivery_date else "Unknown"
-                                cust_lat = float(row['Customer Latitude'])
-                                cust_lon = float(row['Customer Longitude'])
-                                branch_lat = float(row['Branch Latitude'])
-                                branch_lon = float(row['Branch Longitude'])
-                                # reverse geocode
-                                customer_place = reverse_geocode(cust_lat, cust_lon)
-                                branch_place = reverse_geocode(branch_lat, branch_lon)
-                                # Lookup product name
-                                product_name = product_lookup.get(row['Order Item Id'], None)
-                                order_data = {
-                                    'orderItemId': row['Order Item Id'],
-                                    'deliveryStatus': row['Delivery Status'],
-                                    'originBranch': row['Origin Branch'],
-                                    'branchLatitude': branch_lat,
-                                    'branchLongitude': branch_lon,
-                                    'customerLatitude': cust_lat,
-                                    'customerLongitude': cust_lon,
-                                    'orderDate': order_date_str,
-                                    'expectedDeliveryDate': expected_delivery_str,
-                                    'customerPlace': customer_place,
-                                    'branchPlace': branch_place,
-                                    'driverId': driver_id,
-                                    'productName': product_name
+                    conn = get_mysql_connection()
+                    cursor = conn.cursor(dictionary=True)
+                    
+                    # Get product name from hh_product_info table
+                    product_name = None
+                    product_query = "SELECT `product_name` FROM hh_product_info WHERE `order_item_id` = %s LIMIT 1"
+                    cursor.execute(product_query, (tracking_id,))
+                    product_row = cursor.fetchone()
+                    if product_row:
+                        product_name = product_row['product_name'].strip()
+                    
+                    # Get order info from hh_order table
+                    order_query = """
+                        SELECT `order_item_id`, `delivery_status`, `origin_branch`, 
+                        `branch_latitude`, `branch_longitude`, `customer_latitude`, `customer_longitude`,
+                        `driver_id`, `order date (DateOrders)` 
+                        FROM hh_order
+                        WHERE `order_item_id` = %s
+                        LIMIT 1
+                    """
+                    cursor.execute(order_query, (tracking_id,))
+                    row = cursor.fetchone()
+                    
+                    if row:
+                        driver_id = int(row['driver_id']) if row['driver_id'] else None
+                        order_date_str = row['order date (DateOrders)']
+                        try:
+                            order_date = datetime.strptime(order_date_str, "%Y-%m-%d")
+                        except Exception:
+                            order_date = None
+                        offset_days = 5
+                        expected_delivery_date = order_date + timedelta(days=offset_days) if order_date else None
+                        expected_delivery_str = expected_delivery_date.strftime("%Y-%m-%d") if expected_delivery_date else "Unknown"
+                        cust_lat = float(row['customer_latitude'])
+                        cust_lon = float(row['customer_longitude'])
+                        branch_lat = float(row['branch_latitude'])
+                        branch_lon = float(row['branch_longitude'])
+                        # reverse geocode
+                        customer_place = reverse_geocode(cust_lat, cust_lon)
+                        branch_place = reverse_geocode(branch_lat, branch_lon)
+                        
+                        order_data = {
+                            'orderItemId': row['order_item_id'],
+                            'deliveryStatus': row['delivery_status'],
+                            'originBranch': row['origin_branch'],
+                            'branchLatitude': branch_lat,
+                            'branchLongitude': branch_lon,
+                            'customerLatitude': cust_lat,
+                            'customerLongitude': cust_lon,
+                            'orderDate': order_date_str,
+                            'expectedDeliveryDate': expected_delivery_str,
+                            'customerPlace': customer_place,
+                            'branchPlace': branch_place,
+                            'driverId': driver_id,
+                            'productName': product_name
+                        }
+                        
+                        # Get courier (driver) info if driver_id is available
+                        if driver_id:
+                            courier_query = """
+                                SELECT `employee_id`, `first_name`, `last_name`, `gender`, 
+                                `age`, `birth_date`, `contact_number` 
+                                FROM hh_employee_biography 
+                                WHERE `employee_id` = %s
+                                LIMIT 1
+                            """
+                            cursor.execute(courier_query, (driver_id,))
+                            courier_row = cursor.fetchone()
+                            if courier_row:
+                                courier = {
+                                    'employee_id': int(courier_row['employee_id']),
+                                    'first_name': courier_row['first_name'],
+                                    'last_name': courier_row['last_name'],
+                                    'gender': courier_row['gender'],
+                                    'age': int(courier_row['age']),
+                                    'birthdate': courier_row['birth_date'],
+                                    'contact_number': courier_row['contact_number']
                                 }
-                                break
+                    
+                    cursor.close()
+                    conn.close()
                 except Exception as e:
-                    print(f"Error reading order CSV: {e}")
-
-                if driver_id:
-                    emp_csv_path = os.path.join('hexahaul_db', 'hh_employee_biography.csv')
-                    try:
-                        with open(emp_csv_path, 'r', newline='', encoding='utf-8') as csvfile:
-                            reader = csv.DictReader(csvfile)
-                            for row in reader:
-                                if int(row['Employee Id']) == driver_id:
-                                    courier = {
-                                        'employee_id': int(row['Employee Id']),
-                                        'first_name': row['First Name'],
-                                        'last_name': row['Last Name'],
-                                        'gender': row['Gender'],
-                                        'age': int(row['Age']),
-                                        'birthdate': row['birth_date'],
-                                        'contact_number': row['Contact Number']
-                                    }
-                                    break
-                    except Exception as e:
-                        print(f"Error reading employee CSV: {e}")
+                    print(f"Error fetching order data from MySQL: {e}")
 
             return render_template("parceltracking.html", tracking_id=tracking_id, courier=courier, order_data=order_data)
-
+            
         @app.route("/submit-ticket", methods=["GET", "POST"])
         def submit_ticket():
             if request.method == "POST":
@@ -1412,7 +1421,7 @@ class HexaHaulApp:
             # Calculate statistics
             total_count = len(salaries)
             
-            total_salary = sum(s.salary_yearly for s in salaries)
+            total_salary = sum(s.salaries_yearly for s in salaries)
             avg_salary = total_salary / total_count if total_count > 0 else 0
             
             total_bonus = sum(s.bonus_amount for s in salaries)
