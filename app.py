@@ -619,14 +619,24 @@ class HexaHaulApp:
                 new_password = request.form.get('new_password')
                 confirm_password = request.form.get('confirm_password')
                 if new_password == confirm_password and len(new_password) >= 8:
-                    # --- Update admin password in CSV ---
-                    csv_path = os.path.join('hexahaul_db', 'hh_admins.csv')
+                    # Update admin password in MySQL database
                     try:
-                        df = pd.read_csv(csv_path)
-                        # Update the password for the row with matching email
-                        df.loc[df['admin_email'].str.strip().str.lower() == email.strip().lower(), 'admin_password'] = new_password
-                        df.to_csv(csv_path, index=False)
-                        flash("Password reset successful. Please login.")
+                        conn = get_mysql_connection()
+                        cursor = conn.cursor()
+                        
+                        # Update password in hh_admins table where admin_email matches
+                        update_query = "UPDATE hh_admins SET admin_password = %s WHERE admin_email = %s"
+                        cursor.execute(update_query, (new_password, email))
+                        conn.commit()
+                        
+                        # Check if any rows were affected
+                        if cursor.rowcount > 0:
+                            flash("Password reset successful. Please login.", "success")
+                        else:
+                            flash("No account found with that email address.", "error")
+                            
+                        cursor.close()
+                        conn.close()
                     except Exception as e:
                         flash(f"Error updating admin password: {e}", "error")
                     return redirect(url_for('admin_login'))
