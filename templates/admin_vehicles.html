@@ -97,34 +97,56 @@
                 <table class="vehicles-table">
                     <thead>
                         <tr>
-                            <th>ID</th>
+                            <!-- Removing ID column -->
+                            <th>Employee ID</th>
+                            <th>Unit Name</th>
                             <th>Brand</th>
-                            <th>Model</th>
-                            <th>Type</th>
                             <th>Year</th>
-                            <th>Distance (km)</th>
-                            <th>Driver ID</th>
-                            <th>License Expiry</th>
+                            <th>KM Driven</th>
                             <th>Min Weight (kg)</th>
                             <th>Max Weight (kg)</th>
                             <th>Status</th>
+                            <th>Category</th>
                             <th>Actions</th>
                         </tr>
                     </thead>
                     <tbody id="vehiclesTableBody">
                         {% for vehicle in vehicles %}
-                        <tr class="vehicle-row" data-category="{{ vehicle.category }}">
-                            <td>{{ vehicle.id }}</td>
+                        {% set vehicle_category = '' %}
+                        
+                        {# Assign category based on weight and specific models #}
+                        {% if vehicle.min_weight == 0.1 %}
+                            {% set vehicle_category = 'Motorcycle' %}
+                        {% elif vehicle.min_weight == 20 %}
+                            {% set vehicle_category = 'Car' %}
+                        {% elif vehicle.min_weight == 25 %}
+                            {% if vehicle.unit_name and ('NMAX' in vehicle.unit_name or 'Yamaha' in vehicle.unit_brand) %}
+                                {% set vehicle_category = 'Motorcycle' %}
+                            {% else %}
+                                {% set vehicle_category = 'Car' %}
+                            {% endif %}
+                        {% elif vehicle.min_weight >= 350 %}
+                            {% set vehicle_category = 'Truck' %}
+                        {% else %}
+                            {% set vehicle_category = vehicle.category|default('Unknown') %}
+                        {% endif %}
+                        
+                        <tr class="vehicle-row" data-category="{{ vehicle_category }}" data-id="{{ vehicle.id }}">
+                            <!-- Removing ID column <td>{{ vehicle.id }}</td> -->
+                            <td>{{ vehicle.employee_id if vehicle.employee_id else '-' }}</td>
+                            <td>{{ vehicle.unit_name }}</td>
                             <td>{{ vehicle.unit_brand }}</td>
-                            <td>{{ vehicle.unit_model }}</td>
-                            <td>{{ vehicle.unit_type }}</td>
                             <td>{{ vehicle.year }}</td>
-                            <td>{{ vehicle.distance }}</td>
-                            <td>{{ vehicle.driver_employee_id if vehicle.driver_employee_id else '-' }}</td>
-                            <td>{{ vehicle.license_expiration_date if vehicle.license_expiration_date else '-' }}</td>
+                            <td>{{ vehicle.km_driven }}</td>
                             <td>{{ vehicle.min_weight }}</td>
                             <td>{{ vehicle.max_weight }}</td>
-                            <td><span class="status {{ vehicle.status.lower().replace(' ', '-') }}">{{ vehicle.status }}</span></td>
+                            <td>
+                                {% set status = vehicle.get('status', 'Unknown') %}
+                                <span class="status {{ status|lower|replace(' ', '-') }}">{{ status }}</span>
+                            </td>
+                            <td>
+                                <span class="vehicle-category {{ vehicle_category|lower }}">{{ vehicle_category }}</span>
+                            </td>
                             <td>
                                 <button class="action-btn edit" data-id="{{ vehicle.id }}"><i class="fas fa-edit"></i></button>
                                 <button class="action-btn delete" data-id="{{ vehicle.id }}"><i class="fas fa-trash"></i></button>
@@ -145,40 +167,24 @@
             <form id="vehicleForm" method="POST" action="{{ url_for('admin_vehicles') }}/add">
                 <input type="hidden" id="vehicleId" name="vehicle_id">
                 <div class="form-group">
+                    <label for="employeeId">Employee ID:</label>
+                    <input type="text" id="employeeId" name="employee_id">
+                </div>
+                <div class="form-group">
+                    <label for="unitName">Unit Name:</label>
+                    <input type="text" id="unitName" name="unit_name" required>
+                </div>
+                <div class="form-group">
                     <label for="brand">Brand:</label>
                     <input type="text" id="brand" name="unit_brand" required>
-                </div>
-                <div class="form-group">
-                    <label for="model">Model:</label>
-                    <input type="text" id="model" name="unit_model" required>
-                </div>
-                <div class="form-group">
-                    <label for="category">Category:</label>
-                    <select id="category" name="category" required>
-                        <option value="Motorcycle">Motorcycle</option>
-                        <option value="Car">Car</option>
-                        <option value="Truck">Truck</option>
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label for="type">Type:</label>
-                    <input type="text" id="type" name="unit_type" required>
                 </div>
                 <div class="form-group">
                     <label for="year">Year:</label>
                     <input type="number" id="year" name="year" required min="1900" max="2099">
                 </div>
                 <div class="form-group">
-                    <label for="distance">Distance (km):</label>
-                    <input type="number" id="distance" name="distance" value="0" min="0">
-                </div>
-                <div class="form-group">
-                    <label for="driverId">Driver Employee ID:</label>
-                    <input type="number" id="driverId" name="driver_employee_id">
-                </div>
-                <div class="form-group">
-                    <label for="licenseExpiry">License Expiration Date:</label>
-                    <input type="date" id="licenseExpiry" name="license_expiration_date">
+                    <label for="kmDriven">KM Driven:</label>
+                    <input type="number" id="kmDriven" name="km_driven" value="0" min="0">
                 </div>
                 <div class="form-group">
                     <label for="minWeight">Minimum Weight (kg):</label>
@@ -194,6 +200,14 @@
                         <option value="Available">Available</option>
                         <option value="In Use">In Use</option>
                         <option value="Maintenance">Maintenance</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="category">Category:</label>
+                    <select id="category" name="category" required>
+                        <option value="Motorcycle">Motorcycle</option>
+                        <option value="Car">Car</option>
+                        <option value="Truck">Truck</option>
                     </select>
                 </div>
                 <div class="form-actions">
