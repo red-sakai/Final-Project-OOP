@@ -954,17 +954,28 @@ class HexaHaulApp:
                 email = request.args.get("email") or request.form.get("email")
                 new_password = request.form.get("new_password")
                 if email and new_password:
-                    csv_path = os.path.join('hexahaul_db', 'hh_user-login.csv')
+                    # Update password in MySQL database
                     try:
-                        df = pd.read_csv(csv_path)
-                        # Update the password for the row with matching email
-                        df.loc[df['Email Address'].str.strip().str.lower() == email.strip().lower(), 'Password'] = new_password
-                        df.to_csv(csv_path, index=False)
-                        flash("Password updated successfully. Please login.", "success")
+                        conn = get_mysql_connection()
+                        cursor = conn.cursor()
+                        
+                        # Update password in hh_user_login table where email_address matches
+                        update_query = "UPDATE hh_user_login SET password = %s WHERE email_address = %s"
+                        cursor.execute(update_query, (new_password, email))
+                        conn.commit()
+                        
+                        # Check if any rows were affected
+                        if cursor.rowcount > 0:
+                            flash("Password updated successfully. Please login.", "success")
+                        else:
+                            flash("No account found with that email address.", "error")
+                            
+                        cursor.close()
+                        conn.close()
                     except Exception as e:
                         flash(f"Error updating password: {e}", "error")
                 return redirect(url_for("user_login_html"))
-            return render_template("change-password.html")
+            return render_template("change-password.html", email=request.args.get("email", ""))
 
         @app.route("/update-email")
         def update_email():
