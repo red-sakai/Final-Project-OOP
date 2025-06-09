@@ -420,20 +420,8 @@ class HexaHaulApp:
                 username = request.form.get('username')
                 password = request.form.get('password')
 
-                # --- PATCH: Read from CSV directly for admin authentication ---
-                csv_path = os.path.join('hexahaul_db', 'hh_admins.csv')
-                found_admin = None
-                try:
-                    with open(csv_path, 'r', encoding='utf-8') as csvfile:
-                        reader = csv.DictReader(csvfile)
-                        for row in reader:
-                            # Compare with whitespace trimmed, case-sensitive
-                            if (row['admin_username'].strip() == username.strip() and
-                                row['admin_password'].strip() == password.strip()):
-                                found_admin = row
-                                break
-                except Exception as e:
-                    print(f"Error reading admin CSV: {e}")
+                # Try to authenticate with MySQL first
+                found_admin = authenticate_admin_mysql(username, password)
 
                 if found_admin:
                     # Set admin session
@@ -442,7 +430,7 @@ class HexaHaulApp:
                     session['admin_name'] = f"{found_admin.get('admin_fname', '')} {found_admin.get('admin_lname', '')}".strip()
                     return redirect(url_for('admin_dashboard'))
                 else:
-                    # Fallback to SQLAlchemy authentication if not found in CSV
+                    # Fallback to SQLAlchemy authentication if not found in MySQL
                     db_session = get_db_session()
                     try:
                         admin = Admin.authenticate(db_session, username, password)
@@ -457,6 +445,34 @@ class HexaHaulApp:
                         db_session.close()
 
             return render_template('admin-login.html')
+
+        def authenticate_admin_mysql(username, password):
+            """
+            Authenticate admin against MySQL hh_admins table.
+            Returns admin dict if found, else None.
+            """
+            try:
+                conn = get_mysql_connection()
+                cursor = conn.cursor(dictionary=True)
+                query = """
+                    SELECT * FROM hh_admins
+                    WHERE (admin_username = %s) AND (admin_password = %s)
+                    LIMIT 1
+                """
+                cursor.execute(query, (username, password))
+                row = cursor.fetchone()
+                cursor.close()
+                conn.close()
+                if row:
+                    return {
+                        'admin_username': row.get('admin_username'),
+                        'admin_fname': row.get('admin_fname'),
+                        'admin_lname': row.get('admin_lname'),
+                        'admin_email': row.get('admin_email')
+                    }
+            except Exception as e:
+                print(f"Error authenticating admin from MySQL: {e}")
+            return None
 
         @app.route("/admin/dashboard")
         def admin_dashboard():
@@ -1883,6 +1899,7 @@ class HexaHaulApp:
                 
                 # Delete sale
                 sales_db.delete_sale(sale_id)
+                
                 
                 flash('Sale deleted successfully', 'success')
                 
