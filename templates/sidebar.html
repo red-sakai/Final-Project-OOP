@@ -17,7 +17,8 @@
         <div class="sidebar-profile-block">
             <img src="{{ url_for('static', filename=session.get('user_image', 'images/pfp.png')) }}" alt="Profile Icon" class="sidebar-profile-img">
             <div class="sidebar-profile-info">
-                <div class="sidebar-profile-name">{{ session.get('user_name', 'User') }}</div>
+                <!-- Use session['full_name'] if available -->
+                <div class="sidebar-profile-name" id="sidebarFullName">{{ session.get('full_name', session.get('user_name', 'User')) }}</div>
                 <div class="sidebar-profile-email">{{ session.get('user_email', 'user@example.com') }}</div>
             </div>
         </div>
@@ -70,9 +71,11 @@
                             <div class="profile-desc">This will be displayed on your profile.</div>
                         </div>
                         <div class="profile-value" id="nameValue">
-                            <span id="fullNameText">{{ session.get('user_name', 'User') }}</span>
-                            <input type="text" id="fullNameInput" class="profile-input" placeholder="Enter your name" style="display:none;" value="{{ session.get('user_name', '') }}" />
+                            <span id="fullNameText">{{ session.get('full_name', session.get('user_name', 'User')) }}</span>
+                            <input type="text" id="fullNameInput" class="profile-input" placeholder="Enter your name" style="display:none;" value="{{ session.get('full_name', session.get('user_name', '')) }}" />
                             <a href="#" class="profile-edit-link" id="editNameBtn">Edit</a>
+                            <a href="#" class="profile-edit-link" id="saveNameBtn" style="display:none;">Save</a>
+                            <span id="nameUpdateStatus" style="color:green;display:none;">Saved!</span>
                         </div>
                     </div>
                     <hr class="profile-divider">
@@ -181,5 +184,64 @@
     </div>
     <!-- Include the separate JavaScript file -->
     <script src="{{ url_for('static', filename='sidebar.js') }}"></script>
+    <script>
+// ...existing code...
+
+// Full name edit/save logic
+document.addEventListener('DOMContentLoaded', function() {
+    const editBtn = document.getElementById('editNameBtn');
+    const saveBtn = document.getElementById('saveNameBtn');
+    const fullNameText = document.getElementById('fullNameText');
+    const fullNameInput = document.getElementById('fullNameInput');
+    const sidebarFullName = document.getElementById('sidebarFullName');
+    const nameUpdateStatus = document.getElementById('nameUpdateStatus');
+
+    if (editBtn && saveBtn && fullNameText && fullNameInput) {
+        editBtn.addEventListener('click', function(e) {
+            e.preventDefault();
+            fullNameInput.style.display = '';
+            saveBtn.style.display = '';
+            fullNameText.style.display = 'none';
+            editBtn.style.display = 'none';
+            fullNameInput.focus();
+        });
+
+        saveBtn.addEventListener('click', function(e) {
+            e.preventDefault();
+            const newName = fullNameInput.value.trim();
+            if (!newName) return;
+            // AJAX to update full_name in MySQL
+            fetch('/update-full-name', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Accept': 'application/json'
+                },
+                body: JSON.stringify({ full_name: newName })
+            })
+            .then(res => res.json())
+            .then(data => {
+                if (data.success) {
+                    fullNameText.textContent = newName;
+                    if (sidebarFullName) sidebarFullName.textContent = newName;
+                    nameUpdateStatus.style.display = '';
+                    setTimeout(() => { nameUpdateStatus.style.display = 'none'; }, 1200);
+                } else {
+                    alert(data.message || 'Failed to update name');
+                }
+            })
+            .catch(() => alert('Error updating name'))
+            .finally(() => {
+                fullNameInput.style.display = 'none';
+                saveBtn.style.display = 'none';
+                fullNameText.style.display = '';
+                editBtn.style.display = '';
+            });
+        });
+    }
+});
+
+// ...existing code...
+</script>
 </body>
 </html>

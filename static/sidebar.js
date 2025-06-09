@@ -49,43 +49,6 @@ document.addEventListener('DOMContentLoaded', function() {
     handleHash();
     window.addEventListener('hashchange', handleHash);
 
-    // Editable Full Name
-    const editNameBtn = document.getElementById('editNameBtn');
-    const fullNameText = document.getElementById('fullNameText');
-    const fullNameInput = document.getElementById('fullNameInput');
-    
-    if (editNameBtn) {
-        editNameBtn.addEventListener('click', function(e) {
-            e.preventDefault();
-            fullNameText.style.display = 'none';
-            fullNameInput.style.display = 'inline-block';
-            fullNameInput.value = fullNameText.textContent;
-            fullNameInput.focus();
-        });
-    }
-    
-    if (fullNameInput) {
-        fullNameInput.addEventListener('blur', function() {
-            const newName = fullNameInput.value || "User";
-            const oldName = fullNameText.textContent;
-            
-            if (newName !== oldName) {
-                // Send update to server
-                updateUserProfile('name', newName);
-            }
-            
-            fullNameText.textContent = newName;
-            fullNameText.style.display = 'inline';
-            fullNameInput.style.display = 'none';
-        });
-        
-        fullNameInput.addEventListener('keydown', function(e) {
-            if (e.key === 'Enter') {
-                fullNameInput.blur();
-            }
-        });
-    }
-
     // Editable Email
     const editEmailBtn = document.getElementById('editEmailBtn');
     const emailText = document.getElementById('emailText');
