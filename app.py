@@ -277,7 +277,7 @@ class HexaHaulApp:
                 if row:
                     return {
                         'full_name': row.get('Full Name') or row.get('Full_Name') or row.get('full_name'),
-                        'email': row.get('Email Address') or row.get('Email_Address') or row.get('email'),
+                        'email': row.get('email_address') or row.get('Email_Address') or row.get('email'),
                         'username': row.get('Username') or row.get('username'),
                         'user_image': row.get('profile_image') or row.get('Profile Image') or row.get('Profile_Image') or row.get('user_image', 'images/pfp.png')
                     }
@@ -2166,6 +2166,38 @@ Admin Reply:
                 df.at[row_idx, 'status'] = 'done'
                 df.to_csv(csv_path, index=False)
                 return '', 204
+            except Exception as e:
+                return jsonify({'success': False, 'message': str(e)}), 500
+
+        # Add this route to update the user's full name in MySQL and session
+        @app.route('/update-full-name', methods=['POST'])
+        def update_full_name():
+            if 'user_email' not in session:
+                return jsonify({'success': False, 'message': 'User not logged in'}), 401
+            data = request.get_json()
+            new_full_name = data.get('full_name', '').strip()
+            if not new_full_name:
+                return jsonify({'success': False, 'message': 'No name provided'}), 400
+
+            user_email = session.get('user_email')
+            user_username = session.get('username')
+            try:
+                conn = get_mysql_connection()
+                cursor = conn.cursor()
+                # Try to update by email or username
+                update_query = """
+                    UPDATE hh_user_login
+                    SET `full_name` = %s
+                    WHERE (`email_address` = %s OR `Username` = %s OR `username` = %s)
+                """
+                cursor.execute(update_query, (new_full_name, user_email, user_username, user_username))
+                conn.commit()
+                cursor.close()
+                conn.close()
+                # Update session
+                session['full_name'] = new_full_name
+                session['user_name'] = new_full_name
+                return jsonify({'success': True})
             except Exception as e:
                 return jsonify({'success': False, 'message': str(e)}), 500
 
