@@ -1369,32 +1369,61 @@ class HexaHaulApp:
                 flash('Please login to access the admin dashboard', 'error')
                 return redirect(url_for('admin_login'))
                 
-            # Get database session (SQLAlchemy)
-            db_session = vehicle_db.connect()
-            vehicles = db_session.query(Vehicle).all()
+            # Get vehicles from MySQL database instead of SQLAlchemy
+            vehicles = []
+            try:
+                conn = get_mysql_connection()
+                cursor = conn.cursor(dictionary=True)
+                query = """
+                    SELECT * FROM hh_vehicle
+                """
+                cursor.execute(query)
+                vehicles = cursor.fetchall()
+                cursor.close()
+                conn.close()
+                
+                # Convert any Decimal objects to float for JSON serialization
+                # Import random module if it's not already imported at the top of the file
+                import random
+
+                for vehicle in vehicles:
+                    for key, value in vehicle.items():
+                        # Check if value is Decimal and convert to float
+                        if hasattr(value, 'as_tuple') and hasattr(value, 'quantize'):
+                            vehicle[key] = float(value)
+                    
+                    # Randomly assign a status if not already set
+                    if not vehicle.get('status'):
+                        vehicle['status'] = random.choice(['Available', 'In Use', 'Maintenance'])
+                    
+                    # Assign category based on min_weight rules
+                    min_weight = vehicle.get('min_weight', 0)
+                    if min_weight == 0.1:
+                        vehicle['category'] = 'Motorcycle'
+                    elif min_weight == 20:
+                        vehicle['category'] = 'Car'
+                    elif min_weight == 25:
+                        if 'NMAX' in vehicle.get('unit_name', '') or 'Yamaha' in vehicle.get('unit_brand', ''):
+                            vehicle['category'] = 'Motorcycle'
+                        else:
+                            vehicle['category'] = 'Car'
+                    elif min_weight >= 350:
+                        vehicle['category'] = 'Truck'
+                    # If none of the above, keep existing category or set to 'Unknown'
+                    elif not vehicle.get('category'):
+                        vehicle['category'] = 'Unknown'
+                
+            except Exception as e:
+                print(f"Error fetching vehicles from MySQL: {e}")
+                
+            # Calculate counts for stats based on assigned categories
+            motorcycle_count = sum(1 for v in vehicles if v.get('category') == 'Motorcycle')
+            car_count = sum(1 for v in vehicles if v.get('category') == 'Car')
+            truck_count = sum(1 for v in vehicles if v.get('category') == 'Truck')
+            available_count = sum(1 for v in vehicles if v.get('status') == 'Available')
             
-            motorcycle_count = sum(1 for v in vehicles if v.category == 'Motorcycle')
-            car_count = sum(1 for v in vehicles if v.category == 'Car')
-            truck_count = sum(1 for v in vehicles if v.category == 'Truck')
-            available_count = sum(1 for v in vehicles if v.status == 'Available')
-            
-            vehicles_json = json.dumps([{
-                'id': v.id,
-                'unit_brand': v.unit_brand,
-                'unit_model': v.unit_model,
-                'unit_type': v.unit_type,
-                'category': v.category,
-                'distance': v.distance,
-                'driver_employee_id': v.driver_employee_id,
-                'license_expiration_date': v.license_expiration_date,
-                'order_id': v.order_id,
-                'max_weight': v.max_weight,
-                'min_weight': v.min_weight,
-                'status': v.status,
-                'year': v.year
-            } for v in vehicles])
-            
-            vehicle_db.disconnect()
+            # Convert to JSON for JavaScript
+            vehicles_json = json.dumps(vehicles)
             
             # Get admin name from Flask session
             admin_name = session.get('admin_name', 'Admin User')
@@ -1411,21 +1440,39 @@ class HexaHaulApp:
         @app.route('/admin/vehicles/add', methods=['POST'])
         def admin_add_vehicle():
             data = {
+                'employee_id': request.form.get('employee_id') if request.form.get('employee_id') else None,
+                'unit_name': request.form.get('unit_name'),
                 'unit_brand': request.form.get('unit_brand'),
-                'unit_model': request.form.get('unit_model'),
-                'unit_type': request.form.get('unit_type'),
-                'category': request.form.get('category'),
-                'distance': int(request.form.get('distance', 0)),
-                'driver_employee_id': int(request.form.get('driver_employee_id')) if request.form.get('driver_employee_id') else None,
-                'license_expiration_date': request.form.get('license_expiration_date'),
-                'order_id': int(request.form.get('order_id')) if request.form.get('order_id') else None,
-                'max_weight': float(request.form.get('max_weight')),
+                'year': int(request.form.get('year')),
+                'km_driven': int(request.form.get('km_driven', 0)),
                 'min_weight': float(request.form.get('min_weight', 0)),
+                'max_weight': float(request.form.get('max_weight')),
                 'status': request.form.get('status', 'Available'),
-                'year': int(request.form.get('year'))
+                'category': request.form.get('category')
             }
             
-            vehicle_db.add_vehicle(**data)
+            try:
+                conn = get_mysql_connection()
+                cursor = conn.cursor()
+                
+                # Create INSERT statement dynamically based on data keys
+                columns = ', '.join(f"`{key}`" for key in data.keys())
+                placeholders = ', '.join(['%s'] * len(data))
+                query = f"""
+                    INSERT INTO hh_vehicle ({columns})
+                    VALUES ({placeholders})
+                """
+                
+                # Execute the query with data values
+                cursor.execute(query, list(data.values()))
+                conn.commit()
+                
+                cursor.close()
+                conn.close()
+                
+                flash('Vehicle added successfully', 'success')
+            except Exception as e:
+                flash(f'Error adding vehicle: {str(e)}', 'error')
             
             return redirect(url_for('admin_vehicles'))
 
@@ -1434,21 +1481,43 @@ class HexaHaulApp:
             vehicle_id = int(request.form.get('vehicle_id'))
             
             data = {
+                'employee_id': request.form.get('employee_id') if request.form.get('employee_id') else None,
+                'unit_name': request.form.get('unit_name'),
                 'unit_brand': request.form.get('unit_brand'),
-                'unit_model': request.form.get('unit_model'),
-                'unit_type': request.form.get('unit_type'),
-                'category': request.form.get('category'),
-                'distance': int(request.form.get('distance', 0)),
-                'driver_employee_id': int(request.form.get('driver_employee_id')) if request.form.get('driver_employee_id') else None,
-                'license_expiration_date': request.form.get('license_expiration_date'),
-                'order_id': int(request.form.get('order_id')) if request.form.get('order_id') else None,
-                'max_weight': float(request.form.get('max_weight')),
+                'year': int(request.form.get('year')),
+                'km_driven': int(request.form.get('km_driven', 0)),
                 'min_weight': float(request.form.get('min_weight', 0)),
+                'max_weight': float(request.form.get('max_weight')),
                 'status': request.form.get('status'),
-                'year': int(request.form.get('year'))
+                'category': request.form.get('category')
             }
             
-            vehicle_db.update_vehicle(vehicle_id, **data)
+            # ...existing code...
+            try:
+                conn = get_mysql_connection()
+                cursor = conn.cursor()
+                
+                # Create UPDATE statement dynamically based on data
+                set_clause = ', '.join(f"`{key}` = %s" for key in data.keys())
+                query = f"""
+                    UPDATE hh_vehicle 
+                    SET {set_clause}
+                    WHERE id = %s
+                """
+                
+                # Add the vehicle_id to the data values for the WHERE clause
+                values = list(data.values()) + [vehicle_id]
+                
+                # Execute the query
+                cursor.execute(query, values)
+                conn.commit()
+                
+                cursor.close()
+                conn.close()
+                
+                flash('Vehicle updated successfully', 'success')
+            except Exception as e:
+                flash(f'Error updating vehicle: {str(e)}', 'error')
             
             return redirect(url_for('admin_vehicles'))
 
@@ -1456,7 +1525,21 @@ class HexaHaulApp:
         def admin_delete_vehicle():
             vehicle_id = int(request.form.get('vehicle_id'))
             
-            vehicle_db.delete_vehicle(vehicle_id)
+            try:
+                conn = get_mysql_connection()
+                cursor = conn.cursor()
+                
+                # Delete the vehicle with the given ID
+                query = "DELETE FROM hh_vehicle WHERE id = %s"
+                cursor.execute(query, (vehicle_id,))
+                conn.commit()
+                
+                cursor.close()
+                conn.close()
+                
+                flash('Vehicle deleted successfully', 'success')
+            except Exception as e:
+                flash(f'Error deleting vehicle: {str(e)}', 'error')
             
             return redirect(url_for('admin_vehicles'))
 
@@ -1473,7 +1556,7 @@ class HexaHaulApp:
             # Calculate statistics
             total_count = len(salaries)
             
-            total_salary = sum(s.salaries_yearly for s in salaries)
+            total_salary = sum(s.salary_yearly for s in salaries)
             avg_salary = total_salary / total_count if total_count > 0 else 0
             
             total_bonus = sum(s.bonus_amount for s in salaries)
