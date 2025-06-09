@@ -232,7 +232,8 @@ class HexaHaulApp:
 
                 if user:
                     session["logged_in"] = True
-                    session["user_name"] = user["full_name"]
+                    session["user_name"] = user["full_name"]  # For backwards compatibility
+                    session["full_name"] = user["full_name"]  # Make sure this is set
                     session["user_email"] = user["email"]
                     session["username"] = user["username"]
                     session["user_image"] = user.get("user_image", "images/pfp.png")
@@ -267,16 +268,16 @@ class HexaHaulApp:
                 cursor = conn.cursor(dictionary=True)
                 query = """
                     SELECT * FROM hh_user_login
-                    WHERE Username = %s AND Password = %s
+                    WHERE (Username = %s OR username = %s) AND Password = %s
                     LIMIT 1
                 """
-                cursor.execute(query, (username, password))
+                cursor.execute(query, (username, username, password))
                 row = cursor.fetchone()
                 cursor.close()
                 conn.close()
                 if row:
                     return {
-                        'full_name': row.get('Full Name') or row.get('Full_Name') or row.get('full_name'),
+                        'full_name': row.get('full_name') or row.get('Full Name') or row.get('Full_Name') or username,
                         'email': row.get('email_address') or row.get('Email_Address') or row.get('email'),
                         'username': row.get('Username') or row.get('username'),
                         'user_image': row.get('profile_image') or row.get('Profile Image') or row.get('Profile_Image') or row.get('user_image', 'images/pfp.png')
