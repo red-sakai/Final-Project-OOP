@@ -53,82 +53,103 @@ document.addEventListener('DOMContentLoaded', function() {
     const editEmailBtn = document.getElementById('editEmailBtn');
     const emailText = document.getElementById('emailText');
     const emailInput = document.getElementById('emailInput');
-    
-    if (editEmailBtn) {
+    const saveEmailBtn = document.getElementById('saveEmailBtn');
+    const emailUpdateStatus = document.getElementById('emailUpdateStatus');
+
+    if (editEmailBtn && emailInput && saveEmailBtn && emailText) {
         editEmailBtn.addEventListener('click', function(e) {
             e.preventDefault();
             emailText.style.display = 'none';
-            emailInput.style.display = 'inline-block';
+            emailInput.style.display = '';
+            saveEmailBtn.style.display = '';
+            editEmailBtn.style.display = 'none';
             emailInput.value = emailText.textContent;
             emailInput.focus();
         });
-    }
-    
-    if (emailInput) {
-        emailInput.addEventListener('blur', function() {
-            const newEmail = emailInput.value || "user@example.com";
-            const oldEmail = emailText.textContent;
-            
-            if (newEmail !== oldEmail) {
-                // Send update to server
-                updateUserProfile('email', newEmail);
-            }
-            
-            emailText.textContent = newEmail;
-            emailText.style.display = 'inline';
-            emailInput.style.display = 'none';
+
+        saveEmailBtn.addEventListener('click', function(e) {
+            e.preventDefault();
+            const newEmail = emailInput.value.trim();
+            if (!newEmail) return;
+            fetch('/update_email', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Accept': 'application/json'
+                },
+                body: JSON.stringify({ email: newEmail })
+            })
+            .then(res => res.json())
+            .then(data => {
+                if (data.success) {
+                    emailText.textContent = newEmail;
+                    emailUpdateStatus.style.display = '';
+                    setTimeout(() => { emailUpdateStatus.style.display = 'none'; }, 1200);
+                } else {
+                    alert(data.message || 'Failed to update email');
+                }
+            })
+            .catch(() => alert('Error updating email'))
+            .finally(() => {
+                emailInput.style.display = 'none';
+                saveEmailBtn.style.display = 'none';
+                emailText.style.display = '';
+                editEmailBtn.style.display = '';
+            });
         });
-        
+
         emailInput.addEventListener('keydown', function(e) {
             if (e.key === 'Enter') {
-                emailInput.blur();
+                saveEmailBtn.click();
             }
+        });
+
+        emailInput.addEventListener('blur', function() {
+            saveEmailBtn.click();
         });
     }
 
-    // Editable Secondary Email
-    const editSecondaryEmailBtn = document.getElementById('editSecondaryEmailBtn');
-    const secondaryEmailText = document.getElementById('secondaryEmailText');
-    const secondaryEmailInput = document.getElementById('secondaryEmailInput');
-    
-    if (editSecondaryEmailBtn) {
-        editSecondaryEmailBtn.addEventListener('click', function(e) {
-            e.preventDefault();
-            secondaryEmailText.style.display = 'none';
-            secondaryEmailInput.style.display = 'inline-block';
-            secondaryEmailInput.value = secondaryEmailText.textContent;
-            secondaryEmailInput.focus();
-        });
-    }
-    
-    if (secondaryEmailInput) {
-        secondaryEmailInput.addEventListener('blur', function() {
-            secondaryEmailText.textContent = secondaryEmailInput.value || "f.shaw@gmail.com";
-            secondaryEmailText.style.display = 'inline';
-            secondaryEmailInput.style.display = 'none';
-        });
-        
-        secondaryEmailInput.addEventListener('keydown', function(e) {
-            if (e.key === 'Enter') {
-                secondaryEmailInput.blur();
-            }
-        });
-    }
-
-    // Avatar upload preview for a DIV
+    // Avatar upload preview for a DIV and update for IMG
     const avatarInput = document.getElementById('avatarInput');
-    const avatarDiv = document.getElementById('courierAvatarCircle');
-    
-    if (avatarInput && avatarDiv) {
+    const avatarImg = document.getElementById('courierAvatarCircle');
+
+    if (avatarInput && avatarImg) {
         avatarInput.addEventListener('change', function() {
             if (this.files && this.files[0]) {
                 const reader = new FileReader();
                 reader.onload = function(e) {
-                    avatarDiv.style.backgroundImage = `url('${e.target.result}')`;
-                    avatarDiv.style.backgroundSize = 'cover';
-                    avatarDiv.style.backgroundPosition = 'center';
+                    // Update the <img> src for preview
+                    avatarImg.src = e.target.result;
                 }
                 reader.readAsDataURL(this.files[0]);
+            }
+            // Also trigger upload to server
+            if (this.files && this.files[0]) {
+                const file = this.files[0];
+                const formData = new FormData();
+                formData.append('profile_image', file);
+
+                fetch('/upload-profile-image', {
+                    method: 'POST',
+                    body: formData,
+                    credentials: 'same-origin'
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success && data.image_url) {
+                        // Update all profile images instantly
+                        document.querySelectorAll('img.sidebar-profile-img').forEach(img => {
+                            img.src = data.image_url + '?t=' + new Date().getTime(); // cache bust
+                        });
+                        // Update the big avatar
+                        if (avatarImg) {
+                            avatarImg.src = data.image_url + '?t=' + new Date().getTime();
+                        }
+                    } else {
+                        alert(data.message || 'Upload failed');
+                    }
+                })
+                .catch(() => alert('Upload failed'));
             }
         });
     }
@@ -473,35 +494,3 @@ document.addEventListener('DOMContentLoaded', function() {
 function showActivityDetails(timestamp) {
     alert(`Activity details for ${timestamp}\n\nikaw na bahala dito carl`);
 }
-
-// Avatar image upload and update
-document.getElementById('avatarInput').addEventListener('change', function(e) {
-    const file = e.target.files[0];
-    if (!file) return;
-
-    const formData = new FormData();
-    formData.append('profile_image', file);
-
-    fetch('/upload-profile-image', {
-        method: 'POST',
-        body: formData,
-        credentials: 'same-origin'
-    })
-    .then(response => response.json())
-    .then(data => {
-        if (data.success && data.image_url) {
-            // Update all profile images instantly
-            document.querySelectorAll('img.sidebar-profile-img').forEach(img => {
-                img.src = data.image_url + '?t=' + new Date().getTime(); // cache bust
-            });
-            // Update the big avatar
-            const avatarCircle = document.getElementById('courierAvatarCircle');
-            if (avatarCircle) {
-                avatarCircle.src = data.image_url + '?t=' + new Date().getTime();
-            }
-        } else {
-            alert(data.message || 'Upload failed');
-        }
-    })
-    .catch(() => alert('Upload failed'));
-});
