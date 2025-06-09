@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Book Now | Motorcycle</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='motorcycle.css') }}">
+    <link rel="icon" href="{{ url_for('static', filename='images/screentake-removebg-preview.png') }}" />
 </head>
 <body>
     <!-- Header -->
@@ -18,12 +19,12 @@
     </div>
     <!-- Motorcycle Cards -->
     <div class="motorcycle-cards">
-        <!-- Honda Click -->
+        <!-- Yamaha Mio Sporty -->
         <div class="motorcycle-card">
             <div>
                 <span>Your</span>
-                <h2>Honda Click 125i</h2>
-                <p>A fuel-efficient and stylish scooter with a sporty design, perfect for daily commutes and light delivery tasks in urban areas.</p>
+                <h2>Yamaha Mio Sporty</h2>
+                <p>A lightweight and easy-to-ride scooter ideal for short trips, errands, and light deliveries in congested city streets.</p>
                 <div>
                     <a href="{{ url_for('motorcycle_book_html') }}" class="motorcycle-book-btn">Book Now</a>
                 </div>
@@ -37,14 +38,14 @@
                     <div class="motorcycle-loadbar-fill" id="loadbar-light"></div>
                 </div>
             </div>
-            <img src="{{ url_for('static', filename='images/Honda-Click-removebg-preview.png') }}" alt="Honda Click 125i">
+            <img src="{{ url_for('static', filename='images/yamaha mio sporty hexahaul.png') }}" alt="Yamaha Mio Sporty" style="transform: scaleX(-1);">
         </div>
-        <!-- Yamaha Mio Sporty -->
+        <!-- Honda Click -->
         <div class="motorcycle-card">
             <div>
                 <span>Your</span>
-                <h2>Yamaha Mio Sporty</h2>
-                <p>A lightweight and easy-to-ride scooter ideal for short trips, errands, and light deliveries in congested city streets.</p>
+                <h2>Honda Click 125i</h2>
+                <p>A fuel-efficient and stylish scooter with a sporty design, perfect for daily commutes and light delivery tasks in urban areas.</p>
                 <div>
                     <a href="{{ url_for('motorcycle_book2_html') }}" class="motorcycle-book-btn">Book Now</a>
                 </div>
@@ -58,7 +59,7 @@
                     <div class="motorcycle-loadbar-fill" id="loadbar-medium"></div>
                 </div>
             </div>
-            <img src="{{ url_for('static', filename='images/Yamaha-MIo-removebg-preview.png') }}" alt="Yamaha Mio Sporty">
+            <img src="{{ url_for('static', filename='images/honda click 125i hexahaul.png') }}" alt="Honda Click 125i" >
         </div>
         <!-- Yamaha NMAX -->
         <div class="motorcycle-card">
@@ -79,7 +80,7 @@
                     <div class="motorcycle-loadbar-fill" id="loadbar-heavy"></div>
                 </div>
             </div>
-            <img src="{{ url_for('static', filename='images/Yamaha-NMAX-removebg-preview.png') }}" alt="Yamaha NMAX">
+            <img src="{{ url_for('static', filename='images/yamaha nmax hexahaul.png') }}" alt="Yamaha NMAX" style="transform: scaleX(-1);">
         </div>
     </div>
     <!-- Loading Popup -->
