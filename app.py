@@ -1906,32 +1906,38 @@ class HexaHaulApp:
 
             # Always include default profile picture path
             default_profile_pic = 'images/pfp.png'
-            new_user = [full_name, email, username, password, default_profile_pic]
-
-            import os
-            csv_path = os.path.join('hexahaul_db', 'hh_user-login.csv')
-
+            
+            # Insert user into MySQL database instead of CSV file
             try:
-                # Ensure file ends with newline before appending
-                with open(csv_path, 'r+', encoding='utf-8') as f:
-                    f.seek(0, 2)  # Go to end of file
-                    if f.tell() > 0:  # If file is not empty
-                        f.seek(f.tell() - 1)  # Go back one character
-                        last_char = f.read(1)
-                        if last_char != '\n':  # If last character is not newline
-                            f.write('\n')  # Add newline
-
-                # Now append the new user with profile picture path
-                with open(csv_path, 'a', newline='', encoding='utf-8') as csvfile:
-                    writer = csv.writer(csvfile)
-                    writer.writerow(new_user)
-
-                print("DEBUG - Successfully wrote to CSV")
+                conn = get_mysql_connection()
+                cursor = conn.cursor()
+                
+                # Check if username already exists
+                check_query = "SELECT 1 FROM hh_user_login WHERE username = %s LIMIT 1"
+                cursor.execute(check_query, (username,))
+                if cursor.fetchone():
+                    flash('Username already exists. Please choose another username.', 'error')
+                    cursor.close()
+                    conn.close()
+                    return redirect(url_for('user_signup_html'))
+                
+                # Insert the new user
+                insert_query = """
+                    INSERT INTO hh_user_login 
+                    (`full_name`, `email_address`, `username`, `password`, `profile_image`) 
+                    VALUES (%s, %s, %s, %s, %s)
+                """
+                cursor.execute(insert_query, (full_name, email, username, password, default_profile_pic))
+                conn.commit()
+                cursor.close()
+                conn.close()
+                
+                print("DEBUG - Successfully added user to MySQL database")
                 flash('User added successfully!', 'success')
-                return redirect(url_for('user_signup_html')) 
+                return redirect(url_for('user_signup_html'))
 
             except Exception as e:
-                print(f"ERROR writing to CSV: {e}")
+                print(f"ERROR adding user to MySQL: {e}")
                 flash(f'Error adding user: {str(e)}', 'error')
 
             return redirect(url_for('user_login_html'))
