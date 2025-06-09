@@ -99,14 +99,16 @@
                 <table class="employees-table">
                     <thead>
                         <tr>
-                            <th>ID</th>
-                            <th>Name</th>
-                            <th>Email</th>
-                            <th>Phone</th>
+                            <th>Employee ID</th>
+                            <th>Full Name</th>
+                            <th>Gender</th>
+                            <th>Age</th>
+                            <th>Birthdate</th>
+                            <th>Contact Number</th>
                             <th>Department</th>
                             <th>Role</th>
-                            <th>Date Hired</th>
-                            <th>License</th>
+                            <th>Hire Date</th>
+                            <th>License Number</th>
                             <th>Assigned Vehicle</th>
                             <th>Status</th>
                             <th>Actions</th>
@@ -115,16 +117,22 @@
                     <tbody id="employeesTableBody">
                         {% for employee in employees %}
                         <tr class="employee-row" data-role="{{ employee.role }}">
-                            <td>{{ employee.id }}</td>
+                            <td>{{ employee.employee_id }}</td>
                             <td>{{ employee.full_name }}</td>
-                            <td>{{ employee.email }}</td>
-                            <td>{{ employee.phone_number }}</td>
+                            <td>{{ employee.gender }}</td>
+                            <td>{{ employee.age }}</td>
+                            <td>{{ employee.birthdate }}</td>
+                            <td>{{ employee.contact_number }}</td>
                             <td>{{ employee.department }}</td>
                             <td>{{ employee.role }}</td>
                             <td>{{ employee.hire_date }}</td>
                             <td>{{ employee.license_number if employee.license_number else '-' }}</td>
                             <td>{{ employee.assigned_vehicle if employee.assigned_vehicle else '-' }}</td>
-                            <td><span class="status {{ employee.status.lower().replace(' ', '-') }}">{{ employee.status }}</span></td>
+                            <td>
+                                <span class="status {{ (employee.status or '').lower().replace(' ', '-') }}">
+                                    {{ employee.status or '-' }}
+                                </span>
+                            </td>
                             <td>
                                 <button class="action-btn edit" data-id="{{ employee.id }}"><i class="fas fa-edit"></i></button>
                                 <button class="action-btn delete" data-id="{{ employee.id }}"><i class="fas fa-trash"></i></button>
@@ -206,6 +214,46 @@
                         <option value="On Leave">On Leave</option>
                         <option value="Inactive">Inactive</option>
                     </select>
+                </div>
+                <div class="form-group">
+                    <label for="gender">Gender:</label>
+                    <select id="gender" name="gender" required>
+                        <option value="Male">Male</option>
+                        <option value="Female">Female</option>
+                        <option value="Other">Other</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="birthdate">Birthdate:</label>
+                    <input type="date" id="birthdate" name="birthdate" required>
+                </div>
+                <div class="form-group">
+                    <label for="age">Age:</label>
+                    <input type="number" id="age" name="age" required>
+                </div>
+                <div class="form-group">
+                    <label for="address">Address:</label>
+                    <input type="text" id="address" name="address" required>
+                </div>
+                <div class="form-group">
+                    <label for="city">City:</label>
+                    <input type="text" id="city" name="city" required>
+                </div>
+                <div class="form-group">
+                    <label for="province">Province:</label>
+                    <input type="text" id="province" name="province" required>
+                </div>
+                <div class="form-group">
+                    <label for="zipCode">Zip Code:</label>
+                    <input type="text" id="zipCode" name="zip_code" required>
+                </div>
+                <div class="form-group">
+                    <label for="emergencyContact">Emergency Contact:</label>
+                    <input type="text" id="emergencyContact" name="emergency_contact" required>
+                </div>
+                <div class="form-group">
+                    <label for="emergencyNumber">Emergency Number:</label>
+                    <input type="tel" id="emergencyNumber" name="emergency_number" required>
                 </div>
                 <div class="form-actions">
                     <button type="submit" class="save-btn">Save Employee</button>

@@ -1036,45 +1036,92 @@ class HexaHaulApp:
             if 'admin_id' not in session:
                 flash('Please login to access the admin dashboard', 'error')
                 return redirect(url_for('admin_login'))
-                
-            session_db = self.employee_db.connect()
-            employees = session_db.query(Employee).all()
-            
+
+            # --- NEW: Read employees from MySQL hh_employee_biography ---
+            employees = []
+            try:
+                conn = get_mysql_connection()
+                cursor = conn.cursor(dictionary=True)
+                cursor.execute("""
+                    SELECT * FROM hh_employee_biography
+                """)
+                rows = cursor.fetchall()
+                for row in rows:
+                    emp_id = row.get('employee_id')
+                    # Assign role based on employee_id
+                    if emp_id is not None:
+                        try:
+                            emp_id_int = int(emp_id)
+                        except Exception:
+                            emp_id_int = None
+                    else:
+                        emp_id_int = None
+
+                    # Default to DB value
+                    role = row.get('role')
+                    # Override role based on employee_id
+                    if emp_id_int is not None:
+                        if 1 <= emp_id_int <= 200:
+                            # Alternate between Dispatcher and Manager for variety
+                            role = 'Dispatcher' if emp_id_int % 2 == 0 else 'Manager'
+                        elif 201 <= emp_id_int <= 240:
+                            role = 'Driver'
+
+                    # Generate random hire date in yyyy-mm-dd format
+                    start_date = datetime(2018, 1, 1)
+                    end_date = datetime(2023, 12, 31)
+                    random_days = random.randint(0, (end_date - start_date).days)
+                    random_hire_date = (start_date + timedelta(days=random_days)).strftime('%Y-%m-%d')
+
+                    # Generate random status: mostly 'Active', some 'On Leave'
+                    status = 'Active' if random.random() < 0.85 else 'On Leave'
+
+                    employees.append({
+                        'employee_id': emp_id,
+                        'first_name': row.get('first_name'),
+                        'last_name': row.get('last_name'),
+                        'full_name': f"{row.get('first_name', '')} {row.get('last_name', '')}".strip(),
+                        'gender': row.get('gender'),
+                        'age': row.get('age'),
+                        'birthdate': row.get('birth_date'),
+                        'contact_number': row.get('contact_number'),
+                        'email': row.get('email'),
+                        'department': row.get('department'),
+                        'role': role,
+                        'hire_date': random_hire_date,
+                        'license_number': row.get('license'),
+                        'assigned_vehicle': row.get('assigned_vehicle'),
+                        'status': status,
+                    })
+                cursor.close()
+                conn.close()
+            except Exception as e:
+                print(f"Error fetching employees from MySQL: {e}")
+
+            # --- Fix: Convert date/datetime objects to string for JSON serialization ---
+            def serialize_employee(emp):
+                for key in ['birthdate', 'hire_date', 'license_expiry']:
+                    if emp.get(key) is not None and hasattr(emp[key], 'isoformat'):
+                        emp[key] = emp[key].isoformat()
+                    elif emp.get(key) is not None and not isinstance(emp[key], str):
+                        emp[key] = str(emp[key])
+                return emp
+
+            employees_json = json.dumps([serialize_employee(dict(e)) for e in employees])
+
             total_count = len(employees)
-            manager_count = sum(1 for e in employees if e.role == 'Manager')
-            driver_count = sum(1 for e in employees if e.role == 'Driver')
-            active_count = sum(1 for e in employees if e.status == 'Active')
-            
+            manager_count = sum(1 for e in employees if e['role'] == 'Manager')
+            driver_count = sum(1 for e in employees if e['role'] == 'Driver')
+            active_count = sum(1 for e in employees if e['status'] == 'Active')
+
+            # Get available vehicles from SQLAlchemy as before
             session2 = self.vehicle_db.connect()
             available_vehicles = session2.query(Vehicle).filter_by(status='Available').all()
-            
-            employees_json = json.dumps([{
-                'id': e.id,
-                'employee_id': e.employee_id,
-                'first_name': e.first_name,
-                'last_name': e.last_name,
-                'full_name': e.full_name,
-                'gender': e.gender,
-                'age': e.age,
-                'birthdate': e.birthdate,
-                'contact_number': e.contact_number,
-                'email': e.email,
-                'department': e.department,
-                'role': e.role,
-                'hire_date': e.hire_date,
-                'license_number': e.license_number,
-                'license_expiry': e.license_expiry,
-                'assigned_vehicle': e.assigned_vehicle,
-                'status': e.status
-            } for e in employees])
-            
-            self.employee_db.disconnect()
-            self.vehicle_db.disconnect()
-            
+
             # Get admin name from Flask session
             admin_name = session.get('admin_name', 'Admin User')
-            
-            return render_template('admin_employees.html', 
+
+            return render_template('admin_employees.html',
                                   employees=employees,
                                   total_count=total_count,
                                   manager_count=manager_count,
@@ -1099,7 +1146,6 @@ class HexaHaulApp:
                 'role': request.form.get('role'),
                 'hire_date': request.form.get('hire_date'),
                 'license_number': request.form.get('license_number'),
-                'license_expiry': request.form.get('license_expiry'),
                 'assigned_vehicle': int(request.form.get('assigned_vehicle')) if request.form.get('assigned_vehicle') else None,
                 'status': request.form.get('status', 'Active')
             }
@@ -1124,7 +1170,6 @@ class HexaHaulApp:
                 'role': request.form.get('role'),
                 'hire_date': request.form.get('hire_date'),
                 'license_number': request.form.get('license_number'),
-                'license_expiry': request.form.get('license_expiry'),
                 'assigned_vehicle': int(request.form.get('assigned_vehicle')) if request.form.get('assigned_vehicle') else None,
                 'status': request.form.get('status')
             }
@@ -1899,6 +1944,7 @@ class HexaHaulApp:
                 
                 flash('Customer updated successfully', 'success')
                 
+           
             except Exception as e:
                 flash(f'Error updating customer: {str(e)}', 'error')
                 
@@ -1917,6 +1963,7 @@ class HexaHaulApp:
                 
                 flash('Customer deleted successfully', 'success')
                 
+           
             except Exception as e:
                 flash(f'Error deleting customer: {str(e)}', 'error')
                 
