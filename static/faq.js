@@ -1,4 +1,4 @@
-document.addEventListener('DOMContentLoaded', function () {
+// document.addEventListener('DOMContentLoaded', function () {
         // --- Chatbox logic (copy from services.js) ---
     const sendBtn = document.getElementById("send-btn");
     const chatInput = document.getElementById("chat-input");
