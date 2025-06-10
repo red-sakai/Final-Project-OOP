@@ -111,57 +111,35 @@
         </div>
     </div>
 
-    <!-- Main Tracking Section (unchanged) -->
+    <!-- Main Tracking Section (improved) -->
     <section class="track">
         <div class="track-content">
-            <h2 class="fade-slide-right" id="tracking-header">We Provide Best Courier Services</h2>
-            <p class="track-text fade-slide-right" id="tracking-subheader">Stay updated with live tracking from dispatch to delivery.</p>
-            <p class="track-text2 fade-slide-right tracking-subheader">Track your parcel now!</p>
-            <form id="tracking-form" action="{{ url_for('tracking_html') }}" method="post" autocomplete="off">
-                <input type="text" class="track-input" id="tracking-input" name="tracking_id" placeholder="Tracking ID" required />
-                <button type="submit" class="track-button">Track Order</button>
+            <h2 id="tracking-header">Track Your Package</h2>
+            <p class="track-text" id="tracking-subheader">Stay updated with live tracking from dispatch to delivery.</p>
+            <p class="track-text2" id="tracking-callout">Enter your tracking ID below:</p>
+            <form id="tracking-form" action="{{ url_for('tracking_html') }}" method="post" autocomplete="off" class="tracking-form">
+                <div class="tracking-form-container">
+                    <input type="text" class="track-input" id="tracking-input" name="tracking_id" placeholder="Enter Order Item ID" required />
+                    <button type="submit" class="track-button">Track Now</button>
+                    <div id="tracking-error" class="tracking-error">
+                        {% if error %}
+                            {{ error }}
+                        {% endif %}
+                    </div>
+                </div>
             </form>
-            <div id="tracking-error" style="color:red; margin-top:10px;">
-                {% if error %}
-                    {{ error }}
-                {% endif %}
-            </div>
         </div>
         <div class="track-image">
             <img src="{{ url_for('static', filename='images/image-removebg-preview.png') }}" alt="Courier Holding Box">
         </div>
     </section>
+    
     <div class="ending-container">
         <div class="ending">
-            <p class="fade-slide-up" id="tracking-slogan">Haul smarter, with HexaHaul</p>
+            <p id="tracking-slogan">Haul smarter, with HexaHaul</p>
         </div>
     </div>
+    
     <script src="{{ url_for('static', filename='tracking.js') }}"></script>
-    <script>
-    // --- AJAX validation for order_item_id ---
-    document.getElementById('tracking-form').addEventListener('submit', function(e) {
-        e.preventDefault();
-        const input = document.getElementById('tracking-input').value.trim();
-        const errorDiv = document.getElementById('tracking-error');
-        errorDiv.textContent = '';
-        fetch('{{ url_for("validate_order_item_id") }}', {
-            method: 'POST',
-            headers: {'Content-Type': 'application/json'},
-            body: JSON.stringify({order_item_id: input})
-        })
-        .then(resp => resp.json())
-        .then(data => {
-            if (data.exists) {
-                // Submit the form as POST to /tracking
-                e.target.submit();
-            } else {
-                errorDiv.textContent = 'Invalid Tracking ID. Please enter a valid Order Item Id.';
-            }
-        })
-        .catch(() => {
-            errorDiv.textContent = 'Error validating Tracking ID. Please try again.';
-        });
-    });
-    </script>
 </body>
 </html>
