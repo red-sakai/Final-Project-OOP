@@ -8,6 +8,7 @@ class CustomerOrder(Base):
     __tablename__ = "hh_order"
 
     order_id = Column("Order Item Id", String(20), primary_key=True, nullable=False)
+    id = Column(Integer, nullable=False, unique=True) 
     delivery_status = Column("Delivery Status", String(20), nullable=False)
     late_delivery_risk = Column("Late_delivery_risk", Integer, nullable=False)
     origin_branch = Column("Origin Branch", String(20), nullable=False)
@@ -30,9 +31,10 @@ class Customer(Base):
     __tablename__ = "hh_customer_info"
 
     order_id = Column("Order Item Id", String(20), ForeignKey("hh_order.Order Item Id"), primary_key=True, nullable=False) 
+    customer_id = Column("Customer Id", Integer, nullable=False, unique=True) 
+    id = Column(Integer, nullable=False, unique=True) 
     fname = Column("Customer Fname", String(30), nullable=False)    
     lname = Column("Customer Lname", String(30), nullable=False)    
-    customer_id = Column("Customer Id", Integer, nullable=False)
     customer_city = Column("Customer City", String(30), nullable=False)    
     customer_country = Column("Customer Country", String(30), nullable=False)    
     customer_segment = Column("Customer Segment", String(30), nullable=False)    
@@ -47,6 +49,7 @@ class Product(Base):
     __tablename__ = "hh_product_info"
 
     order_id = Column("Order Item Id", String(20), ForeignKey("hh_order.Order Item Id"), primary_key=True, nullable=False) 
+    id = Column(Integer, nullable=False, unique=True)
     product_name = Column("Product Name", String(100), nullable=False)
     product_category_id = Column("Product Category Id", Integer, nullable=False)
     product_category_name = Column("Product Category Name", String(100), nullable=False)
@@ -63,6 +66,7 @@ class Sales(Base):
     __tablename__ = "hh_sales"
 
     order_id = Column("Order Item Id", String(20), ForeignKey("hh_order.Order Item Id"), primary_key=True, nullable=False) 
+    id = Column(Integer, nullable=False, unique=True)
     type = Column("Type", String(10), nullable=False)
     benefit_per_order = Column("Benefit per order", Float, nullable=False)
     sales_per_customer = Column("Sales per customer", Float, nullable=True)
@@ -81,10 +85,10 @@ class Sales(Base):
         return f"Product Sales: price={self.product_price}, profit_ratio={self.profit_ratio}"
 
 
+
 # =============================================================================
 # ORDER MANAGEMENT SYSTEM
 # =============================================================================
-
 class OrderSystem:
     def __init__(self):
         self.session = session
@@ -93,6 +97,7 @@ class OrderSystem:
         # Define mappings for CSV column names
         self.order_column_mapping = {
             'order_id': 'Order Item Id',
+            'id': 'id',
             'delivery_status': 'Delivery Status',
             'late_delivery_risk': 'Late_delivery_risk',
             'origin_branch': 'Origin Branch',
@@ -106,9 +111,10 @@ class OrderSystem:
 
         self.customer_column_mapping = {
             'order_id': 'Order Item Id',
+            'customer_id': 'Customer Id',
+            'id': 'id',  
             'fname': 'Customer Fname',
             'lname': 'Customer Lname',
-            'customer_id': 'Customer Id',
             'customer_city': 'Customer City',
             'customer_country': 'Customer Country',
             'customer_segment': 'Customer Segment'
@@ -116,6 +122,7 @@ class OrderSystem:
 
         self.product_column_mapping = {
             'order_id': 'Order Item Id',
+            'id': 'id',
             'product_name': 'Product Name',
             'product_category_id': 'Product Category Id',
             'product_category_name': 'Product Category Name',
@@ -125,6 +132,7 @@ class OrderSystem:
 
         self.sales_column_mapping = {
             'order_id': 'Order Item Id',
+            'id': 'id',
             'type': 'Type',
             'benefit_per_order': 'Benefit per order',
             'sales_per_customer': 'Sales per customer',
@@ -151,18 +159,52 @@ class OrderSystem:
         data.to_csv(file_path, index=False)
 
     def _update_csv(self, file_name, new_data):
-        """Update the CSV file with new data."""
+        """Update the CSV file with new data - replaces existing records completely."""
         df = self._read_csv(file_name)
-        if not df.empty:
-            # Update existing records by matching 'Order Item Id'
-            for index, row in new_data.iterrows():
-                df.loc[df['Order Item Id'] == row['Order Item Id'], row.index] = row
-            # Append new records if they don't exist yet
-            df = pd.concat([df, new_data[~new_data['Order Item Id'].isin(df['Order Item Id'])]], ignore_index=True)
+        
+        if not df.empty and not new_data.empty:
+            # Get the order IDs from new_data
+            if 'Order Item Id' in new_data.columns:
+                order_ids_to_update = new_data['Order Item Id'].tolist()
+                # Remove existing records that match the Order Item Id in new_data
+                df = df[~df['Order Item Id'].isin(order_ids_to_update)]
+            
+            # Append the new records
+            df = pd.concat([df, new_data], ignore_index=True)
+        elif new_data.empty:
+            # If new_data is empty, don't change anything
+            pass
         else:
+            # If df is empty but new_data is not, use new_data
             df = new_data
 
         self._write_csv(file_name, df)
+
+    def _replace_csv_record(self, file_name, order_id, new_data):
+        """Replace a specific record in CSV file by order_id"""
+        df = self._read_csv(file_name)
+        
+        if not df.empty:
+            # Remove the old record
+            df = df[df['Order Item Id'] != order_id]
+            
+            # Add the new record
+            if not new_data.empty:
+                df = pd.concat([df, new_data], ignore_index=True)
+        else:
+            df = new_data if not new_data.empty else pd.DataFrame()
+
+        self._write_csv(file_name, df)
+
+    def _remove_csv_record(self, file_name, order_id):
+        """Remove a specific record from CSV file by order_id"""
+        df = self._read_csv(file_name)
+        
+        if not df.empty and 'Order Item Id' in df.columns:
+            # Remove records with the specified order_id
+            df_filtered = df[df['Order Item Id'] != order_id]
+            self._write_csv(file_name, df_filtered)
+            print(f"Removed order {order_id} from {file_name}")
 
     def _map_keys_to_columns(self, data: dict, mapping: dict) -> dict:
         """
@@ -170,6 +212,15 @@ class OrderSystem:
         Only keys present in mapping are included.
         """
         return {mapping[key]: value for key, value in data.items() if key in mapping}
+
+    def _get_next_id(self, model_class):
+        """Get the next id for a model by querying max existing id"""
+        max_id = self.session.query(func.max(model_class.id)).scalar()
+        if max_id is None:
+            return 1
+        else:
+            return max_id + 1
+
     
     def add_complete_order_record(self, order_data: dict, user_data: dict, product_data: dict, sales_data: dict):
         """Add a complete order record with all related information"""
@@ -190,6 +241,13 @@ class OrderSystem:
 
     def _create_new_order(self, order_data: dict, user_data: dict, product_data: dict, sales_data: dict):
         """Create new order with all related records"""
+
+        # Assign auto-increment ids for order, product, sales, and customer
+        order_data['id'] = self._get_next_id(CustomerOrder)
+        user_data['id'] = self._get_next_id(Customer)  # Assign id for customer
+        product_data['id'] = self._get_next_id(Product)
+        sales_data['id'] = self._get_next_id(Sales)
+
         # Add order_id to related data
         user_data['order_id'] = order_data['order_id']
         product_data['order_id'] = order_data['order_id']
@@ -208,6 +266,7 @@ class OrderSystem:
         self.session.add(new_sales)
 
         return order_data['order_id']
+
 
     def update_existing_order(self, order_data: dict, user_data: dict, product_data: dict, sales_data: dict):
         try:
@@ -242,7 +301,6 @@ class OrderSystem:
                     raise
             
             # If order ID changed, we need to create new records and delete old ones
-            # This is because changing primary keys with foreign key relationships is complex
             if new_order_id != original_order_id:
                 print("Creating new records with updated Order ID...")
                 
@@ -256,6 +314,12 @@ class OrderSystem:
                 user_data['order_id'] = new_order_id
                 product_data['order_id'] = new_order_id
                 sales_data['order_id'] = new_order_id
+                
+                # Assign new IDs for the new records
+                order_data['id'] = self._get_next_id(CustomerOrder)
+                user_data['id'] = self._get_next_id(Customer)
+                product_data['id'] = self._get_next_id(Product)
+                sales_data['id'] = self._get_next_id(Sales)
                 
                 # Create new records with updated data
                 new_order = CustomerOrder(**order_data)
@@ -282,24 +346,20 @@ class OrderSystem:
                 # Flush to ensure order of operations
                 self.session.flush()
                 
-                # Update CSV files with new order id data
+                # FIXED: Remove old records from CSV files first
+                print(f"Removing old records with order ID {original_order_id} from CSV files...")
+                self._remove_csv_record("hh_order.csv", original_order_id)
+                self._remove_csv_record("hh_customer_info.csv", original_order_id)
+                self._remove_csv_record("hh_product_info.csv", original_order_id)
+                self._remove_csv_record("hh_sales.csv", original_order_id)
+                
+                # Add new records to CSV files
+                print(f"Adding new records with order ID {new_order_id} to CSV files...")
                 self._update_csv("hh_order.csv", pd.DataFrame([self._map_keys_to_columns(order_data, self.order_column_mapping)]))
                 self._update_csv("hh_customer_info.csv", pd.DataFrame([self._map_keys_to_columns(user_data, self.customer_column_mapping)]))
                 self._update_csv("hh_product_info.csv", pd.DataFrame([self._map_keys_to_columns(product_data, self.product_column_mapping)]))
                 self._update_csv("hh_sales.csv", pd.DataFrame([self._map_keys_to_columns(sales_data, self.sales_column_mapping)]))
-                
-                # Remove old order data from CSVs as well
-                for file_name in [
-                    "hh_order.csv",
-                    "hh_customer_info.csv",
-                    "hh_product_info.csv",
-                    "hh_sales.csv"
-                ]:
-                    df = self._read_csv(file_name)
-                    if not df.empty:
-                        df = df[df['Order Item Id'] != original_order_id]
-                        self._write_csv(file_name, df)
-                
+            
             else:
                 # No order ID change, just update existing records
                 print("Updating existing records...")
@@ -330,11 +390,11 @@ class OrderSystem:
                         if hasattr(sales, key) and key != 'order_id':
                             setattr(sales, key, value)
                 
-                # Update CSV files with updated data
-                self._update_csv("hh_order.csv", pd.DataFrame([self._map_keys_to_columns(order_data, self.order_column_mapping)]))
-                self._update_csv("hh_customer_info.csv", pd.DataFrame([self._map_keys_to_columns(user_data, self.customer_column_mapping)]))
-                self._update_csv("hh_product_info.csv", pd.DataFrame([self._map_keys_to_columns(product_data, self.product_column_mapping)]))
-                self._update_csv("hh_sales.csv", pd.DataFrame([self._map_keys_to_columns(sales_data, self.sales_column_mapping)]))
+                # Update CSV files - REPLACE instead of UPDATE
+                self._replace_csv_record("hh_order.csv", original_order_id, pd.DataFrame([self._map_keys_to_columns(order_data, self.order_column_mapping)]))
+                self._replace_csv_record("hh_customer_info.csv", original_order_id, pd.DataFrame([self._map_keys_to_columns(user_data, self.customer_column_mapping)]))
+                self._replace_csv_record("hh_product_info.csv", original_order_id, pd.DataFrame([self._map_keys_to_columns(product_data, self.product_column_mapping)]))
+                self._replace_csv_record("hh_sales.csv", original_order_id, pd.DataFrame([self._map_keys_to_columns(sales_data, self.sales_column_mapping)]))
             
             # Commit all changes
             self.session.commit()
@@ -345,7 +405,6 @@ class OrderSystem:
             self.session.rollback()
             print(f"Error updating order: {e}")
             raise
-
 
 
     def delete_order_record(self, order_id: str):
@@ -1030,7 +1089,7 @@ def existing_order_data():
     while True:
         try:
             # Prompt user to enter an Order ID
-            order_id = input("Enter Order ID to update: ").strip()
+            order_id = input("Enter Order ID to update: ").strip().upper()
         except ValueError:
             # Handle invalid input type
             print("Invalid input. Please enter a valid Order ID.")
@@ -1160,7 +1219,7 @@ def main():
                     print("Order not found")
             
             elif choice == '4':
-                order_id = input("Enter Order ID to delete: ").strip()
+                order_id = input("Enter Order ID to delete: ").strip().upper()
                 confirm = input(f"Confirm deletion of order {order_id}? (y/n): ").lower().strip()
                 if confirm in ['y', 'yes']:
                     order_system.delete_order_record(order_id)

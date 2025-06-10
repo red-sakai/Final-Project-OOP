@@ -17,6 +17,9 @@ class EmployeeBiography(Base):
     age = Column("Age", Integer, nullable=False)
     birthdate = Column("birth_date", Date, nullable=False)
     contact_num = Column("Contact Number", BigInteger, nullable=False)
+    # CLONED FROM EmployeeSalary - keeping in both tables
+    job_title = Column("Job Title", String(100), nullable=False)
+    department = Column("Department", String(100), nullable=False)
 
     salary_info = relationship(
         'EmployeeSalary', 
@@ -32,7 +35,7 @@ class EmployeeBiography(Base):
     )
 
     def __repr__(self):
-        return f"<Employee Biography: id={self.emp_id}, name={self.fname} {self.lname}>"
+        return f"<Employee Biography: id={self.emp_id}, name={self.fname} {self.lname}, job={self.job_title}>"
 
 
 class EmployeeSalary(Base):
@@ -48,6 +51,7 @@ class EmployeeSalary(Base):
         nullable=False
     )
     
+    # KEEPING THESE - now duplicated in both tables
     job_title = Column("Job Title", String(100), nullable=False)
     department = Column("Department", String(100), nullable=False)
     hire_date = Column("hire_date", Date, nullable=False)
@@ -209,6 +213,12 @@ def validate_vehicle_unit():
         unit_name = input("Vehicle unit name: ").strip().title()
         if unit_name == 'Mg 5':
                 unit_name = 'MG 5'
+        if unit_name == 'Isuzu Elf Nhr 55':
+                unit_name = 'Isuzu ELF NHR 55'
+        if unit_name == 'Yamaha Nmax':
+                unit_name = 'Yamaha NMAX'
+        if unit_name == 'Honda Click 125I':
+                unit_name = 'Honda Click 125i'
         if unit_name in VEHICLE_WEIGHT_MAP:
             return unit_name
         print(f"Vehicle '{unit_name}' not found in available options.")
@@ -234,6 +244,10 @@ def get_employee_biography_data():
         min_val=MIN_CONTACT_NUMBER, 
         max_val=MAX_CONTACT_NUMBER
     )
+    
+    # Get job information (now part of biography)
+    job_title = input("Job title: ").strip().title()
+    department = input("Department: ").strip().title()
 
     return {
         'fname': fname,
@@ -241,7 +255,9 @@ def get_employee_biography_data():
         'gender': gender,
         'age': age,
         'birthdate': birthdate,
-        'contact_num': contact_num
+        'contact_num': contact_num,
+        'job_title': job_title,
+        'department': department
     }
 
 
@@ -249,8 +265,6 @@ def get_employee_salary_data():
     print("\nEnter Employee Salary Information:")
     print("-" * 40)
     
-    job_title = input("Job title: ").strip().title()
-    department = input("Department: ").strip().title()
     yearly_salary = get_valid_float("Yearly salary: ", min_val=0)
     monthly_salary = calculate_monthly_salary(yearly_salary)
     hire_date = get_valid_date("Hire date (YYYY-MM-DD): ")
@@ -265,8 +279,6 @@ def get_employee_salary_data():
     total_compensation = calculate_total_compensation(yearly_salary, bonus_amount)
 
     return {
-        'job_title': job_title,
-        'department': department,
         'yearly_sal': yearly_salary,
         'monthly_sal': monthly_salary,
         'hire_date': hire_date,
@@ -306,7 +318,12 @@ def get_complete_employee_data():
     try:
         bio_data = get_employee_biography_data()
         salary_data = get_employee_salary_data()
-        vehicle_data = get_employee_vehicle_data(salary_data['job_title'])
+        
+        # Add job_title and department to salary_data to maintain synchronization
+        salary_data['job_title'] = bio_data['job_title']
+        salary_data['department'] = bio_data['department']
+        
+        vehicle_data = get_employee_vehicle_data(bio_data['job_title'])
         return bio_data, salary_data, vehicle_data
     except (ValueError, KeyboardInterrupt) as e:
         print(f"Data input cancelled or invalid: {e}")
@@ -377,6 +394,7 @@ class EmployeeManagement:
     def _write_to_csv(self, bio_data, salary_data, vehicle_data, is_update):
         """Write data to CSV files with proper field name mapping."""
         
+        # Updated bio_mapping to include job_title and department
         bio_mapping = {
             'emp_id': 'Employee Id',
             'fname': 'First Name',
@@ -384,7 +402,9 @@ class EmployeeManagement:
             'gender': 'Gender',
             'age': 'Age',
             'birthdate': 'birth_date',
-            'contact_num': 'Contact Number'
+            'contact_num': 'Contact Number',
+            'job_title': 'Job Title',
+            'department': 'Department'
         }
 
         salary_mapping = {
@@ -504,6 +524,9 @@ class EmployeeManagement:
         session.add(biography)
 
         salary_data['emp_id'] = new_employee_id
+        # Ensure job_title and department are synced in salary data
+        salary_data['job_title'] = bio_data['job_title']
+        salary_data['department'] = bio_data['department']
         salary = EmployeeSalary(**salary_data)
         session.add(salary)
 
@@ -535,9 +558,15 @@ class EmployeeManagement:
                     if key != 'emp_id':
                         if hasattr(salary, key):
                             setattr(salary, key, value)
+                # Ensure job_title and department are synced
+                salary.job_title = bio_data['job_title']
+                salary.department = bio_data['department']
             else:
                 salary_data_copy = salary_data.copy()
                 salary_data_copy['emp_id'] = employee_id
+                # Ensure job_title and department are synced
+                salary_data_copy['job_title'] = bio_data['job_title']
+                salary_data_copy['department'] = bio_data['department']
                 new_salary = EmployeeSalary(**salary_data_copy)
                 session.add(new_salary)
             
@@ -610,8 +639,8 @@ class EmployeeManagement:
             SELECT 
                 b.`Employee Id`,
                 CONCAT(b.`First Name`, ' ', b.`Last Name`) as `Full Name`,
-                s.`Job Title`,
-                s.Department,
+                b.`Job Title`,
+                b.Department,
                 s.salary_yearly as `Yearly Salary`
             FROM hh_employee_biography b
             INNER JOIN hh_employee_salary s ON b.`Employee Id` = s.`Employee Id`
