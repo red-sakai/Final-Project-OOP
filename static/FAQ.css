@@ -220,14 +220,16 @@ nav {
 
 .logo-container {
     display: flex;
-    align-items: center; 
+    align-items: center;
+    
 }
 
 .logo-container img {
-    width: 100px;
-    height: 100px; 
+    width: 50px;
+    height: 50px; 
     object-fit: contain;
     padding: 0;
+    margin-left: 20px;
 }
 
 .login-button-container {
@@ -241,7 +243,9 @@ nav {
     height: 30px;
 }
 
-/*Chatbox Styles*/
+/* --- Sidebar and Chatbox styles copied from index.css --- */
+
+/* Chatbox container and toggle */
 .chatbox-container {
     position: fixed;
     bottom: 24px;
@@ -745,63 +749,6 @@ nav {
     outline: none;
 }
 
-/* Theme switch */
-.theme-switch {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-}
-
-.theme-switch input[type="checkbox"] {
-    display: none;
-}
-
-.theme-switch .slider {
-    width: 36px;
-    height: 18px;
-    background: #b2dbf8;
-    border-radius: 18px;
-    position: relative;
-    margin-right: 8px;
-    transition: background 0.3s;
-}
-
-.theme-switch .slider:before {
-    content: "";
-    position: absolute;
-    left: 2px;
-    top: 2px;
-    width: 14px;
-    height: 14px;
-    background: #fff;
-    border-radius: 50%;
-    transition: transform 0.3s;
-}
-
-.theme-switch input[type="checkbox"]:checked + .slider {
-    background: #03335e;
-}
-
-.theme-switch input[type="checkbox"]:checked + .slider:before {
-    transform: translateX(18px);
-}
-
-.theme-label {
-    margin-left: 4px;
-    white-space: nowrap;
-    min-width: 40px;
-}
-
-.theme-switch-row {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 10px;
-    padding: 8px 24px;
-    width: 100%;
-    box-sizing: border-box;
-}
-
 /* Overlay for sidebar */
 .sidebar-overlay {
     display: none;
@@ -820,8 +767,6 @@ nav {
     display: block;
     opacity: 1;
 }
-
-/* Profile icon styles */
 
 /* Logout Modal styles */
 .logout-loading-overlay {

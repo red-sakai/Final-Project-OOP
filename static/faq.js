@@ -1,5 +1,14 @@
-// document.addEventListener('DOMContentLoaded', function () {
-        // --- Chatbox logic (copy from services.js) ---
+document.addEventListener("DOMContentLoaded", () => {
+    // --- Navigation Bar Toggle Animation ---
+    const navToggle = document.getElementById('nav-toggle');
+    const navLinksContainer = document.getElementById('nav-links-container');
+    if (navToggle && navLinksContainer) {
+        navToggle.addEventListener('click', function () {
+            navLinksContainer.classList.toggle('expanded');
+        });
+    }
+
+    // --- Chatbox logic ---
     const sendBtn = document.getElementById("send-btn");
     const chatInput = document.getElementById("chat-input");
     const chatBody = document.getElementById("chatbox-body");
@@ -143,23 +152,27 @@
         chatContent.classList.remove("collapsed");
     }
 
-    // --- Sidebar logic (copy from services.js) ---
+    // --- Sidebar logic ---
     const sidebar = document.getElementById("user-sidebar");
     const sidebarToggle = document.getElementById("sidebar-toggle");
     const sidebarClose = document.getElementById("sidebar-close");
+    const sidebarOverlay = document.getElementById("sidebar-overlay");
     const logoutBtn = document.getElementById("logout-btn");
     const themeToggle = document.getElementById("theme-toggle");
     const themeLabel = document.getElementById("theme-label");
-    const sidebarOverlay = document.getElementById("sidebar-overlay");
+    const profileName = document.querySelector(".profile-name");
 
+    // Open sidebar
     if (sidebarToggle && sidebar) {
         sidebarToggle.addEventListener("click", function(e) {
             e.preventDefault();
             sidebar.classList.add("open");
             sidebarOverlay.classList.add("active");
             document.body.style.overflow = "hidden";
+            // Profile name is set by Jinja template
         });
     }
+    // Close sidebar
     function closeSidebar() {
         sidebar.classList.remove("open");
         sidebarOverlay.classList.remove("active");
@@ -172,6 +185,7 @@
         sidebarOverlay.addEventListener("click", closeSidebar);
     }
 
+    // Dropdown logic for sidebar
     document.querySelectorAll('.sidebar-section.dropdown').forEach(section => {
         const toggle = section.querySelector('.dropdown-toggle');
         toggle.addEventListener('click', (e) => {
@@ -190,7 +204,7 @@
         }
     });
 
-    // Logout button logic (modal)
+    // --- LOGOUT LOGIC ---
     if (logoutBtn) {
         logoutBtn.addEventListener("click", () => {
             const logoutLoading = document.getElementById("logout-loading");
@@ -207,6 +221,7 @@
             }
         });
     }
+
     if (themeToggle && themeLabel) {
         themeToggle.addEventListener("change", () => {
             if (themeToggle.checked) {
