@@ -10,7 +10,7 @@
 <body>
     <!-- Header -->
     <div class="truck-header">
-        <h1>Welcome, User</h1>
+        <h1>Welcome, {{ session.get('full_name', 'User') }}</h1>
         <p>Welcome to our truck booking page, click Book Now to get started!</p>
     </div>
     <!-- Navigation Bar -->
@@ -31,12 +31,8 @@
                 <div>
                     <a href="{{ url_for('truck_book_html') }}" class="book-btn">Book Now</a>
                 </div>
-                <!-- Load Bar Explanation -->
-                <div class="loadbar-explanation">
-                    <small>
-                        <span style="color:#3cc878;font-weight:600;">Light load:</span>
-                        For small, light deliveries and quick trips.
-                    </small>
+                <div class="weight-indicator">
+                    <span class="weight-badge light">Weight Capacity: 350kg-3000kg</span>
                 </div>
                 <!-- Load Bar for Light -->
                 <div class="loadbar-row">
@@ -59,12 +55,8 @@
                 <div>
                     <a href="{{ url_for('truck_book2_html') }}" class="book-btn">Book Now</a>
                 </div>
-                <!-- Load Bar Explanation -->
-                <div class="loadbar-explanation">
-                    <small>
-                        <span style="color:#ffd23c;font-weight:600;">Medium load:</span>
-                        For average-sized shipments and regional routes.
-                    </small>
+                <div class="weight-indicator">
+                    <span class="weight-badge medium">Weight Capacity: 3000kg-7000kg</span>
                 </div>
                 <!-- Load Bar for Medium -->
                 <div class="loadbar-row">
@@ -87,12 +79,8 @@
                 <div>
                     <a href="{{ url_for('truck_book3_html') }}" class="book-btn">Book Now</a>
                 </div>
-                <!-- Load Bar Explanation -->
-                <div class="loadbar-explanation">
-                    <small>
-                        <span style="color:#dc3232;font-weight:600;">Heavy load:</span>
-                        For large, heavy, or industrial cargo.
-                    </small>
+                <div class="weight-indicator">
+                    <span class="weight-badge heavy">Weight Capacity: 7000kg-15000kg</span>
                 </div>
                 <!-- Load Bar for Heavy -->
                 <div class="loadbar-row">
@@ -111,5 +99,6 @@
         </div>
     </div>
     <script src="{{ url_for('static', filename='truck.js') }}"></script>
+    <script src="{{ url_for('static', filename='loadbar.js') }}"></script>
 </body>
 </html>
