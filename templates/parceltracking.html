@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='parceltracking.css') }}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
     <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+    <link rel="stylesheet" href="https://unpkg.com/leaflet-routing-machine@latest/dist/leaflet-routing-machine.css" />
     <link rel="icon" href="{{ url_for('static', filename='images/screentake-removebg-preview.png') }}" />
 </head>
 <body>
@@ -245,8 +246,10 @@
     
     <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
     <!-- Add Leaflet Routing Machine CSS/JS -->
-    <link rel="stylesheet" href="https://unpkg.com/leaflet-routing-machine@latest/dist/leaflet-routing-machine.css" />
     <script src="https://unpkg.com/leaflet-routing-machine@latest/dist/leaflet-routing-machine.js"></script>
+    <!-- Add Polyline Decorator plugin for directional arrows -->
+    <script src="https://unpkg.com/leaflet-polylinedecorator/dist/leaflet.polylineDecorator.js"></script>
+    
     {% if order_data %}
     <script>
         // Pass order data from Flask to JavaScript

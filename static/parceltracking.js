@@ -61,7 +61,63 @@ function setupMapWithOrderData(map, orderData) {
         .addTo(map)
         .bindPopup(`<b>${orderData.originBranch}</b><br>Branch Location`);
 
-    // Use Leaflet Routing Machine to get the route
+    // Add customer marker (origin point) with a different color (green)
+    const customerIcon = L.icon({
+        iconUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/images/marker-icon.png',
+        iconSize: [25, 41],
+        iconAnchor: [12, 41],
+        popupAnchor: [1, -34],
+        shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/images/marker-shadow.png',
+        shadowSize: [41, 41],
+        // Use a green marker icon (replace with your own if desired)
+        // You can use a custom green icon URL or SVG here if you want a different style
+        className: 'leaflet-marker-green'
+    });
+
+    const customerMarker = L.marker(customerPoint, { icon: customerIcon })
+        .addTo(map)
+        .bindPopup(`<b>Customer Location</b><br>${orderData.customerPlace || 'Pickup Point'}`);
+
+    // Add CSS to tint the marker green
+    const style = document.createElement('style');
+    style.innerHTML = `
+        .leaflet-marker-green {
+            filter: hue-rotate(90deg) saturate(2);
+        }
+    `;
+    document.head.appendChild(style);
+
+    // Store for refresh
+    window.mapObjects = {
+        map: map,
+        orderData: orderData,
+        branchMarker: branchMarker,
+        customerMarker: customerMarker
+    };
+
+    // --- Draw fallback straight line only, no arrow ---
+    const directPath = L.polyline([customerPoint, branchPoint], {
+        color: '#03335E',
+        weight: 5,
+        opacity: 0.5,
+        dashArray: '10,10'
+    }).addTo(map);
+
+    window.mapObjects.directPath = directPath;
+
+    // Animate the parcel marker along the straight line as initial fallback
+    animateParcelAlongRoute(map, [customerPoint, branchPoint], orderData, 20000);
+
+    // Store route points for proper resize handling
+    window.mapObjects.routePoints = [customerPoint, branchPoint];
+
+    // Ensure the map shows both points
+    map.fitBounds(L.latLngBounds([customerPoint, branchPoint]), {
+        padding: [50, 50],
+        maxZoom: 13
+    });
+
+    // --- Try to get road-following route ---
     const routingControl = L.Routing.control({
         waypoints: [
             L.latLng(customerPoint[0], customerPoint[1]),
@@ -73,11 +129,16 @@ function setupMapWithOrderData(map, orderData) {
         fitSelectedRoutes: true,
         show: false,
         lineOptions: {
-            styles: [{ color: '#03335E', weight: 5, opacity: 0.8 }]
+            styles: [
+                {color: '#03335E', opacity: 0.0, weight: 0} // Make the default route invisible
+            ]
         },
-        createMarker: function() { return null; }, // Don't add default markers
+        createMarker: function() { return null; },
         router: L.Routing.osrmv1({
-            serviceUrl: 'https://router.project-osrm.org/route/v1'
+            serviceUrl: 'https://router.project-osrm.org/route/v1',
+            profile: 'driving',
+            useHints: false,
+            geometryOnly: false
         })
     }).addTo(map);
 
@@ -85,20 +146,63 @@ function setupMapWithOrderData(map, orderData) {
         const route = e.routes[0];
         const routeLine = route.coordinates.map(coord => [coord.lat, coord.lng]);
 
-        // Animate the parcel marker along the route (at least 20 seconds)
+        // Remove the fallback direct path and arrows
+        if (window.mapObjects.directPath) {
+            map.removeLayer(window.mapObjects.directPath);
+            window.mapObjects.directPath = null;
+        }
+        if (window.mapObjects.arrowHead) {
+            map.removeLayer(window.mapObjects.arrowHead);
+            window.mapObjects.arrowHead = null;
+        }
+
+        // Create two layers for the route animation
+        const routeBase = L.polyline(routeLine, {
+            color: '#03335E',
+            weight: 6,
+            opacity: 0.7
+        }).addTo(map);
+
+        const routeOverlay = L.polyline(routeLine, {
+            color: '#1976d2',
+            weight: 3,
+            opacity: 0.9,
+            dashArray: '10, 10',
+            dashOffset: '0'
+        }).addTo(map);
+
+        const arrows = L.polylineDecorator(routeLine, {
+            patterns: [
+                {offset: 25, repeat: 75, symbol: L.Symbol.arrowHead({
+                    pixelSize: 12, 
+                    polygon: false, 
+                    pathOptions: {stroke: true, color: '#ffffff', weight: 2}
+                })}
+            ]
+        }).addTo(map);
+
+        window.mapObjects.routeLine = routeLine;
+        window.mapObjects.routeBase = routeBase;
+        window.mapObjects.routeOverlay = routeOverlay;
+        window.mapObjects.routingControl = routingControl;
+        window.mapObjects.arrows = arrows;
+
+        animatePolyline(routeOverlay);
         animateParcelAlongRoute(map, routeLine, orderData, 20000);
+        window.mapObjects.routePoints = routeLine;
+
+        map.fitBounds(L.latLngBounds(routeLine), {
+            padding: [50, 50],
+            maxZoom: 13
+        });
     });
 
-    // Store for refresh
-    window.mapObjects = {
-        map: map,
-        orderData: orderData,
-        branchMarker: branchMarker,
-        routingControl: routingControl
-    };
+    // If routing fails, keep the fallback line/arrows and do nothing else
+    routingControl.on('routingerror', function() {
+        // No action needed, fallback already shown
+    });
 }
 
-// Animate the parcel marker along the route polyline, with a minimum duration
 function animateParcelAlongRoute(map, routeLine, orderData, minDurationMs) {
     // Remove previous marker if any
     if (window.mapObjects.parcelMarker) {
@@ -117,28 +221,39 @@ function animateParcelAlongRoute(map, routeLine, orderData, minDurationMs) {
 
     marker.openPopup();
 
-    // Animation variables
+    // --- Smooth animation between points ---
     let i = 0;
     const totalPoints = routeLine.length;
-    // Calculate the interval so that the animation takes at least minDurationMs
-    const animationSpeed = Math.max(10, Math.ceil(minDurationMs / totalPoints));
+    const totalDuration = minDurationMs;
+    const segmentDuration = totalDuration / (totalPoints - 1);
+    let startTime = null;
 
-    function moveMarker() {
-        if (i < totalPoints) {
-            marker.setLatLng(routeLine[i]);
-            i++;
-            setTimeout(moveMarker, animationSpeed);
-        } else {
+    function animateStep(timestamp) {
+        if (!startTime) startTime = timestamp;
+        const elapsed = timestamp - startTime;
+        // Determine which segment we are in
+        let seg = Math.floor(elapsed / segmentDuration);
+        if (seg >= totalPoints - 1) {
             marker.setLatLng(routeLine[totalPoints - 1]);
             marker.bindPopup(`<b>Parcel ${orderData.orderItemId}</b><br>Arrived at ${orderData.originBranch}`).openPopup();
+            return;
         }
+        // Interpolate between seg and seg+1
+        const t = (elapsed % segmentDuration) / segmentDuration;
+        const from = routeLine[seg];
+        const to = routeLine[seg + 1];
+        const pos = [
+            from[0] + (to[0] - from[0]) * t,
+            from[1] + (to[1] - from[1]) * t
+        ];
+        marker.setLatLng(pos);
+        requestAnimationFrame(animateStep);
     }
-    moveMarker();
+    requestAnimationFrame(animateStep);
 
     // Save marker for refresh
     window.mapObjects.parcelMarker = marker;
     window.mapObjects.routeLine = routeLine;
-    window.mapObjects.animationSpeed = animationSpeed;
     window.mapObjects.minDurationMs = minDurationMs;
 }
 
@@ -159,15 +274,24 @@ function interpolate(start, end, t) {
 }
 
 function animatePolyline(line) {
-    var dashArray = '1, 8';
-    var dashOffset = 0;
-    
-    function animate() {
-        dashOffset -= 0.5;
-        line.setStyle({ dashOffset: dashOffset.toString() });
-        requestAnimationFrame(animate);
+    // Cancel any existing animation
+    if (window.mapObjects && window.mapObjects.animationId) {
+        cancelAnimationFrame(window.mapObjects.animationId);
     }
     
+    // Set up the animation
+    let dashOffset = 0;
+    
+    function animate() {
+        // Update the dashOffset (negative for left-to-right flow)
+        dashOffset -= 0.75; // Slightly faster animation
+        line.setStyle({ dashOffset: dashOffset.toString() });
+        
+        // Continue the animation
+        window.mapObjects.animationId = requestAnimationFrame(animate);
+    }
+    
+    // Start the animation
     animate();
 }
 
@@ -175,9 +299,50 @@ function updateMapData() {
     // On refresh, re-animate the parcel from current position to destination
     if (!window.mapObjects || !window.mapObjects.routeLine) return;
     const { map, orderData, routeLine, minDurationMs } = window.mapObjects;
+    
+    // Cancel any existing animation
+    if (window.mapObjects.animationId) {
+        cancelAnimationFrame(window.mapObjects.animationId);
+    }
+
+    // Re-create the route visualization
+    if (window.mapObjects.routeOverlay) {
+        map.removeLayer(window.mapObjects.routeOverlay);
+    }
+    
+    if (window.mapObjects.arrows) {
+        map.removeLayer(window.mapObjects.arrows);
+    }
+    
+    // Create a new animated route overlay
+    const routeOverlay = L.polyline(routeLine, {
+        color: '#1976d2',
+        weight: 3,
+        opacity: 0.9,
+        dashArray: '10, 10',
+        dashOffset: '0'
+    }).addTo(map);
+    
+    // Add arrows to show direction
+    const arrows = L.polylineDecorator(routeLine, {
+        patterns: [
+            {offset: 25, repeat: 75, symbol: L.Symbol.arrowHead({
+                pixelSize: 12, 
+                polygon: false, 
+                pathOptions: {stroke: true, color: '#ffffff', weight: 2}
+            })}
+        ]
+    }).addTo(map);
+    
+    // Store the route path
+    window.mapObjects.routeOverlay = routeOverlay;
+    window.mapObjects.arrows = arrows;
+    
+    // Animate the polyline
+    animatePolyline(routeOverlay);
 
     // Start animation from a random point along the route (simulate progress)
-    let startIdx = Math.floor(routeLine.length * (0.7 + Math.random() * 0.2));
+    let startIdx = Math.floor(routeLine.length * (0.3 + Math.random() * 0.4)); // More central position
     let marker = window.mapObjects.parcelMarker;
     if (!marker) return;
 
