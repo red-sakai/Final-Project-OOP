@@ -3,14 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Book Now | Motorcycle</title>
+    <title>Get Started | Motorcycle</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='motorcycle.css') }}">
     <link rel="icon" href="{{ url_for('static', filename='images/screentake-removebg-preview.png') }}" />
 </head>
 <body>
     <!-- Header -->
     <div class="motorcycle-header">
-        <h1>Welcome, User</h1>
+        <h1>Welcome, {{ session.get('full_name', 'User') }}</h1>
         <p>Welcome to our motorcycle booking page, click Book Now to get started!</p>
     </div>
     <!-- Navigation Bar -->
@@ -28,14 +28,14 @@
                 <div>
                     <a href="{{ url_for('motorcycle_book_html') }}" class="motorcycle-book-btn">Book Now</a>
                 </div>
-                <!-- Light Load Message -->
-                <div class="motorcycle-loadbar-message motorcycle-loadbar-message-green">
-                    <strong>Light Load:</strong>
-                    <small class="motorcycle-loadbar-desc">For small, urgent cargo deliveries.</small>
+                <div class="weight-indicator">
+                    <span class="weight-badge light">Weight Capacity: 0.1kg-20kg</span>
                 </div>
-                <!-- Load Bar for Honda Click (Light) -->
-                <div class="motorcycle-loadbar-bg" style="margin:18px 0;">
-                    <div class="motorcycle-loadbar-fill" id="loadbar-light"></div>
+                <!-- Load Bar for Light -->
+                <div class="loadbar-row card-loadbar-row">
+                    <div class="loadbar-track">
+                        <div class="loadbar-fill" id="loadbar-light"></div>
+                    </div>
                 </div>
             </div>
             <img src="{{ url_for('static', filename='images/yamaha mio sporty hexahaul.png') }}" alt="Yamaha Mio Sporty" style="transform: scaleX(-1);">
@@ -49,17 +49,17 @@
                 <div>
                     <a href="{{ url_for('motorcycle_book2_html') }}" class="motorcycle-book-btn">Book Now</a>
                 </div>
-                <!-- Medium Load Message -->
-                <div class="motorcycle-loadbar-message motorcycle-loadbar-message-yellow">
-                    <strong>Medium Load:</strong>
-                    <small class="motorcycle-loadbar-desc">For moderate-sized cargo or multiple packages.</small>
+                <div class="weight-indicator">
+                    <span class="weight-badge medium">Weight Capacity: 0.1kg-25kg</span>
                 </div>
-                <!-- Load Bar for Yamaha Mio Sporty (Medium) -->
-                <div class="motorcycle-loadbar-bg" style="margin:18px 0;">
-                    <div class="motorcycle-loadbar-fill" id="loadbar-medium"></div>
+                <!-- Load Bar for Medium -->
+                <div class="loadbar-row card-loadbar-row">
+                    <div class="loadbar-track">
+                        <div class="loadbar-fill" id="loadbar-medium"></div>
+                    </div>
                 </div>
             </div>
-            <img src="{{ url_for('static', filename='images/honda click 125i hexahaul.png') }}" alt="Honda Click 125i" >
+            <img src="{{ url_for('static', filename='images/honda click 125i hexahaul.png') }}" alt="Honda Click 125i">
         </div>
         <!-- Yamaha NMAX -->
         <div class="motorcycle-card">
@@ -70,14 +70,14 @@
                 <div>
                     <a href="{{ url_for('motorcycle_book3_html') }}" class="motorcycle-book-btn">Book Now</a>
                 </div>
-                <!-- Heavy Load Message -->
-                <div class="motorcycle-loadbar-message motorcycle-loadbar-message-red">
-                    <strong>Heavy Load:</strong>
-                    <small class="motorcycle-loadbar-desc">For bulk cargo or large/heavy deliveries.</small>
+                <div class="weight-indicator">
+                    <span class="weight-badge heavy">Weight Capacity: 25kg-80kg</span>
                 </div>
-                <!-- Load Bar for Yamaha NMAX (Heavy) -->
-                <div class="motorcycle-loadbar-bg" style="margin:18px 0;">
-                    <div class="motorcycle-loadbar-fill" id="loadbar-heavy"></div>
+                <!-- Load Bar for Heavy -->
+                <div class="loadbar-row card-loadbar-row">
+                    <div class="loadbar-track">
+                        <div class="loadbar-fill" id="loadbar-heavy"></div>
+                    </div>
                 </div>
             </div>
             <img src="{{ url_for('static', filename='images/yamaha nmax hexahaul.png') }}" alt="Yamaha NMAX" style="transform: scaleX(-1);">
@@ -91,6 +91,6 @@
         </div>
     </div>
     <script src="{{ url_for('static', filename='motorcycle.js') }}"></script>
-    <script src="{{ url_for('static', filename='motorcycle_loadbar.js') }}"></script>
+    <script src="{{ url_for('static', filename='loadbar.js') }}"></script>
 </body>
 </html>
