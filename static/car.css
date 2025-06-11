@@ -352,12 +352,13 @@ body {
 
 /* Card-specific Load Bar */
 .card-loadbar-row {
-    margin-top: 18px;
+    margin-top: 12px;
     margin-bottom: 0;
     display: flex;
     justify-content: flex-start;
     align-items: center;
     gap: 0;
+    padding: 0;
 }
 .card-loadbar-row .loadbar-track {
     width: 180px;
@@ -434,4 +435,39 @@ body {
     }
     .loadbar-label { width: 54px; font-size: 0.98rem; }
     .loadbar-track { height: 16px; }
+}
+
+/* Weight Indicator Styles */
+.weight-indicator {
+    margin-top: 10px;
+    margin-bottom: 12px;
+}
+
+.weight-badge {
+    display: inline-block;
+    padding: 4px 10px;
+    border-radius: 16px;
+    font-size: 0.85rem;
+    font-weight: 700;
+    letter-spacing: 0.3px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+    border: 1.5px solid transparent;
+}
+
+.weight-badge.light {
+    background-color: #e3f5e6;
+    color: #3cc85a;
+    border-color: #3cc85a;
+}
+
+.weight-badge.medium {
+    background-color: #fff8e0;
+    color: #ffd23c;
+    border-color: #ffd23c;
+}
+
+.weight-badge.heavy {
+    background-color: #ffebeb;
+    color: #dc3c3c;
+    border-color: #dc3c3c;
 }
