@@ -10,7 +10,7 @@
 <body>
     <!-- Header -->
     <div class="car-header">
-        <h1>Welcome, User</h1>
+        <h1>Welcome, {{ session.get('full_name', 'User') }}</h1>
         <p>Welcome to our car booking page, click Book Now to get started!</p>
     </div>
     <!-- Navigation Bar -->
