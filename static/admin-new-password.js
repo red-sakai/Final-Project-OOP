@@ -3,11 +3,11 @@ function togglePassword(inputId, iconId) {
     const icon = document.getElementById(iconId);
     if (input.type === "password") {
         input.type = "text";
-        icon.src = "/static/images/hide.png";
+        icon.src = "/images/hide.png";
         icon.alt = "Hide Password";
     } else {
         input.type = "password";
-        icon.src = "/static/images/visible.png";
+        icon.src = "/images/visible.png";
         icon.alt = "Show Password";
     }
 }
