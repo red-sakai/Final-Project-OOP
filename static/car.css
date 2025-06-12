@@ -185,6 +185,7 @@ body {
     color: #fff;
     padding: 40px 0 30px 0;
     text-align: center;
+    position: relative;
 }
 .car-header h1 {
     font-size: 2.5rem;
@@ -470,4 +471,55 @@ body {
     background-color: #ffebeb;
     color: #dc3c3c;
     border-color: #dc3c3c;
+}
+
+/* Back Button Styles */
+.header-container {
+    position: relative;
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+.back-btn {
+    position: absolute;
+    top: 10px;
+    left: 20px;
+    color: #fff;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 0.95rem;
+    padding: 8px 16px;
+    border-radius: 20px;
+    background-color: rgba(255, 255, 255, 0.15);
+    transition: background-color 0.3s, transform 0.2s;
+    display: inline-flex;
+    align-items: center;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+.back-btn:hover {
+    background-color: rgba(255, 255, 255, 0.25);
+    transform: translateX(-3px);
+}
+
+.arrow-left {
+    display: inline-block;
+    width: 8px;
+    height: 8px;
+    border-top: 2px solid #fff;
+    border-left: 2px solid #fff;
+    margin-right: 8px;
+    transform: rotate(-45deg);
+}
+
+/* Responsive adjustments for the back button */
+@media (max-width: 768px) {
+    .back-btn {
+        top: 5px;
+        left: 10px;
+        font-size: 0.85rem;
+        padding: 6px 12px;
+    }
 }

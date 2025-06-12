@@ -10,8 +10,11 @@
 <body>
     <!-- Header -->
     <div class="car-header">
-        <h1>Welcome, {{ session.get('full_name', 'User') }}</h1>
-        <p>Welcome to our car booking page, click Book Now to get started!</p>
+        <div class="header-container">
+            <a href="{{ url_for('services_html') }}" class="back-btn"><i class="arrow-left"></i> Back to Services</a>
+            <h1>Welcome, {{ session.get('full_name', 'User') }}</h1>
+            <p>Welcome to our car booking page, click Book Now to get started!</p>
+        </div>
     </div>
     <!-- Car Cards -->
     <div class="car-cards">
