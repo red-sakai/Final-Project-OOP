@@ -13,6 +13,7 @@ from models.sales_database import SalesDatabase
 from abc import ABC, abstractmethod
 from enum import Enum
 from flask_mail import Mail, Message
+from flask_moment import Moment
 from transformers import pipeline
 from services.hexabot import hexabot_bp
 from models.activity_database import ActivityDatabase
@@ -197,6 +198,7 @@ class HexaHaulApp:
         self.register_routes()
         self.register_blueprints()
         self.register_template_filters()
+        self.moment = Moment(self.app)
 
     def configure_mail(self):
         self.app.config['MAIL_SERVER'] = 'smtp.gmail.com'
@@ -1405,7 +1407,47 @@ class HexaHaulApp:
 
         @app.route("/payment-wall")
         def payment_wall():
-            return render_template("payment-wall.html")
+            # Get vehicle type from query parameter
+            vehicle_type = request.args.get('type', 'default')
+            order_id = request.args.get('order_id', 'unknown')
+            
+            # Define pricing based on vehicle type
+            pricing = {
+                'motorcycle': {
+                    'base_fare': 120.00,
+                    'shipping_fee': 49.00,
+                    'service_fee': 15.00,
+                    'vehicle_name': 'Motorcycle Delivery'
+                },
+                'car': {
+                    'base_fare': 200.00,
+                    'shipping_fee': 79.00,
+                    'service_fee': 20.00,
+                    'vehicle_name': 'Car Delivery'
+                },
+                'truck': {
+                    'base_fare': 350.00,
+                    'shipping_fee': 150.00,
+                    'service_fee': 35.00,
+                    'vehicle_name': 'Truck Delivery'
+                },
+                'default': {
+                    'base_fare': 200.00,
+                    'shipping_fee': 79.00,
+                    'service_fee': 20.00,
+                    'vehicle_name': 'Standard Delivery'
+                }
+            }
+            
+            # Select proper pricing
+            price_data = pricing.get(vehicle_type, pricing['default'])
+            
+            return render_template("payment-wall.html", 
+                                  vehicle_type=vehicle_type,
+                                  order_id=order_id,
+                                  price_data=price_data,
+                                  moment=self.moment,  # <-- Pass moment to template
+                                  current_date=datetime.now())  # <-- Pass current date
 
         @app.route('/admin/vehicles')
         def admin_vehicles():
@@ -1944,7 +1986,6 @@ class HexaHaulApp:
                 
                 flash('Customer updated successfully', 'success')
                 
-           
             except Exception as e:
                 flash(f'Error updating customer: {str(e)}', 'error')
                 
@@ -1963,7 +2004,6 @@ class HexaHaulApp:
                 
                 flash('Customer deleted successfully', 'success')
                 
-           
             except Exception as e:
                 flash(f'Error deleting customer: {str(e)}', 'error')
                 
