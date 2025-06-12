@@ -1,67 +1,116 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="light">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Payment Wall</title>
+    <title>Complete Your Payment | HexaHaul</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='payment-wall.css') }}">
     <link rel="icon" href="{{ url_for('static', filename='images/screentake-removebg-preview.png') }}" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- Include Flask-Moment JavaScript -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.4/moment.min.js"></script>
 </head>
 <body>
-    <div class="payment-wall-container">
+    <div class="payment-wall-container {% if vehicle_type %}vehicle-{{ vehicle_type }}{% endif %}">
         <div class="payment-wall-card compact-layout">
-            <h2 class="pay-title">Complete Your Payment</h2>
+            <div class="payment-header">
+                <div class="payment-logo">
+                    <img src="{{ url_for('static', filename='images/screentake-removebg-preview.png') }}" alt="HexaHaul">
+                </div>
+                <h2 class="pay-title">Complete Your Payment</h2>
+                <div class="vehicle-badge {{ vehicle_type }}">
+                    <span class="vehicle-icon">
+                        {% if vehicle_type == 'motorcycle' %}🏍️
+                        {% elif vehicle_type == 'car' %}🚗
+                        {% elif vehicle_type == 'truck' %}🚚
+                        {% else %}🚚{% endif %}
+                    </span>
+                    <span class="vehicle-name">{{ price_data.vehicle_name }}</span>
+                </div>
+            </div>
             <div class="pay-content-row">
                 <div class="pay-left">
-                    <div id="fee-breakdown" class="fee-breakdown">
-                        <div class="fee-row"><span>Base Fare:</span><span id="base-fare">₱200.00</span></div>
-                        <div class="fee-row"><span>Shipping Fee:</span><span id="shipping-fee">₱79.00</span></div>
-                        <div class="fee-row"><span>Service Fee:</span><span id="service-fee">₱20.00</span></div>
+                    <div id="fee-breakdown" class="fee-breakdown"
+                         data-base-fare="{{ price_data.base_fare }}"
+                         data-shipping-fee="{{ price_data.shipping_fee }}"
+                         data-service-fee="{{ price_data.service_fee }}"
+                         data-vehicle-type="{{ vehicle_type }}">
+                        <div class="fee-row"><span><span class="fee-icon">
+                            {% if vehicle_type == 'motorcycle' %}🏍️
+                            {% elif vehicle_type == 'car' %}🚗
+                            {% elif vehicle_type == 'truck' %}🚚
+                            {% else %}🚚{% endif %}
+                        </span>Base Fare:</span><span id="base-fare">₱{{ price_data.base_fare }}</span></div>
+                        <div class="fee-row"><span><span class="fee-icon">📦</span>Shipping Fee:</span><span id="shipping-fee">₱{{ price_data.shipping_fee }}</span></div>
+                        <div class="fee-row"><span><span class="fee-icon">💼</span>Service Fee:</span><span id="service-fee">₱{{ price_data.service_fee }}</span></div>
                     </div>
-                    <div id="total-amount" class="total-amount">Total: ₱<span id="amount-value">299.00</span></div>
+                    <div id="total-amount" class="total-amount">Total: ₱<span id="amount-value">{{ price_data.base_fare + price_data.shipping_fee + price_data.service_fee }}</span></div>
+                    
+                    <div class="order-details">
+                        <div class="order-id">Order #{{ order_id }}</div>
+                        <div class="order-time">
+                            <!-- Use Flask-Moment if available, otherwise use the passed date -->
+                            {# Remove Flask-Moment usage, just use Python formatting #}
+                            {{ current_date.strftime('%B %d, %Y') }}
+                        </div>
+                    </div>
                 </div>
                 <div class="pay-right">
-                    <p class="pay-desc">Select your payment method and enter your details.</p>
+                    <p class="pay-desc">Select your payment method below:</p>
                     <form class="payment-form" id="paymentForm" autocomplete="off">
                         <div class="pay-methods">
                             <div class="pay-method-card selected" data-method="credit">
                                 <label>
                                     <input type="radio" name="method" value="credit" checked hidden>
-                                    <span class="pay-method-icon">&#128179;</span>
+                                    <span class="pay-method-icon">💳</span>
                                     <span>Credit/Debit Card</span>
                                 </label>
                             </div>
                             <div class="pay-method-card" data-method="gcash">
                                 <label>
                                     <input type="radio" name="method" value="gcash" hidden>
-                                    <span class="pay-method-icon">&#128184;</span>
+                                    <span class="pay-method-icon">📱</span>
                                     <span>GCash</span>
                                 </label>
                             </div>
                             <div class="pay-method-card" data-method="paypal">
                                 <label>
                                     <input type="radio" name="method" value="paypal" hidden>
-                                    <span class="pay-method-icon">&#128176;</span>
+                                    <span class="pay-method-icon">🌐</span>
                                     <span>PayPal</span>
                                 </label>
                             </div>
                             <div class="pay-method-card" data-method="cod">
                                 <label>
                                     <input type="radio" name="method" value="cod" hidden>
-                                    <span class="pay-method-icon">&#128184;</span>
+                                    <span class="pay-method-icon">💵</span>
                                     <span>Cash on Delivery</span>
                                 </label>
                             </div>
                         </div>
                         <div class="pay-fields" id="credit-fields">
-                            <input type="text" placeholder="Cardholder Name">
-                            <input type="text" placeholder="Card Number" maxlength="19">
+                            <!-- Address input for credit card (reduced width) -->
+                            <input type="text" placeholder="Address Line 1" id="credit-address1" autocomplete="off" required style="max-width: 260px; margin: 0 auto 8px auto; display: block;">
+                            <div class="card-animation-container">
+                                <div class="credit-card-preview">
+                                    <div class="card-chip"></div>
+                                    <div class="card-number">•••• •••• •••• ••••</div>
+                                    <div class="card-details">
+                                        <div class="card-name">YOUR NAME HERE</div>
+                                        <div class="card-exp">MM/YY</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <input type="text" placeholder="Cardholder Name" id="card-name">
+                            <input type="text" placeholder="Card Number" maxlength="19" id="card-number">
                             <div class="pay-row">
-                                <input type="text" placeholder="MM/YY" maxlength="5">
-                                <input type="text" placeholder="CVV" maxlength="4">
+                                <input type="text" placeholder="MM/YY" maxlength="5" id="card-exp">
+                                <input type="password" placeholder="CVV" maxlength="4" id="card-cvv">
                             </div>
                         </div>
                         <div class="pay-fields" id="gcash-fields" style="display:none;">
+                            <!-- Address input for GCash (reduced width) -->
+                            <input type="text" placeholder="Address Line 1" id="gcash-address1" autocomplete="off" required style="max-width: 260px; margin: 0 auto 8px auto; display: block;">
                             <div class="gcash-qr-container">
                                 <img src="{{ url_for('static', filename='images/GCASH QR.jpg') }}" alt="GCash QR" class="gcash-qr-img">
                                 <div class="gcash-instructions">Scan this QR code with your GCash app to pay.</div>
@@ -69,17 +118,27 @@
                             <input type="text" id="gcash-refnum" placeholder="Reference Number (13 digits)" maxlength="13" pattern="\d{13}" autocomplete="off">
                         </div>
                         <div class="pay-fields" id="paypal-fields" style="display:none;">
+                            <!-- Address input for PayPal (reduced width) -->
+                            <input type="text" placeholder="Address Line 1" id="paypal-address1" autocomplete="off" required style="max-width: 260px; margin: 0 auto 8px auto; display: block;">
                             <div id="paypal-button-container"></div>
                         </div>
                         <div class="pay-fields" id="cod-fields" style="display:none;">
                             <div class="cod-inputs">
                                 <input type="text" placeholder="Address Line 1" id="cod-address1" autocomplete="off">
                                 <input type="text" placeholder="Address Line 2 (optional)" id="cod-address2" autocomplete="off">
+                                <input type="text" placeholder="Contact Number" id="cod-phone" autocomplete="off">
                             </div>
                             <div class="cod-info">You will pay the rider upon delivery.</div>
                         </div>
-                        <button type="submit" class="pay-btn" id="payBtn">Order Now</button>
+                        <button type="submit" class="pay-btn" id="payBtn">
+                            <span class="btn-text">Pay Now</span>
+                            <span class="btn-icon">→</span>
+                        </button>
                     </form>
+                    <div class="secure-payment-notice">
+                        <div class="secure-icon">🔒</div>
+                        <div class="secure-text">Your payment information is secure.</div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -87,40 +146,155 @@
     <script src="https://www.paypal.com/sdk/js?client-id=AWQhDw0tETk8-y8na38hRNqbtfoQbweYUuOMHuDTVCl-ZrcUimDcnoHgKqNEyetQM_oXJS60ivTOrjux&currency=PHP"></script>
     <script src="{{ url_for('static', filename='payment-wall.js') }}"></script>
     <script>
-// Show Thank You popup and handle OK button timer
-function showThankYouModal() {
-    document.getElementById('popup').style.display = 'block';
-    let timer = 3;
-    const okBtn = document.getElementById('okBtn');
-    const okTimer = document.getElementById('okTimer');
-    okBtn.disabled = true;
-    okTimer.textContent = timer;
-    okBtn.textContent = `OK(${timer})`;
-    const interval = setInterval(() => {
-        timer--;
-        okTimer.textContent = timer;
-        okBtn.textContent = timer === 0 ? "OK" : `OK(${timer})`;
-        if (timer === 0) {
-            clearInterval(interval);
-            okBtn.disabled = false;
-            okBtn.textContent = "OK";
+        document.getElementById('card-number').addEventListener('input', function(e) {
+            let value = e.target.value.replace(/\D/g, '');
+            let formattedValue = '';
+            for (let i = 0; i < value.length; i++) {
+                if (i > 0 && i % 4 === 0) {
+                    formattedValue += ' ';
+                }
+                formattedValue += value[i];
+            }
+            e.target.value = formattedValue;
+            
+            // Update card preview
+            document.querySelector('.card-number').textContent = 
+                formattedValue || '•••• •••• •••• ••••';
+        });
+
+        document.getElementById('card-name').addEventListener('input', function(e) {
+            document.querySelector('.card-name').textContent = 
+                e.target.value.toUpperCase() || 'YOUR NAME HERE';
+        });
+
+        document.getElementById('card-exp').addEventListener('input', function(e) {
+            let value = e.target.value.replace(/\D/g, '');
+            if (value.length > 2) {
+                value = value.substring(0, 2) + '/' + value.substring(2, 4);
+            }
+            e.target.value = value;
+            document.querySelector('.card-exp').textContent = 
+                value || 'MM/YY';
+        });
+
+        // PayPal integration: Render button only when PayPal method is selected
+        let paypalRendered = false;
+        function renderPayPalButton() {
+            if (paypalRendered) return;
+            if (window.paypal) {
+                paypal.Buttons({
+                    style: {
+                        layout: 'vertical',
+                        color: 'blue',
+                        shape: 'rect',
+                        label: 'paypal'
+                    },
+                    createOrder: function(data, actions) {
+                        const total = parseFloat(document.getElementById('amount-value').textContent.replace(/[^\d.]/g, '')) || 0;
+                        return actions.order.create({
+                            purchase_units: [{
+                                amount: {
+                                    value: total.toFixed(2),
+                                    currency_code: 'PHP'
+                                },
+                                description: 'HexaHaul Delivery Payment'
+                            }]
+                        });
+                    },
+                    onApprove: function(data, actions) {
+                        return actions.order.capture().then(function(details) {
+                            alert('Payment completed by ' + details.payer.name.given_name + '!');
+                            // Optionally, trigger your modal or redirect
+                            // createModal(generateTrackingId());
+                        });
+                    },
+                    onError: function(err) {
+                        alert('PayPal payment failed: ' + err);
+                    }
+                }).render('#paypal-button-container');
+                paypalRendered = true;
+            }
         }
-    }, 1000);
-}
 
-// Redirect after OK
-function closePpopup() {
-    window.location.href = "{{ url_for('index_html') }}";
-}
+        // Show/hide payment fields and PayPal button on method change
+        function showFields(method) {
+            const creditFields = document.getElementById('credit-fields');
+            const gcashFields = document.getElementById('gcash-fields');
+            const paypalFields = document.getElementById('paypal-fields');
+            const codFields = document.getElementById('cod-fields');
+            const payBtn = document.getElementById('payBtn');
 
-// Show popup on Pay Now button click
-document.getElementById('paymentForm').addEventListener('submit', function(e) {
-    e.preventDefault();
-    showThankYouModal();
-});
+            creditFields.style.display = method === 'credit' ? '' : 'none';
+            gcashFields.style.display = method === 'gcash' ? '' : 'none';
+            paypalFields.style.display = method === 'paypal' ? '' : 'none';
+            codFields.style.display = method === 'cod' ? '' : 'none';
+            payBtn.style.display = (method === 'paypal') ? 'none' : '';
 
-// Optionally, if you want to show popup when clicking any payment method button directly (like PayPal), 
-// call showThankYouModal() in those handlers as well.
-</script>
+            if (method === 'paypal') {
+                renderPayPalButton();
+            }
+            updatePayBtnState();
+        }
+
+        // Initial setup: show credit fields by default
+        showFields('credit');
+
+        // Payment method selection
+        const methodCards = document.querySelectorAll('.pay-method-card');
+        methodCards.forEach(card => {
+            card.addEventListener('click', function() {
+                const method = this.getAttribute('data-method');
+                // Deselect all cards
+                methodCards.forEach(c => c.classList.remove('selected'));
+                // Select the clicked card
+                this.classList.add('selected');
+                // Show/hide fields based on selected method
+                showFields(method);
+            });
+        });
+
+        // Update Pay Now button state
+        function updatePayBtnState() {
+            const method = document.querySelector('input[name="method"]:checked').value;
+            const payBtn = document.getElementById('payBtn');
+            if (method === 'credit' || method === 'gcash' || method === 'cod') {
+                payBtn.disabled = false;
+                payBtn.classList.remove('disabled');
+            } else {
+                payBtn.disabled = true;
+                payBtn.classList.add('disabled');
+            }
+        }
+
+        // Initial button state update
+        updatePayBtnState();
+
+        // Update isFormValid to require address for all methods except COD
+        function isFormValid() {
+            const method = getSelectedMethod();
+            if (!method) return false;
+            if (method === 'credit' && creditFields.style.display !== 'none') {
+                const addr = document.getElementById('credit-address1');
+                const inputs = creditFields.querySelectorAll('input');
+                return addr && addr.value.trim() !== '' &&
+                    Array.from(inputs).every(input => input.value.trim() !== '');
+            }
+            if (method === 'gcash' && gcashFields.style.display !== 'none') {
+                const addr = document.getElementById('gcash-address1');
+                const refnum = document.getElementById('gcash-refnum');
+                return addr && addr.value.trim() !== '' &&
+                    refnum && /^\d{13}$/.test(refnum.value.trim());
+            }
+            if (method === 'paypal' && paypalFields.style.display !== 'none') {
+                const addr = document.getElementById('paypal-address1');
+                return addr && addr.value.trim() !== '';
+            }
+            if (method === 'cod' && codFields.style.display !== 'none') {
+                const addr1 = document.getElementById('cod-address1');
+                return addr1 && addr1.value.trim() !== '';
+            }
+            return true;
+        }
+    </script>
 </body>
 </html>
