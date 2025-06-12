@@ -3,14 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Book Now | Truck</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='motorcycle-book.css') }}">
+    <title>Book Now | Motorcycle</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='motorcycle-book2.css') }}">
     <link rel="icon" href="{{ url_for('static', filename='images/screentake-removebg-preview.png') }}" />
 </head>
 <body>
     <div class="mobile-card truck-ui">
         <div class="header-row">
-            <button class="icon-btn" onclick="window.history.back();">
+            <button class="icon-btn" onclick="window.location.href='{{ url_for('motorcycle_html') }}'">
                 <span>&larr;</span>
             </button>
             <span class="header-title">Book Now</span>
@@ -20,21 +20,15 @@
                 <span class="input-icon">&#128205;</span>
                 <select id="dropoff" class="truck-input" required>
                     <option value="" disabled selected>Select drop off point</option>
-                    <option>Location A</option>
-                    <option>Location B</option>
-                    <option>Location C</option>
+                    <option>Parañaque</option>
+                    <option>Manila</option>
+                    <option>Caloocan</option>
+                    <option>Quezon</option>
                 </select>
             </div>
             <div class="input-row">
                 <span class="input-icon">&#128197;</span>
                 <input type="date" id="schedule" class="truck-input" required />
-            </div>
-            <div class="input-row">
-                <span class="input-icon">&#9878;</span>
-                <select id="weight" class="truck-input" required>
-                    <option value="" disabled selected>Select weight range</option>
-                    <option>0.1Kg-20Kg</option>
-                </select>
             </div>
             <div class="input-row">
                 <span class="input-icon">&#128230;</span>
@@ -47,11 +41,30 @@
             <button type="submit" class="btn main-btn">Confirm Booking</button>
         </form>
     </div>
+    
+    <!-- Weight Confirmation Modal -->
+    <div id="weightModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <span class="modal-icon">⚖️</span>
+                <h2>Weight Range Confirmation</h2>
+            </div>
+            <div class="modal-body">
+                <p>Please confirm that your products are within the weight range of <strong>0.1kg-25kg</strong>.</p>
+                <p class="warning-text">If your products exceed or are below this weight range, you may be charged incorrectly or experience delivery issues.</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" id="confirmWeight" class="btn confirm-btn">Yes, My Products Are Within Range</button>
+                <button type="button" id="cancelWeight" class="btn cancel-btn">No, I Need to Reconsider</button>
+            </div>
+        </div>
+    </div>
+    
     <script>
         const carHomeUrl = "{{ url_for('index_html') }}";
     </script>
     <script src="{{ url_for('static', filename='carbook-date.js') }}"></script>
-    <script src="{{ url_for('static', filename='carbook.js') }}"></script>
+    <script src="{{ url_for('static', filename='motorcycle-book2.js') }}"></script>
     <script>
 document.getElementById('bookingForm').addEventListener('submit', function(e) {
     e.preventDefault();
