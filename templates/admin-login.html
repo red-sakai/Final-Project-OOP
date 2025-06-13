@@ -40,6 +40,35 @@
                 color: #1565c0;
                 border: 1px solid #90caf9;
             }
+
+            .admin-login-header {
+                text-align: center;
+                margin-bottom: 20px;
+            }
+
+            .logo-container {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                margin-bottom: 10px;
+            }
+
+            .logistiq-logo {
+                width: 60px;
+                height: auto;
+            }
+
+            .logistiq-text {
+                font-size: 24px;
+                font-weight: bold;
+                margin: 0;
+            }
+
+            .logistiq-slogan {
+                font-size: 14px;
+                color: #777;
+                margin: 5px 0 0 0;
+            }
         </style>
     </head>
     <body>
@@ -49,6 +78,9 @@
             <div class="admin-login-container">
                 <div class="admin-login-panel">
                     <div class="admin-login-header">
+                        <div class="logo-container">
+                            <img src="{{ url_for('static', filename='images/HexaHaul icon transparent.png') }}" alt="LogistIQ Logo" class="logistiq-logo">
+                        </div>
                         <p class="logistiq-text">LogistIQ</p>
                         <p class="logistiq-slogan">Delivering excellence. No matter the situation.</p>
                     </div>
@@ -80,7 +112,7 @@
                         <a href="{{ url_for('admin_forgot_password_page') }}">Forgot Password?</a>
                     </div>
                     <div>
-                        <button onclick="window.location.href='{{ url_for('user_login_html') }}'" style="padding:8px 20px;border-radius:6px;border:none;background:#1579c0;color:#fff;font-weight:600;cursor:pointer;">
+                        <button onclick="window.location.href='{{ url_for('user_login_html') }}'" class="user-login-button">
                             Go to User Login
                         </button>
                     </div> 
