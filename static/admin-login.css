@@ -57,8 +57,20 @@ body {
     box-sizing: border-box;
 }
 
+.logo-container {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 10px;
+}
+
+.logistiq-logo {
+    width: 65px;
+    height: auto;
+    margin-bottom: 5px;
+}
+
 .logistiq-text {
-    padding-top: 50px;
+    padding-top: 10px; /* Reduced from 50px to create better spacing with logo */
     text-align: center;
     font-family: "Futura", sans-serif;
     font-size: 30px;
@@ -83,6 +95,7 @@ body {
 
 .admin-login-background {
     background-color: #bebebe;
+    background-image: linear-gradient(135deg, #d0d0d0 0%, #a9a9a9 100%);
     width: 100vw;
     height: 100vh;
     display: flex;
@@ -94,11 +107,11 @@ body {
 
 .admin-login-panel {
     background-color: var(--bg-color);
-    padding: 5px;
+    padding: 30px 20px;
     text-align: center;
-    width: 400px;
-    height: 400px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    width: 420px;
+    border-radius: 12px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -110,7 +123,7 @@ body {
 
 .admin-login-form {
     width: 100%;
-    max-width: 185px;
+    max-width: 280px;
     display: flex;
     flex-direction: column;
     align-items: stretch;
@@ -120,10 +133,20 @@ body {
 .admin-username-input,
 .admin-password-input {
     display: block;
-    padding: 10px;
+    padding: 12px 15px;
     margin: 10px auto;
     border: 1px solid var(--form-box-color);
-    border-radius: 6px;
+    border-radius: 8px;
+    font-size: 15px;
+    transition: border-color 0.3s, box-shadow 0.3s;
+    width: 100%;
+}
+
+.admin-username-input:focus,
+.admin-password-input:focus {
+    border-color: var(--tertiary-color);
+    box-shadow: 0 0 0 2px rgba(21, 121, 192, 0.2);
+    outline: none;
 }
 
 .admin-password-container {
@@ -133,43 +156,57 @@ body {
 
 .toggle-password {
     position: absolute;
-    right: 10px;
+    right: 12px;
     top: 50%;
     transform: translateY(-50%);
     cursor: pointer;
+    opacity: 0.7;
+    transition: opacity 0.2s;
+}
+
+.toggle-password:hover {
+    opacity: 1;
 }
 
 .toggle-password img {
-    width: 20px;
-    height: 20px;
+    width: 22px;
+    height: 22px;
 }
 
 .signin-button {
-    width: 80px;
-    margin: 0 auto;
-    margin-top: 20px;
-    padding: 10px;
+    width: 100%;
+    margin: 20px auto 0;
+    padding: 12px;
     display: block;
     background-color: var(--primary-color);
     color: var(--bg-color);
     border: none;
-    border-radius: 6px;
+    border-radius: 8px;
     cursor: pointer;
     font-family: "Inter", sans-serif;
-    font-size: 15px;
-    transition: background 0.2s, color 0.2s;
+    font-weight: 600;
+    font-size: 16px;
+    letter-spacing: 0.5px;
+    transition: all 0.2s ease;
+    box-shadow: 0 3px 6px rgba(3, 51, 94, 0.2);
 }
 
 .signin-button:hover {
     background-color: var(--secondary-color);
+    transform: translateY(-2px);
+    box-shadow: 0 5px 10px rgba(3, 51, 94, 0.3);
+}
+
+.signin-button:active {
+    transform: translateY(0);
 }
 
 .admin-forgot-password {
     width: 100%;
     display: block;
-    font-size: 15px;
+    font-size: 14px;
     justify-content: center;
-    margin-top: 10px;
+    margin-top: 15px;
     padding: 0;
     margin-left: auto;
     margin-right: auto;
@@ -178,10 +215,30 @@ body {
 
 .admin-forgot-password a {
     text-decoration: none;
-    color: #bebebe;
+    color: #888888;
     font-family: "Inter", sans-serif;
+    transition: color 0.2s;
 }
 
 .admin-forgot-password a:hover {
-    color: var(--primary-color);
+    color: var(--tertiary-color);
+}
+
+.user-login-button {
+    margin-top: 20px;
+    padding: 10px 20px;
+    border-radius: 8px;
+    border: none;
+    background: var(--tertiary-color);
+    color: #fff;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    font-family: "Inter", sans-serif;
+}
+
+.user-login-button:hover {
+    background: var(--secondary-color);
+    transform: translateY(-2px);
+    box-shadow: 0 3px 8px rgba(9, 81, 144, 0.3);
 }
