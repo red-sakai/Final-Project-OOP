@@ -33,7 +33,7 @@ document.addEventListener('DOMContentLoaded', function() {
             if (element.id === 'efficiency-rate' || element.id === 'uptime') {
                 displayValue = Math.floor(currentValue) + '%';
             } else if (element.id === 'revenue') {
-                displayValue = '$' + (currentValue / 1000).toFixed(1) + 'K';
+                displayValue = '₱' + (currentValue / 1000).toFixed(1) + 'K';
             }
             
             element.textContent = displayValue;
