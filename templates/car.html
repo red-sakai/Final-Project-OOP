@@ -5,16 +5,16 @@
     <meta name="viewport" content="width=width=device-width, initial-scale=1.0">
     <title>Get Started | Car</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='car.css') }}">
+    <link rel="icon" href="{{ url_for('static', filename='images/screentake-removebg-preview.png') }}" />
 </head>
 <body>
     <!-- Header -->
     <div class="car-header">
-        <h1>Welcome, User</h1>
-        <p>Welcome to our car booking page, click Book Now to get started!</p>
-    </div>
-    <!-- Navigation Bar -->
-    <div class="car-navbar">
-        <a href="#" class="active">Reservation</a>
+        <div class="header-container">
+            <a href="{{ url_for('services_html') }}" class="back-btn"><i class="arrow-left"></i> Back to Services</a>
+            <h1>Welcome, {{ session.get('full_name', 'User') }}</h1>
+            <p>Welcome to our car booking page, click Book Now to get started!</p>
+        </div>
     </div>
     <!-- Car Cards -->
     <div class="car-cards">
@@ -27,12 +27,8 @@
                 <div>
                     <a href="{{ url_for('carbook_html') }}" class="car-book-btn">Book Now</a>
                 </div>
-                <!-- Light Load Legend -->
-                <div class="loadbar-legend">
-                    <small>
-                        <span style="color:#3cc85a;font-weight:600;">Light load:</span>
-                        For small, urgent cargo deliveries.
-                    </small>
+                <div class="weight-indicator">
+                    <span class="weight-badge light">Weight Capacity: 20kg-300kg</span>
                 </div>
                 <!-- Load Bar for Toyota Vios -->
                 <div class="loadbar-row card-loadbar-row">
@@ -41,7 +37,7 @@
                     </div>
                 </div>
             </div>
-            <img src="{{ url_for('static', filename='images/vioshd.png') }}" alt="Toyota Vios">
+            <img src="{{ url_for('static', filename='images/toyota vios.png') }}" alt="Toyota Vios">
         </div>
         <!-- Honda Civic -->
         <div class="car-card">
@@ -52,12 +48,8 @@
                 <div>
                     <a href="{{ url_for('carbook2_html') }}" class="car-book-btn">Book Now</a>
                 </div>
-                <!-- Medium Load Legend -->
-                <div class="loadbar-legend">
-                    <small>
-                        <span style="color:#ffd23c;font-weight:600;">Medium load:</span>
-                        For moderate-sized cargo or multiple packages.
-                    </small>
+                <div class="weight-indicator">
+                    <span class="weight-badge medium">Weight Capacity: 25kg-350kg</span>
                 </div>
                 <!-- Load Bar for Honda Civic -->
                 <div class="loadbar-row card-loadbar-row">
@@ -66,7 +58,7 @@
                     </div>
                 </div>
             </div>
-            <img src="{{ url_for('static', filename='images/hondaupscaled.png') }}" alt="Honda Civic">
+            <img src="{{ url_for('static', filename='images/honda civic.png') }}" alt="Honda Civic">
         </div>
         <!-- MG 5 -->
         <div class="car-card">
@@ -77,12 +69,8 @@
                 <div>
                     <a href="{{ url_for('carbook3_html') }}" class="car-book-btn">Book Now</a>
                 </div>
-                <!-- Heavy Load Legend -->
-                <div class="loadbar-legend">
-                    <small>
-                        <span style="color:#dc3c3c;font-weight:600;">Heavy load:</span>
-                        For bulk cargo or large/heavy deliveries.
-                    </small>
+                <div class="weight-indicator">
+                    <span class="weight-badge heavy">Weight Capacity: 25kg-350kg</span>
                 </div>
                 <!-- Load Bar for MG 5 -->
                 <div class="loadbar-row card-loadbar-row">
@@ -91,7 +79,7 @@
                     </div>
                 </div>
             </div>
-            <img src="{{ url_for('static', filename='images/MG5BGremoveUp.png') }}" alt="MG 5">
+            <img src="{{ url_for('static', filename='images/mg 5 hexahaul.png') }}" alt="MG 5">
         </div>
     </div>
     <!-- Loading Popup -->

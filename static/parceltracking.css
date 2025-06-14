@@ -704,20 +704,32 @@ body {
     to { transform: translateY(0); opacity: 1;}
 }
 
-/* Map marker animations */
+/* Route Animation Styles - Updated for better visibility */
+.leaflet-overlay-pane path {
+    pointer-events: auto;
+}
+
+/* Ensure the animations are visible with high z-index */
+.leaflet-overlay-pane {
+    z-index: 450 !important;
+}
+
+/* Use stronger animation for dash animation */
+@keyframes dash {
+    to {
+        stroke-dashoffset: -1000;
+    }
+}
+
+/* Better pulse animation for markers */
 @keyframes markerPulse {
     0% { transform: scale(1); opacity: 1; }
-    50% { transform: scale(1.2); opacity: 0.8; }
+    50% { transform: scale(1.3); opacity: 0.9; }
     100% { transform: scale(1); opacity: 1; }
 }
 
 .marker-updated {
-    animation: markerPulse 0.5s ease-out;
-}
-
-.leaflet-div-icon {
-    background: transparent;
-    border: none;
+    animation: markerPulse 1s ease-out infinite;
 }
 
 /* Responsive Design */

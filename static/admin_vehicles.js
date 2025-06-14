@@ -116,39 +116,33 @@ document.addEventListener('DOMContentLoaded', function() {
     editBtns.forEach(btn => {
         btn.addEventListener('click', function() {
             const row = this.closest('tr');
+            const vehicleId = row.getAttribute('data-id');
             const cells = row.cells;
             
-            // Get values from table row
-            const id = cells[0].textContent;
-            const brand = cells[1].textContent;
-            const model = cells[2].textContent;
-            const type = cells[3].textContent;
-            const year = cells[4].textContent;
-            const distance = parseInt(cells[5].textContent);
-            const driverId = cells[6].textContent !== '-' ? cells[6].textContent : '';
-            const licenseExpiry = cells[7].textContent !== '-' ? cells[7].textContent : '';
-            const minWeight = parseFloat(cells[8].textContent);
-            const maxWeight = parseFloat(cells[9].textContent);
-            const status = cells[10].querySelector('.status').textContent;
+            // Get values from table row (adjusted for removed ID column)
+            const employeeId = cells[0].textContent !== '-' ? cells[0].textContent : '';
+            const unitName = cells[1].textContent;
+            const brand = cells[2].textContent;
+            const year = cells[3].textContent;
+            const kmDriven = parseInt(cells[4].textContent);
+            const minWeight = parseFloat(cells[5].textContent);
+            const maxWeight = parseFloat(cells[6].textContent);
+            const status = cells[7].querySelector('.status').textContent;
+            const category = cells[8].querySelector('.vehicle-category').textContent;
             
             // Set modal title
             document.getElementById('modalTitle').textContent = 'Edit Vehicle';
             
             // Populate form
-            document.getElementById('vehicleId').value = id;
+            document.getElementById('vehicleId').value = vehicleId;
+            document.getElementById('employeeId').value = employeeId;
+            document.getElementById('unitName').value = unitName;
             document.getElementById('brand').value = brand;
-            document.getElementById('model').value = model;
-            document.getElementById('type').value = type;
             document.getElementById('year').value = year;
-            document.getElementById('distance').value = distance || 0;
-            document.getElementById('driverId').value = driverId;
-            document.getElementById('licenseExpiry').value = licenseExpiry;
+            document.getElementById('kmDriven').value = kmDriven || 0;
             document.getElementById('minWeight').value = minWeight || 0;
             document.getElementById('maxWeight').value = maxWeight || 0;
             document.getElementById('status').value = status;
-            
-            // Get category from row data attribute
-            const category = row.getAttribute('data-category');
             document.getElementById('category').value = category;
             
             // Open modal
@@ -160,8 +154,11 @@ document.addEventListener('DOMContentLoaded', function() {
     deleteBtns.forEach(btn => {
         btn.addEventListener('click', function() {
             const row = this.closest('tr');
-            const id = row.cells[0].textContent;
-            currentVehicleId = id;
+            const vehicleId = row.getAttribute('data-id');
+            currentVehicleId = vehicleId;
+            
+            // Set the hidden input in the delete form
+            document.getElementById('deleteVehicleId').value = vehicleId;
             
             // Open confirmation modal
             openModal(confirmationModal);
@@ -194,43 +191,40 @@ document.addEventListener('DOMContentLoaded', function() {
         e.preventDefault();
         
         const id = document.getElementById('vehicleId').value;
+        const employeeId = document.getElementById('employeeId').value;
+        const unitName = document.getElementById('unitName').value;
         const brand = document.getElementById('brand').value;
-        const model = document.getElementById('model').value;
-        const category = document.getElementById('category').value;
-        const type = document.getElementById('type').value;
         const year = document.getElementById('year').value;
-        const distance = document.getElementById('distance').value;
-        const driverId = document.getElementById('driverId').value;
-        const licenseExpiry = document.getElementById('licenseExpiry').value;
+        const kmDriven = document.getElementById('kmDriven').value;
         const minWeight = document.getElementById('minWeight').value;
         const maxWeight = document.getElementById('maxWeight').value;
         const status = document.getElementById('status').value;
+        const category = document.getElementById('category').value;
         
         // In a real app, send AJAX request to save the data
         console.log('Vehicle data:', {
-            id, brand, model, category, type, year, distance, driverId, 
-            licenseExpiry, minWeight, maxWeight, status
+            id, employeeId, unitName, brand, year, kmDriven, minWeight, maxWeight, status, category
         });
         
         if (id) {
             console.log(`Updating vehicle with ID ${id}`);
             // Update existing vehicle in the table
-            const row = document.querySelector(`tr td:first-child:contains('${id}')`).closest('tr');
+            const row = document.querySelector(`tr[data-id="${id}"]`);
             if (row) {
-                row.cells[1].textContent = brand;
-                row.cells[2].textContent = model;
-                row.cells[3].textContent = type;
-                row.cells[4].textContent = year;
-                row.cells[5].textContent = distance;
-                row.cells[6].textContent = driverId || '-';
-                row.cells[7].textContent = licenseExpiry || '-';
-                row.cells[8].textContent = minWeight;
-                row.cells[9].textContent = maxWeight;
+                // Update cell contents in the correct order since ID column is now removed
+                row.cells[0].textContent = employeeId || '-';
+                row.cells[1].textContent = unitName;
+                row.cells[2].textContent = brand;
+                row.cells[3].textContent = year;
+                row.cells[4].textContent = kmDriven;
+                row.cells[5].textContent = minWeight;
+                row.cells[6].textContent = maxWeight;
                 
-                const statusSpan = row.cells[10].querySelector('.status');
+                const statusSpan = row.cells[7].querySelector('.status');
                 statusSpan.textContent = status;
                 statusSpan.className = 'status';
                 
+                // Apply status class
                 if (status === 'Available') {
                     statusSpan.classList.add('available');
                 } else if (status === 'In Use') {
@@ -238,6 +232,12 @@ document.addEventListener('DOMContentLoaded', function() {
                 } else if (status === 'Maintenance') {
                     statusSpan.classList.add('maintenance');
                 }
+                
+                // Update the category
+                const categorySpan = row.cells[8].querySelector('.vehicle-category');
+                categorySpan.textContent = category;
+                categorySpan.className = 'vehicle-category';
+                categorySpan.classList.add(category.toLowerCase());
                 
                 // Update row data attribute
                 row.setAttribute('data-category', category);
@@ -261,17 +261,15 @@ document.addEventListener('DOMContentLoaded', function() {
             const newRow = document.createElement('tr');
             newRow.className = 'vehicle-row';
             newRow.setAttribute('data-category', category);
+            newRow.setAttribute('data-id', newId); // Set data-id attribute
             newRow.style.animation = 'slideUp 0.5s';
             
             newRow.innerHTML = `
-                <td>${newId}</td>
+                <td>${employeeId || '-'}</td>
+                <td>${unitName}</td>
                 <td>${brand}</td>
-                <td>${model}</td>
-                <td>${type}</td>
                 <td>${year}</td>
-                <td>${distance}</td>
-                <td>${driverId || '-'}</td>
-                <td>${licenseExpiry || '-'}</td>
+                <td>${kmDriven}</td>
                 <td>${minWeight}</td>
                 <td>${maxWeight}</td>
                 <td><span class="status ${status.toLowerCase().replace(' ', '-')}">${status}</span></td>

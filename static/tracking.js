@@ -1,32 +1,99 @@
 document.addEventListener("DOMContentLoaded", () => {
-    // --- Animation for tracking page elements (unchanged) ---
+    // --- Animation for tracking page elements ---
     const trackingHeader = document.getElementById("tracking-header");
     const trackingSubheader = document.getElementById("tracking-subheader");
     const trackingSlogan = document.getElementById("tracking-slogan");
+    const trackingCallout = document.getElementById("tracking-callout");
+    const trackForm = document.getElementById("tracking-form");
 
+    // Initialize animations with a slight delay between elements
     if (trackingHeader) {
-        trackingHeader.style.opacity = "1";
-        trackingHeader.style.visibility = "visible";
-        trackingHeader.classList.remove("fade-slide-right");
-        setTimeout(() => {
-            trackingHeader.classList.add("fade-slide-right");
-        }, 10);
+        trackingHeader.classList.add("fade-slide-right");
     }
-    if (trackingSubheader) {
-        trackingSubheader.style.opacity = "1";
-        trackingSubheader.style.visibility = "visible";
-        trackingSubheader.classList.remove("fade-slide-right");
-        setTimeout(() => {
+    
+    setTimeout(() => {
+        if (trackingSubheader) {
             trackingSubheader.classList.add("fade-slide-right");
-        }, 10);
-    }
-    if (trackingSlogan) {
-        trackingSlogan.style.opacity = "1";
-        trackingSlogan.style.visibility = "visible";
-        trackingSlogan.classList.remove("fade-slide-up");
-        setTimeout(() => {
+        }
+    }, 200);
+    
+    setTimeout(() => {
+        if (trackingCallout) {
+            trackingCallout.classList.add("fade-slide-right");
+        }
+    }, 400);
+    
+    setTimeout(() => {
+        if (trackForm) {
+            trackForm.classList.add("fade-slide-up");
+        }
+    }, 600);
+    
+    setTimeout(() => {
+        if (trackingSlogan) {
             trackingSlogan.classList.add("fade-slide-up");
-        }, 10);
+        }
+    }, 1000);
+
+    // --- Error message handling ---
+    const errorDiv = document.getElementById("tracking-error");
+    if (errorDiv && errorDiv.textContent.trim() !== "") {
+        errorDiv.classList.add("visible");
+    }
+
+    // --- Input focus effects ---
+    const trackingInput = document.getElementById("tracking-input");
+    if (trackingInput) {
+        trackingInput.addEventListener("focus", () => {
+            trackingInput.parentElement.classList.add("input-focused");
+        });
+        
+        trackingInput.addEventListener("blur", () => {
+            trackingInput.parentElement.classList.remove("input-focused");
+        });
+    }
+
+    // --- Form validation ---
+    const trackingForm = document.getElementById("tracking-form");
+    if (trackingForm) {
+        trackingForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            const input = document.getElementById('tracking-input').value.trim();
+            const errorDiv = document.getElementById('tracking-error');
+            errorDiv.textContent = '';
+            errorDiv.classList.remove("visible");
+            
+            // Add loading state to button
+            const submitBtn = this.querySelector('button[type="submit"]');
+            const originalText = submitBtn.textContent;
+            submitBtn.disabled = true;
+            submitBtn.innerHTML = '<span class="loading-dots">Processing</span>';
+            
+            fetch('/validate-order-item-id', {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify({order_item_id: input})
+            })
+            .then(resp => resp.json())
+            .then(data => {
+                if (data.exists) {
+                    // Submit the form as POST to /tracking
+                    submitBtn.innerHTML = 'Redirecting...';
+                    e.target.submit();
+                } else {
+                    errorDiv.textContent = 'Invalid Tracking ID. Please enter a valid Order Item Id.';
+                    errorDiv.classList.add("visible");
+                    submitBtn.disabled = false;
+                    submitBtn.textContent = originalText;
+                }
+            })
+            .catch(() => {
+                errorDiv.textContent = 'Error validating Tracking ID. Please try again.';
+                errorDiv.classList.add("visible");
+                submitBtn.disabled = false;
+                submitBtn.textContent = originalText;
+            });
+        });
     }
 
     // --- Chatbox logic (copy from services.js) ---

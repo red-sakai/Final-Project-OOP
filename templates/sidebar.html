@@ -6,6 +6,7 @@
     <title>HexaHaul | Sidebar </title>
     <link rel="stylesheet" href="{{ url_for('static', filename='sidebar.css') }}">
     <link href="https://fonts.googleapis.com/css?family=Inter:400,600&display=swap" rel="stylesheet">
+    <link rel="icon" href="{{ url_for('static', filename='images/screentake-removebg-preview.png') }}" />
 </head>
 <body>
     <aside class="account-sidebar">
@@ -17,7 +18,8 @@
         <div class="sidebar-profile-block">
             <img src="{{ url_for('static', filename=session.get('user_image', 'images/pfp.png')) }}" alt="Profile Icon" class="sidebar-profile-img">
             <div class="sidebar-profile-info">
-                <div class="sidebar-profile-name">{{ session.get('user_name', 'User') }}</div>
+                <!-- Ensure full_name is properly displayed -->
+                <div class="sidebar-profile-name" id="sidebarFullName">{{ session.get('full_name', 'User') }}</div>
                 <div class="sidebar-profile-email">{{ session.get('user_email', 'user@example.com') }}</div>
             </div>
         </div>
@@ -70,9 +72,11 @@
                             <div class="profile-desc">This will be displayed on your profile.</div>
                         </div>
                         <div class="profile-value" id="nameValue">
-                            <span id="fullNameText">{{ session.get('user_name', 'User') }}</span>
-                            <input type="text" id="fullNameInput" class="profile-input" placeholder="Enter your name" style="display:none;" value="{{ session.get('user_name', '') }}" />
+                            <span id="fullNameText">{{ session.get('full_name', 'User') }}</span>
+                            <input type="text" id="fullNameInput" class="profile-input" placeholder="Enter your name" style="display:none;" value="{{ session.get('full_name', '') }}" />
                             <a href="#" class="profile-edit-link" id="editNameBtn">Edit</a>
+                            <a href="#" class="profile-edit-link" id="saveNameBtn" style="display:none;">Save</a>
+                            <span id="nameUpdateStatus" style="color:green;display:none;">Saved!</span>
                         </div>
                     </div>
                     <hr class="profile-divider">
@@ -85,11 +89,8 @@
                             <span id="emailText">{{ session.get('user_email', 'user@example.com') }}</span>
                             <input type="email" id="emailInput" class="profile-input" placeholder="your@email.com" style="display:none;" value="{{ session.get('user_email', '') }}" />
                             <a href="#" class="profile-edit-link" id="editEmailBtn">Edit</a>
-                            <div class="profile-secondary-email" id="secondaryEmailValue">
-                                <span id="secondaryEmailText">{{ session.get('secondary_email', '') }}</span>
-                                <input type="email" id="secondaryEmailInput" class="profile-input" placeholder="secondary@email.com" style="display:none;" value="{{ session.get('secondary_email', '') }}" />
-                                <a href="#" class="profile-edit-link" id="editSecondaryEmailBtn">Edit</a>
-                            </div>
+                            <a href="#" class="profile-edit-link" id="saveEmailBtn" style="display:none;">Save</a>
+                            <span id="emailUpdateStatus" style="color:green;display:none;">Saved!</span>
                         </div>
                     </div>
                 </form>
@@ -181,5 +182,110 @@
     </div>
     <!-- Include the separate JavaScript file -->
     <script src="{{ url_for('static', filename='sidebar.js') }}"></script>
+    <script>
+// Full name edit/save logic
+document.addEventListener('DOMContentLoaded', function() {
+    const editBtn = document.getElementById('editNameBtn');
+    const saveBtn = document.getElementById('saveNameBtn');
+    const fullNameText = document.getElementById('fullNameText');
+    const fullNameInput = document.getElementById('fullNameInput');
+    const sidebarFullName = document.getElementById('sidebarFullName');
+    const nameUpdateStatus = document.getElementById('nameUpdateStatus');
+
+    if (editBtn && saveBtn && fullNameText && fullNameInput) {
+        editBtn.addEventListener('click', function(e) {
+            e.preventDefault();
+            fullNameInput.style.display = '';
+            saveBtn.style.display = '';
+            fullNameText.style.display = 'none';
+            editBtn.style.display = 'none';
+            fullNameInput.focus();
+        });
+
+        saveBtn.addEventListener('click', function(e) {
+            e.preventDefault();
+            const newName = fullNameInput.value.trim();
+            if (!newName) return;
+            // AJAX to update full_name in MySQL
+            fetch('/update-full-name', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Accept': 'application/json'
+                },
+                body: JSON.stringify({ full_name: newName })
+            })
+            .then(res => res.json())
+            .then(data => {
+                if (data.success) {
+                    fullNameText.textContent = newName;
+                    if (sidebarFullName) sidebarFullName.textContent = newName;
+                    nameUpdateStatus.style.display = '';
+                    setTimeout(() => { nameUpdateStatus.style.display = 'none'; }, 1200);
+                } else {
+                    alert(data.message || 'Failed to update name');
+                }
+            })
+            .catch(() => alert('Error updating name'))
+            .finally(() => {
+                fullNameInput.style.display = 'none';
+                saveBtn.style.display = 'none';
+                fullNameText.style.display = '';
+                editBtn.style.display = '';
+            });
+        });
+    }
+
+    // Email edit/save logic
+    const editEmailBtn = document.getElementById('editEmailBtn');
+    const saveEmailBtn = document.getElementById('saveEmailBtn');
+    const emailText = document.getElementById('emailText');
+    const emailInput = document.getElementById('emailInput');
+    const emailUpdateStatus = document.getElementById('emailUpdateStatus');
+
+    if (editEmailBtn && saveEmailBtn && emailText && emailInput) {
+        editEmailBtn.addEventListener('click', function(e) {
+            e.preventDefault();
+            emailInput.style.display = '';
+            saveEmailBtn.style.display = '';
+            emailText.style.display = 'none';
+            editEmailBtn.style.display = 'none';
+            emailInput.focus();
+        });
+
+        saveEmailBtn.addEventListener('click', function(e) {
+            e.preventDefault();
+            const newEmail = emailInput.value.trim();
+            if (!newEmail) return;
+            // AJAX to update email in MySQL
+            fetch('/update_email', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Accept': 'application/json'
+                },
+                body: JSON.stringify({ email: newEmail })
+            })
+            .then(res => res.json())
+            .then(data => {
+                if (data.success) {
+                    emailText.textContent = newEmail;
+                    emailUpdateStatus.style.display = '';
+                    setTimeout(() => { emailUpdateStatus.style.display = 'none'; }, 1200);
+                } else {
+                    alert(data.message || 'Failed to update email');
+                }
+            })
+            .catch(() => alert('Error updating email'))
+            .finally(() => {
+                emailInput.style.display = 'none';
+                saveEmailBtn.style.display = 'none';
+                emailText.style.display = '';
+                editEmailBtn.style.display = '';
+            });
+        });
+    }
+});
+</script>
 </body>
 </html>

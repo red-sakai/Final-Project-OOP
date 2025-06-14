@@ -5,16 +5,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Get Started | Truck</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='truck.css') }}">
+    <link rel="icon" href="{{ url_for('static', filename='images/screentake-removebg-preview.png') }}" />
 </head>
 <body>
     <!-- Header -->
     <div class="truck-header">
-        <h1>Welcome, User</h1>
-        <p>Welcome to our truck booking page, click Book Now to get started!</p>
-    </div>
-    <!-- Navigation Bar -->
-    <div class="truck-navbar">
-        <a href="#" class="active">Reservation</a>
+        <div class="header-container">
+            <a href="{{ url_for('services_html') }}" class="back-btn"><i class="arrow-left"></i> Back to Services</a>
+            <h1>Welcome, {{ session.get('full_name', 'User') }}</h1>
+            <p>Welcome to our truck booking page, click Book Now to get started!</p>
+        </div>
     </div>
     <!-- Truck Cards -->
     <div class="truck-cards">
@@ -30,12 +30,8 @@
                 <div>
                     <a href="{{ url_for('truck_book_html') }}" class="book-btn">Book Now</a>
                 </div>
-                <!-- Load Bar Explanation -->
-                <div class="loadbar-explanation">
-                    <small>
-                        <span style="color:#3cc878;font-weight:600;">Light load:</span>
-                        For small, light deliveries and quick trips.
-                    </small>
+                <div class="weight-indicator">
+                    <span class="weight-badge light">Weight Capacity: 350kg-3000kg</span>
                 </div>
                 <!-- Load Bar for Light -->
                 <div class="loadbar-row">
@@ -44,7 +40,7 @@
                     </div>
                 </div>
             </div>
-            <img src="{{ url_for('static', filename='images/4 wheeler.png') }}" alt="4 Wheeler">
+            <img src="{{ url_for('static', filename='images/4_wheeler_hexahaul-removebg-preview (1).png') }}" alt="4 Wheeler">
         </div>
         <!-- 6 Wheeler -->
         <div class="truck-card">
@@ -58,12 +54,8 @@
                 <div>
                     <a href="{{ url_for('truck_book2_html') }}" class="book-btn">Book Now</a>
                 </div>
-                <!-- Load Bar Explanation -->
-                <div class="loadbar-explanation">
-                    <small>
-                        <span style="color:#ffd23c;font-weight:600;">Medium load:</span>
-                        For average-sized shipments and regional routes.
-                    </small>
+                <div class="weight-indicator">
+                    <span class="weight-badge medium">Weight Capacity: 3000kg-7000kg</span>
                 </div>
                 <!-- Load Bar for Medium -->
                 <div class="loadbar-row">
@@ -72,7 +64,7 @@
                     </div>
                 </div>
             </div>
-            <img src="{{ url_for('static', filename='images/6 Wheeler.png') }}" alt="6 Wheeler">
+            <img src="{{ url_for('static', filename='images/6 wheeler hexahaul.png') }}" alt="6 Wheeler">
         </div>
         <!-- 10 Wheeler -->
         <div class="truck-card">
@@ -86,12 +78,8 @@
                 <div>
                     <a href="{{ url_for('truck_book3_html') }}" class="book-btn">Book Now</a>
                 </div>
-                <!-- Load Bar Explanation -->
-                <div class="loadbar-explanation">
-                    <small>
-                        <span style="color:#dc3232;font-weight:600;">Heavy load:</span>
-                        For large, heavy, or industrial cargo.
-                    </small>
+                <div class="weight-indicator">
+                    <span class="weight-badge heavy">Weight Capacity: 7000kg-15000kg</span>
                 </div>
                 <!-- Load Bar for Heavy -->
                 <div class="loadbar-row">
@@ -100,7 +88,7 @@
                     </div>
                 </div>
             </div>
-            <img src="{{ url_for('static', filename='images/10 Wheeler.png') }}" alt="10 Wheeler">
+            <img src="{{ url_for('static', filename='images/10 Wheeler.png') }}" alt="10 Wheeler" style="transform: scaleX(-1);">
         </div>
     </div>
     <div id="loading-popup" class="loading-popup" style="display:none;">
@@ -110,5 +98,6 @@
         </div>
     </div>
     <script src="{{ url_for('static', filename='truck.js') }}"></script>
+    <script src="{{ url_for('static', filename='loadbar.js') }}"></script>
 </body>
 </html>

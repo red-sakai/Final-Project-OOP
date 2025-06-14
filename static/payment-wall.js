@@ -1,8 +1,9 @@
 document.addEventListener('DOMContentLoaded', function () {
-    // Fee breakdown values (could be dynamic in real app)
-    const baseFare = 200.00;
-    const shippingFee = 79.00;
-    const serviceFee = 20.00;
+    // Get pricing from data attributes embedded by Flask
+    const baseFare = parseFloat(document.getElementById('fee-breakdown').dataset.baseFare || 200.00);
+    const shippingFee = parseFloat(document.getElementById('fee-breakdown').dataset.shippingFee || 79.00);
+    const serviceFee = parseFloat(document.getElementById('fee-breakdown').dataset.serviceFee || 20.00);
+    const vehicleType = document.getElementById('fee-breakdown').dataset.vehicleType || 'default';
 
     function updateBreakdown() {
         document.getElementById('base-fare').textContent = `₱${baseFare.toFixed(2)}`;
@@ -15,6 +16,22 @@ document.addEventListener('DOMContentLoaded', function () {
 
     updateBreakdown();
 
+    // Get vehicle icon based on type
+    function getVehicleEmoji() {
+        switch(vehicleType) {
+            case 'motorcycle': return '🏍️';
+            case 'car': return '🚗';
+            case 'truck': return '🚚';
+            default: return '🚚';
+        }
+    }
+
+    // Update vehicle icon in the first fee row
+    const firstFeeRow = document.querySelector('.fee-row:nth-child(1) span:first-child');
+    if (firstFeeRow && firstFeeRow.dataset.updateIcon !== 'false') {
+        firstFeeRow.querySelector('.fee-icon').textContent = getVehicleEmoji();
+    }
+
     // Demo: get total from query param or use default
     function getTotalAmount() {
         // Always use the calculated breakdown for now
@@ -22,6 +39,10 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     document.getElementById('amount-value').textContent = getTotalAmount();
+
+    // Use vehicle type to customize UI
+    document.documentElement.dataset.vehicleType = vehicleType;
+    document.querySelector('.payment-wall-container').classList.add(`vehicle-${vehicleType}`);
 
     // Modal creation
     function createModal(trackingId) {
@@ -230,64 +251,46 @@ document.addEventListener('DOMContentLoaded', function () {
     // Listen for input changes to enable/disable Pay Now/Order Now
     paymentForm.addEventListener('input', updatePayBtnState);
 
-    // PayPal integration
-    if (window.paypal) {
-        paypal.Buttons({
-            style: {
-                layout: 'vertical',
-                color:  'blue',
-                shape:  'rect',
-                label:  'paypal'
-            },
-            createOrder: function(data, actions) {
-                return actions.order.create({
-                    purchase_units: [{
-                        amount: {
-                            value: getTotalAmount(),
-                            currency_code: 'PHP'
-                        }
-                    }]
-                });
-            },
-            onApprove: function(data, actions) {
-                return actions.order.capture().then(function(details) {
-                    document.getElementById('paypal-button-container').innerHTML =
-                        `<div class="paypal-success">Payment completed by ${details.payer.name.given_name}!</div>`;
-                });
-            }
-        }).render('#paypal-button-container');
-    }
+    // Add animation to the total amount
+    const totalAmount = document.getElementById('total-amount');
+    totalAmount.addEventListener('mouseover', function() {
+        this.classList.add('pulse-animation');
+        setTimeout(() => this.classList.remove('pulse-animation'), 1000);
+    });
 
-    // Handle form submit for non-PayPal
+    // Enhanced payment success animation
     paymentForm.addEventListener('submit', function(e) {
         e.preventDefault();
         if (!isFormValid()) return;
         const method = getSelectedMethod();
-        if (method === 'cod') {
-            payBtn.textContent = "Processing...";
-            payBtn.disabled = true;
-            payBtn.classList.add('processing');
-            setTimeout(() => {
-                payBtn.textContent = "Order Now";
-                payBtn.classList.remove('processing');
-                payBtn.disabled = false;
-                // Show modal
-                createModal(generateTrackingId());
-            }, 1200);
-        } else {
-            payBtn.textContent = "Processing...";
-            payBtn.disabled = true;
-            payBtn.classList.add('processing');
-            setTimeout(() => {
-                payBtn.textContent = "Paid!";
-                payBtn.classList.remove('processing');
-                payBtn.classList.add('paid');
-                // Show modal
-                createModal(generateTrackingId());
-            }, 1200);
-        }
+        
+        // Show processing animation
+        payBtn.textContent = method === 'cod' ? "Processing Order..." : "Processing Payment...";
+        payBtn.disabled = true;
+        payBtn.classList.add('processing');
+        
+        // Add progress animation to payment card
+        const paymentCard = document.querySelector('.payment-wall-card');
+        paymentCard.classList.add('processing-payment');
+        
+        setTimeout(() => {
+            payBtn.textContent = method === 'cod' ? "Order Confirmed!" : "Payment Successful!";
+            payBtn.classList.remove('processing');
+            payBtn.classList.add('paid');
+            paymentCard.classList.remove('processing-payment');
+            paymentCard.classList.add('payment-success');
+            
+            // Show modal with success animation
+            createModal(generateTrackingId());
+        }, 1500);
     });
 
     // Initial button state
     updatePayBtnState();
+
+    // Add subtle animations to payment sections
+    document.querySelectorAll('.pay-method-card').forEach((card, index) => {
+        card.style.animationDelay = `${index * 0.1}s`;
+        card.classList.add('fade-in');
+    });
 });

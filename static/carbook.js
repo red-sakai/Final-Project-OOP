@@ -1,4 +1,13 @@
 document.addEventListener("DOMContentLoaded", function () {
+    const bookingForm = document.getElementById('bookingForm');
+    const confirmBtn = document.querySelector('.btn');
+    const quantityInput = document.getElementById('quantity');
+    const weightModal = document.getElementById('weightModal');
+    const confirmWeightBtn = document.getElementById('confirmWeight');
+    const cancelWeightBtn = document.getElementById('cancelWeight');
+    
+    let weightConfirmed = false;
+    
     document.getElementById('bookingForm').addEventListener('submit', function(event) {
         event.preventDefault();
         if (this.checkValidity()) {
@@ -39,10 +48,36 @@ document.addEventListener("DOMContentLoaded", function () {
         }, 1000);
     }
 
-    // Disable button initially
-    const bookingForm = document.getElementById('bookingForm');
-    const confirmBtn = document.querySelector('.btn');
+    // Weight modal functionality
+    quantityInput.addEventListener('blur', function() {
+        if (this.value && !weightConfirmed) {
+            showWeightModal();
+        }
+    });
+    
+    function showWeightModal() {
+        weightModal.classList.add('active');
+        // Only blur the form inside mobile-card, not the modal
+        document.querySelector('.TypeBox').classList.add('blurred');
+    }
+    
+    function hideWeightModal() {
+        weightModal.classList.remove('active');
+        document.querySelector('.TypeBox').classList.remove('blurred');
+    }
+    
+    confirmWeightBtn.addEventListener('click', function() {
+        weightConfirmed = true;
+        hideWeightModal();
+    });
+    
+    cancelWeightBtn.addEventListener('click', function() {
+        quantityInput.value = '';
+        hideWeightModal();
+        quantityInput.focus();
+    });
 
+    // Disable button initially
     function checkFormValidity() {
         if (bookingForm.checkValidity()) {
             confirmBtn.disabled = false;

@@ -9,13 +9,17 @@ from models.admin_database import init_admin_db, get_db_session, Admin, get_defa
 from models.utilities_database import UtilitiesDatabase
 from models.salary_database import SalaryDatabase, EmployeeSalary
 from models.products_database import ProductsDatabase, Product
+from models.sales_database import SalesDatabase
 from abc import ABC, abstractmethod
 from enum import Enum
 from flask_mail import Mail, Message
+from flask_moment import Moment
 from transformers import pipeline
 from services.hexabot import hexabot_bp
 from models.activity_database import ActivityDatabase
+from models.customers_database import CustomerDatabase
 import csv
+import time
 import os
 import json
 import random
@@ -27,21 +31,25 @@ import uuid
 from markupsafe import Markup
 from sqlalchemy import create_engine, text
 import mysql.connector
+from dotenv import load_dotenv
+
+# Load environment variables from .env file
+load_dotenv()
 
 def get_mysql_connection():
-    """Create and return a MySQL connection for hh_user_login_db table access."""
+    """Create and return a MySQL connection for hh_user_login_db table access using .env credentials."""
     return mysql.connector.connect(
-        host="localhost",
-        user="root",
-        password="Jhered143!",
-        database="hh_user_login_db"
+        host=os.getenv("MYSQL_HOST"),
+        user=os.getenv("MYSQL_USER"),
+        password=os.getenv("MYSQL_PASSWORD"),
+        database=os.getenv("MYSQL_DATABASE"),
+        port=int(os.getenv("MYSQL_PORT"))
     )
 
 def get_qa_pipeline():
     """Lazily load and cache the QA pipeline to avoid OOM on startup."""
     # Lazy Load - delaying the initialization to save memory
     if not hasattr(get_qa_pipeline, "_pipeline"):
-        from transformers import pipeline
         get_qa_pipeline._pipeline = pipeline("question-answering", model="distilbert-base-uncased-distilled-squad")
     return get_qa_pipeline._pipeline
 
@@ -190,6 +198,7 @@ class HexaHaulApp:
         self.register_routes()
         self.register_blueprints()
         self.register_template_filters()
+        self.moment = Moment(self.app)
 
     def configure_mail(self):
         self.app.config['MAIL_SERVER'] = 'smtp.gmail.com'
@@ -222,18 +231,16 @@ class HexaHaulApp:
                 username = request.form.get("username")
                 password = request.form.get("password")
 
-                # Try MySQL authentication first
+                # Only use MySQL authentication
                 user = authenticate_user_mysql(username, password)
-                if not user:
-                    # Fallback to CSV authentication
-                    user = authenticate_user_csv(username, password)
 
                 if user:
                     session["logged_in"] = True
-                    session["user_name"] = user["full_name"]
+                    session["user_name"] = user["full_name"]  # For backwards compatibility
+                    session["full_name"] = user["full_name"]  # Make sure this is set
                     session["user_email"] = user["email"]
                     session["username"] = user["username"]
-                    session["user_image"] = user.get("user_image", "images/pfp.png")  # <-- Add this line
+                    session["user_image"] = user.get("user_image", "images/pfp.png")
                     
                     # Log the login activity
                     ip_address = request.environ.get('HTTP_X_FORWARDED_FOR', request.environ.get('REMOTE_ADDR', ''))
@@ -263,45 +270,24 @@ class HexaHaulApp:
             try:
                 conn = get_mysql_connection()
                 cursor = conn.cursor(dictionary=True)
-                # Adjust table/column names as needed
                 query = """
-                    SELECT * FROM hh_user_login_db
-                    WHERE Username = %s AND Password = %s
+                    SELECT * FROM hh_user_login
+                    WHERE (Username = %s OR username = %s) AND Password = %s
                     LIMIT 1
                 """
-                cursor.execute(query, (username, password))
+                cursor.execute(query, (username, username, password))
                 row = cursor.fetchone()
                 cursor.close()
                 conn.close()
                 if row:
                     return {
-                        'full_name': row.get('Full Name') or row.get('Full_Name') or row.get('full_name'),
-                        'email': row.get('Email Address') or row.get('Email_Address') or row.get('email'),
+                        'full_name': row.get('full_name') or row.get('Full Name') or row.get('Full_Name') or username,
+                        'email': row.get('email_address') or row.get('Email_Address') or row.get('email'),
                         'username': row.get('Username') or row.get('username'),
-                        'user_image': row.get('Profile Image') or row.get('Profile_Image') or row.get('user_image', 'images/pfp.png')
+                        'user_image': row.get('profile_image') or row.get('Profile Image') or row.get('Profile_Image') or row.get('user_image', 'images/pfp.png')
                     }
             except Exception as e:
                 print(f"Error authenticating user from MySQL: {e}")
-            return None
-
-        def authenticate_user_csv(username, password):
-            """Authenticate user against CSV file"""
-            csv_path = os.path.join('hexahaul_db', 'hh_user-login.csv')
-            try:
-                with open(csv_path, 'r', newline='', encoding='utf-8') as csvfile:
-                    reader = csv.DictReader(csvfile)
-                    for row in reader:
-                        if row['Username'] == username and row['Password'] == password:
-                            return {
-                                'full_name': row['Full Name'],
-                                'email': row['Email Address'],
-                                'username': row['Username'],
-                                'user_image': row.get('Profile Image', 'images/pfp.png')  # <-- Add this line
-                            }
-            except FileNotFoundError:
-                print(f"CSV file not found: {csv_path}")
-            except Exception as e:
-                print(f"Error reading CSV: {e}")
             return None
 
         @app.route("/logout")
@@ -371,21 +357,46 @@ class HexaHaulApp:
             print("Services route accessed")
             return render_template("services.html")
 
-        @app.route("/tracking")
-        @app.route("/tracking.html")
+        @app.route("/tracking", methods=["GET", "POST"])
+        @app.route("/tracking.html", methods=["GET", "POST"])
         def tracking_html():
-            print("Tracking route accessed")
-            # Read Order Item Ids from CSV
-            csv_path = os.path.join('hexahaul_db', 'hh_order.csv')
-            order_item_ids = []
+            error_message = None
+            if request.method == "POST":
+                order_item_id = request.form.get("tracking_id", "").strip()
+                # Validate order_item_id in MySQL
+                try:
+                    conn = get_mysql_connection()
+                    cursor = conn.cursor()
+                    query = "SELECT 1 FROM hh_order WHERE order_item_id = %s LIMIT 1"
+                    cursor.execute(query, (order_item_id,))
+                    exists = cursor.fetchone() is not None
+                    cursor.close()
+                    conn.close()
+                except Exception as e:
+                    print(f"Error validating order_item_id in MySQL: {e}")
+                    exists = False
+                if exists:
+                    return redirect(url_for("parceltracking", tracking_id=order_item_id))
+                else:
+                    error_message = "Invalid Tracking ID. Please enter a valid Order Item Id."
+            return render_template("tracking.html", error=error_message)
+
+        @app.route("/validate-order-item-id", methods=["POST"])
+        def validate_order_item_id():
+            data = request.get_json()
+            order_item_id = data.get("order_item_id", "").strip()
+            exists = False
             try:
-                with open(csv_path, 'r', encoding='utf-8') as f:
-                    reader = csv.DictReader(f)
-                    for row in reader:
-                        order_item_ids.append(row['Order Item Id'])
+                conn = get_mysql_connection()
+                cursor = conn.cursor()
+                query = "SELECT 1 FROM hh_order WHERE order_item_id = %s LIMIT 1"
+                cursor.execute(query, (order_item_id,))
+                exists = cursor.fetchone() is not None
+                cursor.close()
+                conn.close()
             except Exception as e:
-                print(f"Error reading hh_order.csv: {e}")
-            return render_template("tracking.html", order_item_ids=order_item_ids)
+                print(f"Error validating order_item_id in MySQL: {e}")
+            return jsonify({"exists": exists})
 
         @app.route("/FAQ")
         @app.route("/FAQ.html")
@@ -411,20 +422,8 @@ class HexaHaulApp:
                 username = request.form.get('username')
                 password = request.form.get('password')
 
-                # --- PATCH: Read from CSV directly for admin authentication ---
-                csv_path = os.path.join('hexahaul_db', 'hh_admins.csv')
-                found_admin = None
-                try:
-                    with open(csv_path, 'r', encoding='utf-8') as csvfile:
-                        reader = csv.DictReader(csvfile)
-                        for row in reader:
-                            # Compare with whitespace trimmed, case-sensitive
-                            if (row['admin_username'].strip() == username.strip() and
-                                row['admin_password'].strip() == password.strip()):
-                                found_admin = row
-                                break
-                except Exception as e:
-                    print(f"Error reading admin CSV: {e}")
+                # Try to authenticate with MySQL first
+                found_admin = authenticate_admin_mysql(username, password)
 
                 if found_admin:
                     # Set admin session
@@ -433,7 +432,7 @@ class HexaHaulApp:
                     session['admin_name'] = f"{found_admin.get('admin_fname', '')} {found_admin.get('admin_lname', '')}".strip()
                     return redirect(url_for('admin_dashboard'))
                 else:
-                    # Fallback to SQLAlchemy authentication if not found in CSV
+                    # Fallback to SQLAlchemy authentication if not found in MySQL
                     db_session = get_db_session()
                     try:
                         admin = Admin.authenticate(db_session, username, password)
@@ -448,6 +447,34 @@ class HexaHaulApp:
                         db_session.close()
 
             return render_template('admin-login.html')
+
+        def authenticate_admin_mysql(username, password):
+            """
+            Authenticate admin against MySQL hh_admins table.
+            Returns admin dict if found, else None.
+            """
+            try:
+                conn = get_mysql_connection()
+                cursor = conn.cursor(dictionary=True)
+                query = """
+                    SELECT * FROM hh_admins
+                    WHERE (admin_username = %s) AND (admin_password = %s)
+                    LIMIT 1
+                """
+                cursor.execute(query, (username, password))
+                row = cursor.fetchone()
+                cursor.close()
+                conn.close()
+                if row:
+                    return {
+                        'admin_username': row.get('admin_username'),
+                        'admin_fname': row.get('admin_fname'),
+                        'admin_lname': row.get('admin_lname'),
+                        'admin_email': row.get('admin_email')
+                    }
+            except Exception as e:
+                print(f"Error authenticating admin from MySQL: {e}")
+            return None
 
         @app.route("/admin/dashboard")
         def admin_dashboard():
@@ -471,16 +498,23 @@ class HexaHaulApp:
             """Handle admin forgot password form submission"""
             email = request.form.get("email")
             
-            # Check if email exists in admin database (hh_admins.csv)
-            admin_emails = []
+            # Check if email exists in admin database (MySQL hh_admins table)
+            email_found = False
             try:
-                with open('hexahaul_db/hh_admins.csv', 'r') as f:
-                    reader = csv.DictReader(f)
-                    admin_emails = [row['admin_email'] for row in reader]
+                conn = get_mysql_connection()
+                cursor = conn.cursor()
+                
+                # Query to check if email exists in admin_email column
+                query = "SELECT 1 FROM hh_admins WHERE admin_email = %s LIMIT 1"
+                cursor.execute(query, (email,))
+                email_found = cursor.fetchone() is not None
+                
+                cursor.close()
+                conn.close()
             except Exception as e:
-                print(f"Error reading admin CSV: {e}")
+                print(f"Error checking admin email in MySQL: {e}")
             
-            if email in admin_emails:
+            if email_found:
                 # Generate and send OTP
                 otp = admin_password_reset_manager.generate_otp(email)
                 admin_password_reset_manager.send_otp(email, otp)
@@ -514,26 +548,33 @@ class HexaHaulApp:
         def forgot_password():
             if request.method == "POST":
                 email = request.form.get("email")
-                # --- Check if email exists in CSV ---
-                csv_path = os.path.join('hexahaul_db', 'hh_user-login.csv')
+                
+                # Check if email exists in MySQL hh_user_login table
                 email_found = False
                 try:
-                    with open(csv_path, 'r', encoding='utf-8') as csvfile:
-                        reader = csv.DictReader(csvfile)
-                        for row in reader:
-                            if row.get('Email Address', '').strip().lower() == email.strip().lower():
-                                email_found = True
-                                break
+                    conn = get_mysql_connection()
+                    cursor = conn.cursor()
+                    
+                    # Query to check if email exists in email_address column
+                    query = "SELECT 1 FROM hh_user_login WHERE email_address = %s LIMIT 1"
+                    cursor.execute(query, (email,))
+                    email_found = cursor.fetchone() is not None
+                    
+                    cursor.close()
+                    conn.close()
                 except Exception as e:
-                    print(f"Error reading user CSV: {e}")
+                    print(f"Error checking email in MySQL: {e}")
+                
                 if not email_found:
-                    flash("Email not found in user records", "error")
+                    flash("Email not found. Please use a registered email address.", "error")
                     return render_template("forgot-password.html", error="Email not found in user records")
-                # --- If found, proceed as before ---
+                
+                # If email is found, proceed with OTP generation and sending
                 otp = user_password_reset_manager.generate_otp(email)
                 user_password_reset_manager.send_otp(email, otp)
                 flash("OTP sent to your email. Please check your inbox.")
                 return redirect(url_for("verify_otp", email=email))
+                
             return render_template("forgot-password.html")
 
         @app.route("/verify-otp", methods=["GET", "POST"])
@@ -580,14 +621,24 @@ class HexaHaulApp:
                 new_password = request.form.get('new_password')
                 confirm_password = request.form.get('confirm_password')
                 if new_password == confirm_password and len(new_password) >= 8:
-                    # --- Update admin password in CSV ---
-                    csv_path = os.path.join('hexahaul_db', 'hh_admins.csv')
+                    # Update admin password in MySQL database
                     try:
-                        df = pd.read_csv(csv_path)
-                        # Update the password for the row with matching email
-                        df.loc[df['admin_email'].str.strip().str.lower() == email.strip().lower(), 'admin_password'] = new_password
-                        df.to_csv(csv_path, index=False)
-                        flash("Password reset successful. Please login.")
+                        conn = get_mysql_connection()
+                        cursor = conn.cursor()
+                        
+                        # Update password in hh_admins table where admin_email matches
+                        update_query = "UPDATE hh_admins SET admin_password = %s WHERE admin_email = %s"
+                        cursor.execute(update_query, (new_password, email))
+                        conn.commit()
+                        
+                        # Check if any rows were affected
+                        if cursor.rowcount > 0:
+                            flash("Password reset successful. Please login.", "success")
+                        else:
+                            flash("No account found with that email address.", "error")
+                            
+                        cursor.close()
+                        conn.close()
                     except Exception as e:
                         flash(f"Error updating admin password: {e}", "error")
                     return redirect(url_for('admin_login'))
@@ -690,85 +741,94 @@ class HexaHaulApp:
             order_data = None
             
             if tracking_id:
-                order_csv_path = os.path.join('hexahaul_db', 'hh_order.csv')
-                product_csv_path = os.path.join('hexahaul_db', 'hh_product_info.csv')
-                driver_id = None
-                product_name = None
-                # --- Read product info into a dict for fast lookup ---
-                product_lookup = {}
+                # Get order data from MySQL instead of CSV
                 try:
-                    with open(product_csv_path, 'r', newline='', encoding='utf-8') as prodfile:
-                        prod_reader = csv.DictReader(prodfile)
-                        for prod_row in prod_reader:
-                            # Normalize key for lookup
-                            product_lookup[prod_row['Order Item Id']] = prod_row['Product Name'].strip()
-                except Exception as e:
-                    print(f"Error reading product info CSV: {e}")
-                # --- Read order info and merge product name ---
-                try:
-                    with open(order_csv_path, 'r', newline='', encoding='utf-8') as csvfile:
-                        reader = csv.DictReader(csvfile)
-                        for row in reader:
-                            if row['Order Item Id'] == tracking_id:
-                                driver_id = int(row['driver_id'])
-                                order_date_str = row['order date (DateOrders)']
-                                try:
-                                    order_date = datetime.strptime(order_date_str, "%Y-%m-%d")
-                                except Exception:
-                                    order_date = None
-                                offset_days = 5
-                                expected_delivery_date = order_date + timedelta(days=offset_days) if order_date else None
-                                expected_delivery_str = expected_delivery_date.strftime("%Y-%m-%d") if expected_delivery_date else "Unknown"
-                                cust_lat = float(row['Customer Latitude'])
-                                cust_lon = float(row['Customer Longitude'])
-                                branch_lat = float(row['Branch Latitude'])
-                                branch_lon = float(row['Branch Longitude'])
-                                # reverse geocode
-                                customer_place = reverse_geocode(cust_lat, cust_lon)
-                                branch_place = reverse_geocode(branch_lat, branch_lon)
-                                # Lookup product name
-                                product_name = product_lookup.get(row['Order Item Id'], None)
-                                order_data = {
-                                    'orderItemId': row['Order Item Id'],
-                                    'deliveryStatus': row['Delivery Status'],
-                                    'originBranch': row['Origin Branch'],
-                                    'branchLatitude': branch_lat,
-                                    'branchLongitude': branch_lon,
-                                    'customerLatitude': cust_lat,
-                                    'customerLongitude': cust_lon,
-                                    'orderDate': order_date_str,
-                                    'expectedDeliveryDate': expected_delivery_str,
-                                    'customerPlace': customer_place,
-                                    'branchPlace': branch_place,
-                                    'driverId': driver_id,
-                                    'productName': product_name
+                    conn = get_mysql_connection()
+                    cursor = conn.cursor(dictionary=True)
+                    
+                    # Get product name from hh_product_info table
+                    product_name = None
+                    product_query = "SELECT `product_name` FROM hh_product_info WHERE `order_item_id` = %s LIMIT 1"
+                    cursor.execute(product_query, (tracking_id,))
+                    product_row = cursor.fetchone()
+                    if product_row:
+                        product_name = product_row['product_name'].strip()
+                    
+                    # Get order info from hh_order table
+                    order_query = """
+                        SELECT `order_item_id`, `delivery_status`, `origin_branch`, 
+                        `branch_latitude`, `branch_longitude`, `customer_latitude`, `customer_longitude`,
+                        `driver_id`, `order date (DateOrders)` 
+                        FROM hh_order
+                        WHERE `order_item_id` = %s
+                        LIMIT 1
+                    """
+                    cursor.execute(order_query, (tracking_id,))
+                    row = cursor.fetchone()
+                    
+                    if row:
+                        driver_id = int(row['driver_id']) if row['driver_id'] else None
+                        order_date_str = row['order date (DateOrders)']
+                        try:
+                            order_date = datetime.strptime(order_date_str, "%Y-%m-%d")
+                        except Exception:
+                            order_date = None
+                        offset_days = 5
+                        expected_delivery_date = order_date + timedelta(days=offset_days) if order_date else None
+                        expected_delivery_str = expected_delivery_date.strftime("%Y-%m-%d") if expected_delivery_date else "Unknown"
+                        cust_lat = float(row['customer_latitude'])
+                        cust_lon = float(row['customer_longitude'])
+                        branch_lat = float(row['branch_latitude'])
+                        branch_lon = float(row['branch_longitude'])
+                        # reverse geocode
+                        customer_place = reverse_geocode(cust_lat, cust_lon)
+                        branch_place = reverse_geocode(branch_lat, branch_lon)
+                        
+                        order_data = {
+                            'orderItemId': row['order_item_id'],
+                            'deliveryStatus': row['delivery_status'],
+                            'originBranch': row['origin_branch'],
+                            'branchLatitude': branch_lat,
+                            'branchLongitude': branch_lon,
+                            'customerLatitude': cust_lat,
+                            'customerLongitude': cust_lon,
+                            'orderDate': order_date_str,
+                            'expectedDeliveryDate': expected_delivery_str,
+                            'customerPlace': customer_place,
+                            'branchPlace': branch_place,
+                            'driverId': driver_id,
+                            'productName': product_name
+                        }
+                        
+                        # Get courier (driver) info if driver_id is available
+                        if driver_id:
+                            courier_query = """
+                                SELECT `employee_id`, `first_name`, `last_name`, `gender`, 
+                                `age`, `birth_date`, `contact_number` 
+                                FROM hh_employee_biography 
+                                WHERE `employee_id` = %s
+                                LIMIT 1
+                            """
+                            cursor.execute(courier_query, (driver_id,))
+                            courier_row = cursor.fetchone()
+                            if courier_row:
+                                courier = {
+                                    'employee_id': int(courier_row['employee_id']),
+                                    'first_name': courier_row['first_name'],
+                                    'last_name': courier_row['last_name'],
+                                    'gender': courier_row['gender'],
+                                    'age': int(courier_row['age']),
+                                    'birthdate': courier_row['birth_date'],
+                                    'contact_number': courier_row['contact_number']
                                 }
-                                break
+                    
+                    cursor.close()
+                    conn.close()
                 except Exception as e:
-                    print(f"Error reading order CSV: {e}")
-
-                if driver_id:
-                    emp_csv_path = os.path.join('hexahaul_db', 'hh_employee_biography.csv')
-                    try:
-                        with open(emp_csv_path, 'r', newline='', encoding='utf-8') as csvfile:
-                            reader = csv.DictReader(csvfile)
-                            for row in reader:
-                                if int(row['Employee Id']) == driver_id:
-                                    courier = {
-                                        'employee_id': int(row['Employee Id']),
-                                        'first_name': row['First Name'],
-                                        'last_name': row['Last Name'],
-                                        'gender': row['Gender'],
-                                        'age': int(row['Age']),
-                                        'birthdate': row['birth_date'],
-                                        'contact_number': row['Contact Number']
-                                    }
-                                    break
-                    except Exception as e:
-                        print(f"Error reading employee CSV: {e}")
+                    print(f"Error fetching order data from MySQL: {e}")
 
             return render_template("parceltracking.html", tracking_id=tracking_id, courier=courier, order_data=order_data)
-
+            
         @app.route("/submit-ticket", methods=["GET", "POST"])
         def submit_ticket():
             if request.method == "POST":
@@ -787,8 +847,6 @@ class HexaHaulApp:
                     for file in files:
                         if file and file.filename:
                             # Use werkzeug for secure and unique filenames
-                            from werkzeug.utils import secure_filename
-                            import time
                             filename = secure_filename(
                                 f"{str(uuid.uuid4())}_{int(time.time())}_{file.filename}"
                             )
@@ -931,17 +989,28 @@ class HexaHaulApp:
                 email = request.args.get("email") or request.form.get("email")
                 new_password = request.form.get("new_password")
                 if email and new_password:
-                    csv_path = os.path.join('hexahaul_db', 'hh_user-login.csv')
+                    # Update password in MySQL database
                     try:
-                        df = pd.read_csv(csv_path)
-                        # Update the password for the row with matching email
-                        df.loc[df['Email Address'].str.strip().str.lower() == email.strip().lower(), 'Password'] = new_password
-                        df.to_csv(csv_path, index=False)
-                        flash("Password updated successfully. Please login.", "success")
+                        conn = get_mysql_connection()
+                        cursor = conn.cursor()
+                        
+                        # Update password in hh_user_login table where email_address matches
+                        update_query = "UPDATE hh_user_login SET password = %s WHERE email_address = %s"
+                        cursor.execute(update_query, (new_password, email))
+                        conn.commit()
+                        
+                        # Check if any rows were affected
+                        if cursor.rowcount > 0:
+                            flash("Password updated successfully. Please login.", "success")
+                        else:
+                            flash("No account found with that email address.", "error")
+                            
+                        cursor.close()
+                        conn.close()
                     except Exception as e:
                         flash(f"Error updating password: {e}", "error")
                 return redirect(url_for("user_login_html"))
-            return render_template("change-password.html")
+            return render_template("change-password.html", email=request.args.get("email", ""))
 
         @app.route("/update-email")
         def update_email():
@@ -969,45 +1038,92 @@ class HexaHaulApp:
             if 'admin_id' not in session:
                 flash('Please login to access the admin dashboard', 'error')
                 return redirect(url_for('admin_login'))
-                
-            session_db = self.employee_db.connect()
-            employees = session_db.query(Employee).all()
-            
+
+            # --- NEW: Read employees from MySQL hh_employee_biography ---
+            employees = []
+            try:
+                conn = get_mysql_connection()
+                cursor = conn.cursor(dictionary=True)
+                cursor.execute("""
+                    SELECT * FROM hh_employee_biography
+                """)
+                rows = cursor.fetchall()
+                for row in rows:
+                    emp_id = row.get('employee_id')
+                    # Assign role based on employee_id
+                    if emp_id is not None:
+                        try:
+                            emp_id_int = int(emp_id)
+                        except Exception:
+                            emp_id_int = None
+                    else:
+                        emp_id_int = None
+
+                    # Default to DB value
+                    role = row.get('role')
+                    # Override role based on employee_id
+                    if emp_id_int is not None:
+                        if 1 <= emp_id_int <= 200:
+                            # Alternate between Dispatcher and Manager for variety
+                            role = 'Dispatcher' if emp_id_int % 2 == 0 else 'Manager'
+                        elif 201 <= emp_id_int <= 240:
+                            role = 'Driver'
+
+                    # Generate random hire date in yyyy-mm-dd format
+                    start_date = datetime(2018, 1, 1)
+                    end_date = datetime(2023, 12, 31)
+                    random_days = random.randint(0, (end_date - start_date).days)
+                    random_hire_date = (start_date + timedelta(days=random_days)).strftime('%Y-%m-%d')
+
+                    # Generate random status: mostly 'Active', some 'On Leave'
+                    status = 'Active' if random.random() < 0.85 else 'On Leave'
+
+                    employees.append({
+                        'employee_id': emp_id,
+                        'first_name': row.get('first_name'),
+                        'last_name': row.get('last_name'),
+                        'full_name': f"{row.get('first_name', '')} {row.get('last_name', '')}".strip(),
+                        'gender': row.get('gender'),
+                        'age': row.get('age'),
+                        'birthdate': row.get('birth_date'),
+                        'contact_number': row.get('contact_number'),
+                        'email': row.get('email'),
+                        'department': row.get('department'),
+                        'role': role,
+                        'hire_date': random_hire_date,
+                        'license_number': row.get('license'),
+                        'assigned_vehicle': row.get('assigned_vehicle'),
+                        'status': status,
+                    })
+                cursor.close()
+                conn.close()
+            except Exception as e:
+                print(f"Error fetching employees from MySQL: {e}")
+
+            # --- Fix: Convert date/datetime objects to string for JSON serialization ---
+            def serialize_employee(emp):
+                for key in ['birthdate', 'hire_date', 'license_expiry']:
+                    if emp.get(key) is not None and hasattr(emp[key], 'isoformat'):
+                        emp[key] = emp[key].isoformat()
+                    elif emp.get(key) is not None and not isinstance(emp[key], str):
+                        emp[key] = str(emp[key])
+                return emp
+
+            employees_json = json.dumps([serialize_employee(dict(e)) for e in employees])
+
             total_count = len(employees)
-            manager_count = sum(1 for e in employees if e.role == 'Manager')
-            driver_count = sum(1 for e in employees if e.role == 'Driver')
-            active_count = sum(1 for e in employees if e.status == 'Active')
-            
+            manager_count = sum(1 for e in employees if e['role'] == 'Manager')
+            driver_count = sum(1 for e in employees if e['role'] == 'Driver')
+            active_count = sum(1 for e in employees if e['status'] == 'Active')
+
+            # Get available vehicles from SQLAlchemy as before
             session2 = self.vehicle_db.connect()
             available_vehicles = session2.query(Vehicle).filter_by(status='Available').all()
-            
-            employees_json = json.dumps([{
-                'id': e.id,
-                'employee_id': e.employee_id,
-                'first_name': e.first_name,
-                'last_name': e.last_name,
-                'full_name': e.full_name,
-                'gender': e.gender,
-                'age': e.age,
-                'birthdate': e.birthdate,
-                'contact_number': e.contact_number,
-                'email': e.email,
-                'department': e.department,
-                'role': e.role,
-                'hire_date': e.hire_date,
-                'license_number': e.license_number,
-                'license_expiry': e.license_expiry,
-                'assigned_vehicle': e.assigned_vehicle,
-                'status': e.status
-            } for e in employees])
-            
-            self.employee_db.disconnect()
-            self.vehicle_db.disconnect()
-            
+
             # Get admin name from Flask session
             admin_name = session.get('admin_name', 'Admin User')
-            
-            return render_template('admin_employees.html', 
+
+            return render_template('admin_employees.html',
                                   employees=employees,
                                   total_count=total_count,
                                   manager_count=manager_count,
@@ -1032,7 +1148,6 @@ class HexaHaulApp:
                 'role': request.form.get('role'),
                 'hire_date': request.form.get('hire_date'),
                 'license_number': request.form.get('license_number'),
-                'license_expiry': request.form.get('license_expiry'),
                 'assigned_vehicle': int(request.form.get('assigned_vehicle')) if request.form.get('assigned_vehicle') else None,
                 'status': request.form.get('status', 'Active')
             }
@@ -1057,7 +1172,6 @@ class HexaHaulApp:
                 'role': request.form.get('role'),
                 'hire_date': request.form.get('hire_date'),
                 'license_number': request.form.get('license_number'),
-                'license_expiry': request.form.get('license_expiry'),
                 'assigned_vehicle': int(request.form.get('assigned_vehicle')) if request.form.get('assigned_vehicle') else None,
                 'status': request.form.get('status')
             }
@@ -1291,9 +1405,66 @@ class HexaHaulApp:
             
             return jsonify(result)
 
-        @app.route("/payment-wall")
+        def generate_order_id(vehicle_type=None):
+            """
+            Generate an order ID with a prefix based on vehicle_type:
+            - 'MC' for motorcycle, 'CR' for car, 'TK' for truck.
+            Followed by 6-7 random digits.
+            """
+            import random
+            prefix = 'CR'
+            if vehicle_type == 'motorcycle':
+                prefix = 'MC'
+            elif vehicle_type == 'truck':
+                prefix = 'TK'
+            # 6 or 7 digits
+            digits = str(random.randint(100000, 9999999))
+            return f"{prefix}{digits}"
+
+        @app.route("/payment-wall", methods=['GET', 'POST'])
         def payment_wall():
-            return render_template("payment-wall.html")
+            # Get the source booking page from query param or form
+            source = request.args.get('source') or request.form.get('source') or ''
+            # Default prices (car based)
+            price_data = {
+                'base_fare': 200.00,
+                'shipping_fee': 79.00,
+                'service_fee': 20.00,
+                'vehicle_name': 'Car'
+            }
+            vehicle_type = 'car'
+            # Set prices based on source
+            if source in ['motorcycle-book', 'motorcycle-book2', 'motorcycle-book3']:
+                price_data = {
+                    'base_fare': 80.00,
+                    'shipping_fee': 39.00,
+                    'service_fee': 10.00,
+                    'vehicle_name': 'Motorcycle'
+                }
+                vehicle_type = 'motorcycle'
+            elif source in ['carbook', 'carbook2', 'carbook3']:
+                price_data = {
+                    'base_fare': 200.00,
+                    'shipping_fee': 79.00,
+                    'service_fee': 20.00,
+                    'vehicle_name': 'Car'
+                }
+                vehicle_type = 'car'
+            elif source in ['truck-book', 'truck-book2', 'truck-book3']:
+                price_data = {
+                    'base_fare': 400.00,
+                    'shipping_fee': 159.00,
+                    'service_fee': 40.00,
+                    'vehicle_name': 'Truck'
+                }
+                vehicle_type = 'truck'
+            return render_template(
+                'payment-wall.html',
+                price_data=price_data,
+                vehicle_type=vehicle_type,
+                order_id=generate_order_id(vehicle_type),  # Pass vehicle_type for correct prefix
+                current_date=datetime.now(),
+            )
 
         @app.route('/admin/vehicles')
         def admin_vehicles():
@@ -1302,32 +1473,61 @@ class HexaHaulApp:
                 flash('Please login to access the admin dashboard', 'error')
                 return redirect(url_for('admin_login'))
                 
-            # Get database session (SQLAlchemy)
-            db_session = vehicle_db.connect()
-            vehicles = db_session.query(Vehicle).all()
+            # Get vehicles from MySQL database instead of SQLAlchemy
+            vehicles = []
+            try:
+                conn = get_mysql_connection()
+                cursor = conn.cursor(dictionary=True)
+                query = """
+                    SELECT * FROM hh_vehicle
+                """
+                cursor.execute(query)
+                vehicles = cursor.fetchall()
+                cursor.close()
+                conn.close()
+                
+                # Convert any Decimal objects to float for JSON serialization
+                # Import random module if it's not already imported at the top of the file
+                import random
+
+                for vehicle in vehicles:
+                    for key, value in vehicle.items():
+                        # Check if value is Decimal and convert to float
+                        if hasattr(value, 'as_tuple') and hasattr(value, 'quantize'):
+                            vehicle[key] = float(value)
+                    
+                    # Randomly assign a status if not already set
+                    if not vehicle.get('status'):
+                        vehicle['status'] = random.choice(['Available', 'In Use', 'Maintenance'])
+                    
+                    # Assign category based on min_weight rules
+                    min_weight = vehicle.get('min_weight', 0)
+                    if min_weight == 0.1:
+                        vehicle['category'] = 'Motorcycle'
+                    elif min_weight == 20:
+                        vehicle['category'] = 'Car'
+                    elif min_weight == 25:
+                        if 'NMAX' in vehicle.get('unit_name', '') or 'Yamaha' in vehicle.get('unit_brand', ''):
+                            vehicle['category'] = 'Motorcycle'
+                        else:
+                            vehicle['category'] = 'Car'
+                    elif min_weight >= 350:
+                        vehicle['category'] = 'Truck'
+                    # If none of the above, keep existing category or set to 'Unknown'
+                    elif not vehicle.get('category'):
+                        vehicle['category'] = 'Unknown'
+                
+            except Exception as e:
+                print(f"Error fetching vehicles from MySQL: {e}")
+                
+            # Calculate counts for stats based on assigned categories
+            motorcycle_count = sum(1 for v in vehicles if v.get('category') == 'Motorcycle')
+            car_count = sum(1 for v in vehicles if v.get('category') == 'Car')
+            truck_count = sum(1 for v in vehicles if v.get('category') == 'Truck')
+            available_count = sum(1 for v in vehicles if v.get('status') == 'Available')
             
-            motorcycle_count = sum(1 for v in vehicles if v.category == 'Motorcycle')
-            car_count = sum(1 for v in vehicles if v.category == 'Car')
-            truck_count = sum(1 for v in vehicles if v.category == 'Truck')
-            available_count = sum(1 for v in vehicles if v.status == 'Available')
-            
-            vehicles_json = json.dumps([{
-                'id': v.id,
-                'unit_brand': v.unit_brand,
-                'unit_model': v.unit_model,
-                'unit_type': v.unit_type,
-                'category': v.category,
-                'distance': v.distance,
-                'driver_employee_id': v.driver_employee_id,
-                'license_expiration_date': v.license_expiration_date,
-                'order_id': v.order_id,
-                'max_weight': v.max_weight,
-                'min_weight': v.min_weight,
-                'status': v.status,
-                'year': v.year
-            } for v in vehicles])
-            
-            vehicle_db.disconnect()
+            # Convert to JSON for JavaScript
+            vehicles_json = json.dumps(vehicles)
             
             # Get admin name from Flask session
             admin_name = session.get('admin_name', 'Admin User')
@@ -1344,21 +1544,39 @@ class HexaHaulApp:
         @app.route('/admin/vehicles/add', methods=['POST'])
         def admin_add_vehicle():
             data = {
+                'employee_id': request.form.get('employee_id') if request.form.get('employee_id') else None,
+                'unit_name': request.form.get('unit_name'),
                 'unit_brand': request.form.get('unit_brand'),
-                'unit_model': request.form.get('unit_model'),
-                'unit_type': request.form.get('unit_type'),
-                'category': request.form.get('category'),
-                'distance': int(request.form.get('distance', 0)),
-                'driver_employee_id': int(request.form.get('driver_employee_id')) if request.form.get('driver_employee_id') else None,
-                'license_expiration_date': request.form.get('license_expiration_date'),
-                'order_id': int(request.form.get('order_id')) if request.form.get('order_id') else None,
-                'max_weight': float(request.form.get('max_weight')),
+                'year': int(request.form.get('year')),
+                'km_driven': int(request.form.get('km_driven', 0)),
                 'min_weight': float(request.form.get('min_weight', 0)),
+                'max_weight': float(request.form.get('max_weight')),
                 'status': request.form.get('status', 'Available'),
-                'year': int(request.form.get('year'))
+                'category': request.form.get('category')
             }
             
-            vehicle_db.add_vehicle(**data)
+            try:
+                conn = get_mysql_connection()
+                cursor = conn.cursor()
+                
+                # Create INSERT statement dynamically based on data keys
+                columns = ', '.join(f"`{key}`" for key in data.keys())
+                placeholders = ', '.join(['%s'] * len(data))
+                query = f"""
+                    INSERT INTO hh_vehicle ({columns})
+                    VALUES ({placeholders})
+                """
+                
+                # Execute the query with data values
+                cursor.execute(query, list(data.values()))
+                conn.commit()
+                
+                cursor.close()
+                conn.close()
+                
+                flash('Vehicle added successfully', 'success')
+            except Exception as e:
+                flash(f'Error adding vehicle: {str(e)}', 'error')
             
             return redirect(url_for('admin_vehicles'))
 
@@ -1367,21 +1585,43 @@ class HexaHaulApp:
             vehicle_id = int(request.form.get('vehicle_id'))
             
             data = {
+                'employee_id': request.form.get('employee_id') if request.form.get('employee_id') else None,
+                'unit_name': request.form.get('unit_name'),
                 'unit_brand': request.form.get('unit_brand'),
-                'unit_model': request.form.get('unit_model'),
-                'unit_type': request.form.get('unit_type'),
-                'category': request.form.get('category'),
-                'distance': int(request.form.get('distance', 0)),
-                'driver_employee_id': int(request.form.get('driver_employee_id')) if request.form.get('driver_employee_id') else None,
-                'license_expiration_date': request.form.get('license_expiration_date'),
-                'order_id': int(request.form.get('order_id')) if request.form.get('order_id') else None,
-                'max_weight': float(request.form.get('max_weight')),
+                'year': int(request.form.get('year')),
+                'km_driven': int(request.form.get('km_driven', 0)),
                 'min_weight': float(request.form.get('min_weight', 0)),
+                'max_weight': float(request.form.get('max_weight')),
                 'status': request.form.get('status'),
-                'year': int(request.form.get('year'))
+                'category': request.form.get('category')
             }
             
-            vehicle_db.update_vehicle(vehicle_id, **data)
+            # ...existing code...
+            try:
+                conn = get_mysql_connection()
+                cursor = conn.cursor()
+                
+                # Create UPDATE statement dynamically based on data
+                set_clause = ', '.join(f"`{key}` = %s" for key in data.keys())
+                query = f"""
+                    UPDATE hh_vehicle 
+                    SET {set_clause}
+                    WHERE id = %s
+                """
+                
+                # Add the vehicle_id to the data values for the WHERE clause
+                values = list(data.values()) + [vehicle_id]
+                
+                # Execute the query
+                cursor.execute(query, values)
+                conn.commit()
+                
+                cursor.close()
+                conn.close()
+                
+                flash('Vehicle updated successfully', 'success')
+            except Exception as e:
+                flash(f'Error updating vehicle: {str(e)}', 'error')
             
             return redirect(url_for('admin_vehicles'))
 
@@ -1389,7 +1629,21 @@ class HexaHaulApp:
         def admin_delete_vehicle():
             vehicle_id = int(request.form.get('vehicle_id'))
             
-            vehicle_db.delete_vehicle(vehicle_id)
+            try:
+                conn = get_mysql_connection()
+                cursor = conn.cursor()
+                
+                # Delete the vehicle with the given ID
+                query = "DELETE FROM hh_vehicle WHERE id = %s"
+                cursor.execute(query, (vehicle_id,))
+                conn.commit()
+                
+                cursor.close()
+                conn.close()
+                
+                flash('Vehicle deleted successfully', 'success')
+            except Exception as e:
+                flash(f'Error deleting vehicle: {str(e)}', 'error')
             
             return redirect(url_for('admin_vehicles'))
 
@@ -1648,9 +1902,6 @@ class HexaHaulApp:
             if 'admin_id' not in session:
                 flash('Please login to access the admin dashboard', 'error')
                 return redirect(url_for('admin_login'))
-            
-            from models.sales_database import SalesDatabase
-            
             # Initialize sales database and get sales data
             sales_db = SalesDatabase()
             sales = sales_db.get_all_sales()
@@ -1674,9 +1925,6 @@ class HexaHaulApp:
             if 'admin_id' not in session:
                 flash('Please login to access the admin dashboard', 'error')
                 return redirect(url_for('admin_login'))
-            
-            from models.customers_database import CustomerDatabase
-            
             # Initialize customer database and get customer data
             customer_db = CustomerDatabase()
             customers = customer_db.get_all_customers()
@@ -1706,11 +1954,8 @@ class HexaHaulApp:
 
         @app.route('/admin/customers/add', methods=['POST'])
         def admin_add_customer():
-            from models.customers_database import CustomerDatabase
-            
             try:
                 # Generate a unique customer ID (in a real app, this would be more systematic)
-                import random
                 customer_id = f"CUST-{random.randint(10000, 99999)}"
                 
                 data = {
@@ -1738,8 +1983,6 @@ class HexaHaulApp:
         
         @app.route('/admin/customers/update', methods=['POST'])
         def admin_update_customer():
-            from models.customers_database import CustomerDatabase
-            
             try:
                 customer_id = request.form.get('customer_id')
                 
@@ -1767,8 +2010,6 @@ class HexaHaulApp:
         
         @app.route('/admin/customers/delete', methods=['POST'])
         def admin_delete_customer():
-            from models.customers_database import CustomerDatabase
-            
             try:
                 customer_id = request.form.get('customer_id')
                 
@@ -1787,7 +2028,6 @@ class HexaHaulApp:
         
         @app.route('/admin/sales/add', methods=['POST'])
         def admin_add_sale():
-            from models.sales_database import SalesDatabase
             
             try:
                 data = {
@@ -1821,8 +2061,6 @@ class HexaHaulApp:
         
         @app.route('/admin/sales/update', methods=['POST'])
         def admin_update_sale():
-            from models.sales_database import SalesDatabase
-            
             try:
                 sale_id = int(request.form.get('sale_id'))
                 
@@ -1856,9 +2094,7 @@ class HexaHaulApp:
             return redirect(url_for('admin_sales'))
         
         @app.route('/admin/sales/delete', methods=['POST'])
-        def admin_delete_sale():
-            from models.sales_database import SalesDatabase
-            
+        def admin_delete_sale():    
             try:
                 sale_id = int(request.form.get('sale_id'))
                 
@@ -1867,6 +2103,7 @@ class HexaHaulApp:
                 
                 # Delete sale
                 sales_db.delete_sale(sale_id)
+                
                 
                 flash('Sale deleted successfully', 'success')
                 
@@ -1891,32 +2128,38 @@ class HexaHaulApp:
 
             # Always include default profile picture path
             default_profile_pic = 'images/pfp.png'
-            new_user = [full_name, email, username, password, default_profile_pic]
-
-            import os
-            csv_path = os.path.join('hexahaul_db', 'hh_user-login.csv')
-
+            
+            # Insert user into MySQL database instead of CSV file
             try:
-                # Ensure file ends with newline before appending
-                with open(csv_path, 'r+', encoding='utf-8') as f:
-                    f.seek(0, 2)  # Go to end of file
-                    if f.tell() > 0:  # If file is not empty
-                        f.seek(f.tell() - 1)  # Go back one character
-                        last_char = f.read(1)
-                        if last_char != '\n':  # If last character is not newline
-                            f.write('\n')  # Add newline
-
-                # Now append the new user with profile picture path
-                with open(csv_path, 'a', newline='', encoding='utf-8') as csvfile:
-                    writer = csv.writer(csvfile)
-                    writer.writerow(new_user)
-
-                print("DEBUG - Successfully wrote to CSV")
+                conn = get_mysql_connection()
+                cursor = conn.cursor()
+                
+                # Check if username already exists
+                check_query = "SELECT 1 FROM hh_user_login WHERE username = %s LIMIT 1"
+                cursor.execute(check_query, (username,))
+                if cursor.fetchone():
+                    flash('Username already exists. Please choose another username.', 'error')
+                    cursor.close()
+                    conn.close()
+                    return redirect(url_for('user_signup_html'))
+                
+                # Insert the new user
+                insert_query = """
+                    INSERT INTO hh_user_login 
+                    (`full_name`, `email_address`, `username`, `password`, `profile_image`) 
+                    VALUES (%s, %s, %s, %s, %s)
+                """
+                cursor.execute(insert_query, (full_name, email, username, password, default_profile_pic))
+                conn.commit()
+                cursor.close()
+                conn.close()
+                
+                print("DEBUG - Successfully added user to MySQL database")
                 flash('User added successfully!', 'success')
-                return redirect(url_for('user_signup_html')) 
+                return redirect(url_for('user_signup_html'))
 
             except Exception as e:
-                print(f"ERROR writing to CSV: {e}")
+                print(f"ERROR adding user to MySQL: {e}")
                 flash(f'Error adding user: {str(e)}', 'error')
 
             return redirect(url_for('user_login_html'))
@@ -1925,101 +2168,72 @@ class HexaHaulApp:
         @app.route('/update-profile', methods=['POST'])
        
         def update_profile():
-
             # Make sure user is logged in
-
             if 'user_email' not in session:
                 return jsonify({'success': False, 'message': 'User not logged in'})
             
-            # Get the data from request
             data = request.get_json()
             field = data.get('field')
             value = data.get('value')
-            
-            # Get current email from session
             current_email = session.get('user_email')
             
+            # Only allow name update here (email handled separately)
             try:
-                # Path to CSV file
-                csv_path = os.path.join('hexahaul_db', 'hh_user-login.csv')
-                
-                # Read the CSV file into a pandas DataFrame
-                df = pd.read_csv(csv_path)
-                
-                # Find the row with the current email
-                user_row = df[df['Email Address'] == current_email]
-                
-               
-                if len(user_row) == 0:
-                    return jsonify({'success': False, 'message': 'User not found'})
-                
-                # Update the appropriate field
                 if field == 'name':
-                    df.loc[df['Email Address'] == current_email, 'Full Name'] = value
-                    # Update the session name
+                    # Update full name in MySQL
+                    conn = get_mysql_connection()
+                    cursor = conn.cursor()
+                    user_username = session.get('username')
+                    update_query = """
+                        UPDATE hh_user_login
+                        SET `full_name` = %s
+                        WHERE (`email_address` = %s OR `Username` = %s OR `username` = %s)
+                    """
+                    cursor.execute(update_query, (value, current_email, user_username, user_username))
+                    conn.commit()
+                    cursor.close()
+                    conn.close()
                     session['user_name'] = value
+                    session['full_name'] = value
+                    return jsonify({'success': True})
                 elif field == 'email':
-                    # First save the current email to find the user row
-                    old_email = current_email
-                    # Update the email in the DataFrame
-                    df.loc[df['Email Address'] == old_email, 'Email Address'] = value
-                    # Update the session email
-                    session['user_email'] = value
+                    # Email update is handled by /update_email route
+                    return jsonify({'success': False, 'message': 'Use /update_email for email changes'})
                 else:
                     return jsonify({'success': False, 'message': 'Invalid field'})
-                
-                # Save the updated DataFrame back to CSV
-                df.to_csv(csv_path, index=False)
-                
-                return jsonify({'success': True})
-            
             except Exception as e:
                 return jsonify({'success': False, 'message': str(e)}), 500
-        
-        UPLOAD_FOLDER = os.path.join('static', 'user_images')
-        ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg', 'gif'}
 
-        def allowed_file(filename):
-            return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
-
-        # Add this route to handle uploads
-        @app.route('/upload-profile-image', methods=['POST'])
-        def upload_profile_image():
+        # New route to update the user's contact email in MySQL and session
+        @app.route('/update_email', methods=['POST'])
+        def update_email_route():
             if 'user_email' not in session:
-                if request.is_json or request.accept_mimetypes['application/json']:
-                    return jsonify(success=False, message="Not logged in"), 401
-                return redirect(url_for('user_login_html'))
+                return jsonify({'success': False, 'message': 'User not logged in'}), 401
+            data = request.get_json()
+            new_email = data.get('email', '').strip()
+            if not new_email:
+                return jsonify({'success': False, 'message': 'No email provided'}), 400
 
-            file = request.files.get('profile_image')
-            if file and allowed_file(file.filename):
-                filename = secure_filename(session['user_email'].replace('@', '').replace('.', '') + '_' + file.filename)
-                filepath = os.path.join(UPLOAD_FOLDER, filename)
-                os.makedirs(UPLOAD_FOLDER, exist_ok=True)
-                file.save(filepath)
-                # Always use forward slashes for web paths
-                relative_path = os.path.join('user_images', filename).replace('\\', '/')
-                session['user_image'] = relative_path
-
-                # Update CSV
-                csv_path = os.path.join('hexahaul_db', 'hh_user-login.csv')
-                try:
-                    df = pd.read_csv(csv_path)
-                    user_email = session['user_email']
-                    df.loc[df['Email Address'] == user_email, 'Profile Image'] = relative_path
-                    df.to_csv(csv_path, index=False)
-                except Exception as e:
-                    print(f"Error updating profile image in CSV: {e}")
-
-                image_url = url_for('static', filename=relative_path)
-               
-                if request.is_json or request.accept_mimetypes['application/json']:
-                    return jsonify(success=True, image_url=image_url)
-                flash('Profile image updated!', 'success')
-            else:
-                if request.is_json or request.accept_mimetypes['application/json']:
-                    return jsonify(success=False, message="Invalid file type")
-                flash('Invalid file type.', 'error')
-            return redirect(request.referrer or url_for('sidebar_html'))
+            user_email = session.get('user_email')
+            user_username = session.get('username')
+            try:
+                conn = get_mysql_connection()
+                cursor = conn.cursor()
+                # Update email_address in MySQL
+                update_query = """
+                    UPDATE hh_user_login
+                    SET `email_address` = %s
+                    WHERE (`email_address` = %s OR `Username` = %s OR `username` = %s)
+                """
+                cursor.execute(update_query, (new_email, user_email, user_username, user_username))
+                conn.commit()
+                cursor.close()
+                conn.close()
+                # Update session
+                session['user_email'] = new_email
+                return jsonify({'success': True, 'email': new_email})
+            except Exception as e:
+                return jsonify({'success': False, 'message': str(e)}), 500
 
         @app.route('/admin/support-tickets')
         def admin_support_tickets():
@@ -2060,7 +2274,7 @@ class HexaHaulApp:
 
             # Read and update the CSV
             try:
-                import pandas as pd
+
                 df = pd.read_csv(csv_path)
                 idx = df.index[df['ticket_id'] == ticket_id].tolist()
                 if not idx:
@@ -2071,7 +2285,6 @@ class HexaHaulApp:
                 ticket_title = df.at[row_idx, 'ticket_title']
                 ticket_description = df.at[row_idx, 'ticket_description']
                 df.at[row_idx, 'admin_reply'] = reply_message
-                from datetime import datetime
                 reply_timestamp = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
                 df.at[row_idx, 'reply_timestamp'] = reply_timestamp
                 df.to_csv(csv_path, index=False)
@@ -2139,7 +2352,6 @@ Admin Reply:
             csv_path = os.path.join('hexahaul_db', 'hh_support_tickets.csv')
             ticket = None
             try:
-                import pandas as pd
                 df = pd.read_csv(csv_path)
                 row = df[df['ticket_id'] == ticket_id]
                 if not row.empty:
@@ -2158,7 +2370,6 @@ Admin Reply:
             """
             Mark a support ticket as done by updating its status in the CSV.
             """
-            import pandas as pd
             csv_path = os.path.join('hexahaul_db', 'hh_support_tickets.csv')
             try:
                 df = pd.read_csv(csv_path)
@@ -2172,6 +2383,81 @@ Admin Reply:
                 df.at[row_idx, 'status'] = 'done'
                 df.to_csv(csv_path, index=False)
                 return '', 204
+            except Exception as e:
+                return jsonify({'success': False, 'message': str(e)}), 500
+
+        # Add this route to update the user's full name in MySQL and session
+        @app.route('/update-full-name', methods=['POST'])
+        def update_full_name():
+            if 'user_email' not in session:
+                return jsonify({'success': False, 'message': 'User not logged in'}), 401
+            data = request.get_json()
+            new_full_name = data.get('full_name', '').strip()
+            if not new_full_name:
+                return jsonify({'success': False, 'message': 'No name provided'}), 400
+
+            user_email = session.get('user_email')
+            user_username = session.get('username')
+            try:
+                conn = get_mysql_connection()
+                cursor = conn.cursor()
+                # Try to update by email or username
+                update_query = """
+                    UPDATE hh_user_login
+                    SET `full_name` = %s
+                    WHERE (`email_address` = %s OR `Username` = %s OR `username` = %s)
+                """
+                cursor.execute(update_query, (new_full_name, user_email, user_username, user_username))
+                conn.commit()
+                cursor.close()
+                conn.close()
+                # Update session
+                session['full_name'] = new_full_name
+                session['user_name'] = new_full_name
+                return jsonify({'success': True})
+            except Exception as e:
+                return jsonify({'success': False, 'message': str(e)}), 500
+
+        # --- Ensure this route is present and correct ---
+        @app.route('/upload-profile-image', methods=['POST'])
+        def upload_profile_image():
+            if 'user_email' not in session or 'username' not in session:
+                return jsonify({'success': False, 'message': 'User not logged in'}), 401
+
+            if 'profile_image' not in request.files:
+                return jsonify({'success': False, 'message': 'No file uploaded'}), 400
+
+            file = request.files['profile_image']
+            if not file or file.filename == '':
+                return jsonify({'success': False, 'message': 'No file selected'}), 400
+
+            # Save the file to static/profile_images/
+            filename = secure_filename(f"{session['username']}_{int(time.time())}_{file.filename}")
+            upload_dir = os.path.join('static', 'profile_images')
+            os.makedirs(upload_dir, exist_ok=True)
+            filepath = os.path.join(upload_dir, filename)
+            file.save(filepath)
+
+            # Store relative path for web access
+            rel_path = os.path.join('profile_images', filename).replace('\\', '/')
+
+            # Update the user's profile image in MySQL
+            try:
+                conn = get_mysql_connection()
+                cursor = conn.cursor()
+                update_query = """
+                    UPDATE hh_user_login
+                    SET profile_image = %s
+                    WHERE (email_address = %s OR Username = %s OR username = %s)
+                """
+                cursor.execute(update_query, (rel_path, session['user_email'], session['username'], session['username']))
+                conn.commit()
+                cursor.close()
+                conn.close()
+                # Update session
+                session['user_image'] = rel_path
+                image_url = url_for('static', filename=rel_path)
+                return jsonify({'success': True, 'image_url': image_url})
             except Exception as e:
                 return jsonify({'success': False, 'message': str(e)}), 500
 
