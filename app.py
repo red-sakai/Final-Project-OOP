@@ -1405,49 +1405,66 @@ class HexaHaulApp:
             
             return jsonify(result)
 
-        @app.route("/payment-wall")
+        def generate_order_id(vehicle_type=None):
+            """
+            Generate an order ID with a prefix based on vehicle_type:
+            - 'MC' for motorcycle, 'CR' for car, 'TK' for truck.
+            Followed by 6-7 random digits.
+            """
+            import random
+            prefix = 'CR'
+            if vehicle_type == 'motorcycle':
+                prefix = 'MC'
+            elif vehicle_type == 'truck':
+                prefix = 'TK'
+            # 6 or 7 digits
+            digits = str(random.randint(100000, 9999999))
+            return f"{prefix}{digits}"
+
+        @app.route("/payment-wall", methods=['GET', 'POST'])
         def payment_wall():
-            # Get vehicle type from query parameter
-            vehicle_type = request.args.get('type', 'default')
-            order_id = request.args.get('order_id', 'unknown')
-            
-            # Define pricing based on vehicle type
-            pricing = {
-                'motorcycle': {
-                    'base_fare': 120.00,
-                    'shipping_fee': 49.00,
-                    'service_fee': 15.00,
-                    'vehicle_name': 'Motorcycle Delivery'
-                },
-                'car': {
-                    'base_fare': 200.00,
-                    'shipping_fee': 79.00,
-                    'service_fee': 20.00,
-                    'vehicle_name': 'Car Delivery'
-                },
-                'truck': {
-                    'base_fare': 350.00,
-                    'shipping_fee': 150.00,
-                    'service_fee': 35.00,
-                    'vehicle_name': 'Truck Delivery'
-                },
-                'default': {
-                    'base_fare': 200.00,
-                    'shipping_fee': 79.00,
-                    'service_fee': 20.00,
-                    'vehicle_name': 'Standard Delivery'
-                }
+            # Get the source booking page from query param or form
+            source = request.args.get('source') or request.form.get('source') or ''
+            # Default prices (car based)
+            price_data = {
+                'base_fare': 200.00,
+                'shipping_fee': 79.00,
+                'service_fee': 20.00,
+                'vehicle_name': 'Car'
             }
-            
-            # Select proper pricing
-            price_data = pricing.get(vehicle_type, pricing['default'])
-            
-            return render_template("payment-wall.html", 
-                                  vehicle_type=vehicle_type,
-                                  order_id=order_id,
-                                  price_data=price_data,
-                                  moment=self.moment,  # <-- Pass moment to template
-                                  current_date=datetime.now())  # <-- Pass current date
+            vehicle_type = 'car'
+            # Set prices based on source
+            if source in ['motorcycle-book', 'motorcycle-book2', 'motorcycle-book3']:
+                price_data = {
+                    'base_fare': 80.00,
+                    'shipping_fee': 39.00,
+                    'service_fee': 10.00,
+                    'vehicle_name': 'Motorcycle'
+                }
+                vehicle_type = 'motorcycle'
+            elif source in ['carbook', 'carbook2', 'carbook3']:
+                price_data = {
+                    'base_fare': 200.00,
+                    'shipping_fee': 79.00,
+                    'service_fee': 20.00,
+                    'vehicle_name': 'Car'
+                }
+                vehicle_type = 'car'
+            elif source in ['truck-book', 'truck-book2', 'truck-book3']:
+                price_data = {
+                    'base_fare': 400.00,
+                    'shipping_fee': 159.00,
+                    'service_fee': 40.00,
+                    'vehicle_name': 'Truck'
+                }
+                vehicle_type = 'truck'
+            return render_template(
+                'payment-wall.html',
+                price_data=price_data,
+                vehicle_type=vehicle_type,
+                order_id=generate_order_id(vehicle_type),  # Pass vehicle_type for correct prefix
+                current_date=datetime.now(),
+            )
 
         @app.route('/admin/vehicles')
         def admin_vehicles():

@@ -68,15 +68,15 @@
     <script>
 document.getElementById('bookingForm').addEventListener('submit', function(e) {
     e.preventDefault();
-    // Set a flag to show modal after payment
-    // Redirect to payment wall
-    window.location.href = "{{ url_for('payment_wall') }}";
+    window.location.href = "{{ url_for('payment_wall', source='carbook2') }}";
 });
 
-// Make OK button go to payment wall
 function closePpopup() {
-    window.location.href = "{{ url_for('payment_wall') }}";
+    window.location.href = "{{ url_for('payment_wall', source='carbook2') }}";
 }
+</script>
+</body>
+</html>
 </script>
 </body>
 </html>
