@@ -29,7 +29,10 @@ document.addEventListener('DOMContentLoaded', function () {
     // Update vehicle icon in the first fee row
     const firstFeeRow = document.querySelector('.fee-row:nth-child(1) span:first-child');
     if (firstFeeRow && firstFeeRow.dataset.updateIcon !== 'false') {
-        firstFeeRow.querySelector('.fee-icon').textContent = getVehicleEmoji();
+        const feeIcon = firstFeeRow.querySelector('.fee-icon');
+        if (feeIcon) {
+            feeIcon.textContent = getVehicleEmoji();
+        }
     }
 
     // Demo: get total from query param or use default
@@ -42,22 +45,26 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // Use vehicle type to customize UI
     document.documentElement.dataset.vehicleType = vehicleType;
-    document.querySelector('.payment-wall-container').classList.add(`vehicle-${vehicleType}`);
+    const container = document.querySelector('.payment-wall-container');
+    if (container) {
+        container.classList.add(`vehicle-${vehicleType}`);
+    }
 
     // Modal creation
-    function createModal(trackingId) {
+    function createModal(orderNumber) {
         let modal = document.createElement('div');
         modal.className = 'order-modal';
         modal.innerHTML = `
             <div class="order-modal-content">
+                <div class="modal-icon">✅</div>
                 <h2>Thank you for your order!</h2>
-                <p>Your tracking ID is <span class="tracking-id">${trackingId}</span></p>
+                <p>Your Order # is <span class="order-number">#${orderNumber}</span></p>
                 <button id="okOrderBtn" class="order-ok-btn" disabled>OK (<span id="okOrderTimer">3</span>)</button>
             </div>
         `;
         Object.assign(modal.style, {
             position: 'fixed', top: 0, left: 0, width: '100vw', height: '100vh',
-            background: 'rgba(3,51,94,0.18)', zIndex: 99999, display: 'flex',
+            background: 'rgba(3,51,94,0.6)', backdropFilter: 'blur(5px)', zIndex: 99999, display: 'flex',
             alignItems: 'center', justifyContent: 'center'
         });
         document.body.appendChild(modal);
@@ -86,18 +93,24 @@ document.addEventListener('DOMContentLoaded', function () {
         }, 1000);
 
         okBtn.onclick = function () {
-            window.location.href = "index.html";
+            window.location.href = "/index.html";
         };
     }
 
-    // Generate random tracking ID: 4 digits + 2 lowercase letters
-    function generateTrackingId() {
-        const digits = Math.floor(1000 + Math.random() * 9000);
-        const letters = String.fromCharCode(
-            97 + Math.floor(Math.random() * 26),
-            97 + Math.floor(Math.random() * 26)
-        );
-        return `${digits}${letters}`;
+    // Get the order number from the DOM (matches the one rendered by Flask)
+    function getOrderNumberFromDOM() {
+        const orderIdElem = document.querySelector('.order-id');
+        if (orderIdElem) {
+            // Extract the order id after the '#' (e.g., "Order #CR1234567")
+            const match = orderIdElem.textContent.match(/#([A-Z]{2}\d{6,7})/i);
+            if (match) return match[1];
+        }
+        return null;
+    }
+
+    // Generate random order number (6 digits)
+    function generateOrderNumber() {
+        return Math.floor(100000 + Math.random() * 900000).toString();
     }
 
     // Button enable/disable logic
@@ -117,36 +130,74 @@ document.addEventListener('DOMContentLoaded', function () {
     function isFormValid() {
         const method = getSelectedMethod();
         if (!method) return false;
-        if (method === 'credit' && creditFields.style.display !== 'none') {
-            const inputs = creditFields.querySelectorAll('input');
-            return Array.from(inputs).every(input => input.value.trim() !== '');
+        
+        if (method === 'credit' && creditFields && creditFields.style.display !== 'none') {
+            const cardName = document.getElementById('card-name');
+            const cardNumber = document.getElementById('card-number');
+            const cardExp = document.getElementById('card-exp');
+            const cardCvv = document.getElementById('card-cvv');
+            const address = document.getElementById('credit-address1');
+            
+            return cardName && cardName.value.trim() !== '' &&
+                cardNumber && cardNumber.value.trim().replace(/\s/g, '').length >= 16 &&
+                cardExp && /^\d{2}\/\d{2}$/.test(cardExp.value.trim()) &&
+                cardCvv && cardCvv.value.trim().length >= 3 &&
+                address && address.value.trim() !== '';
         }
-        if (method === 'cod' && codFields.style.display !== 'none') {
-            const addr1 = document.getElementById('cod-address1');
-            return addr1 && addr1.value.trim() !== '';
-        }
-        if (method === 'gcash' && gcashFields.style.display !== 'none') {
+        
+        if (method === 'gcash' && gcashFields && gcashFields.style.display !== 'none') {
             const refnum = document.getElementById('gcash-refnum');
-            return refnum && /^\d{13}$/.test(refnum.value.trim());
+            const address = document.getElementById('gcash-address1');
+            return refnum && /^\d{13}$/.test(refnum.value.trim()) &&
+                address && address.value.trim() !== '';
         }
-        // For PayPal: just need method selected
-        return true;
+        
+        if (method === 'paypal' && paypalFields && paypalFields.style.display !== 'none') {
+            const address = document.getElementById('paypal-address1');
+            return address && address.value.trim() !== '';
+        }
+        
+        if (method === 'cod' && codFields && codFields.style.display !== 'none') {
+            const addr1 = document.getElementById('cod-address1');
+            const phone = document.getElementById('cod-phone');
+            return addr1 && addr1.value.trim() !== '' && 
+                phone && phone.value.trim() !== '';
+        }
+        
+        return false;
     }
 
     function updatePayBtnState() {
         const method = getSelectedMethod();
-        // Change button text for COD
-        if (method === 'cod') {
-            payBtn.textContent = "Order Now";
-        } else {
-            payBtn.textContent = "Pay Now";
+        if (!payBtn) return;
+
+        // Update button text based on payment method
+        const btnText = payBtn.querySelector('.btn-text');
+        if (btnText) {
+            if (method === 'cod') {
+                btnText.textContent = "Order Now";
+            } else {
+                btnText.textContent = "Pay Now";
+            }
         }
-        if (isFormValid()) {
-            payBtn.disabled = false;
-            payBtn.classList.remove('btn-disabled');
+
+        // Toggle PayPal button visibility
+        if (method === 'paypal') {
+            payBtn.style.display = 'none';
+            if (window.renderPayPalButton) window.renderPayPalButton();
         } else {
-            payBtn.disabled = true;
-            payBtn.classList.add('btn-disabled');
+            payBtn.style.display = '';
+        }
+
+        // Enable/disable button based on form validity (only if not PayPal)
+        if (method !== 'paypal') {
+            if (isFormValid()) {
+                payBtn.disabled = false;
+                payBtn.classList.remove('btn-disabled', 'disabled');
+            } else {
+                payBtn.disabled = true;
+                payBtn.classList.add('btn-disabled', 'disabled');
+            }
         }
     }
 
@@ -223,13 +274,46 @@ document.addEventListener('DOMContentLoaded', function () {
         document.head.appendChild(style);
     }
 
+    // Helper to set required attributes only for visible fields
+    function updateRequiredFields(method) {
+        // Credit Card
+        if (creditFields) {
+            creditFields.querySelectorAll('input').forEach(input => {
+                input.required = (method === 'credit');
+            });
+        }
+        // GCash
+        if (gcashFields) {
+            gcashFields.querySelectorAll('input').forEach(input => {
+                input.required = (method === 'gcash');
+            });
+        }
+        // PayPal
+        if (paypalFields) {
+            paypalFields.querySelectorAll('input').forEach(input => {
+                input.required = (method === 'paypal');
+            });
+        }
+        // COD
+        if (codFields) {
+            codFields.querySelectorAll('input').forEach(input => {
+                // Only require address1 and phone for COD
+                if (input.id === 'cod-address1' || input.id === 'cod-phone') {
+                    input.required = (method === 'cod');
+                } else {
+                    input.required = false;
+                }
+            });
+        }
+    }
+
     // Payment method switching
     function showFields(method) {
-        creditFields.style.display = method === 'credit' ? '' : 'none';
-        gcashFields.style.display = method === 'gcash' ? '' : 'none';
-        paypalFields.style.display = method === 'paypal' ? '' : 'none';
-        codFields.style.display = method === 'cod' ? '' : 'none';
-        payBtn.style.display = (method === 'paypal') ? 'none' : '';
+        if (creditFields) creditFields.style.display = method === 'credit' ? '' : 'none';
+        if (gcashFields) gcashFields.style.display = method === 'gcash' ? '' : 'none';
+        if (paypalFields) paypalFields.style.display = method === 'paypal' ? '' : 'none';
+        if (codFields) codFields.style.display = method === 'cod' ? '' : 'none';
+        updateRequiredFields(method);
         updatePayBtnState();
     }
 
@@ -238,59 +322,92 @@ document.addEventListener('DOMContentLoaded', function () {
             methodCards.forEach(c => c.classList.remove('selected'));
             this.classList.add('selected');
             const radio = this.querySelector('input[type="radio"]');
-            radio.checked = true;
-            showFields(radio.value);
-            updatePayBtnState();
+            if (radio) {
+                radio.checked = true;
+                showFields(radio.value);
+            }
         });
     });
 
     // Initial state
     showFields(getSelectedMethod());
-    updatePayBtnState();
 
     // Listen for input changes to enable/disable Pay Now/Order Now
-    paymentForm.addEventListener('input', updatePayBtnState);
+    if (paymentForm) {
+        paymentForm.addEventListener('input', updatePayBtnState);
+    }
 
     // Add animation to the total amount
     const totalAmount = document.getElementById('total-amount');
-    totalAmount.addEventListener('mouseover', function() {
-        this.classList.add('pulse-animation');
-        setTimeout(() => this.classList.remove('pulse-animation'), 1000);
-    });
+    if (totalAmount) {
+        totalAmount.addEventListener('mouseover', function() {
+            this.classList.add('pulse-animation');
+            setTimeout(() => this.classList.remove('pulse-animation'), 1000);
+        });
+    }
 
     // Enhanced payment success animation
-    paymentForm.addEventListener('submit', function(e) {
-        e.preventDefault();
-        if (!isFormValid()) return;
-        const method = getSelectedMethod();
-        
-        // Show processing animation
-        payBtn.textContent = method === 'cod' ? "Processing Order..." : "Processing Payment...";
-        payBtn.disabled = true;
-        payBtn.classList.add('processing');
-        
-        // Add progress animation to payment card
-        const paymentCard = document.querySelector('.payment-wall-card');
-        paymentCard.classList.add('processing-payment');
-        
-        setTimeout(() => {
-            payBtn.textContent = method === 'cod' ? "Order Confirmed!" : "Payment Successful!";
-            payBtn.classList.remove('processing');
-            payBtn.classList.add('paid');
-            paymentCard.classList.remove('processing-payment');
-            paymentCard.classList.add('payment-success');
+    if (paymentForm) {
+        paymentForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            console.log('Form submitted');
             
-            // Show modal with success animation
-            createModal(generateTrackingId());
-        }, 1500);
+            // Double check form validation
+            if (!isFormValid()) {
+                console.log('Form validation failed');
+                alert("Please fill in all required fields correctly.");
+                return;
+            }
+            
+            const method = getSelectedMethod();
+            console.log('Processing payment for method:', method);
+            
+            // Show processing animation
+            const btnText = payBtn.querySelector('.btn-text');
+            if (btnText) {
+                btnText.textContent = method === 'cod' ? "Processing Order..." : "Processing Payment...";
+            }
+            payBtn.disabled = true;
+            payBtn.classList.add('processing');
+            
+            // Add progress animation to payment card
+            const paymentCard = document.querySelector('.payment-wall-card');
+            if (paymentCard) {
+                paymentCard.classList.add('processing-payment');
+            }
+            
+            setTimeout(() => {
+                if (btnText) {
+                    btnText.textContent = method === 'cod' ? "Order Confirmed!" : "Payment Successful!";
+                }
+                payBtn.classList.remove('processing');
+                payBtn.classList.add('paid');
+                if (paymentCard) {
+                    paymentCard.classList.remove('processing-payment');
+                    paymentCard.classList.add('payment-success');
+                }
+                
+                // Show modal with success animation and order number from DOM
+                const orderNumber = getOrderNumberFromDOM();
+                createModal(orderNumber || generateOrderNumber());
+            }, 1500);
+        });
+    }
+
+    // Force re-validation on input changes
+    document.querySelectorAll('.pay-fields input').forEach(input => {
+        input.addEventListener('input', updatePayBtnState);
     });
 
-    // Initial button state
-    updatePayBtnState();
-
-    // Add subtle animations to payment sections
-    document.querySelectorAll('.pay-method-card').forEach((card, index) => {
-        card.style.animationDelay = `${index * 0.1}s`;
-        card.classList.add('fade-in');
-    });
+    // Add direct click handler to the button
+    if (payBtn) {
+        payBtn.addEventListener('click', function(e) {
+            console.log('Button clicked, disabled state:', this.disabled);
+            if (this.disabled) {
+                e.preventDefault();
+                e.stopPropagation();
+                alert("Please fill in all required fields correctly.");
+            }
+        });
+    }
 });

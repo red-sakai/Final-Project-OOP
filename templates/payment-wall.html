@@ -7,7 +7,6 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='payment-wall.css') }}">
     <link rel="icon" href="{{ url_for('static', filename='images/screentake-removebg-preview.png') }}" />
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-    <!-- Include Flask-Moment JavaScript -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.4/moment.min.js"></script>
 </head>
 <body>
@@ -49,8 +48,6 @@
                     <div class="order-details">
                         <div class="order-id">Order #{{ order_id }}</div>
                         <div class="order-time">
-                            <!-- Use Flask-Moment if available, otherwise use the passed date -->
-                            {# Remove Flask-Moment usage, just use Python formatting #}
                             {{ current_date.strftime('%B %d, %Y') }}
                         </div>
                     </div>
@@ -59,38 +56,37 @@
                     <p class="pay-desc">Select your payment method below:</p>
                     <form class="payment-form" id="paymentForm" autocomplete="off">
                         <div class="pay-methods">
-                            <div class="pay-method-card selected" data-method="credit">
+                            <div class="pay-method-card selected">
                                 <label>
-                                    <input type="radio" name="method" value="credit" checked hidden>
+                                    <input type="radio" name="method" value="credit" checked>
                                     <span class="pay-method-icon">💳</span>
                                     <span>Credit/Debit Card</span>
                                 </label>
                             </div>
-                            <div class="pay-method-card" data-method="gcash">
+                            <div class="pay-method-card">
                                 <label>
-                                    <input type="radio" name="method" value="gcash" hidden>
+                                    <input type="radio" name="method" value="gcash">
                                     <span class="pay-method-icon">📱</span>
                                     <span>GCash</span>
                                 </label>
                             </div>
-                            <div class="pay-method-card" data-method="paypal">
+                            <div class="pay-method-card">
                                 <label>
-                                    <input type="radio" name="method" value="paypal" hidden>
+                                    <input type="radio" name="method" value="paypal">
                                     <span class="pay-method-icon">🌐</span>
                                     <span>PayPal</span>
                                 </label>
                             </div>
-                            <div class="pay-method-card" data-method="cod">
+                            <div class="pay-method-card">
                                 <label>
-                                    <input type="radio" name="method" value="cod" hidden>
+                                    <input type="radio" name="method" value="cod">
                                     <span class="pay-method-icon">💵</span>
                                     <span>Cash on Delivery</span>
                                 </label>
                             </div>
                         </div>
                         <div class="pay-fields" id="credit-fields">
-                            <!-- Address input for credit card (reduced width) -->
-                            <input type="text" placeholder="Address Line 1" id="credit-address1" autocomplete="off" required style="max-width: 260px; margin: 0 auto 8px auto; display: block;">
+                            <input type="text" placeholder="Address Line 1" id="credit-address1" autocomplete="off" style="max-width: 260px; margin: 0 auto 8px auto; display: block;">
                             <div class="card-animation-container">
                                 <div class="credit-card-preview">
                                     <div class="card-chip"></div>
@@ -109,8 +105,7 @@
                             </div>
                         </div>
                         <div class="pay-fields" id="gcash-fields" style="display:none;">
-                            <!-- Address input for GCash (reduced width) -->
-                            <input type="text" placeholder="Address Line 1" id="gcash-address1" autocomplete="off" required style="max-width: 260px; margin: 0 auto 8px auto; display: block;">
+                            <input type="text" placeholder="Address Line 1" id="gcash-address1" autocomplete="off" style="max-width: 260px; margin: 0 auto 8px auto; display: block;">
                             <div class="gcash-qr-container">
                                 <img src="{{ url_for('static', filename='images/GCASH QR.jpg') }}" alt="GCash QR" class="gcash-qr-img">
                                 <div class="gcash-instructions">Scan this QR code with your GCash app to pay.</div>
@@ -118,8 +113,7 @@
                             <input type="text" id="gcash-refnum" placeholder="Reference Number (13 digits)" maxlength="13" pattern="\d{13}" autocomplete="off">
                         </div>
                         <div class="pay-fields" id="paypal-fields" style="display:none;">
-                            <!-- Address input for PayPal (reduced width) -->
-                            <input type="text" placeholder="Address Line 1" id="paypal-address1" autocomplete="off" required style="max-width: 260px; margin: 0 auto 8px auto; display: block;">
+                            <input type="text" placeholder="Address Line 1" id="paypal-address1" autocomplete="off" style="max-width: 260px; margin: 0 auto 8px auto; display: block;">
                             <div id="paypal-button-container"></div>
                         </div>
                         <div class="pay-fields" id="cod-fields" style="display:none;">
@@ -144,44 +138,64 @@
         </div>
     </div>
     <script src="https://www.paypal.com/sdk/js?client-id=AWQhDw0tETk8-y8na38hRNqbtfoQbweYUuOMHuDTVCl-ZrcUimDcnoHgKqNEyetQM_oXJS60ivTOrjux&currency=PHP"></script>
-    <script src="{{ url_for('static', filename='payment-wall.js') }}"></script>
+    
+    <!-- Card formatting and PayPal integration -->
     <script>
-        document.getElementById('card-number').addEventListener('input', function(e) {
-            let value = e.target.value.replace(/\D/g, '');
-            let formattedValue = '';
-            for (let i = 0; i < value.length; i++) {
-                if (i > 0 && i % 4 === 0) {
-                    formattedValue += ' ';
-                }
-                formattedValue += value[i];
+        document.addEventListener('DOMContentLoaded', function() {
+            // Card number formatting
+            const cardNumberInput = document.getElementById('card-number');
+            if (cardNumberInput) {
+                cardNumberInput.addEventListener('input', function(e) {
+                    let value = e.target.value.replace(/\D/g, '');
+                    let formattedValue = '';
+                    for (let i = 0; i < value.length; i++) {
+                        if (i > 0 && i % 4 === 0) {
+                            formattedValue += ' ';
+                        }
+                        formattedValue += value[i];
+                    }
+                    e.target.value = formattedValue;
+                    
+                    // Update card preview
+                    const cardPreview = document.querySelector('.card-number');
+                    if (cardPreview) {
+                        cardPreview.textContent = formattedValue || '•••• •••• •••• ••••';
+                    }
+                });
             }
-            e.target.value = formattedValue;
-            
-            // Update card preview
-            document.querySelector('.card-number').textContent = 
-                formattedValue || '•••• •••• •••• ••••';
-        });
 
-        document.getElementById('card-name').addEventListener('input', function(e) {
-            document.querySelector('.card-name').textContent = 
-                e.target.value.toUpperCase() || 'YOUR NAME HERE';
-        });
-
-        document.getElementById('card-exp').addEventListener('input', function(e) {
-            let value = e.target.value.replace(/\D/g, '');
-            if (value.length > 2) {
-                value = value.substring(0, 2) + '/' + value.substring(2, 4);
+            // Card name formatting
+            const cardNameInput = document.getElementById('card-name');
+            if (cardNameInput) {
+                cardNameInput.addEventListener('input', function(e) {
+                    const cardNamePreview = document.querySelector('.card-name');
+                    if (cardNamePreview) {
+                        cardNamePreview.textContent = e.target.value.toUpperCase() || 'YOUR NAME HERE';
+                    }
+                });
             }
-            e.target.value = value;
-            document.querySelector('.card-exp').textContent = 
-                value || 'MM/YY';
-        });
 
-        // PayPal integration: Render button only when PayPal method is selected
-        let paypalRendered = false;
-        function renderPayPalButton() {
-            if (paypalRendered) return;
-            if (window.paypal) {
+            // Card expiry formatting
+            const cardExpInput = document.getElementById('card-exp');
+            if (cardExpInput) {
+                cardExpInput.addEventListener('input', function(e) {
+                    let value = e.target.value.replace(/\D/g, '');
+                    if (value.length > 2) {
+                        value = value.substring(0, 2) + '/' + value.substring(2, 4);
+                    }
+                    e.target.value = value;
+                    const cardExpPreview = document.querySelector('.card-exp');
+                    if (cardExpPreview) {
+                        cardExpPreview.textContent = value || 'MM/YY';
+                    }
+                });
+            }
+
+            // PayPal integration
+            let paypalRendered = false;
+            window.renderPayPalButton = function() {
+                if (paypalRendered || !window.paypal) return;
+                
                 paypal.Buttons({
                     style: {
                         layout: 'vertical',
@@ -190,7 +204,7 @@
                         label: 'paypal'
                     },
                     createOrder: function(data, actions) {
-                        const total = parseFloat(document.getElementById('amount-value').textContent.replace(/[^\d.]/g, '')) || 0;
+                        const total = parseFloat(document.getElementById('amount-value').textContent) || 0;
                         return actions.order.create({
                             purchase_units: [{
                                 amount: {
@@ -204,97 +218,19 @@
                     onApprove: function(data, actions) {
                         return actions.order.capture().then(function(details) {
                             alert('Payment completed by ' + details.payer.name.given_name + '!');
-                            // Optionally, trigger your modal or redirect
-                            // createModal(generateTrackingId());
                         });
                     },
                     onError: function(err) {
-                        alert('PayPal payment failed: ' + err);
+                        console.error('PayPal payment failed:', err);
+                        alert('PayPal payment failed. Please try again.');
                     }
                 }).render('#paypal-button-container');
                 paypalRendered = true;
-            }
-        }
-
-        // Show/hide payment fields and PayPal button on method change
-        function showFields(method) {
-            const creditFields = document.getElementById('credit-fields');
-            const gcashFields = document.getElementById('gcash-fields');
-            const paypalFields = document.getElementById('paypal-fields');
-            const codFields = document.getElementById('cod-fields');
-            const payBtn = document.getElementById('payBtn');
-
-            creditFields.style.display = method === 'credit' ? '' : 'none';
-            gcashFields.style.display = method === 'gcash' ? '' : 'none';
-            paypalFields.style.display = method === 'paypal' ? '' : 'none';
-            codFields.style.display = method === 'cod' ? '' : 'none';
-            payBtn.style.display = (method === 'paypal') ? 'none' : '';
-
-            if (method === 'paypal') {
-                renderPayPalButton();
-            }
-            updatePayBtnState();
-        }
-
-        // Initial setup: show credit fields by default
-        showFields('credit');
-
-        // Payment method selection
-        const methodCards = document.querySelectorAll('.pay-method-card');
-        methodCards.forEach(card => {
-            card.addEventListener('click', function() {
-                const method = this.getAttribute('data-method');
-                // Deselect all cards
-                methodCards.forEach(c => c.classList.remove('selected'));
-                // Select the clicked card
-                this.classList.add('selected');
-                // Show/hide fields based on selected method
-                showFields(method);
-            });
+            };
         });
-
-        // Update Pay Now button state
-        function updatePayBtnState() {
-            const method = document.querySelector('input[name="method"]:checked').value;
-            const payBtn = document.getElementById('payBtn');
-            if (method === 'credit' || method === 'gcash' || method === 'cod') {
-                payBtn.disabled = false;
-                payBtn.classList.remove('disabled');
-            } else {
-                payBtn.disabled = true;
-                payBtn.classList.add('disabled');
-            }
-        }
-
-        // Initial button state update
-        updatePayBtnState();
-
-        // Update isFormValid to require address for all methods except COD
-        function isFormValid() {
-            const method = getSelectedMethod();
-            if (!method) return false;
-            if (method === 'credit' && creditFields.style.display !== 'none') {
-                const addr = document.getElementById('credit-address1');
-                const inputs = creditFields.querySelectorAll('input');
-                return addr && addr.value.trim() !== '' &&
-                    Array.from(inputs).every(input => input.value.trim() !== '');
-            }
-            if (method === 'gcash' && gcashFields.style.display !== 'none') {
-                const addr = document.getElementById('gcash-address1');
-                const refnum = document.getElementById('gcash-refnum');
-                return addr && addr.value.trim() !== '' &&
-                    refnum && /^\d{13}$/.test(refnum.value.trim());
-            }
-            if (method === 'paypal' && paypalFields.style.display !== 'none') {
-                const addr = document.getElementById('paypal-address1');
-                return addr && addr.value.trim() !== '';
-            }
-            if (method === 'cod' && codFields.style.display !== 'none') {
-                const addr1 = document.getElementById('cod-address1');
-                return addr1 && addr1.value.trim() !== '';
-            }
-            return true;
-        }
     </script>
+    
+    <!-- Load your external JavaScript file -->
+    <script src="{{ url_for('static', filename='payment-wall.js') }}"></script>
 </body>
 </html>
