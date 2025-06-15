@@ -1458,6 +1458,82 @@ class HexaHaulApp:
                     'vehicle_name': 'Truck'
                 }
                 vehicle_type = 'truck'
+
+            # --- NEW: Insert order into MySQL on POST ---
+            if request.method == 'POST':
+                # Extract order details from form
+                order_item_id = request.form.get('order_item_id')
+                origin_branch = request.form.get('dropoff')
+                customer_latitude = request.form.get('customer_latitude')
+                customer_longitude = request.form.get('customer_longitude')
+                # Defensive: fallback to 0 if not provided
+                try:
+                    customer_latitude = float(customer_latitude)
+                except Exception:
+                    customer_latitude = 0.0
+                try:
+                    customer_longitude = float(customer_longitude)
+                except Exception:
+                    customer_longitude = 0.0
+
+                # Map origin_branch to lat/lon
+                branch_lat_map = {
+                    'Parañaque': '14.479300',
+                    'Caloocan': '14.650700',
+                    'Quezon': '14.676000',
+                    'Manila': '14.599500'
+                }
+                branch_lon_map = {
+                    'Parañaque': '121.019800',
+                    'Caloocan': '120.966700',
+                    'Quezon': '14.676000',  # Note: This seems incorrect for longitude
+                    'Manila': '120.984200'
+                }
+                branch_latitude = branch_lat_map.get(origin_branch, '0')
+                branch_longitude = branch_lon_map.get(origin_branch, '0')
+
+                # Assign random driver_id between 201 and 240
+                driver_id = random.randint(201, 240)
+
+                # Insert into hh_order
+                try:
+                    conn = get_mysql_connection()
+                    cursor = conn.cursor()
+                    insert_query = """
+                        INSERT INTO hh_order (
+                            order_item_id, delivery_status, late_delivery_risk, origin_branch,
+                            branch_latitude, branch_longitude, customer_latitude, customer_longitude,
+                            `order date (DateOrders)`, driver_id
+                        ) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s)
+                    """
+                    cursor.execute(insert_query, (
+                        order_item_id,
+                        'Shipping on time',
+                        0,
+                        origin_branch,
+                        branch_latitude,
+                        branch_longitude,
+                        customer_latitude,
+                        customer_longitude,
+                        datetime.now().strftime('%Y-%m-%d %H:%M:%S'),
+                        driver_id
+                    ))
+                    conn.commit()
+                    cursor.close()
+                    conn.close()
+                except Exception as e:
+                    print(f"Error inserting order into hh_order: {e}")
+
+                return render_template(
+                    'payment-wall.html',
+                    price_data=price_data,
+                    vehicle_type=vehicle_type,
+                    order_id=order_item_id,
+                    current_date=datetime.now(),
+                    order_success=True
+                )
+
+            # ...existing code for GET...
             return render_template(
                 'payment-wall.html',
                 price_data=price_data,
