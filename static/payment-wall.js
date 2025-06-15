@@ -45,19 +45,20 @@ document.addEventListener('DOMContentLoaded', function () {
     document.querySelector('.payment-wall-container').classList.add(`vehicle-${vehicleType}`);
 
     // Modal creation
-    function createModal(trackingId) {
+    function createModal(orderNumber) {
         let modal = document.createElement('div');
         modal.className = 'order-modal';
         modal.innerHTML = `
             <div class="order-modal-content">
+                <div class="modal-icon">✅</div>
                 <h2>Thank you for your order!</h2>
-                <p>Your tracking ID is <span class="tracking-id">${trackingId}</span></p>
+                <p>Your Order # is <span class="order-number">${orderNumber}</span></p>
                 <button id="okOrderBtn" class="order-ok-btn" disabled>OK (<span id="okOrderTimer">3</span>)</button>
             </div>
         `;
         Object.assign(modal.style, {
             position: 'fixed', top: 0, left: 0, width: '100vw', height: '100vh',
-            background: 'rgba(3,51,94,0.18)', zIndex: 99999, display: 'flex',
+            background: 'rgba(3,51,94,0.6)', backdropFilter: 'blur(5px)', zIndex: 99999, display: 'flex',
             alignItems: 'center', justifyContent: 'center'
         });
         document.body.appendChild(modal);
@@ -86,18 +87,13 @@ document.addEventListener('DOMContentLoaded', function () {
         }, 1000);
 
         okBtn.onclick = function () {
-            window.location.href = "index.html";
+            window.location.href = "/index.html";
         };
     }
 
-    // Generate random tracking ID: 4 digits + 2 lowercase letters
-    function generateTrackingId() {
-        const digits = Math.floor(1000 + Math.random() * 9000);
-        const letters = String.fromCharCode(
-            97 + Math.floor(Math.random() * 26),
-            97 + Math.floor(Math.random() * 26)
-        );
-        return `${digits}${letters}`;
+    // Generate random order number (6 digits)
+    function generateOrderNumber() {
+        return Math.floor(100000 + Math.random() * 900000).toString();
     }
 
     // Button enable/disable logic
@@ -117,37 +113,73 @@ document.addEventListener('DOMContentLoaded', function () {
     function isFormValid() {
         const method = getSelectedMethod();
         if (!method) return false;
+        
         if (method === 'credit' && creditFields.style.display !== 'none') {
-            const inputs = creditFields.querySelectorAll('input');
-            return Array.from(inputs).every(input => input.value.trim() !== '');
+            const cardName = document.getElementById('card-name');
+            const cardNumber = document.getElementById('card-number');
+            const cardExp = document.getElementById('card-exp');
+            const cardCvv = document.getElementById('card-cvv');
+            const address = document.getElementById('credit-address1');
+            
+            return cardName && cardName.value.trim() !== '' &&
+                cardNumber && cardNumber.value.trim().replace(/\s/g, '').length >= 16 &&
+                cardExp && /^\d{2}\/\d{2}$/.test(cardExp.value.trim()) &&
+                cardCvv && cardCvv.value.trim().length >= 3 &&
+                address && address.value.trim() !== '';
         }
-        if (method === 'cod' && codFields.style.display !== 'none') {
-            const addr1 = document.getElementById('cod-address1');
-            return addr1 && addr1.value.trim() !== '';
-        }
+        
         if (method === 'gcash' && gcashFields.style.display !== 'none') {
             const refnum = document.getElementById('gcash-refnum');
-            return refnum && /^\d{13}$/.test(refnum.value.trim());
+            const address = document.getElementById('gcash-address1');
+            return refnum && /^\d{13}$/.test(refnum.value.trim()) &&
+                address && address.value.trim() !== '';
         }
-        // For PayPal: just need method selected
-        return true;
+        
+        if (method === 'paypal' && paypalFields.style.display !== 'none') {
+            const address = document.getElementById('paypal-address1');
+            return address && address.value.trim() !== '';
+        }
+        
+        if (method === 'cod' && codFields.style.display !== 'none') {
+            const addr1 = document.getElementById('cod-address1');
+            const phone = document.getElementById('cod-phone');
+            return addr1 && addr1.value.trim() !== '' && 
+                phone && phone.value.trim() !== '';
+        }
+        
+        return false;
     }
 
     function updatePayBtnState() {
         const method = getSelectedMethod();
-        // Change button text for COD
+        
+        // Update button text based on payment method
+        const btnText = payBtn.querySelector('.btn-text');
         if (method === 'cod') {
-            payBtn.textContent = "Order Now";
+            btnText.textContent = "Order Now";
         } else {
-            payBtn.textContent = "Pay Now";
+            btnText.textContent = "Pay Now";
         }
+        
+        // Toggle PayPal button visibility
+        if (method === 'paypal') {
+            payBtn.style.display = 'none';
+        } else {
+            payBtn.style.display = '';
+        }
+        
+        // Enable/disable button based on form validity
         if (isFormValid()) {
             payBtn.disabled = false;
             payBtn.classList.remove('btn-disabled');
+            payBtn.classList.remove('disabled'); // Remove both possible class names
         } else {
             payBtn.disabled = true;
             payBtn.classList.add('btn-disabled');
+            payBtn.classList.add('disabled'); // Add both possible class names
         }
+        
+        console.log('Button state updated:', method, isFormValid(), payBtn.disabled);
     }
 
     // Add .btn-disabled style if not present
@@ -261,11 +293,21 @@ document.addEventListener('DOMContentLoaded', function () {
     // Enhanced payment success animation
     paymentForm.addEventListener('submit', function(e) {
         e.preventDefault();
-        if (!isFormValid()) return;
+        console.log('Form submitted');
+        
+        // Double check form validation
+        if (!isFormValid()) {
+            console.log('Form validation failed');
+            alert("Please fill in all required fields correctly.");
+            return;
+        }
+        
         const method = getSelectedMethod();
+        console.log('Processing payment for method:', method);
         
         // Show processing animation
-        payBtn.textContent = method === 'cod' ? "Processing Order..." : "Processing Payment...";
+        const btnText = payBtn.querySelector('.btn-text');
+        btnText.textContent = method === 'cod' ? "Processing Order..." : "Processing Payment...";
         payBtn.disabled = true;
         payBtn.classList.add('processing');
         
@@ -274,23 +316,36 @@ document.addEventListener('DOMContentLoaded', function () {
         paymentCard.classList.add('processing-payment');
         
         setTimeout(() => {
-            payBtn.textContent = method === 'cod' ? "Order Confirmed!" : "Payment Successful!";
+            btnText.textContent = method === 'cod' ? "Order Confirmed!" : "Payment Successful!";
             payBtn.classList.remove('processing');
             payBtn.classList.add('paid');
             paymentCard.classList.remove('processing-payment');
             paymentCard.classList.add('payment-success');
             
-            // Show modal with success animation
-            createModal(generateTrackingId());
+            // Show modal with success animation and order number
+            createModal(generateOrderNumber());
         }, 1500);
     });
 
-    // Initial button state
-    updatePayBtnState();
+    // Force re-validation on input changes
+    document.querySelectorAll('.pay-fields input').forEach(input => {
+        input.addEventListener('input', function() {
+            console.log('Input changed:', this.id);
+            updatePayBtnState();
+        });
+    });
 
-    // Add subtle animations to payment sections
-    document.querySelectorAll('.pay-method-card').forEach((card, index) => {
-        card.style.animationDelay = `${index * 0.1}s`;
-        card.classList.add('fade-in');
+    // Add direct click handler to the button
+    payBtn.addEventListener('click', function(e) {
+        console.log('Button clicked, disabled state:', this.disabled);
+        if (this.disabled) {
+            e.preventDefault();
+            e.stopPropagation();
+            alert("Please fill in all required fields correctly.");
+        }
+    });
+});
+            alert("Please fill in all required fields correctly.");
+        }
     });
 });
