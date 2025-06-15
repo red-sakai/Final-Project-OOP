@@ -10,6 +10,7 @@ import random
 import os
 import traceback 
 from pathlib import Path
+from dotenv import load_dotenv
 
 # Suppress specific warnings
 warnings.filterwarnings('ignore')
@@ -17,16 +18,22 @@ warnings.filterwarnings('ignore')
 # Create SQLAlchemy base
 Base = declarative_base()
 
-# Database configuration
+# Load environment variables from .env
+load_dotenv()
+
+# Use values from .env
 connection = {
-    'host': 'localhost', 
-    'port': 3306,
-    'username': 'your_username', # Input mysql username (eg. root)
-    'password': 'your_password', # Input mysql password
-    'database': 'schema_name' # Input mysql schema/database
+    'host': os.getenv('MYSQL_HOST'),
+    'port': int(os.getenv('MYSQL_PORT', 3306)),  # Default to 3306 if not set
+    'username': os.getenv('MYSQL_USER'),
+    'password': os.getenv('MYSQL_PASSWORD'),
+    'database': os.getenv('MYSQL_DATABASE')
 }
 
-engine = create_engine(f"mysql+mysqldb://{connection['username']}:{connection['password']}@{connection['host']}/{connection['database']}", echo=False)
-
+# Create engine using those values
+engine = create_engine(
+    f"mysql+mysqldb://{connection['username']}:{connection['password']}@{connection['host']}:{connection['port']}/{connection['database']}",
+    echo=False
+)
 Session = sessionmaker(bind=engine)
 session = Session()
