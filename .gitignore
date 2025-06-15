@@ -5,3 +5,4 @@ venv/
 .env
 REMOVED
 replacements.txt
+/__pycache__
