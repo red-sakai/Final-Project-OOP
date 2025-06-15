@@ -17,6 +17,10 @@
         </div>
         <form class="TypeBox" id="bookingForm">
             <div class="input-row">
+                <span class="input-icon">&#128722;</span>
+                <input type="text" id="productNames" class="truck-input" placeholder="Product Name/s" required />
+            </div>
+            <div class="input-row">
                 <span class="input-icon">&#128205;</span>
                 <select id="dropoff" class="truck-input" required>
                     <option value="" disabled selected>Select drop off point</option>
@@ -74,9 +78,6 @@ document.getElementById('bookingForm').addEventListener('submit', function(e) {
 function closePpopup() {
     window.location.href = "{{ url_for('payment_wall', source='carbook2') }}";
 }
-</script>
-</body>
-</html>
 </script>
 </body>
 </html>
