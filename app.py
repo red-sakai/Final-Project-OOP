@@ -318,20 +318,116 @@ class HexaHaulApp:
             if not username and not email:
                 return jsonify({"error": "No user identifier found"}), 400
             
-            # Get recent activities for the user
-            activities = self.activity_db.get_recent_activities(
-                username=username, 
-                email=email, 
-                limit=10
-            )
+            # Try MySQL hh_activity table first
+            activities = []
+            try:
+                conn = get_mysql_connection()
+                cursor = conn.cursor(dictionary=True)
+                
+                # Query hh_activity table for user activities
+                query = """
+                    SELECT id, Username, Email, Activity_Type, Activity_Description, 
+                           Timestamp, IP_Address, User_Agent
+                    FROM hh_activity 
+                    WHERE (Username = %s OR Email = %s)
+                    ORDER BY STR_TO_DATE(Timestamp, '%m/%d/%Y %H:%i') DESC
+                    LIMIT 20
+                """
+                cursor.execute(query, (username, email))
+                mysql_activities = cursor.fetchall()
+                
+                # Format MySQL activities
+                for activity in mysql_activities:
+                    try:
+                        # Parse timestamp - handle different formats
+                        timestamp_str = activity.get('Timestamp', '')
+                        if '/' in timestamp_str:
+                            # Format: 5/26/2025 15:18
+                            timestamp = datetime.strptime(timestamp_str, '%m/%d/%Y %H:%M')
+                        else:
+                            # Format: 2025-06-08 23:32:58
+                            timestamp = datetime.strptime(timestamp_str, '%Y-%m-%d %H:%M:%S')
+                        
+                        formatted_activity = {
+                            'id': activity.get('id'),
+                            'username': activity.get('Username', ''),
+                            'email': activity.get('Email', ''),
+                            'activity_type': activity.get('Activity_Type', ''),
+                            'description': activity.get('Activity_Description', ''),
+                            'timestamp': timestamp_str,
+                            'date': timestamp.strftime('%Y-%m-%d'),
+                            'time': timestamp.strftime('%H:%M:%S'),
+                            'full_timestamp': timestamp.isoformat(),
+                            'ip_address': activity.get('IP_Address', ''),
+                            'user_agent': activity.get('User_Agent', ''),
+                            'source': 'mysql'
+                        }
+                        activities.append(formatted_activity)
+                    except Exception as e:
+                        print(f"Error parsing MySQL activity: {e}")
+                        continue
+                
+                cursor.close()
+                conn.close()
+                print(f"Found {len(activities)} activities from MySQL")
+                
+            except Exception as e:
+                print(f"Error fetching from MySQL hh_activity table: {e}")
+                activities = []
             
-            # Format activities for display
-            formatted_activities = []
-            for activity in activities:
-                formatted = self.activity_db.format_activity_for_display(activity)
-                formatted_activities.append(formatted)
+            # Fallback to CSV if MySQL failed or returned no results
+            if not activities:
+                try:
+                    csv_path = os.path.join('hexahaul_db', 'hh_activity.csv')
+                    if os.path.exists(csv_path):
+                        with open(csv_path, 'r', encoding='utf-8') as file:
+                            reader = csv.DictReader(file)
+                            csv_activities = []
+                            
+                            for row in reader:
+                                # Filter by username or email
+                                if (row.get('Username') == username or 
+                                    row.get('Email') == email):
+                                    
+                                    try:
+                                        # Parse timestamp from CSV
+                                        timestamp_str = row.get('Timestamp', '')
+                                        if timestamp_str:
+                                            if '/' in timestamp_str:
+                                                timestamp = datetime.strptime(timestamp_str, '%m/%d/%Y %H:%M')
+                                            else:
+                                                timestamp = datetime.strptime(timestamp_str, '%Y-%m-%d %H:%M:%S')
+                                        else:
+                                            timestamp = datetime.now()
+                                        
+                                        formatted_activity = {
+                                            'id': row.get('id', ''),
+                                            'username': row.get('Username', ''),
+                                            'email': row.get('Email', ''),
+                                            'activity_type': row.get('Activity_Type', ''),
+                                            'description': row.get('Activity_Description', ''),
+                                            'timestamp': timestamp_str,
+                                            'date': timestamp.strftime('%Y-%m-%d'),
+                                            'time': timestamp.strftime('%H:%M:%S'),
+                                            'full_timestamp': timestamp.isoformat(),
+                                            'ip_address': row.get('IP_Address', ''),
+                                            'user_agent': row.get('User_Agent', ''),
+                                            'source': 'csv'
+                                        }
+                                        csv_activities.append(formatted_activity)
+                                    except Exception as e:
+                                        print(f"Error parsing CSV activity: {e}")
+                                        continue
+                            
+                            # Sort by timestamp and take most recent 20
+                            csv_activities.sort(key=lambda x: x['full_timestamp'], reverse=True)
+                            activities = csv_activities[:20]
+                            print(f"Found {len(activities)} activities from CSV fallback")
+                            
+                except Exception as e:
+                    print(f"Error reading CSV fallback: {e}")
             
-            return jsonify({"activities": formatted_activities})
+            return jsonify({"activities": activities})
 
         @app.route("/user-dashboard")
         def user_dashboard():
