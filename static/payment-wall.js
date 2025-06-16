@@ -362,6 +362,43 @@ document.addEventListener('DOMContentLoaded', function () {
             const method = getSelectedMethod();
             console.log('Processing payment for method:', method);
             
+            // Get geocoded coordinates from the active address field
+            let addrInput = null;
+            let coordsLat = 0;
+            let coordsLon = 0;
+            
+            if (method === 'credit') addrInput = document.getElementById('credit-address1');
+            if (method === 'gcash') addrInput = document.getElementById('gcash-address1');
+            if (method === 'paypal') addrInput = document.getElementById('paypal-address1');
+            if (method === 'cod') addrInput = document.getElementById('cod-address1');
+            
+            if (addrInput && addrInput.dataset.geocodeLat && addrInput.dataset.geocodeLon) {
+                coordsLat = parseFloat(addrInput.dataset.geocodeLat) || 0;
+                coordsLon = parseFloat(addrInput.dataset.geocodeLon) || 0;
+                console.log('Geocoded coordinates found:', coordsLat, coordsLon);
+            } else {
+                console.log('No geocoded coordinates found for address input');
+            }
+            
+            // Set the hidden input values based on payment method
+            if (method === 'credit') {
+                document.getElementById('credit-lat').value = coordsLat;
+                document.getElementById('credit-lon').value = coordsLon;
+            } else if (method === 'gcash') {
+                document.getElementById('gcash-lat').value = coordsLat;
+                document.getElementById('gcash-lon').value = coordsLon;
+            } else if (method === 'paypal') {
+                document.getElementById('paypal-lat').value = coordsLat;
+                document.getElementById('paypal-lon').value = coordsLon;
+            } else if (method === 'cod') {
+                document.getElementById('cod-lat').value = coordsLat;
+                document.getElementById('cod-lon').value = coordsLon;
+            }
+            
+            // Add payment method to form data
+            const formData = new FormData(paymentForm);
+            formData.append('method', method);
+            
             // Show processing animation
             const btnText = payBtn.querySelector('.btn-text');
             if (btnText) {
@@ -376,7 +413,14 @@ document.addEventListener('DOMContentLoaded', function () {
                 paymentCard.classList.add('processing-payment');
             }
             
-            setTimeout(() => {
+            // Submit form data via AJAX
+            fetch(window.location.href, {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => response.text())
+            .then(data => {
+                // Process completed successfully
                 if (btnText) {
                     btnText.textContent = method === 'cod' ? "Order Confirmed!" : "Payment Successful!";
                 }
@@ -390,7 +434,22 @@ document.addEventListener('DOMContentLoaded', function () {
                 // Show modal with success animation and order number from DOM
                 const orderNumber = getOrderNumberFromDOM();
                 createModal(orderNumber || generateOrderNumber());
-            }, 1500);
+                
+                console.log('Order submitted successfully to server');
+            })
+            .catch(error => {
+                console.error('Error submitting order:', error);
+                // Reset button state on error
+                if (btnText) {
+                    btnText.textContent = method === 'cod' ? "Order Now" : "Pay Now";
+                }
+                payBtn.disabled = false;
+                payBtn.classList.remove('processing');
+                if (paymentCard) {
+                    paymentCard.classList.remove('processing-payment');
+                }
+                alert('Error processing payment. Please try again.');
+            });
         });
     }
 

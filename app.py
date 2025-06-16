@@ -1459,21 +1459,40 @@ class HexaHaulApp:
                 }
                 vehicle_type = 'truck'
 
-            # --- NEW: Insert order into MySQL on POST ---
+            # --- Insert order into MySQL on POST ---
             if request.method == 'POST':
                 # Extract order details from form
-                order_item_id = request.form.get('order_item_id')
-                origin_branch = request.form.get('dropoff')
-                customer_latitude = request.form.get('customer_latitude')
-                customer_longitude = request.form.get('customer_longitude')
-                # Defensive: fallback to 0 if not provided
+                order_item_id = generate_order_id(vehicle_type)
+                origin_branch = request.form.get('dropoff') or 'Manila'  # Default fallback
+                schedule_date = request.form.get('schedule')
+                
+                # Get geocoded coordinates from the payment form based on payment method
+                payment_method = request.form.get('method', 'credit')
+                customer_latitude = 0.0
+                customer_longitude = 0.0
+                
+                # Get coordinates from the appropriate address field based on payment method
+                if payment_method == 'credit':
+                    customer_latitude = request.form.get('credit_latitude', 0.0)
+                    customer_longitude = request.form.get('credit_longitude', 0.0)
+                elif payment_method == 'gcash':
+                    customer_latitude = request.form.get('gcash_latitude', 0.0)
+                    customer_longitude = request.form.get('gcash_longitude', 0.0)
+                elif payment_method == 'paypal':
+                    customer_latitude = request.form.get('paypal_latitude', 0.0)
+                    customer_longitude = request.form.get('paypal_longitude', 0.0)
+                elif payment_method == 'cod':
+                    customer_latitude = request.form.get('cod_latitude', 0.0)
+                    customer_longitude = request.form.get('cod_longitude', 0.0)
+                
+                # Defensive: convert to float if not already
                 try:
                     customer_latitude = float(customer_latitude)
-                except Exception:
+                except (ValueError, TypeError):
                     customer_latitude = 0.0
                 try:
                     customer_longitude = float(customer_longitude)
-                except Exception:
+                except (ValueError, TypeError):
                     customer_longitude = 0.0
 
                 # Map origin_branch to lat/lon
@@ -1486,14 +1505,20 @@ class HexaHaulApp:
                 branch_lon_map = {
                     'Parañaque': '121.019800',
                     'Caloocan': '120.966700',
-                    'Quezon': '14.676000',  # Note: This seems incorrect for longitude
+                    'Quezon': '121.043700',
                     'Manila': '120.984200'
                 }
-                branch_latitude = branch_lat_map.get(origin_branch, '0')
-                branch_longitude = branch_lon_map.get(origin_branch, '0')
+                branch_latitude = branch_lat_map.get(origin_branch, '14.599500')  # Default to Manila
+                branch_longitude = branch_lon_map.get(origin_branch, '120.984200')  # Default to Manila
 
                 # Assign random driver_id between 201 and 240
                 driver_id = random.randint(201, 240)
+
+                # Use the user-selected schedule date if provided, else fallback to now
+                if schedule_date:
+                    order_date_value = schedule_date
+                else:
+                    order_date_value = datetime.now().strftime('%Y-%m-%d')
 
                 # Insert into hh_order
                 try:
@@ -1515,12 +1540,13 @@ class HexaHaulApp:
                         branch_longitude,
                         customer_latitude,
                         customer_longitude,
-                        datetime.now().strftime('%Y-%m-%d %H:%M:%S'),
+                        order_date_value,
                         driver_id
                     ))
                     conn.commit()
                     cursor.close()
                     conn.close()
+                    print(f"Order inserted successfully: {order_item_id}")
                 except Exception as e:
                     print(f"Error inserting order into hh_order: {e}")
 
@@ -1533,12 +1559,12 @@ class HexaHaulApp:
                     order_success=True
                 )
 
-            # ...existing code for GET...
+            # GET request - just show the form
             return render_template(
                 'payment-wall.html',
                 price_data=price_data,
                 vehicle_type=vehicle_type,
-                order_id=generate_order_id(vehicle_type),  # Pass vehicle_type for correct prefix
+                order_id=generate_order_id(vehicle_type),
                 current_date=datetime.now(),
             )
 
@@ -1883,6 +1909,7 @@ class HexaHaulApp:
             department_stats = self.product_db.get_department_stats()
             
             # Get category statistics
+           
             category_stats = self.product_db.get_category_stats()
             
             # Find top department
@@ -1905,7 +1932,7 @@ class HexaHaulApp:
             
             return render_template('admin_products.html', 
                                   products=products,
-                                  departments=sorted(departments),
+                                                                   departments=sorted(departments),
                                   categories=sorted(categories),
                                   main_departments=main_departments,
                                   total_count=total_count,
