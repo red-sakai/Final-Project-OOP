@@ -54,7 +54,7 @@
                 </div>
                 <div class="pay-right">
                     <p class="pay-desc">Select your payment method below:</p>
-                    <form class="payment-form" id="paymentForm" autocomplete="off">
+                    <form class="payment-form" id="paymentForm" autocomplete="off" method="post">
                         <div class="pay-methods">
                             <div class="pay-method-card selected">
                                 <label>
@@ -124,6 +124,18 @@
                             </div>
                             <div class="cod-info">You will pay the rider upon delivery.</div>
                         </div>
+                        <!-- Add hidden fields to POST dropoff and schedule if not already present -->
+                        <input type="hidden" name="dropoff" id="payment-dropoff">
+                        <input type="hidden" name="schedule" id="payment-schedule">
+                        <!-- Hidden inputs for geocoded coordinates -->
+                        <input type="hidden" name="credit_latitude" id="credit-lat">
+                        <input type="hidden" name="credit_longitude" id="credit-lon">
+                        <input type="hidden" name="gcash_latitude" id="gcash-lat">
+                        <input type="hidden" name="gcash_longitude" id="gcash-lon">
+                        <input type="hidden" name="paypal_latitude" id="paypal-lat">
+                        <input type="hidden" name="paypal_longitude" id="paypal-lon">
+                        <input type="hidden" name="cod_latitude" id="cod-lat">
+                        <input type="hidden" name="cod_longitude" id="cod-lon">
                         <button type="submit" class="pay-btn" id="payBtn">
                             <span class="btn-text">Pay Now</span>
                             <span class="btn-icon">→</span>
@@ -232,5 +244,15 @@
     
     <!-- Load your external JavaScript file -->
     <script src="{{ url_for('static', filename='payment-wall.js') }}"></script>
+    <script>
+        // Set hidden dropoff and schedule fields if coming from carbook
+        document.addEventListener('DOMContentLoaded', function() {
+            // Try to get from localStorage/sessionStorage or URL if needed
+            var dropoff = sessionStorage.getItem('carbook_dropoff') || '';
+            var schedule = sessionStorage.getItem('carbook_schedule') || '';
+            if (dropoff) document.getElementById('payment-dropoff').value = dropoff;
+            if (schedule) document.getElementById('payment-schedule').value = schedule;
+        });
+    </script>
 </body>
 </html>
