@@ -10,6 +10,9 @@ document.addEventListener("DOMContentLoaded", function () {
     
     document.getElementById('bookingForm').addEventListener('submit', function(event) {
         event.preventDefault();
+        // Store dropoff and schedule in sessionStorage for payment-wall
+        sessionStorage.setItem('carbook_dropoff', document.getElementById('dropoff').value);
+        sessionStorage.setItem('carbook_schedule', document.getElementById('schedule').value);
         if (this.checkValidity()) {
             openPopup();
         } else {
