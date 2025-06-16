@@ -1462,7 +1462,7 @@ class HexaHaulApp:
             # --- Insert order into MySQL on POST ---
             if request.method == 'POST':
                 # Extract order details from form
-                order_item_id = generate_order_id(vehicle_type)
+                order_item_id = request.form.get('order_item_id') or generate_order_id(vehicle_type)
                 origin_branch = request.form.get('dropoff') or 'Manila'  # Default fallback
                 schedule_date = request.form.get('schedule')
                 

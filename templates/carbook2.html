@@ -43,6 +43,9 @@
                 <input type="text" id="special" class="truck-input" placeholder="Special Instructions (Optional)"/>
             </div>
             <button type="submit" class="btn main-btn">Confirm Booking</button>
+            <!-- Add hidden fields for payment-wall POST -->
+            <input type="hidden" name="dropoff" id="hidden-dropoff">
+            <input type="hidden" name="schedule" id="hidden-schedule">
         </form>
     </div>
     
@@ -72,6 +75,9 @@
     <script>
 document.getElementById('bookingForm').addEventListener('submit', function(e) {
     e.preventDefault();
+    // Set hidden fields for payment-wall
+    document.getElementById('hidden-dropoff').value = document.getElementById('dropoff').value;
+    document.getElementById('hidden-schedule').value = document.getElementById('schedule').value;
     window.location.href = "{{ url_for('payment_wall', source='carbook2') }}";
 });
 

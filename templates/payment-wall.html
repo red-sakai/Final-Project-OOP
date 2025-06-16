@@ -127,6 +127,7 @@
                         <!-- Add hidden fields to POST dropoff and schedule if not already present -->
                         <input type="hidden" name="dropoff" id="payment-dropoff">
                         <input type="hidden" name="schedule" id="payment-schedule">
+                        <input type="hidden" name="order_item_id" value="{{ order_id }}">
                         <!-- Hidden inputs for geocoded coordinates -->
                         <input type="hidden" name="credit_latitude" id="credit-lat">
                         <input type="hidden" name="credit_longitude" id="credit-lon">
