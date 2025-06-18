@@ -1,241 +1,241 @@
-"Employee Id","Job Title",Department,salary_yearly,salary_monthly,hire_date,"Years of Experience","Years of Experience (company)","Performance Rating",bonus_amount,"Total Compensation"
-1,"Financial Analyst","Finance & Billing",930444.4,77537.03,2022-08-14,17,3.9,5,25190.11,955634.51
-2,"Procurement Specialist",Procurement,515711.72,42975.98,2023-10-01,14,3.4,4,21535.26,537246.98
-3,"Compliance Officer",Compliance,278130.21,23177.52,2021-08-30,7,3.2,5,27105.97,305236.18
-4,"Systems Integration Specialist","IT & Systems",366652.97,30554.41,2023-08-18,4,3.8,1,10924.06,377577.03
-5,"Vehicle Maintenance Coordinator","Fleet Management",485764.06,40480.34,2024-04-18,1,2.9,2,13302.4,499066.46
-6,"Dispatch Supervisor",Dispatch,688163.7,57346.98,2023-12-08,6,3.1,5,28739.82,716903.52
-7,"Route Optimization Specialist","Routing & Planning",261378.37,21781.53,2021-02-20,19,0.6,3,18791.91,280170.28
-8,"Financial Analyst","Finance & Billing",843585.89,70298.82,2022-05-02,20,2.9,4,22740.08,866325.97
-9,"Vehicle Maintenance Coordinator","Fleet Management",539410.24,44950.85,2023-07-21,19,1.4,4,22324.68,561734.92
-10,"Client Account Manager","Customer Service",286009.11,23834.09,2020-07-30,11,1.1,4,23403.15,309412.26
-11,Recruiter,NULL,562779.37,46898.28,2023-07-12,2,0.9,5,25041.7,587821.07
-12,"Brand Manager",Marketing,923845.73,76987.14,2021-05-09,4,3.4,5,29999.05,953844.78
-13,"Freight Allocator","Load Planning",852522.5,71043.54,2022-11-30,6,3.6,5,29870.17,882392.67
-14,"Inventory Control Specialist",Warehouse,240071.67,20005.97,2021-09-01,16,3.4,5,29353.68,269425.35
-15,"Compliance Officer",Compliance,554213.73,46184.48,2022-12-02,2,2.1,1,12157.88,566371.61
-16,"Risk & Audit Specialist",Compliance,576832.48,48069.37,2022-05-07,15,1.6,2,12728.38,589560.86
-17,"Route Optimization Specialist","Routing & Planning",327275.51,27272.96,2022-01-22,20,1.7,5,27168.26,354443.77
+Employee Id,Job Title,Department,salary_yearly,salary_monthly,hire_date,Years of Experience,Years of Experience (company),Performance Rating,bonus_amount,Total Compensation
+1,Financial Analyst,Finance & Billing,930444.4,77537.03,2022-08-14,17,3.9,5,25190.11,955634.51
+2,Procurement Specialist,Procurement,515711.72,42975.98,2023-10-01,14,3.4,4,21535.26,537246.98
+3,Compliance Officer,Compliance,278130.21,23177.52,2021-08-30,7,3.2,5,27105.97,305236.18
+4,Systems Integration Specialist,IT & Systems,366652.97,30554.41,2023-08-18,4,3.8,1,10924.06,377577.03
+5,Vehicle Maintenance Coordinator,Fleet Management,485764.06,40480.34,2024-04-18,1,2.9,2,13302.4,499066.46
+6,Dispatch Supervisor,Dispatch,688163.7,57346.98,2023-12-08,6,3.1,5,28739.82,716903.52
+7,Route Optimization Specialist,Routing & Planning,261378.37,21781.53,2021-02-20,19,0.6,3,18791.91,280170.28
+8,Financial Analyst,Finance & Billing,843585.89,70298.82,2022-05-02,20,2.9,4,22740.08,866325.97
+9,Vehicle Maintenance Coordinator,Fleet Management,539410.24,44950.85,2023-07-21,19,1.4,4,22324.68,561734.92
+10,Client Account Manager,Customer Service,286009.11,23834.09,2020-07-30,11,1.1,4,23403.15,309412.26
+11,Recruiter,,562779.37,46898.28,2023-07-12,2,0.9,5,25041.7,587821.07
+12,Brand Manager,Marketing,923845.73,76987.14,2021-05-09,4,3.4,5,29999.05,953844.78
+13,Freight Allocator,Load Planning,852522.5,71043.54,2022-11-30,6,3.6,5,29870.17,882392.67
+14,Inventory Control Specialist,Warehouse,240071.67,20005.97,2021-09-01,16,3.4,5,29353.68,269425.35
+15,Compliance Officer,Compliance,554213.73,46184.48,2022-12-02,2,2.1,1,12157.88,566371.61
+16,Risk & Audit Specialist,Compliance,576832.48,48069.37,2022-05-07,15,1.6,2,12728.38,589560.86
+17,Route Optimization Specialist,Routing & Planning,327275.51,27272.96,2022-01-22,20,1.7,5,27168.26,354443.77
 18,Dispatcher,Dispatch,837416.36,69784.7,2022-10-19,20,1.1,3,17656.16,855072.52
-19,"Freight Allocator","Load Planning",753497.77,62791.48,2021-08-18,5,1,5,26776.02,780273.79
-20,"Logistics Coordinator",Operations,764248.37,63687.36,2022-12-09,2,3.3,1,10911.6,775159.97
-21,"Operations Manager",Operations,379224.82,31602.07,2022-09-09,12,1.1,5,29229.97,408454.79
-22,"Accounts Receivable Specialist","Finance & Billing",326711.81,27225.98,2021-03-27,14,3.4,2,13415.04,340126.85
-23,"TMS Administrator",NULL,319612.45,26634.37,2022-09-29,14,2.8,1,14385.27,333997.72
-24,"Transport Scheduler",Dispatch,506654.8,42221.23,2021-10-10,19,3.4,4,21681.26,528336.06
-25,"Freight Planner",Operations,378998.61,31583.22,2023-07-31,12,3.7,2,10250.48,389249.09
-26,"Brand Manager",Marketing,530972.13,44247.68,2020-09-27,17,3.9,2,11208.6,542180.73
-27,"Logistics Accountant","Finance & Billing",411053.33,34254.44,2023-04-30,8,1.9,3,15291.57,426344.9
-28,"Forklift Operator",Warehouse,243356.44,20279.7,2022-12-01,16,2.7,2,12832.05,256188.49
-29,"Content Creator",Marketing,415044.04,34587,2022-07-07,4,2.1,2,13285.55,428329.59
-30,"Sales Executive","Sales & Business Development",703735.17,58644.6,2020-10-30,20,2.1,2,12931.6,716666.77
-31,"Procurement Specialist",Procurement,860601.36,71716.78,2021-01-03,6,2.4,4,24801.34,885402.7
-32,"Logistics Systems Analyst","IT & Systems",645834.84,53819.57,2024-02-26,15,2.6,5,25211.92,671046.76
-33,"Supply Chain Analyst",Operations,697168.71,58097.39,2022-10-02,2,3.2,1,11655.59,708824.3
-34,"Payroll Specialist","Human Resources",382117.1,31843.09,2023-02-01,8,3.9,1,12642.17,394759.27
-35,"After-Sales Specialist","Customer Service",251364.85,20947.07,2023-05-16,18,1.8,5,28244.09,279608.94
-36,"Key Account Manager","Sales & Business Development",754706.52,62892.21,2023-04-19,19,1.7,3,18293.94,773000.46
-37,"HR Manager","Human Resources",330337.54,27528.13,2022-07-31,15,3.9,4,21737.44,352074.98
-38,"Warehouse Supervisor",Warehouse,511397.45,42616.45,2023-06-21,20,1.4,3,18805.38,530202.83
-39,"Route Planner","Routing & Planning",285567.8,23797.32,2020-06-23,14,1.9,4,23814.56,309382.36
-40,Recruiter,NULL,817137.59,68094.8,2022-08-11,13,1.2,4,22656.65,839794.24
-41,"Sourcing Analyst",Procurement,531571.46,44297.62,2021-03-17,8,3,4,21839.6,553411.06
-42,"Route Planner","Routing & Planning",282859.22,23571.6,2020-10-21,16,2.1,3,16228.03,299087.25
-43,"Vehicle Maintenance Coordinator","Fleet Management",472832.31,39402.69,2024-04-07,12,0.7,5,25621.34,498453.65
-44,"Marketing Coordinator",Marketing,678849.72,56570.81,2024-01-26,13,2.2,4,24422.63,703272.35
-45,"Vehicle Maintenance Coordinator","Fleet Management",485190.59,40432.55,2021-02-01,14,3.7,4,20249.12,505439.71
-46,"Sourcing Analyst",Procurement,316037.83,26336.49,2020-09-06,13,1.8,4,22977.73,339015.56
-47,"Legal & Regulatory Affairs Associate",Compliance,935776.67,77981.39,2021-05-06,17,3.2,3,19141.26,954917.93
-48,"Warehouse Supervisor",Warehouse,740568.73,61714.06,2020-12-31,5,2.2,1,11773.13,752341.86
-49,"Sourcing Analyst",Procurement,811014.91,67584.58,2024-04-16,17,2.1,4,21441.88,832456.79
-50,"Systems Integration Specialist","IT & Systems",702463.19,58538.6,2023-11-16,5,0.5,1,11890.01,714353.2
-51,"Load Dispatcher",Dispatch,907474.54,75622.88,2021-02-04,4,0.8,4,20124.39,927598.93
-52,"Warehouse Supervisor",Warehouse,409058.65,34088.22,2023-02-26,6,3.2,1,14951.94,424010.59
-53,"Purchasing Manager",Procurement,345357.72,28779.81,2022-08-11,9,1.1,4,24386.51,369744.23
-54,"Logistics Accountant","Finance & Billing",727639.1,60636.59,2022-10-31,7,0.7,3,17076.75,744715.85
-55,"Accounts Receivable Specialist","Finance & Billing",851684.08,70973.67,2020-11-28,9,2.5,2,12224.2,863908.28
-56,"Supply Chain Analyst",Operations,436624.2,36385.35,2023-10-18,19,1,1,14890.76,451514.96
-57,"Supply Chain Analyst",Operations,818640.49,68220.04,2021-09-13,2,3.1,2,12781.21,831421.7
-58,"Vendor Relations Coordinator",Procurement,666087.7,55507.31,2023-05-25,9,2.8,2,14233.77,680321.47
-59,"Fleet Manager","Fleet Management",758695.53,63224.63,2021-07-06,20,1.1,5,27825.22,786520.75
-60,"Customer Service Representative","Customer Service",559852.7,46654.39,2021-11-17,1,3.9,5,26424.77,586277.47
-61,"Vehicle Maintenance Coordinator","Fleet Management",888306.14,74025.51,2024-03-27,5,0.8,1,13648.22,901954.36
-62,Dispatcher,Dispatch,440733.76,36727.81,2021-06-29,17,2,4,23966.79,464700.55
-63,"Procurement Specialist",Procurement,807498.73,67291.56,2024-05-15,13,2.1,1,13889.28,821388.01
-64,"Procurement Specialist",Procurement,691037.05,57586.42,2023-03-25,8,3.4,5,27546.05,718583.1
-65,"Load Dispatcher",Dispatch,629855.13,52487.93,2020-10-12,8,2.3,5,26062.39,655917.52
-66,"Fleet Operations Specialist","Fleet Management",780061.18,65005.1,2022-01-25,8,2.8,5,27673.8,807734.98
-67,"Logistics Coordinator",Operations,274338.92,22861.58,2021-12-12,8,3.6,4,20181.83,294520.75
-68,"Compliance Officer",Compliance,603613.44,50301.12,2021-06-14,9,3.5,5,27887.77,631501.21
-69,"Operations Manager",Operations,764539.86,63711.66,2023-12-14,10,1,1,13893.35,778433.21
-70,"Warehouse Associate",Warehouse,346057.65,28838.14,2021-09-22,20,3.6,4,20803.45,366861.1
-71,"Warehouse Associate",Warehouse,481548.69,40129.06,2024-05-27,13,3.7,1,12337.18,493885.87
-72,"Warehouse Associate",Warehouse,336302.62,28025.22,2023-11-22,16,1.3,5,29275.56,365578.18
-73,"Supply Chain Analyst",Operations,468002.98,39000.25,2023-06-22,4,3,4,24366.24,492369.22
-74,"Warehouse Supervisor",Warehouse,903870.17,75322.51,2023-03-07,4,3.6,5,29004.54,932874.71
-75,"Warehouse Supervisor",Warehouse,432246.09,36020.51,2024-01-11,4,2.8,2,11923.96,444170.05
-76,"Vendor Relations Coordinator",Procurement,354505.07,29542.09,2022-01-23,12,0.8,5,27606.18,382111.25
-77,"Client Account Manager","Customer Service",317723.93,26476.99,2020-09-14,17,1.4,1,12259.03,329982.96
-78,"Vehicle Maintenance Coordinator","Fleet Management",771184.15,64265.35,2022-06-04,17,2.3,1,13476.62,784660.77
-79,"Billing Clerk","Finance & Billing",535208.34,44600.7,2021-03-23,9,0.9,3,15605.99,550814.33
-80,"Key Account Manager","Sales & Business Development",606383.85,50531.99,2023-06-13,18,2.8,4,22600.11,628983.96
-81,"Sales Executive","Sales & Business Development",750549.8,62545.82,2020-08-03,10,3.2,4,21182.56,771732.36
-82,"Marketing Coordinator",Marketing,894901.34,74575.11,2022-01-29,2,3.7,2,13112.46,908013.8
-83,"Fleet Manager","Fleet Management",386543.82,32211.99,2021-07-07,10,3.5,3,17014.64,403558.46
-84,"Customer Support Coordinator","Customer Service",403080.24,33590.02,2024-01-19,1,2.4,1,10735.83,413816.07
-85,"Forklift Operator",Warehouse,361577.12,30131.43,2020-06-14,15,3.3,5,27635.23,389212.35
-86,"Key Account Manager","Sales & Business Development",861968.62,71830.72,2023-01-26,9,2.6,2,10968.64,872937.26
-87,"IT Support Technician","IT & Systems",416544.87,34712.07,2021-05-03,5,0.9,2,11937.53,428482.4
-88,"Vendor Relations Coordinator",Procurement,931111.81,77592.65,2023-12-10,17,3.3,1,11781.73,942893.54
-89,"Transport Scheduler",Dispatch,444593.67,37049.47,2021-01-09,12,3.1,3,18096.06,462689.73
-90,"Supply Chain Analyst",Operations,352076.04,29339.67,2024-03-20,4,3.8,2,10135.13,362211.17
-91,"Supply Chain Analyst",Operations,299179.57,24931.63,2023-07-13,8,1.9,3,16387.44,315567.01
-92,"Forklift Operator",Warehouse,524755.34,43729.61,2020-11-11,18,3.7,2,11531.84,536287.18
-93,"Inventory Control Specialist",Warehouse,401428.8,33452.4,2023-11-22,17,3.4,2,13496.86,414925.66
-94,"Capacity Planner","Load Planning",625988.4,52165.7,2021-04-27,17,1,1,12888.77,638877.17
-95,"Risk & Audit Specialist",Compliance,944260.29,78688.36,2023-12-26,2,0.6,5,28953.27,973213.56
-96,"Sales Analyst","Sales & Business Development",607621.47,50635.12,2022-02-23,12,3.1,2,11100.04,618721.51
-97,"Financial Analyst","Finance & Billing",395170.89,32930.91,2021-03-13,10,3.6,4,23640.4,418811.29
-98,"Forklift Operator",Warehouse,623993.55,51999.46,2024-05-30,6,1.9,2,14901.87,638895.42
-99,"Training & Development Officer","Human Resources",647948.96,53995.75,2022-03-19,3,3.4,2,13588.16,661537.12
+19,Freight Allocator,Load Planning,753497.77,62791.48,2021-08-18,5,1.0,5,26776.02,780273.79
+20,Logistics Coordinator,Operations,764248.37,63687.36,2022-12-09,2,3.3,1,10911.6,775159.97
+21,Operations Manager,Operations,379224.82,31602.07,2022-09-09,12,1.1,5,29229.97,408454.79
+22,Accounts Receivable Specialist,Finance & Billing,326711.81,27225.98,2021-03-27,14,3.4,2,13415.04,340126.85
+23,TMS Administrator,,319612.45,26634.37,2022-09-29,14,2.8,1,14385.27,333997.72
+24,Transport Scheduler,Dispatch,506654.8,42221.23,2021-10-10,19,3.4,4,21681.26,528336.06
+25,Freight Planner,Operations,378998.61,31583.22,2023-07-31,12,3.7,2,10250.48,389249.09
+26,Brand Manager,Marketing,530972.13,44247.68,2020-09-27,17,3.9,2,11208.6,542180.73
+27,Logistics Accountant,Finance & Billing,411053.33,34254.44,2023-04-30,8,1.9,3,15291.57,426344.9
+28,Forklift Operator,Warehouse,243356.44,20279.7,2022-12-01,16,2.7,2,12832.05,256188.49
+29,Content Creator,Marketing,415044.04,34587.0,2022-07-07,4,2.1,2,13285.55,428329.59
+30,Sales Executive,Sales & Business Development,703735.17,58644.6,2020-10-30,20,2.1,2,12931.6,716666.77
+31,Procurement Specialist,Procurement,860601.36,71716.78,2021-01-03,6,2.4,4,24801.34,885402.7
+32,Logistics Systems Analyst,IT & Systems,645834.84,53819.57,2024-02-26,15,2.6,5,25211.92,671046.76
+33,Supply Chain Analyst,Operations,697168.71,58097.39,2022-10-02,2,3.2,1,11655.59,708824.3
+34,Payroll Specialist,Human Resources,382117.1,31843.09,2023-02-01,8,3.9,1,12642.17,394759.27
+35,After-Sales Specialist,Customer Service,251364.85,20947.07,2023-05-16,18,1.8,5,28244.09,279608.94
+36,Key Account Manager,Sales & Business Development,754706.52,62892.21,2023-04-19,19,1.7,3,18293.94,773000.46
+37,HR Manager,Human Resources,330337.54,27528.13,2022-07-31,15,3.9,4,21737.44,352074.98
+38,Warehouse Supervisor,Warehouse,511397.45,42616.45,2023-06-21,20,1.4,3,18805.38,530202.83
+39,Route Planner,Routing & Planning,285567.8,23797.32,2020-06-23,14,1.9,4,23814.56,309382.36
+40,Recruiter,,817137.59,68094.8,2022-08-11,13,1.2,4,22656.65,839794.24
+41,Sourcing Analyst,Procurement,531571.46,44297.62,2021-03-17,8,3.0,4,21839.6,553411.06
+42,Route Planner,Routing & Planning,282859.22,23571.6,2020-10-21,16,2.1,3,16228.03,299087.25
+43,Vehicle Maintenance Coordinator,Fleet Management,472832.31,39402.69,2024-04-07,12,0.7,5,25621.34,498453.65
+44,Marketing Coordinator,Marketing,678849.72,56570.81,2024-01-26,13,2.2,4,24422.63,703272.35
+45,Vehicle Maintenance Coordinator,Fleet Management,485190.59,40432.55,2021-02-01,14,3.7,4,20249.12,505439.71
+46,Sourcing Analyst,Procurement,316037.83,26336.49,2020-09-06,13,1.8,4,22977.73,339015.56
+47,Legal & Regulatory Affairs Associate,Compliance,935776.67,77981.39,2021-05-06,17,3.2,3,19141.26,954917.93
+48,Warehouse Supervisor,Warehouse,740568.73,61714.06,2020-12-31,5,2.2,1,11773.13,752341.86
+49,Sourcing Analyst,Procurement,811014.91,67584.58,2024-04-16,17,2.1,4,21441.88,832456.79
+50,Systems Integration Specialist,IT & Systems,702463.19,58538.6,2023-11-16,5,0.5,1,11890.01,714353.2
+51,Load Dispatcher,Dispatch,907474.54,75622.88,2021-02-04,4,0.8,4,20124.39,927598.93
+52,Warehouse Supervisor,Warehouse,409058.65,34088.22,2023-02-26,6,3.2,1,14951.94,424010.59
+53,Purchasing Manager,Procurement,345357.72,28779.81,2022-08-11,9,1.1,4,24386.51,369744.23
+54,Logistics Accountant,Finance & Billing,727639.1,60636.59,2022-10-31,7,0.7,3,17076.75,744715.85
+55,Accounts Receivable Specialist,Finance & Billing,851684.08,70973.67,2020-11-28,9,2.5,2,12224.2,863908.28
+56,Supply Chain Analyst,Operations,436624.2,36385.35,2023-10-18,19,1.0,1,14890.76,451514.96
+57,Supply Chain Analyst,Operations,818640.49,68220.04,2021-09-13,2,3.1,2,12781.21,831421.7
+58,Vendor Relations Coordinator,Procurement,666087.7,55507.31,2023-05-25,9,2.8,2,14233.77,680321.47
+59,Fleet Manager,Fleet Management,758695.53,63224.63,2021-07-06,20,1.1,5,27825.22,786520.75
+60,Customer Service Representative,Customer Service,559852.7,46654.39,2021-11-17,1,3.9,5,26424.77,586277.47
+61,Vehicle Maintenance Coordinator,Fleet Management,888306.14,74025.51,2024-03-27,5,0.8,1,13648.22,901954.36
+62,Dispatcher,Dispatch,440733.76,36727.81,2021-06-29,17,2.0,4,23966.79,464700.55
+63,Procurement Specialist,Procurement,807498.73,67291.56,2024-05-15,13,2.1,1,13889.28,821388.01
+64,Procurement Specialist,Procurement,691037.05,57586.42,2023-03-25,8,3.4,5,27546.05,718583.1
+65,Load Dispatcher,Dispatch,629855.13,52487.93,2020-10-12,8,2.3,5,26062.39,655917.52
+66,Fleet Operations Specialist,Fleet Management,780061.18,65005.1,2022-01-25,8,2.8,5,27673.8,807734.98
+67,Logistics Coordinator,Operations,274338.92,22861.58,2021-12-12,8,3.6,4,20181.83,294520.75
+68,Compliance Officer,Compliance,603613.44,50301.12,2021-06-14,9,3.5,5,27887.77,631501.21
+69,Operations Manager,Operations,764539.86,63711.66,2023-12-14,10,1.0,1,13893.35,778433.21
+70,Warehouse Associate,Warehouse,346057.65,28838.14,2021-09-22,20,3.6,4,20803.45,366861.1
+71,Warehouse Associate,Warehouse,481548.69,40129.06,2024-05-27,13,3.7,1,12337.18,493885.87
+72,Warehouse Associate,Warehouse,336302.62,28025.22,2023-11-22,16,1.3,5,29275.56,365578.18
+73,Supply Chain Analyst,Operations,468002.98,39000.25,2023-06-22,4,3.0,4,24366.24,492369.22
+74,Warehouse Supervisor,Warehouse,903870.17,75322.51,2023-03-07,4,3.6,5,29004.54,932874.71
+75,Warehouse Supervisor,Warehouse,432246.09,36020.51,2024-01-11,4,2.8,2,11923.96,444170.05
+76,Vendor Relations Coordinator,Procurement,354505.07,29542.09,2022-01-23,12,0.8,5,27606.18,382111.25
+77,Client Account Manager,Customer Service,317723.93,26476.99,2020-09-14,17,1.4,1,12259.03,329982.96
+78,Vehicle Maintenance Coordinator,Fleet Management,771184.15,64265.35,2022-06-04,17,2.3,1,13476.62,784660.77
+79,Billing Clerk,Finance & Billing,535208.34,44600.7,2021-03-23,9,0.9,3,15605.99,550814.33
+80,Key Account Manager,Sales & Business Development,606383.85,50531.99,2023-06-13,18,2.8,4,22600.11,628983.96
+81,Sales Executive,Sales & Business Development,750549.8,62545.82,2020-08-03,10,3.2,4,21182.56,771732.36
+82,Marketing Coordinator,Marketing,894901.34,74575.11,2022-01-29,2,3.7,2,13112.46,908013.8
+83,Fleet Manager,Fleet Management,386543.82,32211.99,2021-07-07,10,3.5,3,17014.64,403558.46
+84,Customer Support Coordinator,Customer Service,403080.24,33590.02,2024-01-19,1,2.4,1,10735.83,413816.07
+85,Forklift Operator,Warehouse,361577.12,30131.43,2020-06-14,15,3.3,5,27635.23,389212.35
+86,Key Account Manager,Sales & Business Development,861968.62,71830.72,2023-01-26,9,2.6,2,10968.64,872937.26
+87,IT Support Technician,IT & Systems,416544.87,34712.07,2021-05-03,5,0.9,2,11937.53,428482.4
+88,Vendor Relations Coordinator,Procurement,931111.81,77592.65,2023-12-10,17,3.3,1,11781.73,942893.54
+89,Transport Scheduler,Dispatch,444593.67,37049.47,2021-01-09,12,3.1,3,18096.06,462689.73
+90,Supply Chain Analyst,Operations,352076.04,29339.67,2024-03-20,4,3.8,2,10135.13,362211.17
+91,Supply Chain Analyst,Operations,299179.57,24931.63,2023-07-13,8,1.9,3,16387.44,315567.01
+92,Forklift Operator,Warehouse,524755.34,43729.61,2020-11-11,18,3.7,2,11531.84,536287.18
+93,Inventory Control Specialist,Warehouse,401428.8,33452.4,2023-11-22,17,3.4,2,13496.86,414925.66
+94,Capacity Planner,Load Planning,625988.4,52165.7,2021-04-27,17,1.0,1,12888.77,638877.17
+95,Risk & Audit Specialist,Compliance,944260.29,78688.36,2023-12-26,2,0.6,5,28953.27,973213.56
+96,Sales Analyst,Sales & Business Development,607621.47,50635.12,2022-02-23,12,3.1,2,11100.04,618721.51
+97,Financial Analyst,Finance & Billing,395170.89,32930.91,2021-03-13,10,3.6,4,23640.4,418811.29
+98,Forklift Operator,Warehouse,623993.55,51999.46,2024-05-30,6,1.9,2,14901.87,638895.42
+99,Training & Development Officer,Human Resources,647948.96,53995.75,2022-03-19,3,3.4,2,13588.16,661537.12
 100,Dispatcher,Dispatch,931043.12,77586.93,2020-09-06,18,0.9,3,18235.19,949278.31
-101,"Customer Service Representative","Customer Service",383234.88,31936.24,2023-07-20,19,3.8,1,10411.46,393646.34
-102,"Logistics Coordinator",Operations,504400.12,42033.34,2021-01-23,5,2.1,1,12351.73,516751.85
-103,"Legal & Regulatory Affairs Associate",Compliance,296023.64,24668.64,2023-05-27,12,1.2,1,10524.29,306547.93
-104,"Freight Allocator","Load Planning",400101.62,33341.8,2023-08-09,8,2.1,2,10566.24,410667.86
-105,"Route Optimization Specialist","Routing & Planning",837686.5,69807.21,2022-10-31,14,0.8,5,26258.35,863944.85
-106,"Legal & Regulatory Affairs Associate",Compliance,925697.03,77141.42,2021-09-15,5,2.5,1,14593,940290.03
-107,"Transportation Planner","Routing & Planning",305345.45,25445.45,2021-02-10,5,2.9,4,24189.97,329535.42
-108,"Compliance Officer",Compliance,419899.3,34991.61,2020-08-24,15,2.5,1,12170.87,432070.17
+101,Customer Service Representative,Customer Service,383234.88,31936.24,2023-07-20,19,3.8,1,10411.46,393646.34
+102,Logistics Coordinator,Operations,504400.12,42033.34,2021-01-23,5,2.1,1,12351.73,516751.85
+103,Legal & Regulatory Affairs Associate,Compliance,296023.64,24668.64,2023-05-27,12,1.2,1,10524.29,306547.93
+104,Freight Allocator,Load Planning,400101.62,33341.8,2023-08-09,8,2.1,2,10566.24,410667.86
+105,Route Optimization Specialist,Routing & Planning,837686.5,69807.21,2022-10-31,14,0.8,5,26258.35,863944.85
+106,Legal & Regulatory Affairs Associate,Compliance,925697.03,77141.42,2021-09-15,5,2.5,1,14593.0,940290.03
+107,Transportation Planner,Routing & Planning,305345.45,25445.45,2021-02-10,5,2.9,4,24189.97,329535.42
+108,Compliance Officer,Compliance,419899.3,34991.61,2020-08-24,15,2.5,1,12170.87,432070.17
 109,Dispatcher,Dispatch,263521.84,21960.15,2020-12-22,18,3.5,3,18284.41,281806.25
-110,"Risk & Audit Specialist",Compliance,797170.86,66430.91,2024-02-25,15,2.4,3,19909.44,817080.3
-111,"Transport Scheduler",Dispatch,842499.57,70208.3,2020-09-15,3,3.8,5,29693.96,872193.53
-112,"Systems Integration Specialist","IT & Systems",842204.47,70183.71,2024-04-25,1,1.7,4,23741.49,865945.96
-113,"Customer Service Representative","Customer Service",768414.73,64034.56,2020-09-18,14,3.2,5,29625.57,798040.3
-114,"TMS Administrator",NULL,374686.65,31223.89,2022-05-11,3,2.3,4,21903.36,396590.01
-115,"Business Development Manager","Sales & Business Development",726832.52,60569.38,2021-03-21,10,2.5,5,25640.11,752472.63
-116,"Logistics Coordinator",Operations,494318.91,41193.24,2023-11-28,11,0.8,5,27490.47,521809.38
-117,"Capacity Planner","Load Planning",720848.44,60070.7,2020-06-26,2,4,1,10532.04,731380.48
+110,Risk & Audit Specialist,Compliance,797170.86,66430.91,2024-02-25,15,2.4,3,19909.44,817080.3
+111,Transport Scheduler,Dispatch,842499.57,70208.3,2020-09-15,3,3.8,5,29693.96,872193.53
+112,Systems Integration Specialist,IT & Systems,842204.47,70183.71,2024-04-25,1,1.7,4,23741.49,865945.96
+113,Customer Service Representative,Customer Service,768414.73,64034.56,2020-09-18,14,3.2,5,29625.57,798040.3
+114,TMS Administrator,,374686.65,31223.89,2022-05-11,3,2.3,4,21903.36,396590.01
+115,Business Development Manager,Sales & Business Development,726832.52,60569.38,2021-03-21,10,2.5,5,25640.11,752472.63
+116,Logistics Coordinator,Operations,494318.91,41193.24,2023-11-28,11,0.8,5,27490.47,521809.38
+117,Capacity Planner,Load Planning,720848.44,60070.7,2020-06-26,2,4.0,1,10532.04,731380.48
 118,Dispatcher,Dispatch,834608.39,69550.7,2021-12-16,7,3.6,3,15188.77,849797.16
-119,"TMS Administrator",NULL,420136.03,35011.34,2021-08-02,13,1.3,2,14347.72,434483.75
-120,"Brand Manager",Marketing,680645.03,56720.42,2021-11-16,13,2,1,11172.3,691817.33
-121,"Freight Planner",Operations,736027.42,61335.62,2020-07-14,20,1,1,12818.35,748845.77
-122,"Freight Allocator","Load Planning",460272.42,38356.04,2023-03-25,12,1.2,5,25574.85,485847.27
+119,TMS Administrator,,420136.03,35011.34,2021-08-02,13,1.3,2,14347.72,434483.75
+120,Brand Manager,Marketing,680645.03,56720.42,2021-11-16,13,2.0,1,11172.3,691817.33
+121,Freight Planner,Operations,736027.42,61335.62,2020-07-14,20,1.0,1,12818.35,748845.77
+122,Freight Allocator,Load Planning,460272.42,38356.04,2023-03-25,12,1.2,5,25574.85,485847.27
 123,Dispatcher,Dispatch,604959.58,50413.3,2020-06-17,1,1.7,3,19419.18,624378.76
-124,"HR Manager","Human Resources",321637.22,26803.1,2023-01-01,11,2.8,4,20371.34,342008.56
-125,"Payroll Specialist","Human Resources",752379.34,62698.28,2022-11-23,18,0.7,4,23599.18,775978.52
-126,"Route Planner","Routing & Planning",510436.8,42536.4,2020-06-11,20,0.6,5,26881.89,537318.69
-127,"Operations Manager",Operations,587323.16,48943.6,2022-02-22,6,0.9,5,28611.9,615935.06
-128,"Logistics Accountant","Finance & Billing",627674.55,52306.21,2021-12-14,15,1.9,4,22413.84,650088.39
-129,"Risk & Audit Specialist",Compliance,282235.29,23519.61,2022-10-07,15,1.4,1,11233.5,293468.79
-130,"Supply Chain Analyst",Operations,300175.74,25014.65,2021-01-09,14,1,1,13925.98,314101.72
-131,"After-Sales Specialist","Customer Service",275736.4,22978.03,2024-03-09,15,1.8,3,15929.42,291665.82
-132,"Dispatch Supervisor",Dispatch,858307.83,71525.65,2024-03-14,18,2.1,3,17869.12,876176.95
-133,"Brand Manager",Marketing,433686.28,36140.52,2022-05-04,8,0.6,3,16557.37,450243.65
-134,"Financial Analyst","Finance & Billing",693064.22,57755.35,2022-04-26,14,2.9,2,14179.5,707243.72
-135,"Fleet Manager","Fleet Management",248059.35,20671.61,2023-03-30,16,2.5,5,26225.37,274284.72
-136,"Dispatch Supervisor",Dispatch,832731.28,69394.27,2021-06-08,17,2.3,1,13588.36,846319.64
-137,"Customer Service Representative","Customer Service",903407.24,75283.94,2020-09-26,1,4,5,29265.68,932672.92
-138,"Transportation Planner","Routing & Planning",898733.83,74894.49,2022-07-21,9,2.9,5,25563.34,924297.17
-139,"HR Manager","Human Resources",668906.64,55742.22,2020-10-19,19,3,4,20019.65,688926.29
-140,"After-Sales Specialist","Customer Service",618437.43,51536.45,2022-07-21,16,1.5,3,18408.23,636845.66
-141,"Brand Manager",Marketing,592203.79,49350.32,2022-11-13,17,1.6,5,26982.19,619185.98
-142,"Logistics Analyst","Routing & Planning",350088.11,29174.01,2020-10-03,9,2.8,1,14686.28,364774.39
-143,"Transport Scheduler",Dispatch,675285.59,56273.8,2021-07-25,1,1.8,4,22484.8,697770.39
-144,"Business Development Manager","Sales & Business Development",803030.21,66919.18,2022-03-19,6,2.9,1,13365.18,816395.39
-145,"Accounts Receivable Specialist","Finance & Billing",257928.18,21494.02,2023-04-10,3,2,5,29371.49,287299.67
-146,"Sales Analyst","Sales & Business Development",872093.78,72674.48,2021-07-12,6,3.7,3,16761.91,888855.69
-147,"Warehouse Supervisor",Warehouse,609459.42,50788.29,2022-07-16,3,1.6,2,10695.1,620154.52
-148,"Capacity Planner","Load Planning",611539.98,50961.67,2023-07-03,15,2.8,1,13189.75,624729.73
-149,"Driver Compliance Officer","Fleet Management",845276.28,70439.69,2022-02-13,19,2.5,3,18863.47,864139.75
-150,"Content Creator",Marketing,554124.22,46177.02,2020-10-23,9,3.4,4,24748.1,578872.32
-151,"Customer Service Representative","Customer Service",257807.17,21483.93,2022-12-09,10,3.3,2,12150.07,269957.24
-152,"Vendor Relations Coordinator",Procurement,595635.18,49636.27,2024-01-27,3,3.4,3,16506.04,612141.22
+124,HR Manager,Human Resources,321637.22,26803.1,2023-01-01,11,2.8,4,20371.34,342008.56
+125,Payroll Specialist,Human Resources,752379.34,62698.28,2022-11-23,18,0.7,4,23599.18,775978.52
+126,Route Planner,Routing & Planning,510436.8,42536.4,2020-06-11,20,0.6,5,26881.89,537318.69
+127,Operations Manager,Operations,587323.16,48943.6,2022-02-22,6,0.9,5,28611.9,615935.06
+128,Logistics Accountant,Finance & Billing,627674.55,52306.21,2021-12-14,15,1.9,4,22413.84,650088.39
+129,Risk & Audit Specialist,Compliance,282235.29,23519.61,2022-10-07,15,1.4,1,11233.5,293468.79
+130,Supply Chain Analyst,Operations,300175.74,25014.65,2021-01-09,14,1.0,1,13925.98,314101.72
+131,After-Sales Specialist,Customer Service,275736.4,22978.03,2024-03-09,15,1.8,3,15929.42,291665.82
+132,Dispatch Supervisor,Dispatch,858307.83,71525.65,2024-03-14,18,2.1,3,17869.12,876176.95
+133,Brand Manager,Marketing,433686.28,36140.52,2022-05-04,8,0.6,3,16557.37,450243.65
+134,Financial Analyst,Finance & Billing,693064.22,57755.35,2022-04-26,14,2.9,2,14179.5,707243.72
+135,Fleet Manager,Fleet Management,248059.35,20671.61,2023-03-30,16,2.5,5,26225.37,274284.72
+136,Dispatch Supervisor,Dispatch,832731.28,69394.27,2021-06-08,17,2.3,1,13588.36,846319.64
+137,Customer Service Representative,Customer Service,903407.24,75283.94,2020-09-26,1,4.0,5,29265.68,932672.92
+138,Transportation Planner,Routing & Planning,898733.83,74894.49,2022-07-21,9,2.9,5,25563.34,924297.17
+139,HR Manager,Human Resources,668906.64,55742.22,2020-10-19,19,3.0,4,20019.65,688926.29
+140,After-Sales Specialist,Customer Service,618437.43,51536.45,2022-07-21,16,1.5,3,18408.23,636845.66
+141,Brand Manager,Marketing,592203.79,49350.32,2022-11-13,17,1.6,5,26982.19,619185.98
+142,Logistics Analyst,Routing & Planning,350088.11,29174.01,2020-10-03,9,2.8,1,14686.28,364774.39
+143,Transport Scheduler,Dispatch,675285.59,56273.8,2021-07-25,1,1.8,4,22484.8,697770.39
+144,Business Development Manager,Sales & Business Development,803030.21,66919.18,2022-03-19,6,2.9,1,13365.18,816395.39
+145,Accounts Receivable Specialist,Finance & Billing,257928.18,21494.02,2023-04-10,3,2.0,5,29371.49,287299.67
+146,Sales Analyst,Sales & Business Development,872093.78,72674.48,2021-07-12,6,3.7,3,16761.91,888855.69
+147,Warehouse Supervisor,Warehouse,609459.42,50788.29,2022-07-16,3,1.6,2,10695.1,620154.52
+148,Capacity Planner,Load Planning,611539.98,50961.67,2023-07-03,15,2.8,1,13189.75,624729.73
+149,Driver Compliance Officer,Fleet Management,845276.28,70439.69,2022-02-13,19,2.5,3,18863.47,864139.75
+150,Content Creator,Marketing,554124.22,46177.02,2020-10-23,9,3.4,4,24748.1,578872.32
+151,Customer Service Representative,Customer Service,257807.17,21483.93,2022-12-09,10,3.3,2,12150.07,269957.24
+152,Vendor Relations Coordinator,Procurement,595635.18,49636.27,2024-01-27,3,3.4,3,16506.04,612141.22
 153,Dispatcher,Dispatch,335030.63,27919.22,2022-07-28,8,3.4,1,11080.01,346110.64
-154,"Client Account Manager","Customer Service",399539.06,33294.92,2020-06-28,8,2.7,3,15881.92,415420.98
-155,"Logistics Accountant","Finance & Billing",631844.05,52653.67,2022-10-27,6,1.2,2,11169.58,643013.63
-156,"Key Account Manager","Sales & Business Development",347108.18,28925.68,2020-08-09,1,0.6,1,13202.14,360310.32
-157,"Capacity Planner","Load Planning",519927.25,43327.27,2021-05-22,5,3.2,1,12501.97,532429.22
-158,"Payroll Specialist","Human Resources",459678.48,38306.54,2024-05-20,7,1.6,1,12903.43,472581.91
-159,"Vendor Relations Coordinator",Procurement,453946.48,37828.87,2021-03-26,6,3,2,12011.23,465957.71
-160,"Vendor Relations Coordinator",Procurement,746120.5,62176.71,2022-07-06,20,1.7,2,11345.85,757466.35
-161,"Accounts Receivable Specialist","Finance & Billing",292121.78,24343.48,2024-02-21,8,1.5,4,20695.58,312817.36
-162,"Fleet Operations Specialist","Fleet Management",405148.94,33762.41,2024-02-05,20,3.6,5,29440.34,434589.28
-163,"Content Creator",Marketing,696584.6,58048.72,2024-04-01,5,2.9,2,10114.95,706699.55
-164,"Key Account Manager","Sales & Business Development",950888.16,79240.68,2021-05-10,4,3.7,3,17253.72,968141.88
-165,"Fleet Manager","Fleet Management",570172.28,47514.36,2022-03-08,7,1.9,4,20923.76,591096.04
-166,"Route Optimization Specialist","Routing & Planning",727525.59,60627.13,2021-01-17,9,3.3,1,12857.66,740383.25
-167,"Customer Support Coordinator","Customer Service",440622.95,36718.58,2023-09-17,6,2,5,26517.01,467139.96
-168,"Capacity Planner","Load Planning",298069.1,24839.09,2020-08-15,11,0.7,3,19012.07,317081.17
-169,Recruiter,NULL,411268.24,34272.35,2021-03-24,1,3.2,3,15509.3,426777.54
-170,"Logistics Coordinator",Operations,514591.32,42882.61,2021-06-22,10,3,1,10510.32,525101.64
-171,"Transportation Planner","Routing & Planning",414020.37,34501.7,2020-12-21,14,1.4,1,11023.71,425044.08
-172,"Key Account Manager","Sales & Business Development",732135.7,61011.31,2020-12-20,7,2.6,1,13587.56,745723.26
-173,"Risk & Audit Specialist",Compliance,465741.16,38811.76,2020-11-21,4,3.9,4,24866.68,490607.84
-174,"Compliance Officer",Compliance,396375.55,33031.3,2023-06-14,13,3.9,3,18570.73,414946.28
-175,"HR Manager","Human Resources",731375.41,60947.95,2022-08-22,17,1.9,4,23253.58,754628.99
-176,"Risk & Audit Specialist",Compliance,607637.55,50636.46,2022-07-12,7,3.9,3,15555.74,623193.29
-177,"Sales Executive","Sales & Business Development",363645.36,30303.78,2024-01-10,17,3.4,2,13017.95,376663.31
-178,"Fleet Operations Specialist","Fleet Management",939448.71,78287.39,2022-02-28,11,2.8,4,23422.52,962871.23
-179,"Brand Manager",Marketing,806135.99,67178,2023-05-01,3,2.9,3,18058.75,824194.74
-180,"Warehouse Supervisor",Warehouse,866862.38,72238.53,2020-10-22,2,3.8,1,10026.18,876888.56
-181,"Transportation Planner","Routing & Planning",382547.83,31878.99,2022-02-17,2,3.9,1,10954.67,393502.5
-182,"Client Account Manager","Customer Service",382613.02,31884.42,2023-03-26,5,1.3,4,24694.81,407307.83
-183,"Route Planner","Routing & Planning",944641.92,78720.16,2023-01-20,9,2.4,4,20610.05,965251.97
-184,"Freight Planner",Operations,817153.23,68096.1,2022-07-28,15,1.1,1,13965.82,831119.05
-185,"Freight Allocator","Load Planning",695209.83,57934.15,2024-02-02,18,2.4,5,27998.94,723208.77
-186,"Route Optimization Specialist","Routing & Planning",356182.72,29681.89,2023-07-05,18,3.3,2,13097.25,369279.97
-187,"Health & Safety Coordinator",Compliance,762280.03,63523.34,2022-04-21,17,2.4,5,26489.41,788769.44
-188,"Fleet Manager","Fleet Management",295612.04,24634.34,2022-10-08,8,2.7,3,18155.31,313767.35
-189,"Procurement Specialist",Procurement,270337.78,22528.15,2021-09-21,12,1.4,3,16308.3,286646.08
-190,"Fleet Manager","Fleet Management",442514.97,36876.25,2022-06-29,2,1.3,4,22075.6,464590.57
-191,"Route Planner","Routing & Planning",721696.08,60141.34,2023-07-14,15,3.5,4,21453.1,743149.18
-192,"Risk & Audit Specialist",Compliance,758533.41,63211.12,2021-04-25,19,3.3,3,16038.69,774572.1
-193,"Route Planner","Routing & Planning",762372.89,63531.07,2023-03-12,5,1.5,4,20834.15,783207.04
-194,"Health & Safety Coordinator",Compliance,897492.5,74791.04,2022-06-29,8,2.9,5,26054.67,923547.17
-195,"Driver Compliance Officer","Fleet Management",742872.86,61906.07,2022-01-09,3,1.7,5,27770.9,770643.76
+154,Client Account Manager,Customer Service,399539.06,33294.92,2020-06-28,8,2.7,3,15881.92,415420.98
+155,Logistics Accountant,Finance & Billing,631844.05,52653.67,2022-10-27,6,1.2,2,11169.58,643013.63
+156,Key Account Manager,Sales & Business Development,347108.18,28925.68,2020-08-09,1,0.6,1,13202.14,360310.32
+157,Capacity Planner,Load Planning,519927.25,43327.27,2021-05-22,5,3.2,1,12501.97,532429.22
+158,Payroll Specialist,Human Resources,459678.48,38306.54,2024-05-20,7,1.6,1,12903.43,472581.91
+159,Vendor Relations Coordinator,Procurement,453946.48,37828.87,2021-03-26,6,3.0,2,12011.23,465957.71
+160,Vendor Relations Coordinator,Procurement,746120.5,62176.71,2022-07-06,20,1.7,2,11345.85,757466.35
+161,Accounts Receivable Specialist,Finance & Billing,292121.78,24343.48,2024-02-21,8,1.5,4,20695.58,312817.36
+162,Fleet Operations Specialist,Fleet Management,405148.94,33762.41,2024-02-05,20,3.6,5,29440.34,434589.28
+163,Content Creator,Marketing,696584.6,58048.72,2024-04-01,5,2.9,2,10114.95,706699.55
+164,Key Account Manager,Sales & Business Development,950888.16,79240.68,2021-05-10,4,3.7,3,17253.72,968141.88
+165,Fleet Manager,Fleet Management,570172.28,47514.36,2022-03-08,7,1.9,4,20923.76,591096.04
+166,Route Optimization Specialist,Routing & Planning,727525.59,60627.13,2021-01-17,9,3.3,1,12857.66,740383.25
+167,Customer Support Coordinator,Customer Service,440622.95,36718.58,2023-09-17,6,2.0,5,26517.01,467139.96
+168,Capacity Planner,Load Planning,298069.1,24839.09,2020-08-15,11,0.7,3,19012.07,317081.17
+169,Recruiter,,411268.24,34272.35,2021-03-24,1,3.2,3,15509.3,426777.54
+170,Logistics Coordinator,Operations,514591.32,42882.61,2021-06-22,10,3.0,1,10510.32,525101.64
+171,Transportation Planner,Routing & Planning,414020.37,34501.7,2020-12-21,14,1.4,1,11023.71,425044.08
+172,Key Account Manager,Sales & Business Development,732135.7,61011.31,2020-12-20,7,2.6,1,13587.56,745723.26
+173,Risk & Audit Specialist,Compliance,465741.16,38811.76,2020-11-21,4,3.9,4,24866.68,490607.84
+174,Compliance Officer,Compliance,396375.55,33031.3,2023-06-14,13,3.9,3,18570.73,414946.28
+175,HR Manager,Human Resources,731375.41,60947.95,2022-08-22,17,1.9,4,23253.58,754628.99
+176,Risk & Audit Specialist,Compliance,607637.55,50636.46,2022-07-12,7,3.9,3,15555.74,623193.29
+177,Sales Executive,Sales & Business Development,363645.36,30303.78,2024-01-10,17,3.4,2,13017.95,376663.31
+178,Fleet Operations Specialist,Fleet Management,939448.71,78287.39,2022-02-28,11,2.8,4,23422.52,962871.23
+179,Brand Manager,Marketing,806135.99,67178.0,2023-05-01,3,2.9,3,18058.75,824194.74
+180,Warehouse Supervisor,Warehouse,866862.38,72238.53,2020-10-22,2,3.8,1,10026.18,876888.56
+181,Transportation Planner,Routing & Planning,382547.83,31878.99,2022-02-17,2,3.9,1,10954.67,393502.5
+182,Client Account Manager,Customer Service,382613.02,31884.42,2023-03-26,5,1.3,4,24694.81,407307.83
+183,Route Planner,Routing & Planning,944641.92,78720.16,2023-01-20,9,2.4,4,20610.05,965251.97
+184,Freight Planner,Operations,817153.23,68096.1,2022-07-28,15,1.1,1,13965.82,831119.05
+185,Freight Allocator,Load Planning,695209.83,57934.15,2024-02-02,18,2.4,5,27998.94,723208.77
+186,Route Optimization Specialist,Routing & Planning,356182.72,29681.89,2023-07-05,18,3.3,2,13097.25,369279.97
+187,Health & Safety Coordinator,Compliance,762280.03,63523.34,2022-04-21,17,2.4,5,26489.41,788769.44
+188,Fleet Manager,Fleet Management,295612.04,24634.34,2022-10-08,8,2.7,3,18155.31,313767.35
+189,Procurement Specialist,Procurement,270337.78,22528.15,2021-09-21,12,1.4,3,16308.3,286646.08
+190,Fleet Manager,Fleet Management,442514.97,36876.25,2022-06-29,2,1.3,4,22075.6,464590.57
+191,Route Planner,Routing & Planning,721696.08,60141.34,2023-07-14,15,3.5,4,21453.1,743149.18
+192,Risk & Audit Specialist,Compliance,758533.41,63211.12,2021-04-25,19,3.3,3,16038.69,774572.1
+193,Route Planner,Routing & Planning,762372.89,63531.07,2023-03-12,5,1.5,4,20834.15,783207.04
+194,Health & Safety Coordinator,Compliance,897492.5,74791.04,2022-06-29,8,2.9,5,26054.67,923547.17
+195,Driver Compliance Officer,Fleet Management,742872.86,61906.07,2022-01-09,3,1.7,5,27770.9,770643.76
 196,Dispatcher,Dispatch,411980.11,34331.68,2022-04-28,17,1.9,5,25690.48,437670.59
-197,"Load Dispatcher",Dispatch,752297.95,62691.5,2021-02-17,20,2.9,4,20139.72,772437.67
-198,"Load Dispatcher",Dispatch,510207.67,42517.31,2021-07-26,20,2.9,5,28627.17,538834.84
-199,"Forklift Operator",Warehouse,937857.25,78154.77,2021-05-30,19,3.6,2,12716.68,950573.93
-200,"Driver Compliance Officer","Fleet Management",605260.32,50438.36,2021-05-28,4,0.6,1,12701.91,617962.23
-201,"Delivery Driver","Human Resources",244197.27,20349.77,2021-01-11,7,2.1,5,28691.66,272888.93
-202,"Delivery Driver","Human Resources",243608.93,20300.74,2022-03-21,7,0.7,2,12379.89,255988.82
-203,"Delivery Driver","Human Resources",293209.93,24434.16,2024-06-01,8,1.4,4,20824.45,314034.38
-204,"Delivery Driver","Human Resources",296432.81,24702.73,2021-07-18,10,2.7,4,21982.57,318415.38
-205,"Delivery Driver","Human Resources",271852.31,22654.36,2023-11-17,8,1.1,2,12439.5,284291.81
-206,"Delivery Driver","Human Resources",288587.52,24048.96,2024-04-02,2,3,5,26249.81,314837.33
-207,"Delivery Driver","Human Resources",267384.67,22282.06,2022-01-31,2,1.8,5,28930.56,296315.23
-208,"Delivery Driver","Human Resources",295088.5,24590.71,2023-03-30,9,3.2,4,20903.37,315991.87
-209,"Delivery Driver","Human Resources",255267.59,21272.3,2024-05-22,3,3,2,12725.15,267992.74
-210,"Delivery Driver","Human Resources",299535.81,24961.32,2022-08-19,10,3.6,3,15915.65,315451.46
-211,"Delivery Driver","Human Resources",268813.28,22401.11,2023-10-29,5,3,4,21402.78,290216.06
-212,"Delivery Driver","Human Resources",299407.99,24950.67,2023-11-18,3,2.2,3,19266.95,318674.94
-213,"Delivery Driver","Human Resources",290529.84,24210.82,2023-10-21,10,1.6,2,12126.43,302656.27
-214,"Delivery Driver","Human Resources",249621.44,20801.79,2020-12-27,10,0.6,5,27831.3,277452.74
-215,"Delivery Driver","Human Resources",248189.32,20682.44,2022-10-06,3,3.9,2,12777.2,260966.52
-216,"Delivery Driver","Human Resources",297672.7,24806.06,2021-11-08,1,2.4,4,20392.11,318064.81
-217,"Delivery Driver","Human Resources",264416.75,22034.73,2021-11-23,10,0.5,4,23628.96,288045.71
-218,"Delivery Driver","Human Resources",298900.47,24908.37,2020-11-09,1,0.7,1,11968.45,310868.92
-219,"Delivery Driver","Human Resources",279251.98,23271,2022-07-15,4,0.7,3,18955.38,298207.36
-220,"Delivery Driver","Human Resources",247173.52,20597.79,2023-03-12,8,1.3,3,18871.54,266045.06
-221,"Delivery Driver","Human Resources",254087.65,21173.97,2020-06-26,2,1.3,4,22491.54,276579.19
-222,"Delivery Driver","Human Resources",279734.89,23311.24,2021-03-22,8,1.6,3,15843.12,295578.01
-223,"Delivery Driver","Human Resources",293293.34,24441.11,2021-10-23,4,2,2,11740.96,305034.3
-224,"Delivery Driver","Human Resources",289908.06,24159.01,2022-05-20,9,1.2,2,11175.46,301083.52
-225,"Delivery Driver","Human Resources",271853.27,22654.44,2022-09-16,7,4,4,20654.41,292507.68
-226,"Delivery Driver","Human Resources",251442.95,20953.58,2021-01-01,7,3.3,4,24745.65,276188.6
-227,"Delivery Driver","Human Resources",291944.42,24328.7,2023-04-25,3,1.7,3,16765.04,308709.46
-228,"Delivery Driver","Human Resources",277866.71,23155.56,2024-01-18,1,2.8,2,14588.27,292454.98
-229,"Delivery Driver","Human Resources",294708.84,24559.07,2022-07-14,9,3.2,1,12646.19,307355.03
-230,"Delivery Driver","Human Resources",248166.29,20680.52,2022-09-30,7,2.1,2,14466.17,262632.46
-231,"Delivery Driver","Human Resources",265949.74,22162.48,2022-09-22,6,2.3,2,14392.27,280342.01
-232,"Delivery Driver","Human Resources",264518.59,22043.22,2022-09-17,7,1.1,2,13562.86,278081.45
-233,"Delivery Driver","Human Resources",276306.94,23025.58,2021-04-11,3,2.2,5,29637.47,305944.41
-234,"Delivery Driver","Human Resources",296399.09,24699.92,2021-02-21,6,3.5,3,17498.77,313897.86
-235,"Delivery Driver","Human Resources",282527.99,23544,2023-11-20,2,2.6,2,13581.46,296109.45
-236,"Delivery Driver","Human Resources",259671.79,21639.32,2021-05-27,10,1.1,3,15410.97,275082.76
-237,"Delivery Driver","Human Resources",258864.68,21572.06,2022-11-25,3,2.7,3,16310.48,275175.16
-238,"Delivery Driver","Human Resources",240217.24,20018.1,2021-05-27,10,1.1,2,10319.51,250536.75
-239,"Delivery Driver","Human Resources",244893.06,20407.76,2022-07-04,10,0.6,2,12666.08,257559.14
-240,"Delivery Driver","Human Resources",279219.9,23268.33,2020-06-24,9,3.7,3,17371.89,296591.79
+197,Load Dispatcher,Dispatch,752297.95,62691.5,2021-02-17,20,2.9,4,20139.72,772437.67
+198,Load Dispatcher,Dispatch,510207.67,42517.31,2021-07-26,20,2.9,5,28627.17,538834.84
+199,Forklift Operator,Warehouse,937857.25,78154.77,2021-05-30,19,3.6,2,12716.68,950573.93
+200,Driver Compliance Officer,Fleet Management,605260.32,50438.36,2021-05-28,4,0.6,1,12701.91,617962.23
+201,Delivery Driver,Human Resources,244197.27,20349.77,2021-01-11,7,2.1,5,28691.66,272888.93
+202,Delivery Driver,Human Resources,243608.93,20300.74,2022-03-21,7,0.7,2,12379.89,255988.82
+203,Delivery Driver,Human Resources,293209.93,24434.16,2024-06-01,8,1.4,4,20824.45,314034.38
+204,Delivery Driver,Human Resources,296432.81,24702.73,2021-07-18,10,2.7,4,21982.57,318415.38
+205,Delivery Driver,Human Resources,271852.31,22654.36,2023-11-17,8,1.1,2,12439.5,284291.81
+206,Delivery Driver,Human Resources,288587.52,24048.96,2024-04-02,2,3.0,5,26249.81,314837.33
+207,Delivery Driver,Human Resources,267384.67,22282.06,2022-01-31,2,1.8,5,28930.56,296315.23
+208,Delivery Driver,Human Resources,295088.5,24590.71,2023-03-30,9,3.2,4,20903.37,315991.87
+209,Delivery Driver,Human Resources,255267.59,21272.3,2024-05-22,3,3.0,2,12725.15,267992.74
+210,Delivery Driver,Human Resources,299535.81,24961.32,2022-08-19,10,3.6,3,15915.65,315451.46
+211,Delivery Driver,Human Resources,268813.28,22401.11,2023-10-29,5,3.0,4,21402.78,290216.06
+212,Delivery Driver,Human Resources,299407.99,24950.67,2023-11-18,3,2.2,3,19266.95,318674.94
+213,Delivery Driver,Human Resources,290529.84,24210.82,2023-10-21,10,1.6,2,12126.43,302656.27
+214,Delivery Driver,Human Resources,249621.44,20801.79,2020-12-27,10,0.6,5,27831.3,277452.74
+215,Delivery Driver,Human Resources,248189.32,20682.44,2022-10-06,3,3.9,2,12777.2,260966.52
+216,Delivery Driver,Human Resources,297672.7,24806.06,2021-11-08,1,2.4,4,20392.11,318064.81
+217,Delivery Driver,Human Resources,264416.75,22034.73,2021-11-23,10,0.5,4,23628.96,288045.71
+218,Delivery Driver,Human Resources,298900.47,24908.37,2020-11-09,1,0.7,1,11968.45,310868.92
+219,Delivery Driver,Human Resources,279251.98,23271.0,2022-07-15,4,0.7,3,18955.38,298207.36
+220,Delivery Driver,Human Resources,247173.52,20597.79,2023-03-12,8,1.3,3,18871.54,266045.06
+221,Delivery Driver,Human Resources,254087.65,21173.97,2020-06-26,2,1.3,4,22491.54,276579.19
+222,Delivery Driver,Human Resources,279734.89,23311.24,2021-03-22,8,1.6,3,15843.12,295578.01
+223,Delivery Driver,Human Resources,293293.34,24441.11,2021-10-23,4,2.0,2,11740.96,305034.3
+224,Delivery Driver,Human Resources,289908.06,24159.01,2022-05-20,9,1.2,2,11175.46,301083.52
+225,Delivery Driver,Human Resources,271853.27,22654.44,2022-09-16,7,4.0,4,20654.41,292507.68
+226,Delivery Driver,Human Resources,251442.95,20953.58,2021-01-01,7,3.3,4,24745.65,276188.6
+227,Delivery Driver,Human Resources,291944.42,24328.7,2023-04-25,3,1.7,3,16765.04,308709.46
+228,Delivery Driver,Human Resources,277866.71,23155.56,2024-01-18,1,2.8,2,14588.27,292454.98
+229,Delivery Driver,Human Resources,294708.84,24559.07,2022-07-14,9,3.2,1,12646.19,307355.03
+230,Delivery Driver,Human Resources,248166.29,20680.52,2022-09-30,7,2.1,2,14466.17,262632.46
+231,Delivery Driver,Human Resources,265949.74,22162.48,2022-09-22,6,2.3,2,14392.27,280342.01
+232,Delivery Driver,Human Resources,264518.59,22043.22,2022-09-17,7,1.1,2,13562.86,278081.45
+233,Delivery Driver,Human Resources,276306.94,23025.58,2021-04-11,3,2.2,5,29637.47,305944.41
+234,Delivery Driver,Human Resources,296399.09,24699.92,2021-02-21,6,3.5,3,17498.77,313897.86
+235,Delivery Driver,Human Resources,282527.99,23544.0,2023-11-20,2,2.6,2,13581.46,296109.45
+236,Delivery Driver,Human Resources,259671.79,21639.32,2021-05-27,10,1.1,3,15410.97,275082.76
+237,Delivery Driver,Human Resources,258864.68,21572.06,2022-11-25,3,2.7,3,16310.48,275175.16
+238,Delivery Driver,Human Resources,240217.24,20018.1,2021-05-27,10,1.1,2,10319.51,250536.75
+239,Delivery Driver,Human Resources,244893.06,20407.76,2022-07-04,10,0.6,2,12666.08,257559.14
+240,Delivery Driver,Human Resources,279219.9,23268.33,2020-06-24,9,3.7,3,17371.89,296591.79

@@ -7,17 +7,17 @@ from mysql_connection import *
 class Customer(Base):
     __tablename__ = "hh_customer_info"
 
-    order_id = Column("Order Item Id", String(20), primary_key=True, nullable=False) 
-    customer_id = Column("Customer Id", Integer, nullable=False, unique=True) 
-    id = Column(Integer, nullable=False, unique=True) 
-    fname = Column("Customer Fname", String(30), nullable=False)    
-    lname = Column("Customer Lname", String(30), nullable=False)    
-    customer_city = Column("Customer City", String(30), nullable=False)    
-    customer_country = Column("Customer Country", String(30), nullable=False)    
-    customer_segment = Column("Customer Segment", String(30), nullable=False)    
+    order_item_id = Column("order_item_id", String(20), primary_key=True, nullable=False) 
+    customer_id = Column("customer_id", Integer, nullable=False, unique=True) 
+    id = Column("id", Integer, nullable=False, unique=True) 
+    customer_fname = Column("customer_fname", String(50), nullable=False)  
+    customer_lname = Column("customer_lname", String(50), nullable=False)    
+    customer_city = Column("customer_city", String(100), nullable=False)    
+    customer_country = Column("customer_country", String(100), nullable=False)    
+    customer_segment = Column("customer_segment", String(50), nullable=False)    
 
     def __repr__(self):
-        return f"<Customer Info: id={self.customer_id}, name={self.fname} {self.lname}>"
+        return f"<Customer Info: id={self.customer_id}, name={self.customer_fname} {self.customer_lname}>" 
 
 
 # =============================================================================
@@ -30,11 +30,11 @@ class CustomerSystem:
 
         # Define mappings for CSV column names
         self.customer_column_mapping = {
-            'order_id': 'Order Item Id',
+            'order_item_id': 'Order Item Id',
             'customer_id': 'Customer Id',
             'id': 'id',  
-            'fname': 'Customer Fname',
-            'lname': 'Customer Lname',
+            'customer_fname': 'Customer Fname',
+            'customer_lname': 'Customer Lname',
             'customer_city': 'Customer City',
             'customer_country': 'Customer Country',
             'customer_segment': 'Customer Segment'
@@ -74,13 +74,13 @@ class CustomerSystem:
 
         self._write_csv(file_name, df)
 
-    def _replace_csv_record(self, file_name, order_id, new_data):
+    def _replace_csv_record(self, file_name, order_item_id, new_data):
         """Replace a specific record in CSV file by order_id"""
         df = self._read_csv(file_name)
         
         if not df.empty:
             # Remove the old record
-            df = df[df['Order Item Id'] != order_id]
+            df = df[df['Order Item Id'] != order_item_id]
             
             # Add the new record
             if not new_data.empty:
@@ -90,15 +90,15 @@ class CustomerSystem:
 
         self._write_csv(file_name, df)
 
-    def _remove_csv_record(self, file_name, order_id):
-        """Remove a specific record from CSV file by order_id"""
+    def _remove_csv_record(self, file_name, order_item_id):
+        """Remove a specific record from CSV file by order_item_id"""
         df = self._read_csv(file_name)
         
         if not df.empty and 'Order Item Id' in df.columns:
-            # Remove records with the specified order_id
-            df_filtered = df[df['Order Item Id'] != order_id]
+            # Remove records with the specified order_item_id
+            df_filtered = df[df['Order Item Id'] != order_item_id]
             self._write_csv(file_name, df_filtered)
-            print(f"Removed customer with order ID {order_id} from {file_name}")
+            print(f"Removed customer with order ID {order_item_id} from {file_name}")
 
     def _map_keys_to_columns(self, data: dict, mapping: dict) -> dict:
         """
@@ -118,12 +118,12 @@ class CustomerSystem:
     def add_complete_customer_record(self, customer_data: dict):
         """Add a complete customer record"""
         try:
-            order_id = self._create_new_customer(customer_data)
+            order_item_id = self._create_new_customer(customer_data)
             self.session.commit()
-            print(f"Customer with Order ID {order_id} successfully created!")
+            print(f"Customer with Order ID {order_item_id} successfully created!")
             # Transform and update CSV files
             self._update_csv("hh_customer_info.csv", pd.DataFrame([self._map_keys_to_columns(customer_data, self.customer_column_mapping)]))
-            return order_id
+            return order_item_id
         except Exception as e:
             self.session.rollback()
             print(f"Error creating customer: {e}")
@@ -141,66 +141,79 @@ class CustomerSystem:
         # Add to session
         self.session.add(new_customer)
 
-        return customer_data['order_id']
+        return customer_data['order_item_id']
 
     def update_existing_customer(self, customer_data: dict):
         """Update existing customer record"""
         try:
-            order_id = customer_data['order_id']
+            order_item_id = customer_data['order_item_id']
             
             # Get the existing customer
-            customer = self.session.query(Customer).filter_by(order_id=order_id).first()
+            customer = self.session.query(Customer).filter_by(order_item_id=order_item_id).first()
             if not customer:
-                raise ValueError(f"Customer with Order ID {order_id} not found")
+                raise ValueError(f"Customer with Order ID {order_item_id} not found")
             
             # Store the original id to preserve it
             original_id = customer.id
             
-            # Update customer attributes
-            for key, value in customer_data.items():
-                if hasattr(customer, key) and key != 'id':  # Don't update the auto-increment id
-                    setattr(customer, key, value)
+            # CREATE A MAPPING for input keys to model attributes
+            attribute_mapping = {
+                'order_item_id': 'order_item_id',
+                'customer_fname': 'customer_fname',
+                'customer_lname': 'customer_lname',
+                'customer_id': 'customer_id',
+                'customer_city': 'customer_city',
+                'customer_country': 'customer_country',
+                'customer_segment': 'customer_segment'
+            }
             
-            # Add the original id to customer_data for CSV update
-            customer_data_with_id = customer_data.copy()
-            customer_data_with_id['id'] = original_id
+            # Update customer attributes using the mapping
+            for key, value in customer_data.items():
+                if key in attribute_mapping and key != 'id':  # Don't update the auto-increment id
+                    model_attribute = attribute_mapping[key]
+                    if hasattr(customer, model_attribute):
+                        setattr(customer, model_attribute, value)
+                
+                # Add the original id to customer_data for CSV update
+                customer_data_with_id = customer_data.copy()
+                customer_data_with_id['id'] = original_id
             
             # Update CSV file - REPLACE instead of UPDATE
-            self._replace_csv_record("hh_customer_info.csv", order_id, pd.DataFrame([self._map_keys_to_columns(customer_data_with_id, self.customer_column_mapping)]))
+            self._replace_csv_record("hh_customer_info.csv", order_item_id, pd.DataFrame([self._map_keys_to_columns(customer_data_with_id, self.customer_column_mapping)]))
             
             # Commit all changes
             self.session.commit()
-            print(f"Customer with Order ID {order_id} successfully updated!")
-            return order_id
+            print(f"Customer with Order ID {order_item_id} successfully updated!")
+            return order_item_id
             
         except Exception as e:
             self.session.rollback()
             print(f"Error updating customer: {e}")
             raise
 
-    def delete_customer_record(self, order_id: str):
+    def delete_customer_record(self, order_item_id: str):
         """Delete customer record by order_id"""
         try:
-            customer = self.session.query(Customer).filter_by(order_id=order_id).first()
+            customer = self.session.query(Customer).filter_by(order_item_id=order_item_id).first()
             if customer:
                 self.session.delete(customer)
                 self.session.commit()
-                print(f"Customer with Order ID {order_id} successfully deleted!")
+                print(f"Customer with Order ID {order_item_id} successfully deleted!")
                 
                 # Remove from CSV
-                self._remove_csv_record("hh_customer_info.csv", order_id)
+                self._remove_csv_record("hh_customer_info.csv", order_item_id)
                 return True
             else:
-                print(f"Customer with Order ID {order_id} not found!")
+                print(f"Customer with Order ID {order_item_id} not found!")
                 return False
         except Exception as e:
             self.session.rollback()
             print(f"Error deleting customer: {e}")
             raise
 
-    def get_customer_by_order_id(self, order_id: str):
+    def get_customer_by_order_id(self, order_item_id: str):
         """Retrieve customer information by order_id"""
-        customer = self.session.query(Customer).filter_by(order_id=order_id).first()
+        customer = self.session.query(Customer).filter_by(order_item_id=order_item_id).first()
         return customer
 
     def close(self):
@@ -258,9 +271,9 @@ def get_customer_info():
         print(f"Please choose from: {', '.join(segments)}")
     
     return {
-        'order_id': order_id,
-        'fname': fname,
-        'lname': lname,
+        'order_item_id': order_id,
+        'customer_fname': fname,
+        'customer_lname': lname,
         'customer_id': customer_id,
         'customer_city': city,
         'customer_country': country,
@@ -279,7 +292,7 @@ def get_existing_customer_for_update():
             continue
 
         # Query the database for the customer with the given Order ID
-        customer = session.query(Customer).filter_by(order_id=order_id).first()
+        customer = session.query(Customer).filter_by(order_item_id=order_id).first()
 
         # If customer not found, notify user and retry
         if not customer:
@@ -288,9 +301,9 @@ def get_existing_customer_for_update():
 
         # Display basic details of the found customer
         print("\nFound Customer:")
-        print(f"Order ID: {customer.order_id}")
+        print(f"Order ID: {customer.order_item_id}")
         print(f"Customer ID: {customer.customer_id}")
-        print(f"Name: {customer.fname} {customer.lname}")
+        print(f"Name: {customer.customer_fname} {customer.customer_lname}")
         print(f"City: {customer.customer_city}")
         print(f"Country: {customer.customer_country}")
         print(f"Segment: {customer.customer_segment}")
@@ -303,14 +316,14 @@ def get_existing_customer_for_update():
             print("\nPress Enter to keep current value, or enter new value to change:")
             
             # First Name
-            print(f"Current First Name: {customer.fname}")
+            print(f"Current First Name: {customer.customer_fname}")
             new_fname = input("New First Name (Enter to keep): ").strip().title()
-            fname = new_fname if new_fname else customer.fname
+            fname = new_fname if new_fname else customer.customer_fname
             
             # Last Name
-            print(f"Current Last Name: {customer.lname}")
+            print(f"Current Last Name: {customer.customer_lname}")
             new_lname = input("New Last Name (Enter to keep): ").strip().title()
-            lname = new_lname if new_lname else customer.lname
+            lname = new_lname if new_lname else customer.customer_lname
             
             # Customer ID
             print(f"Current Customer ID: {customer.customer_id}")
@@ -348,9 +361,9 @@ def get_existing_customer_for_update():
                 segment = customer.customer_segment
             
             return {
-                'order_id': order_id,
-                'fname': fname,
-                'lname': lname,
+                'order_item_id': order_id,
+                'customer_fname': fname,
+                'customer_lname': lname,
                 'customer_id': customer_id,
                 'customer_city': city,
                 'customer_country': country,
@@ -374,9 +387,9 @@ def display_customer_summary(customer_data):
     print("\n" + "="*60)
     print("                CUSTOMER SUMMARY")
     print("="*60)
-    print(f"Order ID: {customer_data['order_id']}")
+    print(f"Order ID: {customer_data['order_item_id']}")
     print(f"Customer ID: {customer_data['customer_id']}")
-    print(f"Name: {customer_data['fname']} {customer_data['lname']}")
+    print(f"Name: {customer_data['customer_fname']} {customer_data['customer_lname']}")
     print(f"City: {customer_data['customer_city']}")
     print(f"Country: {customer_data['customer_country']}")
     print(f"Segment: {customer_data['customer_segment']}")
@@ -403,9 +416,9 @@ def main():
                     customer_data = get_customer_info()
                     
                     # Check if customer with this order_id already exists
-                    existing_customer = customer_system.get_customer_by_order_id(customer_data['order_id'])
+                    existing_customer = customer_system.get_customer_by_order_id(customer_data['order_item_id'])
                     if existing_customer:
-                        print(f"Customer with Order ID {customer_data['order_id']} already exists!")
+                        print(f"Customer with Order ID {customer_data['order_item_id']} already exists!")
                         continue
                     
                     display_customer_summary(customer_data)
@@ -445,7 +458,7 @@ def main():
                 order_id = input("Enter Order ID to delete: ").strip().upper()
                 customer = customer_system.get_customer_by_order_id(order_id)
                 if customer:
-                    print(f"\nCustomer to delete: {customer.fname} {customer.lname} (ID: {customer.customer_id})")
+                    print(f"\nCustomer to delete: {customer.customer_fname} {customer.customer_lname} (ID: {customer.customer_id})")
                     confirm = input(f"Confirm deletion of customer with Order ID {order_id}? (y/n): ").lower().strip()
                     if confirm in ['y', 'yes']:
                         customer_system.delete_customer_record(order_id)

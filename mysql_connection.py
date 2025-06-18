@@ -24,7 +24,7 @@ load_dotenv()
 # Use values from .env
 connection = {
     'host': os.getenv('MYSQL_HOST'),
-    'port': int(os.getenv('MYSQL_PORT', 3306)),  # Default to 3306 if not set
+    'port': int(os.getenv('MYSQL_PORT', 25060)),  # Default to 25060 if not set
     'username': os.getenv('MYSQL_USER'),
     'password': os.getenv('MYSQL_PASSWORD'),
     'database': os.getenv('MYSQL_DATABASE')
