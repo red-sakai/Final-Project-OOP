@@ -306,3 +306,4 @@ test6,jhered@gmail.com,LOGIN,User logged in successfully,2025-06-17 00:31:36,127
 test6,jhered@gmail.com,LOGOUT,User logged out,2025-06-17 00:35:05,127.0.0.1,"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/137.0.0.0 Safari/537.36"
 apennington,adele.pennington@gmail.com,LOGIN,User logged in successfully,2025-06-17 00:35:25,127.0.0.1,"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/137.0.0.0 Safari/537.36"
 apennington,adele.pennington@gmail.com,LOGIN,User logged in successfully,2025-06-17 00:35:25,127.0.0.1,"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/137.0.0.0 Safari/537.36"
+test6,jhered@gmail.com,LOGIN,User logged in successfully,2025-06-17 20:59:39,127.0.0.1,"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/137.0.0.0 Safari/537.36"
