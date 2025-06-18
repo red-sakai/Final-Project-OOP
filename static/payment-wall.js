@@ -362,6 +362,43 @@ document.addEventListener('DOMContentLoaded', function () {
             const method = getSelectedMethod();
             console.log('Processing payment for method:', method);
             
+            // Get geocoded coordinates from the active address field
+            let addrInput = null;
+            let coordsLat = 0;
+            let coordsLon = 0;
+            
+            if (method === 'credit') addrInput = document.getElementById('credit-address1');
+            if (method === 'gcash') addrInput = document.getElementById('gcash-address1');
+            if (method === 'paypal') addrInput = document.getElementById('paypal-address1');
+            if (method === 'cod') addrInput = document.getElementById('cod-address1');
+            
+            if (addrInput && addrInput.dataset.geocodeLat && addrInput.dataset.geocodeLon) {
+                coordsLat = parseFloat(addrInput.dataset.geocodeLat) || 0;
+                coordsLon = parseFloat(addrInput.dataset.geocodeLon) || 0;
+                console.log('Geocoded coordinates found:', coordsLat, coordsLon);
+            } else {
+                console.log('No geocoded coordinates found for address input');
+            }
+            
+            // Set the hidden input values based on payment method
+            if (method === 'credit') {
+                document.getElementById('credit-lat').value = coordsLat;
+                document.getElementById('credit-lon').value = coordsLon;
+            } else if (method === 'gcash') {
+                document.getElementById('gcash-lat').value = coordsLat;
+                document.getElementById('gcash-lon').value = coordsLon;
+            } else if (method === 'paypal') {
+                document.getElementById('paypal-lat').value = coordsLat;
+                document.getElementById('paypal-lon').value = coordsLon;
+            } else if (method === 'cod') {
+                document.getElementById('cod-lat').value = coordsLat;
+                document.getElementById('cod-lon').value = coordsLon;
+            }
+            
+            // Add payment method to form data
+            const formData = new FormData(paymentForm);
+            formData.append('method', method);
+            
             // Show processing animation
             const btnText = payBtn.querySelector('.btn-text');
             if (btnText) {
@@ -376,7 +413,14 @@ document.addEventListener('DOMContentLoaded', function () {
                 paymentCard.classList.add('processing-payment');
             }
             
-            setTimeout(() => {
+            // Submit form data via AJAX
+            fetch(window.location.href, {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => response.text())
+            .then(data => {
+                // Process completed successfully
                 if (btnText) {
                     btnText.textContent = method === 'cod' ? "Order Confirmed!" : "Payment Successful!";
                 }
@@ -390,7 +434,22 @@ document.addEventListener('DOMContentLoaded', function () {
                 // Show modal with success animation and order number from DOM
                 const orderNumber = getOrderNumberFromDOM();
                 createModal(orderNumber || generateOrderNumber());
-            }, 1500);
+                
+                console.log('Order submitted successfully to server');
+            })
+            .catch(error => {
+                console.error('Error submitting order:', error);
+                // Reset button state on error
+                if (btnText) {
+                    btnText.textContent = method === 'cod' ? "Order Now" : "Pay Now";
+                }
+                payBtn.disabled = false;
+                payBtn.classList.remove('processing');
+                if (paymentCard) {
+                    paymentCard.classList.remove('processing-payment');
+                }
+                alert('Error processing payment. Please try again.');
+            });
         });
     }
 
@@ -408,6 +467,129 @@ document.addEventListener('DOMContentLoaded', function () {
                 e.stopPropagation();
                 alert("Please fill in all required fields correctly.");
             }
+        });
+    }
+
+    // --- Address Geocoding Helper ---
+    async function geocodeAddress(address) {
+        // Use Nominatim OpenStreetMap API for demonstration (no API key required)
+        const url = `https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(address)}`;
+        try {
+            const resp = await fetch(url, {
+                headers: { 'Accept-Language': 'en' }
+            });
+            if (!resp.ok) return null;
+            const data = await resp.json();
+            if (data && data.length > 0) {
+                // Return the best match
+                return {
+                    lat: data[0].lat,
+                    lon: data[0].lon,
+                    display_name: data[0].display_name,
+                    confidence: data[0].importance || 0
+                };
+            }
+            return null;
+        } catch (e) {
+            return null;
+        }
+    }
+
+    // Show geocode warning or coordinates below the input
+    function showGeocodeWarning(input, message) {
+        let warn = input.parentNode.querySelector('.geocode-warning');
+        if (!warn) {
+            warn = document.createElement('div');
+            warn.className = 'geocode-warning';
+            warn.style.color = '#e74c3c';
+            warn.style.fontSize = '0.92em';
+            warn.style.margin = '4px 0 0 0';
+            input.parentNode.appendChild(warn);
+        }
+        warn.textContent = message;
+    }
+
+    // Show geocode coordinates below the input
+    function showGeocodeCoords(input, lat, lon) {
+        let coords = input.parentNode.querySelector('.geocode-coords');
+        if (!coords) {
+            coords = document.createElement('div');
+            coords.className = 'geocode-coords';
+            coords.style.color = '#1579c0';
+            coords.style.fontSize = '0.92em';
+            coords.style.margin = '2px 0 0 0';
+            input.parentNode.appendChild(coords);
+        }
+        coords.textContent = `📍 Latitude: ${lat}, Longitude: ${lon}`;
+    }
+
+    function clearGeocodeWarning(input) {
+        let warn = input.parentNode.querySelector('.geocode-warning');
+        if (warn) warn.remove();
+        let coords = input.parentNode.querySelector('.geocode-coords');
+        if (coords) coords.remove();
+    }
+
+    // Attach geocoding to all Address Line 1 fields
+    function attachAddressGeocoding(inputId) {
+        const input = document.getElementById(inputId);
+        if (!input) return;
+        input.addEventListener('blur', async function() {
+            const val = input.value.trim();
+            clearGeocodeWarning(input);
+            if (val.length < 5) return; // Ignore too-short addresses
+            input.dataset.geocodeStatus = 'pending';
+            const result = await geocodeAddress(val);
+            if (!result) {
+                showGeocodeWarning(input, "⚠️ Address not found. Please check for typos or be more specific.");
+                input.dataset.geocodeStatus = 'fail';
+            } else {
+                // Optionally, show the resolved address
+                if (result.confidence < 0.2) {
+                    showGeocodeWarning(input, "⚠️ Address found, but confidence is low. Please double-check.");
+                } else {
+                    clearGeocodeWarning(input);
+                }
+                input.dataset.geocodeStatus = 'ok';
+                input.dataset.geocodeLat = result.lat;
+                input.dataset.geocodeLon = result.lon;
+                input.dataset.geocodeDisplay = result.display_name;
+                showGeocodeCoords(input, result.lat, result.lon);
+            }
+        });
+    }
+    ['credit-address1', 'gcash-address1', 'paypal-address1', 'cod-address1'].forEach(attachAddressGeocoding);
+
+    // On submit, geocode if not already done
+    if (paymentForm) {
+        paymentForm.addEventListener('submit', async function(e) {
+            // ...existing code...
+            // Before processing payment, check geocode for the selected address
+            const method = getSelectedMethod();
+            let addrInput = null;
+            if (method === 'credit') addrInput = document.getElementById('credit-address1');
+            if (method === 'gcash') addrInput = document.getElementById('gcash-address1');
+            if (method === 'paypal') addrInput = document.getElementById('paypal-address1');
+            if (method === 'cod') addrInput = document.getElementById('cod-address1');
+            if (addrInput && addrInput.value.trim().length >= 5) {
+                if (!addrInput.dataset.geocodeStatus || addrInput.dataset.geocodeStatus === 'pending') {
+                    // Try geocoding now
+                    clearGeocodeWarning(addrInput);
+                    const result = await geocodeAddress(addrInput.value.trim());
+                    if (!result) {
+                        showGeocodeWarning(addrInput, "⚠️ Address not found. Please check for typos or be more specific.");
+                        // Allow submission, but warn
+                    } else if (result.confidence < 0.2) {
+                        showGeocodeWarning(addrInput, "⚠️ Address found, but confidence is low. Please double-check.");
+                        showGeocodeCoords(addrInput, result.lat, result.lon);
+                    } else {
+                        clearGeocodeWarning(addrInput);
+                        showGeocodeCoords(addrInput, result.lat, result.lon);
+                    }
+                    addrInput.dataset.geocodeStatus = result ? 'ok' : 'fail';
+                }
+            }
+            // ...existing code...
         });
     }
 });

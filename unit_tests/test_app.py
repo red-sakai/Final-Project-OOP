@@ -12,7 +12,6 @@ class TestApp(unittest.TestCase):
     def test_home_route(self):
         response = self.app.get('/')
         self.assertEqual(response.status_code, 200)
-        # self.assertIn(b'Expected Content', response.data)
 
     # Test user login page (GET)
     def test_user_login_get(self):
