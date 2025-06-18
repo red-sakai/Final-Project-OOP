@@ -10,16 +10,15 @@ class EmployeeBiography(Base):
     
     __tablename__ = "hh_employee_biography"
 
-    emp_id = Column("Employee Id", Integer, primary_key=True, nullable=False)
-    fname = Column("First Name", String(100), nullable=False)
-    lname = Column("Last Name", String(100), nullable=False)
-    gender = Column("Gender", String(10), nullable=False)
-    age = Column("Age", Integer, nullable=False)
+    emp_id = Column("employee_id", Integer, primary_key=True, nullable=False) 
+    fname = Column("first_name", String(100), nullable=False)
+    lname = Column("last_name", String(100), nullable=False) 
+    gender = Column("gender", String(10), nullable=False)  
+    age = Column("age", Integer, nullable=False) 
     birthdate = Column("birth_date", Date, nullable=False)
-    contact_num = Column("Contact Number", BigInteger, nullable=False)
-    # CLONED FROM EmployeeSalary - keeping in both tables
-    job_title = Column("Job Title", String(100), nullable=False)
-    department = Column("Department", String(100), nullable=False)
+    contact_num = Column("contact_number", BigInteger, nullable=False) 
+    job_title = Column("job_title", String(100), nullable=False) 
+    department = Column("department", String(100), nullable=False)
 
     salary_info = relationship(
         'EmployeeSalary', 
@@ -43,25 +42,17 @@ class EmployeeSalary(Base):
     
     __tablename__ = "hh_employee_salary"
 
-    emp_id = Column(
-        "Employee Id", 
-        Integer, 
-        ForeignKey("hh_employee_biography.Employee Id"), 
-        primary_key=True, 
-        nullable=False
-    )
-    
-    # KEEPING THESE - now duplicated in both tables
-    job_title = Column("Job Title", String(100), nullable=False)
-    department = Column("Department", String(100), nullable=False)
+    emp_id = Column("employee_id", Integer, ForeignKey("hh_employee_biography.employee_id"), primary_key=True, nullable=False)
+    job_title = Column("job_title", String(100), nullable=False) 
+    department = Column("department", String(100), nullable=False) 
     hire_date = Column("hire_date", Date, nullable=False)
-    years_exp = Column("Years of Experience", Integer, nullable=False)
-    years_exp_comp = Column("Years of Experience (company)", Float, nullable=False)
+    years_exp = Column("years_experience", Integer, nullable=False)  
+    years_exp_comp = Column("years_experience_company", Float, nullable=False)
     yearly_sal = Column("salary_yearly", Float, nullable=False)
     monthly_sal = Column("salary_monthly", Float, nullable=False)
     bonus = Column("bonus_amount", Float, nullable=False)
-    compensation = Column("Total Compensation", Float, nullable=False)
-    rating = Column("Performance Rating", Integer, nullable=True)
+    compensation = Column("total_compensation", Float, nullable=False)
+    rating = Column("performance_rating", Integer, nullable=True)  
 
     employee = relationship('EmployeeBiography', back_populates='salary_info', uselist=False)
 
@@ -74,14 +65,7 @@ class EmployeeVehicle(Base):
     
     __tablename__ = "hh_vehicle"
 
-    emp_id = Column(
-        "Employee Id", 
-        Integer, 
-        ForeignKey("hh_employee_biography.Employee Id"), 
-        primary_key=True, 
-        nullable=False
-    )
-    
+    emp_id = Column("employee_id", Integer, ForeignKey("hh_employee_biography.employee_id"), primary_key=True, nullable=False)
     unit_name = Column("unit_name", String(100), nullable=False)
     unit_brand = Column("unit_brand", String(100), nullable=False)
     year = Column("year", Integer, nullable=False)
@@ -633,18 +617,17 @@ class EmployeeManagement:
             session.close()
 
     def get_all_employees_summary(self):
-        """Get a summary of all employees for display."""
         try:
             query = """
             SELECT 
-                b.`Employee Id`,
-                CONCAT(b.`First Name`, ' ', b.`Last Name`) as `Full Name`,
-                b.`Job Title`,
-                b.Department,
+                b.employee_id, 
+                CONCAT(b.first_name, ' ', b.last_name) as `Full Name`,
+                b.job_title,  
+                b.department, 
                 s.salary_yearly as `Yearly Salary`
             FROM hh_employee_biography b
-            INNER JOIN hh_employee_salary s ON b.`Employee Id` = s.`Employee Id`
-            ORDER BY b.`Employee Id`
+            INNER JOIN hh_employee_salary s ON b.employee_id = s.employee_id
+            ORDER BY b.employee_id 
             """
             
             return pd.read_sql(query, con=engine)
@@ -723,13 +706,13 @@ def handle_delete_employee(manager):
     employee_id = get_valid_integer("Enter Employee ID to delete: ", min_val=1)
     
     # Check if employee exists
-    employee_exists = employee_id in employees_df['Employee Id'].values
+    employee_exists = employee_id in employees_df['employee_id'].values
     if not employee_exists:
         print(f"Employee with ID {employee_id} not found.")
         return
     
     # Show employee details
-    employee_info = employees_df[employees_df['Employee Id'] == employee_id]
+    employee_info = employees_df[employees_df['employee_id'] == employee_id]
     print(f"\nEmployee to delete:")
     print(employee_info.to_string(index=False))
     
