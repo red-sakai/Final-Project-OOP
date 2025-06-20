@@ -3,6 +3,7 @@ HexaHaul Flask Application
 
 This module defines the main Flask application for HexaHaul, organizing all routes,
 database connections, and business logic in an object-oriented and Pythonic manner.
+Follows PEP-8 style guide when writing this code.
 """
 
 import os
