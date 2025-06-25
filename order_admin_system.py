@@ -7,15 +7,17 @@ from mysql_connection import *
 class CustomerOrder(Base):
     __tablename__ = "hh_order"
 
-    order_id = Column("Order Item Id", String(20), primary_key=True, nullable=False)
-    id = Column(Integer, nullable=False, unique=True) 
-    delivery_status = Column("Delivery Status", String(20), nullable=False)
-    late_delivery_risk = Column("Late_delivery_risk", Integer, nullable=False)
-    origin_branch = Column("Origin Branch", String(20), nullable=False)
-    branch_latitude = Column("Branch Latitude", Float, nullable=False)
-    branch_longitude = Column("Branch Longitude", Float, nullable=False)
-    customer_latitude = Column("Customer Latitude", Float, nullable=False)
-    customer_longitude = Column("Customer Longitude", Float, nullable=False)
+    # order_id = Column("order_item_id", String(20), primary_key=True, nullable=False)
+    # id = Column(Integer, nullable=False, unique=True) 
+    order_id = Column("order_item_id", String(20), nullable=False, unique=True)
+    id = Column(Integer, primary_key=True, autoincrement=True, nullable=False)
+    delivery_status = Column("delivery_status", String(50), nullable=False)
+    late_delivery_risk = Column("late_delivery_risk", Integer, nullable=False)
+    origin_branch = Column("origin_branch", String(100), nullable=False)
+    branch_latitude = Column("branch_latitude", Float, nullable=False)
+    branch_longitude = Column("branch_longitude", Float, nullable=False)
+    customer_latitude = Column("customer_latitude", Float, nullable=False)
+    customer_longitude = Column("customer_longitude", Float, nullable=False)
     order_date = Column("order date (DateOrders)", Date, nullable=False)
     driver_id = Column("driver_id", Integer, nullable=False)
 
@@ -28,16 +30,19 @@ class CustomerOrder(Base):
 
 
 class Customer(Base):
-    __tablename__ = "hh_customer_info"
+    __tablename__ = "hh_customer_info"   
 
-    order_id = Column("Order Item Id", String(20), ForeignKey("hh_order.Order Item Id"), primary_key=True, nullable=False) 
-    customer_id = Column("Customer Id", Integer, nullable=False, unique=True) 
-    id = Column(Integer, nullable=False, unique=True) 
-    fname = Column("Customer Fname", String(30), nullable=False)    
-    lname = Column("Customer Lname", String(30), nullable=False)    
-    customer_city = Column("Customer City", String(30), nullable=False)    
-    customer_country = Column("Customer Country", String(30), nullable=False)    
-    customer_segment = Column("Customer Segment", String(30), nullable=False)    
+    # order_id = Column("order_item_id", String(20), ForeignKey("hh_order.order_item_id"), primary_key=True, nullable=False) 
+    # customer_id = Column("customer_id", Integer, nullable=False, unique=True) 
+    # id = Column(Integer, nullable=False, unique=True) 
+    order_id = Column("order_item_id", String(20), ForeignKey("hh_order.order_item_id"), nullable=False)
+    id = Column(Integer, primary_key=True, autoincrement=True, nullable=False)
+    customer_id = Column("customer_id", Integer, nullable=False, unique=True)
+    fname = Column("customer_fname", String(50), nullable=False)
+    lname = Column("customer_lname", String(50), nullable=False)
+    customer_city = Column("customer_city", String(100), nullable=False)
+    customer_country = Column("customer_country", String(100), nullable=False)
+    customer_segment = Column("customer_segment", String(50), nullable=False)
 
     order = relationship('CustomerOrder', back_populates='customer_info', uselist=False)
 
@@ -48,13 +53,15 @@ class Customer(Base):
 class Product(Base):
     __tablename__ = "hh_product_info"
 
-    order_id = Column("Order Item Id", String(20), ForeignKey("hh_order.Order Item Id"), primary_key=True, nullable=False) 
-    id = Column(Integer, nullable=False, unique=True)
-    product_name = Column("Product Name", String(100), nullable=False)
-    product_category_id = Column("Product Category Id", Integer, nullable=False)
-    product_category_name = Column("Product Category Name", String(100), nullable=False)
-    dep_id = Column("Department Id", Integer, nullable=False)
-    dep_name = Column("Department Name", String(100), nullable=False)
+    # order_id = Column("order_item_id", String(20), ForeignKey("hh_order.order_item_id"), primary_key=True, nullable=False)
+    # id = Column(Integer, nullable=False, unique=True)
+    order_id = Column("order_item_id", String(20), ForeignKey("hh_order.order_item_id"), nullable=False)
+    id = Column(Integer, primary_key=True, autoincrement=True, nullable=False)
+    product_name = Column("product_name", String(100), nullable=False)  
+    product_category_id = Column("product_category_id", Integer, nullable=False)  
+    product_category_name = Column("product_category_name", String(100), nullable=False)  
+    dep_id = Column("department_id", Integer, nullable=False)
+    dep_name = Column("department_name", String(100), nullable=False)
 
     order = relationship("CustomerOrder", back_populates='product_info', uselist=False)
 
@@ -65,19 +72,21 @@ class Product(Base):
 class Sales(Base):
     __tablename__ = "hh_sales"
 
-    order_id = Column("Order Item Id", String(20), ForeignKey("hh_order.Order Item Id"), primary_key=True, nullable=False) 
-    id = Column(Integer, nullable=False, unique=True)
-    type = Column("Type", String(10), nullable=False)
-    benefit_per_order = Column("Benefit per order", Float, nullable=False)
-    sales_per_customer = Column("Sales per customer", Float, nullable=True)
-    order_discount = Column("Order Item Discount Rate", Float, nullable=False)
-    profit_ratio = Column("Order Item Profit Ratio", Float, nullable=False)
-    order_quantity = Column("Order Item Quantity", Integer, nullable=False)
-    sales = Column("Sales", Float, nullable=False)
-    order_item_total = Column("Order Item Total", Float, nullable=False)
-    order_profit = Column("Order Profit Per Order", Float, nullable=False)
-    product_price = Column("Product Price", Float, nullable=False)
-    date = Column("order date (DateOrders)", Date, nullable=False)
+    # order_id = Column("order_item_id", String(20), ForeignKey("hh_order.order_item_id"), primary_key=True, nullable=False)  
+    # id = Column(Integer, nullable=False, unique=True)
+    order_id = Column("order_item_id", String(20), ForeignKey("hh_order.order_item_id"), nullable=False)
+    id = Column(Integer, primary_key=True, autoincrement=True, nullable=False)
+    type = Column("type", String(10), nullable=False) 
+    benefit_per_order = Column("benefit_per_order", Float, nullable=False) 
+    sales_per_customer = Column("sales_per_order", Float, nullable=True)
+    order_discount = Column("order_item_discount_rate", Float, nullable=False) 
+    profit_ratio = Column("order_item_profit_ratio", Float, nullable=False) 
+    order_quantity = Column("order_item_quantity", Integer, nullable=False) 
+    sales = Column("sales", Float, nullable=False)
+    order_item_total = Column("order_item_total", Float, nullable=False) 
+    order_profit = Column("order_profit_per_order", Float, nullable=False) 
+    product_price = Column("product_price", Float, nullable=False)  
+    date = Column("dateorders", Date, nullable=False)
 
     order = relationship("CustomerOrder", back_populates='sales_info', uselist=False)
 
@@ -108,6 +117,19 @@ class OrderSystem:
             'order_date': 'order date (DateOrders)',
             'driver_id': 'driver_id'
         }
+        # self.order_column_mapping = {
+        #     'order_id': 'order_item_id',
+        #     'id': 'id',
+        #     'delivery_status': 'delivery_status',
+        #     'late_delivery_risk': 'late_delivery_risk',
+        #     'origin_branch': 'origin_branch',
+        #     'branch_latitude': 'branch_latitude',
+        #     'branch_longitude': 'branch_longitude',
+        #     'customer_latitude': 'customer_latitude',
+        #     'customer_longitude': 'customer_longitude',
+        #     'order_date': 'order date (DateOrders)',
+        #     'driver_id': 'driver_id'
+        # }
 
         self.customer_column_mapping = {
             'order_id': 'Order Item Id',
@@ -449,7 +471,7 @@ class OrderSystem:
 
 def generate_order_id(pin: str, driver_id: int) -> str:
     """Generate order ID based on driver's vehicle type"""
-    query = "SELECT `unit_name` FROM hh_vehicle WHERE `Employee Id` = %s"
+    query = "SELECT unit_name FROM hh_vehicle WHERE employee_id = %s"
     df = pd.read_sql(query, con=engine, params=[(driver_id,)])
 
     if df.empty:
@@ -478,8 +500,8 @@ def generate_order_id(pin: str, driver_id: int) -> str:
 
 def get_driver_assignment():
     """Get valid driver assignment with confirmation"""
-    drivers_df = pd.read_sql("SELECT `Employee Id` FROM hh_vehicle", con=engine)
-    valid_ids = drivers_df['Employee Id'].tolist()
+    drivers_df = pd.read_sql("SELECT employee_id FROM hh_vehicle", con=engine)
+    valid_ids = drivers_df['employee_id'].tolist()
     
     print("Available Driver IDs:")
     for i in range(0, len(valid_ids), 8):
@@ -498,7 +520,7 @@ def get_driver_assignment():
 
             # Get vehicle info
             vehicle_df = pd.read_sql(
-                "SELECT unit_name FROM hh_vehicle WHERE `Employee Id` = %s", 
+                "SELECT unit_name FROM hh_vehicle WHERE employee_id = %s", 
                 con=engine, params=[(driver_id,)]
             )
             
@@ -523,13 +545,13 @@ def get_driver_assignment():
 
 def get_branch_info():
     """Get branch information with coordinates"""
-    query = "SELECT DISTINCT `Origin Branch`, `Branch Latitude`, `Branch Longitude` FROM hh_order"
+    query = "SELECT DISTINCT origin_branch, branch_latitude, branch_longitude FROM hh_order"
     df = pd.read_sql(query, con=engine)
     
     if df.empty:
         raise ValueError("No branch data found in database")
     
-    branches_dict = df.set_index('Origin Branch').to_dict('index')
+    branches_dict = df.set_index('origin_branch').to_dict('index')
     valid_branches = list(branches_dict.keys())
     normalized_branches = {b.lower(): b for b in valid_branches}
 
@@ -550,8 +572,8 @@ def get_branch_info():
             branch_data = branches_dict[selected_branch]
             return (
                 selected_branch,
-                branch_data['Branch Latitude'],
-                branch_data['Branch Longitude']
+                branch_data['branch_latitude'], 
+                branch_data['branch_longitude']
             )
         else:
             print("Invalid branch name. Please choose from the list above.")
@@ -638,8 +660,8 @@ def get_product_data():
     print("Product Information:")
     
     # Get existing products
-    existing_products_df = pd.read_sql("SELECT DISTINCT `Product Name` FROM hh_product_info", con=engine)
-    existing_products = existing_products_df['Product Name'].tolist()
+    existing_products_df = pd.read_sql("SELECT DISTINCT product_name FROM hh_product_info", con=engine)
+    existing_products = existing_products_df['product_name'].tolist()
     existing_products_lower = [p.lower() for p in existing_products]
 
     # Input product name
@@ -682,10 +704,10 @@ def _handle_new_product(product_name: str):
 
     # Check if category exists
     category_df = pd.read_sql(
-        "SELECT DISTINCT `Product Category Name`, `Product Category Id` FROM hh_product_info", 
+        "SELECT DISTINCT product_category_name, product_category_id FROM hh_product_info", 
         con=engine
     )
-    existing_categories = category_df['Product Category Name'].str.lower().tolist()
+    existing_categories = category_df['product_category_name'].str.lower().tolist()
     
     if category_name.lower() in existing_categories:
         # Existing category
@@ -698,7 +720,7 @@ def _handle_new_product(product_name: str):
         dep_name = cat_record.dep_name.title()
     else:
         # New category
-        existing_cat_ids = category_df['Product Category Id'].tolist()
+        existing_cat_ids = category_df['product_category_id'].tolist()
         
         while True:
             try:
@@ -731,10 +753,10 @@ def _handle_department_info():
 
     # Check if department exists
     dep_df = pd.read_sql(
-        "SELECT DISTINCT `Department Name`, `Department Id` FROM hh_product_info", 
+        "SELECT DISTINCT department_name, department_id FROM hh_product_info", 
         con=engine
     )
-    existing_deps = dep_df['Department Name'].str.lower().tolist()
+    existing_deps = dep_df['department_name'].str.lower().tolist()
     
     if dep_name.lower() in existing_deps:
         # Existing department
@@ -744,7 +766,7 @@ def _handle_department_info():
         return dep_name, dep_record.dep_id
     else:
         # New department
-        existing_dep_ids = dep_df['Department Id'].tolist()
+        existing_dep_ids = dep_df['department_id'].tolist()
         
         while True:
             try:

@@ -7,14 +7,13 @@ from mysql_connection import *
 class Product(Base):
     __tablename__ = "hh_product_info"
 
-    # Use actual database column names (with spaces as they appear in the database)
-    product_id = Column("Order Item Id", String(20), primary_key=True, nullable=False)
-    id = Column("id", Integer, nullable=False, unique=True)
-    product_name = Column("Product Name", String(100), nullable=False)
-    product_category_id = Column("Product Category Id", Integer, nullable=False)
-    product_category_name = Column("Product Category Name", String(100), nullable=False)
-    dep_id = Column("Department Id", Integer, nullable=False)
-    dep_name = Column("Department Name", String(100), nullable=False)
+    id = Column("id", Integer, primary_key=True, nullable=False)
+    product_id = Column("order_item_id", String(20), nullable=False, unique=True)
+    product_name = Column("product_name", String(255), nullable=False)
+    product_category_id = Column("product_category_id", Integer, nullable=False)
+    product_category_name = Column("product_category_name", String(100), nullable=False)
+    dep_id = Column("department_id", Integer, nullable=False)
+    dep_name = Column("department_name", String(100), nullable=False)
 
     def __repr__(self):
         return f"<Product: id={self.product_id}, name={self.product_name}>"
@@ -105,10 +104,11 @@ class ProductSystem:
         Only keys present in mapping are included.
         """
         return {mapping[key]: value for key, value in data.items() if key in mapping}
-
-    def _get_next_id(self, model_class):
-        """Get the next id for a model by querying max existing id"""
-        max_id = self.session.query(func.max(model_class.id)).scalar()
+    
+        
+    def _get_next_id(self):
+        """Get the next id for a product by querying max existing id"""
+        max_id = self.session.query(func.max(Product.id)).scalar()
         if max_id is None:
             return 1
         else:
@@ -131,7 +131,7 @@ class ProductSystem:
     def _create_new_product(self, product_data: dict):
         """Create new product record"""
         # Assign auto-increment id for product
-        product_data['id'] = self._get_next_id(Product)
+        product_data['id'] = self._get_next_id()
 
         # Create new record
         new_product = Product(**product_data)
@@ -155,10 +155,9 @@ class ProductSystem:
             
             # Update product attributes
             for key, value in product_data.items():
-                if hasattr(product, key) and key != 'id':  # Don't update the auto-increment id
+                if hasattr(product, key) and key != 'id': 
                     setattr(product, key, value)
             
-            # Update CSV file - REPLACE instead of UPDATE
             # Make sure to include the 'id' field in the CSV data
             csv_data = product_data.copy()
             csv_data['id'] = product.id  # Preserve the existing id
@@ -214,8 +213,8 @@ def get_product_data():
     print("Product Information:")
     
     # Get existing products - use actual column names
-    existing_products_df = pd.read_sql("SELECT DISTINCT `Product Name` FROM hh_product_info", con=engine)
-    existing_products = existing_products_df['Product Name'].tolist()
+    existing_products_df = pd.read_sql("SELECT DISTINCT product_name FROM hh_product_info", con=engine)
+    existing_products = existing_products_df['product_name'].tolist()
     existing_products_lower = [p.lower() for p in existing_products]
 
     # Input product name
@@ -256,12 +255,12 @@ def _handle_new_product(product_name: str):
             break
         print("Category name cannot be empty")
 
-    # Check if category exists - use actual column names
+    # Check if category exists
     category_df = pd.read_sql(
-        "SELECT DISTINCT `Product Category Name`, `Product Category Id` FROM hh_product_info", 
+        "SELECT DISTINCT product_category_name, product_category_id FROM hh_product_info", 
         con=engine
     )
-    existing_categories = category_df['Product Category Name'].str.lower().tolist()
+    existing_categories = category_df['product_category_name'].str.lower().tolist()
     
     if category_name.lower() in existing_categories:
         # Existing category
@@ -274,7 +273,7 @@ def _handle_new_product(product_name: str):
         dep_name = cat_record.dep_name.title()
     else:
         # New category
-        existing_cat_ids = category_df['Product Category Id'].tolist()
+        existing_cat_ids = category_df['product_category_name'].tolist()
         
         while True:
             try:
@@ -307,10 +306,10 @@ def _handle_department_info():
 
     # Check if department exists - use actual column names
     dep_df = pd.read_sql(
-        "SELECT DISTINCT `Department Name`, `Department Id` FROM hh_product_info", 
+        "SELECT DISTINCT department_name, department_id FROM hh_product_info", 
         con=engine
     )
-    existing_deps = dep_df['Department Name'].str.lower().tolist()
+    existing_deps = dep_df['department_name'].str.lower().tolist()
     
     if dep_name.lower() in existing_deps:
         # Existing department
@@ -320,7 +319,7 @@ def _handle_department_info():
         return dep_name, dep_record.dep_id
     else:
         # New department
-        existing_dep_ids = dep_df['Department Id'].tolist()
+        existing_dep_ids = dep_df['department_id'].tolist()
         
         while True:
             try:
@@ -409,10 +408,10 @@ def get_existing_product_for_update(product_id):
         
         # Check if category exists - use actual column names
         category_df = pd.read_sql(
-            "SELECT DISTINCT `Product Category Name`, `Product Category Id` FROM hh_product_info", 
+            "SELECT DISTINCT product_category_name, product_category_id FROM hh_product_info", 
             con=engine
         )
-        existing_categories = category_df['Product Category Name'].str.lower().tolist()
+        existing_categories = category_df['product_category_name'].str.lower().tolist()
         
         if category_name.lower() in existing_categories:
             # Existing category
@@ -422,7 +421,7 @@ def get_existing_product_for_update(product_id):
             category_id = cat_record.product_category_id
         else:
             # New category
-            existing_cat_ids = category_df['Product Category Id'].tolist()
+            existing_cat_ids = category_df['product_category_id'].tolist()
             while True:
                 try:
                     category_id = int(input("New Product Category ID: ").strip())

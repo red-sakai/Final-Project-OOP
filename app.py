@@ -1,4 +1,33 @@
-from flask import Flask, render_template, url_for, request, redirect, flash, jsonify, Blueprint, send_from_directory, session
+"""
+HexaHaul Flask Application
+
+This module defines the main Flask application for HexaHaul, organizing all routes,
+database connections, and business logic in an object-oriented and Pythonic manner.
+Follows PEP-8 style guide when writing this code.
+"""
+
+import os
+import csv
+import time
+import json
+import random
+import pandas as pd
+import requests
+import uuid
+from datetime import datetime, timedelta
+from flask import (
+    Flask, render_template, url_for, request, redirect, flash, jsonify,
+    Blueprint, send_from_directory, session
+)
+from flask_mail import Mail, Message
+from flask_moment import Moment
+from werkzeug.utils import secure_filename
+from markupsafe import Markup
+from dotenv import load_dotenv
+from transformers import pipeline
+from abc import ABC, abstractmethod
+
+# Import models and services
 from models.admin import Admin
 from models.analytics_backend import plot_employee_statuses, plot_vehicles_deployed
 from models.vehicle_database import VehicleDatabase, Vehicle
@@ -10,34 +39,19 @@ from models.utilities_database import UtilitiesDatabase
 from models.salary_database import SalaryDatabase, EmployeeSalary
 from models.products_database import ProductsDatabase, Product
 from models.sales_database import SalesDatabase
-from abc import ABC, abstractmethod
-from enum import Enum
-from flask_mail import Mail, Message
-from flask_moment import Moment
-from transformers import pipeline
 from services.hexabot import hexabot_bp
 from models.activity_database import ActivityDatabase
 from models.customers_database import CustomerDatabase
-import csv
-import time
-import os
-import json
-import random
-import pandas as pd
-from werkzeug.utils import secure_filename
-import requests
-from datetime import datetime, timedelta
-import uuid
-from markupsafe import Markup
-from sqlalchemy import create_engine, text
+
 import mysql.connector
-from dotenv import load_dotenv
 
 # Load environment variables from .env file
 load_dotenv()
 
 def get_mysql_connection():
-    """Create and return a MySQL connection for hh_user_login_db table access using .env credentials."""
+    """
+    Create and return a MySQL connection for hh_user_login_db table access using .env credentials.
+    """
     return mysql.connector.connect(
         host=os.getenv("MYSQL_HOST"),
         user=os.getenv("MYSQL_USER"),
@@ -47,13 +61,17 @@ def get_mysql_connection():
     )
 
 def get_qa_pipeline():
-    """Lazily load and cache the QA pipeline to avoid OOM on startup."""
-    # Lazy Load - delaying the initialization to save memory
+    """
+    Lazily load and cache the QA pipeline to avoid OOM on startup.
+    """
     if not hasattr(get_qa_pipeline, "_pipeline"):
         get_qa_pipeline._pipeline = pipeline("question-answering", model="distilbert-base-uncased-distilled-squad")
     return get_qa_pipeline._pipeline
 
 class BaseManager(ABC):
+    """
+    Abstract base class for OTP and password reset managers.
+    """
     @abstractmethod
     def generate_otp(self, email):
         pass
@@ -71,6 +89,9 @@ class BaseManager(ABC):
         pass
 
 class PasswordResetManager(BaseManager):
+    """
+    Handles OTP generation, sending, and verification for password resets.
+    """
     def __init__(self, mail):
         self.__user_otps = {}
         self.mail = mail
@@ -87,6 +108,9 @@ class PasswordResetManager(BaseManager):
         return otp
 
     def send_otp(self, email, otp):
+        """
+        Send the OTP to the user's email for password reset.
+        """
         logo_url = "https://i.imgur.com/upLAusA.png"
         msg = Message("Forgot Password Code: " + otp,
                       sender="hexahaulprojects@gmail.com",
@@ -118,6 +142,9 @@ class PasswordResetManager(BaseManager):
         self.mail.send(msg)
 
     def send_admin_otp(self, email, otp):
+        """
+        Send the OTP to the admin's email for password reset.
+        """
         logo_url = "https://i.imgur.com/upLAusA.png"
         msg = Message("Admin Password Reset Code: " + otp,
                       sender="hexahaulprojects@gmail.com",
@@ -149,58 +176,79 @@ class PasswordResetManager(BaseManager):
         self.mail.send(msg)
 
     def verify_otp(self, email, otp):
+        """
+        Verify the OTP entered by the user/admin.
+        """
         return self.__user_otps.get(email) == otp
 
     def clear_otp(self, email):
+        """
+        Clear the OTP for the user/admin after verification or timeout.
+        """
         self.__user_otps.pop(email, None)
 
 class UserPasswordResetManager(PasswordResetManager):
+    """
+    Handles OTP for user password resets.
+    """
     def send_otp(self, email, otp):
         super().send_otp(email, otp)
 
 class AdminPasswordResetManager(PasswordResetManager):
+    """
+    Handles OTP for admin password resets.
+    """
     def send_otp(self, email, otp):
         self.send_admin_otp(email, otp)
 
 class HexaHaulApp:
+    """
+    Main HexaHaul Flask Application class.
+    Encapsulates all app logic, routes, and configuration.
+    """
     def __init__(self):
+        # Set up Flask app with custom template and static folders
         template_dir = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'templates')
-        self.app = Flask(__name__, 
-                         static_url_path='', 
-                         static_folder='static',
-                         template_folder=template_dir)
-        
+        self.app = Flask(
+            __name__,
+            static_url_path='',
+            static_folder='static',
+            template_folder=template_dir
+        )
         self.app.secret_key = "your_secret_key"
         self.configure_mail()
         self.user_password_reset_manager = UserPasswordResetManager(self.mail)
         self.admin_password_reset_manager = AdminPasswordResetManager(self.mail)
-        
-        # Initialize admin database
+
+        # Initialize databases and models
         init_admin_db()
-        
-        # Get or create default admin account
         self.admin_account = get_default_admin()
-        
         self.vehicle_db = VehicleDatabase()
         self.employee_db = EmployeeDatabase()
         self.hexabox_db = HexaBoxesDatabase()
         self.salary_db = SalaryDatabase()
         self.product_db = ProductsDatabase()
         self.activity_db = ActivityDatabase()
-        
+
+        # Print template folder info for debugging
         print(f"Template folder: {template_dir}")
         print(f"Template folder exists: {os.path.exists(template_dir)}")
-        
+
+        # Initialize user login DB and load users
         with self.app.app_context():
             init_db()
             load_users_from_csv()
-            
+
+        # Register routes, blueprints, and template filters
         self.register_routes()
         self.register_blueprints()
         self.register_template_filters()
         self.moment = Moment(self.app)
 
     def configure_mail(self):
+        """
+        Configure Flask-Mail for sending emails.
+        """
         self.app.config['MAIL_SERVER'] = 'smtp.gmail.com'
         self.app.config['MAIL_PORT'] = 587
         self.app.config['MAIL_USE_TLS'] = True
@@ -209,8 +257,9 @@ class HexaHaulApp:
         self.mail = Mail(self.app)
 
     def register_template_filters(self):
-        """Register custom template filters for the application"""
-        
+        """
+        Register custom template filters for the application.
+        """
         @self.app.template_filter('number_format')
         def number_format_filter(value):
             if isinstance(value, (int, float)):
@@ -218,6 +267,11 @@ class HexaHaulApp:
             return value
 
     def register_routes(self):
+        """
+        Register all Flask routes for the application.
+        All logic is preserved as in the original implementation.
+        """
+
         app = self.app
         user_password_reset_manager = self.user_password_reset_manager
         admin_password_reset_manager = self.admin_password_reset_manager
@@ -2661,22 +2715,27 @@ Admin Reply:
                 return jsonify({'success': False, 'message': str(e)}), 500
 
     def register_blueprints(self):
+        """
+        Register Flask blueprints for modular route organization.
+        """
         self.app.register_blueprint(analytics_bp)
         self.app.register_blueprint(hexabot_bp)
 
     def run(self):
+        """
+        Run the Flask application.
+        """
         self.app.debug = True
         self.app.run(host="0.0.0.0", port=5000)
         print("Flask app routes:")
         print(self.app.url_map)
-        
-        
+
         template_dir = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'templates')
         if os.path.exists(template_dir):
             print("Available templates:")
             for file in os.listdir(template_dir):
                 print(f"  - {file}")
-            
+
             @self.app.route('/test-template/<template_name>')
             def test_template(template_name):
                 try:
@@ -2685,14 +2744,18 @@ Admin Reply:
                     return f"Error rendering template {template_name}: {str(e)}"
         else:
             print("Template directory not found!")
-            
+
         port = int(os.environ.get("PORT", 5000))
         self.app.run(host='0.0.0.0', port=port, debug=True)
 
+# Blueprint for analytics routes (graphs)
 analytics_bp = Blueprint('analytics', __name__)
 
 @analytics_bp.route('/analytics/employee_statuses.png')
 def employee_statuses_graph():
+    """
+    Serve the employee statuses graph as a PNG image.
+    """
     save_path = os.path.join('static', 'graphs', 'employee_statuses.png')
     os.makedirs(os.path.dirname(save_path), exist_ok=True)
     plot_employee_statuses(save_path)
@@ -2700,12 +2763,16 @@ def employee_statuses_graph():
 
 @analytics_bp.route('/analytics/vehicles_deployed.png')
 def vehicles_deployed_graph():
+    """
+    Serve the vehicles deployed graph as a PNG image.
+    """
     save_path = os.path.join('static', 'graphs', 'vehicles_deployed.png')
     os.makedirs(os.path.dirname(save_path), exist_ok=True)
     plot_vehicles_deployed(save_path)
     return send_from_directory('static/graphs', 'vehicles_deployed.png')
 
 if __name__ == "__main__":
+    # Entry point for running the Flask app directly
     app_instance = HexaHaulApp()
     app_instance.run()
 
